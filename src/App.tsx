@@ -1,5 +1,64 @@
 //import { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, User, ChevronRight } from 'lucide-react';
+const SkillsBoard = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const boardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (boardRef.current) observer.observe(boardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const skillCategories = [
+    { title: 'User Research', items: ['Pendo', 'Accessibility', 'User Interviews', 'Usability Testing', 'Heuristic Evaluation'] },
+    { title: 'Infrastructure', items: ['Design Systems', 'Information Architecture', 'Systems Design', 'Behavior Design', 'Material UI'] },
+    { title: 'Interaction', items: ['Figma', 'Rapid Prototyping', 'User Flows', 'Journey Mapping', 'AI Design'] },
+    { title: 'Engineering', items: ['Python, HTML, CSS, C++', 'Prompt Design', 'Cursor & Framer', 'APIs & Automation', 'Git'] }
+  ];
+
+  return (
+    <div className="mb-12" ref={boardRef}>
+      <h3 className="text-2xl font-bold text-[#7DE2D1] mb-4">Operating the System</h3>
+      <div className="bg-black border-2 border-[#7DE2D1]/50 rounded-lg p-6 font-mono">
+        <div className="split-flap-board grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {skillCategories.map((cat, cIdx) => (
+            <div key={cIdx} className="space-y-3">
+              <div className="text-sm text-white/60 uppercase tracking-wider">{cat.title}</div>
+              <div className="space-y-2">
+                {cat.items.map((it, iIdx) => (
+                  <div
+                    key={iIdx}
+                    className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/6 rounded px-3 py-2 text-[#7DE2D1] text-sm`}
+                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 80}ms` : '0ms' }}
+                  >
+                    {it}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <style>{`
+          .split-flap-board { perspective: 1000px; }
+          .split-flap-item { transform: rotateX(-90deg); opacity: 0; transform-origin: top; }
+          .split-flap-item.is-flipping { animation: flap 600ms cubic-bezier(.2,.8,.2,1) forwards; }
+          @keyframes flap { from { transform: rotateX(-90deg); opacity: 0; } to { transform: rotateX(0deg); opacity: 1; } }
+        `}</style>
+      </div>
+    </div>
+  );
+};
+
 
 //interface Station {
 //  name: string;
@@ -363,49 +422,7 @@ export default function DesignCentralStation() {
             </div>
           </div>
 
-          {/* Skills as full-width Solari (split-flap) board */}
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-[#7DE2D1] mb-4">Operating the System</h3>
-            <div className="bg-black border-2 border-[#7DE2D1]/50 rounded-lg p-6 font-mono">
-              {/* categorize skills into 4 sections */}
-              {/* define categories inline to keep changes minimal */}
-              {(() => {
-                const skillCategories = [
-                  { title: 'User Research', items: ['Pendo', 'Accessibility', 'User Interviews', 'Usability Testing', 'Heuristic Evaluation'] },
-                  { title: 'Infrastructure', items: ['Design Systems', 'Information Architecture', 'Systems Design', 'Behavior Design', 'Material UI'] },
-                  { title: 'Interaction', items: ['Figma', 'Rapid Prototyping', 'User Flows', 'Journey Mapping', 'AI Design'] },
-                  { title: 'Engineering', items: ['Python, HTML, CSS, C++', 'Prompt Design', 'Cursor & Framer', 'APIs & Automation', 'Git'] }
-                ];
-
-                return (
-                  <div className="split-flap-board grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    {skillCategories.map((cat, cIdx) => (
-                      <div key={cIdx} className="space-y-3">
-                        <div className="text-sm text-white/60 uppercase tracking-wider">{cat.title}</div>
-                        <div className="space-y-2">
-                          {cat.items.map((it, iIdx) => (
-                            <div
-                              key={iIdx}
-                              className="split-flap-item bg-black/80 border border-white/6 rounded px-3 py-2 text-[#7DE2D1] text-sm"
-                              style={{ animationDelay: `${(cIdx * 6 + iIdx) * 80}ms` }}
-                            >
-                              {it}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })()}
-
-              <style>{`
-                .split-flap-board { perspective: 800px; }
-                .split-flap-item { transform-origin: top center; backface-visibility: hidden; transform: rotateX(75deg); opacity: 0; animation: flap 420ms cubic-bezier(.2,.8,.2,1) forwards; }
-                @keyframes flap { from { transform: rotateX(75deg); opacity: 0; } to { transform: rotateX(0deg); opacity: 1; } }
-              `}</style>
-            </div>
-          </div>
+          <SkillsBoard />
 
           {/* About Me with map preview (heading full-width; grid below) */}
           <div className="mb-16">
