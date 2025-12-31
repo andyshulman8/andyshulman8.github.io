@@ -466,7 +466,7 @@ export default function DesignCentralStation() {
       <section className="mb-16 bg-[#141515] py-10 px-6 max-w-7xl mx-auto">
       {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
           <div className="relative py-12 px-6 overflow-hidden border-y-0 bg-[#141515]">
-            <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
+            <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
             
             {/* Content overlay */}
             <div className="relative z-10 max-w-7xl mx-auto">
