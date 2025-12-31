@@ -48,7 +48,7 @@ export default function DesignCentralStation() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   //const [activeSection, setActiveSection] = useState('hero');
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   const caseStudies = [
     {
