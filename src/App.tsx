@@ -1,5 +1,5 @@
 //import { useState } from 'react';
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, User, ChevronRight } from 'lucide-react';
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
