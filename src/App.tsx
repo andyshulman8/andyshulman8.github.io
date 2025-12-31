@@ -2,6 +2,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 
+const THEME_COLOR = '#7DE2D1'; // Change this once to update everywhere
+const SECONDARY_COLOR = '#339989';
+const INFO_COLOR = '#2B2C28';
+const BACK_COLOR = '#141515';
+
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const boardRef = useRef(null);
@@ -29,8 +34,8 @@ const SkillsBoard = () => {
 
   return (
     <div className="mb-12" ref={boardRef}>
-      <h3 className="text-2xl font-bold text-[#7DE2D1] mb-4">Operating the System</h3>
-      <div className="bg-black border-2 border-[#7DE2D1]/50 rounded-lg p-6 font-mono">
+      <h3 className="text-2xl font-bold mb-4" style={{ color: THEME_COLOR }}>Operating the System</h3>
+      <div className="bg-black border-2 rounded-lg p-6 font-mono" style={{ borderColor: `${THEME_COLOR}50` }}>
         <div className="split-flap-board grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {skillCategories.map((cat, cIdx) => (
             <div key={cIdx} className="space-y-3">
@@ -39,8 +44,8 @@ const SkillsBoard = () => {
                 {cat.items.map((it, iIdx) => (
                   <div
                     key={iIdx}
-                    className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/6 rounded px-3 py-2 text-[#7DE2D1] text-sm`}
-                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 200}ms` : '0ms' }}
+                    className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/6 rounded px-3 py-2 text-sm`}
+                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 200}ms` : '0ms', color: THEME_COLOR  }}
                   >
                     {it}
                   </div>
@@ -207,7 +212,7 @@ export default function DesignCentralStation() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#141515] text-[#FFFAFB]">
+    <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
       {/* Hero Section - Station Entrance 
       <header className="py-12">
         <div className="max-w-7xl mx-auto px-6">
@@ -230,10 +235,10 @@ export default function DesignCentralStation() {
       */}
         {/* Hero Section (single) */}
         <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: "url('/images/Home/test.png')" }}>
-          <div className="absolute inset-0 bg-[#141515]/60"></div>
+          <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
           <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
             <div className="text-left">
-              <h1 className="text-4xl md:text-5xl font-bold mb-3">Final destination: <span className="text-[#7DE2D1]">Impact</span></h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-3">Final destination: <span className="" style={{ color: THEME_COLOR }}>Impact</span></h1>
               <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">All routes begin with empathy.</h2>
               <p className="text-white/60">I’m Andy Shulman, a Senior UX Designer with experience simplifying complexity.</p>
             </div>
@@ -248,11 +253,11 @@ export default function DesignCentralStation() {
         <div className="relative mb-12 h-24 flex items-center">
           {/* Railroad ties (dashed) placed below the rail */}
           <div className="absolute left-0 right-0 bottom-4 flex items-center z-0">
-            <div className="w-full border-t-4 border-dashed border-[#7DE2D1]/40"></div>
+            <div className="w-full border-t-4 border-dashed" style={{ borderColor: `${THEME_COLOR}40` }}></div>
           </div>
 
           {/* Solid rail placed between train and ties */}
-          <div className="absolute left-0 right-0 bottom-4 transform -translate-y-1/2 h-1 bg-[#339989] z-10"></div>
+          <div className="absolute left-0 right-0 bottom-4 transform -translate-y-1/2 h-1 z-10" style={{ backgroundColor: THEME_COLOR }}></div>
 
           {/* Animated Train - above the solid rail */}
           <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
@@ -355,7 +360,7 @@ export default function DesignCentralStation() {
               
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-[#7DE2D1]" />
+                  <MapPin className="w-4 h-4" style={{ color: THEME_COLOR }}/>
                   <span className="text-white/60">{project.impact}</span>
                 </div>
                 
@@ -388,22 +393,22 @@ export default function DesignCentralStation() {
         <div className="max-w-7xl mx-auto">
             {/* Info Booth Sign */}
             <div className="relative inline-block mb-12">
-              <div className="bg-[#141515] border-4 border-[#7DE2D1]/20 rounded-lg px-4 py-4 shadow-2xl">
+              <div className="border-4 rounded-lg px-4 py-4 shadow-2xl" style={{ borderColor: `${SECONDARY_COLOR}20`, backgroundColor: BACK_COLOR }} >
                 <div className="flex items-center gap-4">
-                  <Info className="w-10 h-10 text-[#7DE2D1]" />
+                  <Info className="w-10 h-10 " style={{ color: THEME_COLOR }}/>
                   <h2 className="text-4xl font-bold text-[#FFFAFB] tracking-wide">INFORMATION</h2>
                 </div>
               </div>
               {/* Mounting brackets */}
-              <div className="absolute -top-3 -left-3 w-4 h-4 bg-[#2B2C28] rounded-full border-2 border-[#339989]"></div>
-              <div className="absolute -top-3 -right-3 w-4 h-4 bg-[#2B2C28] rounded-full border-2 border-[#339989]"></div>
-              <div className="absolute -bottom-3 -left-3 w-4 h-4 bg-[#2B2C28] rounded-full border-2 border-[#339989]"></div>
-              <div className="absolute -bottom-3 -right-3 w-4 h-4 bg-[#2B2C28] rounded-full border-2 border-[#339989]"></div>
+              <div className="absolute -top-3 -left-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
+              <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
+              <div className="absolute -bottom-3 -left-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
+              <div className="absolute -bottom-3 -right-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
             </div>
 
           {/* Process Map */}
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-[#7DE2D1] mb-4">The Complete Transit System</h3>
+            <h3 className="text-2xl font-bold mb-4" style={{ color: THEME_COLOR }}>The Complete Transit System</h3>
             <p className="text-white/60 text-left mb-8 mx-auto">
               This is my design process map. Each project follows a unique route through these stations, 
               combining methodologies from Stanford d.school, Business Strategy, Behavior Design, and 
@@ -425,7 +430,7 @@ export default function DesignCentralStation() {
 
           {/* About Me with map preview (heading full-width; grid below) */}
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-[#7DE2D1] mb-4">About the Conductor</h3>
+            <h3 className="text-2xl font-bold mb-4" style={{ color: THEME_COLOR }}>About the Conductor</h3>
 
             <div className="grid md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2 space-y-4">
@@ -463,7 +468,7 @@ export default function DesignCentralStation() {
       </section>  
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
-      <section className="mb-16 bg-[#141515] py-10 px-6 max-w-7xl mx-auto">
+      <section className="mb-16 py-10 px-6 max-w-7xl mx-auto" style={{ backgroundColor: BACK_COLOR }}>
       {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
           <div className="relative py-12 px-6 overflow-hidden border-y-0 bg-[#141515]">
             <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
@@ -483,9 +488,10 @@ export default function DesignCentralStation() {
               {testimonials.map((testimonial, idx) => (
                 <div 
                   key={idx}
-                  className="bg-black/60 border border-white/10 rounded-xl p-6 hover:border-[#7DE2D1]/50 transition-all"
+                  className="bg-black/60 border border-white/10 rounded-xl p-6 hover:border-[var(THEME_COLOR)]/50 transition-all"
+                  style={{ color: THEME_COLOR }}
                 >
-                  <div className="text-6xl text-[#7DE2D1]/20 mb-4">"</div>
+                  <div className="text-6xl mb-4" style={{ color: `${THEME_COLOR}20` }}>"</div>
                   <p className="text-white/80 italic mb-4 leading-relaxed">
                     {testimonial.quote}
                   </p>
@@ -498,12 +504,12 @@ export default function DesignCentralStation() {
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-full bg-[#7DE2D1] flex items-center justify-center text-[#2B2C28] font-semibold text-sm">
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-[#2B2C28] font-semibold text-sm" style={{ backgroundColor: THEME_COLOR }}>
                           {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
                         </div>
                       )}
                       <div>
-                        <div className="font-semibold text-[#7DE2D1]">{testimonial.author}</div>
+                        <div className="font-semibold" style={{ color: THEME_COLOR }}>{testimonial.author}</div>
                         <div className="text-sm text-white/60">
                           <span>{testimonial.role}</span>
                           {testimonial.company && (
@@ -519,8 +525,8 @@ export default function DesignCentralStation() {
         </section>
 
           {/* Contact - Thanks for Riding */}
-          <footer className="text-center bg-black/40 py-12 border-t-2 border-[#7DE2D1]/30">
-            <Train className="w-16 h-16 mx-auto mb-6 text-[#7DE2D1]" />
+          <footer className="text-center bg-black/40 py-12 border-t-2 " style={{ borderColor: `${THEME_COLOR}30` }}>
+            <Train className="w-16 h-16 mx-auto mb-6" style={{ color: THEME_COLOR }}/>
             <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
             <p className="text-2xl text-white/80 mb-8">
               Please contact Andy to build your next impactful experience.
