@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Train, MapPin, User, Briefcase, MessageSquare, Mail, Linkedin, ChevronRight, Info } from 'lucide-react';
+import { useState } from 'react';
+import { Train, MapPin, User, ChevronRight } from 'lucide-react';
 
+interface Station {
+  name: string;
+  stations: string[];
+  color: string;
+}
 // Mini Map Component for Case Study Pages
-function CaseStudyMiniMap({ route, currentStation }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function CaseStudyMiniMap({ route, currentStation }: { route: Station; currentStation: string }) {
   const stations = route.stations;
   
   return (
@@ -13,7 +19,7 @@ function CaseStudyMiniMap({ route, currentStation }) {
       </div>
       
       <div className="space-y-2">
-        {stations.map((station, idx) => (
+        {stations.map((station: string, idx: number) => (
           <div 
             key={idx}
             className={`flex items-center gap-2 text-xs transition-all ${
@@ -37,6 +43,8 @@ function CaseStudyMiniMap({ route, currentStation }) {
 
 // Main Portfolio Component
 export default function DesignCentralStation() {
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   const [activeSection, setActiveSection] = useState('hero');
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -268,9 +276,11 @@ export default function DesignCentralStation() {
         {/* Case Studies Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((project) => (
-            <div
+            <a
               key={project.id}
-              className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden"
+              href={`https://ashulman-i4ku6yb.gamma.site/project1`}
+              /*/case/${project.id}*/
+              className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
             >
@@ -321,7 +331,7 @@ export default function DesignCentralStation() {
                   </div>
                 </div>
               )}*/}
-            </div>
+            </a>
           ))}
         </div>
       </section>
