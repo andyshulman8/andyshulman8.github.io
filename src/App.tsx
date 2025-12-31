@@ -1,11 +1,11 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import { Train, MapPin, User, ChevronRight } from 'lucide-react';
 
-interface Station {
-  name: string;
-  stations: string[];
-  color: string;
-}
+//interface Station {
+//  name: string;
+//  stations: string[];
+//  color: string;
+//}
 // Mini Map Component for Case Study Pages
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 {/*}
@@ -303,7 +303,7 @@ export default function DesignCentralStation() {
                 </div>
               </div>
 
-              {/* Route preview on hover 
+              {/* Route preview on hover */}
               {hoveredProject === project.id && (
                 <div className="absolute inset-0 bg-black/95 backdrop-blur-sm p-6 flex flex-col justify-center">
                   <div className="text-xs text-white/60 mb-3">Route Preview:</div>
@@ -319,7 +319,7 @@ export default function DesignCentralStation() {
                     ))}
                   </div>
                 </div>
-              )}*/}
+              )}
             </a>
           ))}
         </div>
