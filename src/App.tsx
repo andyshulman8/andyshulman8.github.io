@@ -8,6 +8,7 @@ interface Station {
 }
 // Mini Map Component for Case Study Pages
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+{/*}
 function CaseStudyMiniMap({ route, currentStation }: { route: Station; currentStation: string }) {
   const stations = route.stations;
   
@@ -39,15 +40,15 @@ function CaseStudyMiniMap({ route, currentStation }: { route: Station; currentSt
       </div>
     </div>
   );
-}
+} */}
 
 // Main Portfolio Component
 export default function DesignCentralStation() {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  const [activeSection, setActiveSection] = useState('hero');
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  //const [activeSection, setActiveSection] = useState('hero');
+  //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   const caseStudies = [
     {
@@ -118,20 +119,8 @@ export default function DesignCentralStation() {
     }
   ];
 
-  const skills = [
-    'User Research & Testing',
-    'Design Systems',
-    'AI/ML Product Design',
-    'Accessibility (WCAG)',
-    'Design Thinking Facilitation',
-    'Behavior Design',
-    'Systems Thinking',
-    'Figma & Prototyping',
-    'Enterprise B2B SaaS',
-    'Healthcare & Climate Tech'
-  ];
 
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  //const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   const testimonials = [
     {
