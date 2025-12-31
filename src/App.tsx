@@ -356,11 +356,9 @@ export default function DesignCentralStation() {
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-[#7DE2D1]" />
-                  <span className="text-white/60">{project.methodology}</span>
+                  <span className="text-white/60">{project.impact}</span>
                 </div>
-                <div className="font-semibold text-[#7DE2D1]">
-                  {project.impact}
-                </div>
+                
               </div>
 
               {/* Route preview on hover
