@@ -1,6 +1,6 @@
 //import { useState } from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Train, MapPin, User, ChevronRight } from 'lucide-react';
+import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const boardRef = useRef(null);
@@ -389,9 +389,9 @@ export default function DesignCentralStation() {
         <div className="max-w-7xl mx-auto">
             {/* Info Booth Sign */}
             <div className="relative inline-block mb-12">
-              <div className="bg-[#141515] border-4 border-[#7DE2D1]/20 rounded-lg px-8 py-4 shadow-2xl">
+              <div className="bg-[#141515] border-4 border-[#7DE2D1]/20 rounded-lg px-4 py-4 shadow-2xl">
                 <div className="flex items-center gap-4">
-                  <User className="w-10 h-10 text-[#7DE2D1]" />
+                  <Info className="w-10 h-10 text-[#7DE2D1]" />
                   <h2 className="text-4xl font-bold text-[#FFFAFB] tracking-wide">INFORMATION</h2>
                 </div>
               </div>
