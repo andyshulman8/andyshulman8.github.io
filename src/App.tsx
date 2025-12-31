@@ -470,7 +470,7 @@ export default function DesignCentralStation() {
       {/* Passenger Testimonials (section background matching All Aboard) */}
       <section className="mb-16 py-10 px-6 max-w-7xl mx-auto" style={{ backgroundColor: BACK_COLOR }}>
       {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
-          <div className="relative py-12 px-6 overflow-hidden border-y-0 bg-[#141515]">
+          <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
             <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
             
             {/* Content overlay */}
@@ -504,7 +504,7 @@ export default function DesignCentralStation() {
                           className="w-12 h-12 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center text-[#2B2C28] font-semibold text-sm" style={{ backgroundColor: THEME_COLOR }}>
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center font-semibold text-sm" style={{ color: INFO_COLOR, backgroundColor: THEME_COLOR }}>
                           {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
                         </div>
                       )}
