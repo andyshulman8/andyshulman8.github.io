@@ -1,4 +1,4 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import { Train, MapPin, User, ChevronRight } from 'lucide-react';
 
 //interface Station {
@@ -270,8 +270,8 @@ export default function DesignCentralStation() {
               href={`https://ashulman-i4ku6yb.gamma.site/project1`}
               /*/case/${project.id}*/
               className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
+              //onMouseEnter={() => setHoveredProject(project.id)}
+              //onMouseLeave={() => setHoveredProject(null)}
             >
               <div className="mb-4">
                 {project.thumbnail && (
