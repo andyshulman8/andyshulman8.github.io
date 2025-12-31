@@ -1,6 +1,7 @@
 //import { useState } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
+
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const boardRef = useRef(null);
@@ -39,7 +40,7 @@ const SkillsBoard = () => {
                   <div
                     key={iIdx}
                     className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/6 rounded px-3 py-2 text-[#7DE2D1] text-sm`}
-                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 100}ms` : '0ms' }}
+                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 200}ms` : '0ms' }}
                   >
                     {it}
                   </div>
@@ -539,7 +540,7 @@ export default function DesignCentralStation() {
             </div>
             */}
             <div className="mt-8 text-white/40 text-sm">
-              Montrose, Colorado • andyshulman8@gmail.com • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u>
+              Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
              </div>
           </footer>
         </div>
