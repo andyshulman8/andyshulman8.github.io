@@ -39,7 +39,7 @@ const SkillsBoard = () => {
                   <div
                     key={iIdx}
                     className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/6 rounded px-3 py-2 text-[#7DE2D1] text-sm`}
-                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 80}ms` : '0ms' }}
+                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 100}ms` : '0ms' }}
                   >
                     {it}
                   </div>
@@ -50,7 +50,7 @@ const SkillsBoard = () => {
         </div>
         <style>{`
           .split-flap-board { perspective: 1000px; }
-          .split-flap-item { transform: rotateX(-90deg); opacity: 0; transform-origin: top; }
+          .split-flap-item { transform: rotateX(-90deg); opacity: 0; transform-origin: top; backface-visibility: hidden; -webkit-backface-visibility: hidden;}
           .split-flap-item.is-flipping { animation: flap 600ms cubic-bezier(.2,.8,.2,1) forwards; }
           @keyframes flap { from { transform: rotateX(-90deg); opacity: 0; } to { transform: rotateX(0deg); opacity: 1; } }
         `}</style>
