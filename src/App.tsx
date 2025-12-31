@@ -437,15 +437,15 @@ export default function DesignCentralStation() {
                 <p className="text-white/80 leading-relaxed">
                   I'm Andy, a Senior UX Designer with 5+ years transforming complex enterprise systems 
                   into intuitive experiences. I have a Master's in Sustainability Science from Stanford 
-                  and bring together design thinking, behavior design, business strategy, and systems thinking.
+                  and a skillset that brings together design thinking, behavior design, business strategy, and systems thinking.
                 </p>
                 <p className="text-white/80 leading-relaxed">
-                  My work spans enterprise B2B SaaS, health tech, and mission-driven organizations. 
+                  My work spans enterprise B2B SaaS, health tech, to mission-driven organizations. 
                   I've designed AI-driven features, laid foundations for IBM partnerships, and helped 
                   teams from cancer treatment centers to global energy companies work more efficiently.
                 </p>
                 <p className="text-white/80 leading-relaxed">
-                  Currently based in Montrose, Colorado with my adventure dog, exploring opportunities 
+                  I am currently based in Montrose, Colorado with my adventure dog, exploring opportunities 
                   in climate tech and mental health spaces. Check out my adventures:
                 </p>
               </div>
