@@ -460,12 +460,12 @@ export default function DesignCentralStation() {
               </aside>
             </div>
           </div>
+        </div>
+      </section>  
 
-          
-
-          {/* Passenger Testimonials (section background matching All Aboard) */}
-          <section className="mb-16 bg-[#141515] py-10 px-6 max-w-7xl mx-auto">
-            {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
+      {/* Passenger Testimonials (section background matching All Aboard) */}
+      <section className="mb-16 bg-[#141515] py-10 px-6 max-w-7xl mx-auto">
+      {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
           <div className="relative py-12 px-6 overflow-hidden border-y-0 bg-[#141515]">
             <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
             
@@ -517,10 +517,10 @@ export default function DesignCentralStation() {
                 </div>
               ))}
             </div>
-          </section>
+        </section>
 
           {/* Contact - Thanks for Riding */}
-          <section className="text-center py-12 border-t-2 border-[#7DE2D1]/30">
+          <footer className="text-center bg-black/40 py-12 border-t-2 border-[#7DE2D1]/30">
             <Train className="w-16 h-16 mx-auto mb-6 text-[#7DE2D1]" />
             <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
             <p className="text-2xl text-white/80 mb-8">
@@ -541,9 +541,9 @@ export default function DesignCentralStation() {
             <div className="mt-8 text-white/40 text-sm">
               Montrose, Colorado • andyshulman8@gmail.com • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u>
              </div>
-          </section>
+          </footer>
         </div>
-      </section>
-    </div>
+      //</section>
+    //</div>
   );
 }
