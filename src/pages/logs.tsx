@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 //import { allCaseStudies } from './casedata.tsx'; // Import your new file
-import Dot from './dot.tsx';
+//import Dot from './dot.tsx';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 
-const THEME_COLOR = '#7DE2D1';
+//const THEME_COLOR = '#7DE2D1';
 const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
@@ -24,7 +24,7 @@ const lineNames = {
   green: 'Sustainability'
 } as const;
 
-type LineColor = keyof typeof lineColors;
+//type LineColor = keyof typeof lineColors;
 //type Phase = 'Empathize' | 'Define' | 'Ideate' | 'Prototype' | 'Test';
 
 interface Stop {
@@ -56,9 +56,9 @@ interface CaseStudyTemplateProps {
   dataIndex: number; // Add this
 }
 
-interface LogsCaseStudyProps {
-  onBack: () => void;
-}
+// interface LogsCaseStudyProps {
+//   onBack: () => void;
+// }
 
 // Main Case Study Component - accepts onBack prop
 export default function CaseStudyTemplate({ onBack, dataIndex }: CaseStudyTemplateProps) {

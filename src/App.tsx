@@ -503,6 +503,45 @@ export default function DesignCentralStation() {
               <div className="flex items-center gap-4 mb-8">
                 
               </div>
+              {/* Passenger Testimonials Section */}
+<div className="relative mt-24">
+  <h3 className="text-3xl font-bold text-white mb-8 ml-2">Passenger Testimonials</h3>
+  
+  <div className="grid md:grid-cols-2 gap-8">
+    {/* Example Testimonial Card */}
+    <div className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group">
+      
+      {/* Top Left Quote Mark */}
+      <div 
+        className="absolute top-4 left-4 text-6xl font-serif opacity-20 transition-transform group-hover:-translate-y-1"
+        style={{ color: THEME_COLOR }}
+      >
+        “
+      </div>
+
+      {/* The Actual Content */}
+      <div className="relative z-10">
+        <p className="text-xl text-white/80 italic leading-relaxed mb-6">
+          {caseStudyData.stops[currentStop].quote}
+        </p>
+        <div className="flex items-center gap-3">
+          <div className="h-px w-8" style={{ backgroundColor: THEME_COLOR }} />
+          <span className="text-sm font-bold uppercase tracking-widest text-white/40">
+            {caseStudyData.stops[currentStop].quoteAuthor}
+          </span>
+        </div>
+      </div>
+
+      {/* Bottom Right Quote Mark */}
+      <div 
+        className="absolute bottom-[-10px] right-4 text-6xl font-serif opacity-20 transition-transform group-hover:translate-y-1"
+        style={{ color: THEME_COLOR }}
+      >
+        ”
+      </div>
+    </div>
+  </div>
+</div>
             
             <div className="grid md:grid-cols-3 gap-6">
               {testimonials.map((testimonial, idx) => (
