@@ -109,6 +109,8 @@ function CaseStudyMiniMap({ route, currentStation }: { route: Station; currentSt
 } */}
 
 
+
+
 // Main Portfolio Component
 export default function DesignCentralStation() {
 
@@ -116,6 +118,7 @@ export default function DesignCentralStation() {
 
   //const [activeSection, setActiveSection] = useState('hero');
   //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+
 
   const caseStudies = [
     {
@@ -504,83 +507,71 @@ export default function DesignCentralStation() {
                 
               </div>
               {/* Passenger Testimonials Section */}
-<div className="relative mt-24">
-  <h3 className="text-3xl font-bold text-white mb-8 ml-2">Passenger Testimonials</h3>
-  
-  <div className="grid md:grid-cols-2 gap-8">
-    {/* Example Testimonial Card */}
-    <div className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group">
-      
-      {/* Top Left Quote Mark */}
-      <div 
-        className="absolute top-4 left-4 text-6xl font-serif opacity-20 transition-transform group-hover:-translate-y-1"
-        style={{ color: THEME_COLOR }}
-      >
-        “
-      </div>
+            <div className="mt-24">
+              <h3 className="text-3xl font-bold text-white mb-8 ml-2">Passenger Testimonials</h3>
+              
+              {/* The Grid stays on the outside */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {testimonials.map((testimonial, idx) => (
+                  <div 
+                    key={idx}
+                    className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
+                  >
+                    {/* Decorative Quote - Top Left */}
+                    <div 
+                      className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
+                      style={{ color: THEME_COLOR }}
+                    >
+                      “
+                    </div>
 
-      {/* The Actual Content */}
-      <div className="relative z-10">
-        <p className="text-xl text-white/80 italic leading-relaxed mb-6">
-          {caseStudyData.stops[currentStop].quote}
-        </p>
-        <div className="flex items-center gap-3">
-          <div className="h-px w-8" style={{ backgroundColor: THEME_COLOR }} />
-          <span className="text-sm font-bold uppercase tracking-widest text-white/40">
-            {caseStudyData.stops[currentStop].quoteAuthor}
-          </span>
-        </div>
-      </div>
+                    {/* Main Content */}
+                    <div className="relative z-10 flex flex-col h-full">
+                      <p className="text-white/80 italic mb-8 leading-relaxed flex-grow">
+                        {testimonial.quote}
+                      </p>
 
-      {/* Bottom Right Quote Mark */}
-      <div 
-        className="absolute bottom-[-10px] right-4 text-6xl font-serif opacity-20 transition-transform group-hover:translate-y-1"
-        style={{ color: THEME_COLOR }}
-      >
-        ”
-      </div>
-    </div>
-  </div>
-</div>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, idx) => (
-                <div 
-                  key={idx}
-                  className="bg-black/60 border border-white/10 rounded-xl p-6 hover:border-[var(THEME_COLOR)]/50 transition-all"
-                  style={{ color: THEME_COLOR }}
-                >
-                  <div className="text-6xl mb-4" style={{ color: `${THEME_COLOR}20` }}>"</div>
-                  <p className="text-white/80 italic mb-4 leading-relaxed">
-                    {testimonial.quote}
-                  </p>
-                  <div className="border-t border-white/10 pt-4">
-                    <div className="flex items-center gap-3">
-                      {testimonial.avatar ? (
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.author}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center font-semibold text-sm" style={{ color: INFO_COLOR, backgroundColor: THEME_COLOR }}>
-                          {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
-                        </div>
-                      )}
-                      <div>
-                        <div className="font-semibold" style={{ color: THEME_COLOR }}>{testimonial.author}</div>
-                        <div className="text-sm text-white/60">
-                          <span>{testimonial.role}</span>
-                          {testimonial.company && (
-                            <span className="text-white/40"> <br></br> {testimonial.company}</span>
-                          )}
+                      <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                        {testimonial.avatar ? (
+                          <img
+                            src={testimonial.avatar}
+                            alt={testimonial.author}
+                            className="w-12 h-12 rounded-full object-cover border-2 border-white/10"
+                          />
+                        ) : (
+                          <div 
+                            className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xs" 
+                            style={{ color: BACK_COLOR, backgroundColor: THEME_COLOR }}
+                          >
+                            {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
+                          </div>
+                        )}
+                        
+                        <div>
+                          <div className="font-bold text-sm tracking-tight" style={{ color: THEME_COLOR }}>
+                            {testimonial.author}
+                          </div>
+                          <div className="text-[11px] uppercase tracking-widest text-white/40 leading-tight">
+                            {testimonial.role} <br />
+                            <span className="text-white/20">{testimonial.company}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
+
+                    {/* Decorative Quote - Bottom Right */}
+                    <div 
+                      className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
+                      style={{ color: THEME_COLOR }}
+                    >
+                      ”
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+            
+            
         </section>
 
           {/* Contact - Thanks for Riding */}

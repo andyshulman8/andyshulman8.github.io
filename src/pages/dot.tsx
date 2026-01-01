@@ -17,9 +17,9 @@ interface DotConfig {
 
 interface StationDotProps {
   // New props needed for your subway line
-  index?: number; 
-  lineColor?: string;
-  backColor?: string;
+  // index?: number; 
+  // lineColor?: string;
+  // backColor?: string;
   
   // Existing props
   x?: number; // Made optional since they aren't used in your button list
