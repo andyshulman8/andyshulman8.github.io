@@ -1,6 +1,7 @@
 //import { useState } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
+import LogsCaseStudy from './pages/logs.tsx'; // Import your new file
 
 const THEME_COLOR = '#7DE2D1'; // Change this once to update everywhere
 const SECONDARY_COLOR = '#339989';
@@ -107,6 +108,7 @@ function CaseStudyMiniMap({ route, currentStation }: { route: Station; currentSt
   );
 } */}
 
+
 // Main Portfolio Component
 export default function DesignCentralStation() {
 
@@ -210,6 +212,13 @@ export default function DesignCentralStation() {
       avatar: '/images/Home/volker.png'
     }
   ];
+
+  const [view, setView] = useState('map');
+
+  // Show case study pages
+  if (view === 'logs') {
+    return <LogsCaseStudy onBack={() => setView('map')} />;
+  }
 
   return (
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
@@ -332,7 +341,8 @@ export default function DesignCentralStation() {
           {caseStudies.map((project) => (
             <a
               key={project.id}
-              href={`https://ashulman-i4ku6yb.gamma.site/project1`}
+              onClick={() => setView(project.id)}
+              //href={`https://ashulman-i4ku6yb.gamma.site/project1`}
               /*/case/${project.id}*/
               className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
               //onMouseEnter={() => setHoveredProject(project.id)}
