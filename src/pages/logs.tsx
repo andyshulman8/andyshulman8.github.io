@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 
 //const THEME_COLOR = '#7DE2D1';
