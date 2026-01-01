@@ -161,7 +161,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   style={{ backgroundColor: lineColor + '40' }}
                 />
                 
-                <div className="space-y-6">
+                <div className="space-y-1">
                   {caseStudyData.stops.map((stop: Stop, index: number) => (
                     <button
                       key={index}
