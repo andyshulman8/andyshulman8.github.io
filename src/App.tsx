@@ -216,7 +216,20 @@ export default function DesignCentralStation() {
     }
   ];
 
+  const routeOrder = ['logs', 'alerts', 'data', 'team', 'future', 'health'];
+
   const [view, setView] = useState('map');
+
+  const handleNextRoute = () => {
+  // Find where we are currently
+  const currentIndex = routeOrder.indexOf(view);
+  // Get the next one (loop back to 0 if at the end)
+  const nextIndex = (currentIndex + 1) % routeOrder.length;
+  // Change the view
+  setView(routeOrder[nextIndex]);
+  // Optional: Scroll to top when changing routes
+  window.scrollTo(0, 0);
+};
 
   const viewToIndex: Record<string, number> = {
   logs: 0,
@@ -229,7 +242,7 @@ export default function DesignCentralStation() {
 
   // Show case study pages
   if (view !== 'map' && viewToIndex[view] !== undefined) {
-  return <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} />;
+  return <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />;
   }
 
 
@@ -507,8 +520,6 @@ export default function DesignCentralStation() {
                 
               </div>
               {/* Passenger Testimonials Section */}
-            <div className="mt-24">
-              <h3 className="text-3xl font-bold text-white mb-8 ml-2">Passenger Testimonials</h3>
               
               {/* The Grid stays on the outside */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -568,7 +579,6 @@ export default function DesignCentralStation() {
                     </div>
                   </div>
                 ))}
-              </div>
             </div>
             
             

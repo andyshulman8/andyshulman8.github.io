@@ -53,6 +53,7 @@ interface Stop {
 
 interface CaseStudyTemplateProps {
   onBack: () => void;
+  onNextRoute: () => void;
   dataIndex: number; // Add this
 }
 
@@ -61,7 +62,7 @@ interface CaseStudyTemplateProps {
 // }
 
 // Main Case Study Component - accepts onBack prop
-export default function CaseStudyTemplate({ onBack, dataIndex }: CaseStudyTemplateProps) {
+export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: CaseStudyTemplateProps) {
   //const caseStudyData = allCaseStudies[dataIndex]
 
   const caseStudyData: CaseStudyData = allCaseStudies[dataIndex];
@@ -224,9 +225,12 @@ export default function CaseStudyTemplate({ onBack, dataIndex }: CaseStudyTempla
               >
                 Start Journey →
               </button>
-              <div className="text-white/40 text-sm">
-                Or try another route from the map
-              </div>
+              <button 
+        onClick={onNextRoute} // Trigger the function when clicked
+        className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
+      >
+        Or try the next route
+      </button>
             </div>
           </div>
         ) : (
