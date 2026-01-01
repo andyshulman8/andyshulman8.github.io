@@ -191,7 +191,7 @@ export default function DesignCentralStation() {
 
   const testimonials = [
     {
-      quote: "Andy played a crucial role in launching this new product — from shaping the user experience and performing deep UX research to ensuring seamless integration of design and workflows across the broader LogicMonitor platform. What impressed me most was his ability to translate complex technical requirements into intuitive user experiences.",
+      quote: "Andy played a crucial role in launching this new product: from shaping the user experience and performing deep UX research to ensuring seamless integration of design and workflows across the broader LogicMonitor platform. What impressed me most was his ability to translate complex technical requirements into intuitive user experiences.",
       author: "David Femino",
       role: "Sr. Manager, PM - Cloud & Logs",
       company: "LogicMonitor",
@@ -226,7 +226,7 @@ export default function DesignCentralStation() {
 
   // Show case study pages
   if (view !== 'map' && viewToIndex[view] !== undefined) {
-  return <CaseStudyTemplate dataIndex={0} onBack={() => setView('map')} />;
+  return <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} />;
   }
 
 

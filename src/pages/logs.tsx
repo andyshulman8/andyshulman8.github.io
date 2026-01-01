@@ -51,9 +51,6 @@ interface Stop {
 //   stops: Stop[];
 // }
 
-// Sample data for "Logs: Rags to Riches"
-const caseStudyData: CaseStudyData = allCaseStudies[0]
-
 interface CaseStudyTemplateProps {
   onBack: () => void;
   dataIndex: number; // Add this
@@ -65,7 +62,10 @@ interface LogsCaseStudyProps {
 
 // Main Case Study Component - accepts onBack prop
 export default function CaseStudyTemplate({ onBack, dataIndex }: CaseStudyTemplateProps) {
-  const caseStudyData = allCaseStudies[dataIndex];
+  //const caseStudyData = allCaseStudies[dataIndex]
+
+  const caseStudyData: CaseStudyData = allCaseStudies[dataIndex];
+  
   const [currentStop, setCurrentStop] = useState(0);
   const [showOverview, setShowOverview] = useState(true);
   
@@ -143,7 +143,7 @@ export default function CaseStudyTemplate({ onBack, dataIndex }: CaseStudyTempla
                 </p>
               </div>
               <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-white/80">🎯 Overview</h2>
+                <h2 className="text-2xl font-bold text-white/80">🎯 Impact</h2>
                 <p className="text-white/60 leading-relaxed">
                   {caseStudyData.overview}
                 </p>
