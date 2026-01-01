@@ -39,9 +39,9 @@ const dotTypes: Record<DotType, DotConfig> = {
 };
 
 export default function StationDot({ 
-  index,
-  lineColor,
-  backColor,
+  // index,
+  // lineColor,
+  // backColor,
   x = 0, 
   y = 0, 
   type = 'service', 
