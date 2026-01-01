@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
+//import { allCaseStudies } from './casedata.tsx'; // Import your new file
+import Dot from './dot.tsx';
+import { allCaseStudies } from './casedata';
+import type { CaseStudyData } from './casedata';
 
-//const THEME_COLOR = '#7DE2D1';
+const THEME_COLOR = '#7DE2D1';
 const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
@@ -21,11 +25,11 @@ const lineNames = {
 } as const;
 
 type LineColor = keyof typeof lineColors;
-type Phase = 'Empathize' | 'Define' | 'Ideate' | 'Prototype' | 'Test';
+//type Phase = 'Empathize' | 'Define' | 'Ideate' | 'Prototype' | 'Test';
 
 interface Stop {
   station_name: string;
-  phase: Phase;
+  phase: string;
   content: string;
   quote?: string;
   quoteAuthor?: string;
@@ -38,79 +42,30 @@ interface Stop {
   };
 }
 
-interface CaseStudyData {
-  title: string;
-  line_color: LineColor;
-  destination: string;
-  background: string;
-  overview: string;
-  stops: Stop[];
-}
+// interface CaseStudyData {
+//   title: string;
+//   line_color: LineColor;
+//   destination: string;
+//   background: string;
+//   overview: string;
+//   stops: Stop[];
+// }
 
 // Sample data for "Logs: Rags to Riches"
-const caseStudyData: CaseStudyData = {
-  title: "Logs: Rags to Riches",
-  line_color: "red",
-  destination: "Established LM Logs as competitive player",
-  background: "Before LogicMonitor had acquired (and properly integrated) a logs product, users were forced to jump between disconnected tools during critical moments. RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs.",
-  overview: "I joined and took over design for LogicMonitor Logs, helping users bridge the critical gap between knowing that something is wrong and solving the problem. Through close collaboration across global teams, I helped transform LM Logs from a niche add-on to a flagship product that LogicMonitor itself relied on.",
-  stops: [
-    {
-      station_name: "User Research",
-      phase: "Empathize",
-      content: "I led recurring user research sessions, conducting Zoom interviews and analyzing users' current workflows to understand where our product was failing. Working with customers like RaySearch Labs (who develop pioneering cancer treatment software), I discovered three critical gaps.",
-      quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
-      quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
-      insights: [
-        "Disconnected Tools: Critical troubleshooting moments are stressful when you have siloed apps",
-        "Inefficient Filtering: Competitors offered advanced search while users reacted 'Why is LM Logs search so small?'",
-        "Raw Data Overload: Without proper visualizations, the benefit of LM Logs was buried"
-      ]
-    },
-    {
-      station_name: "Define Solutions",
-      phase: "Define",
-      content: "Based on research findings, I identified three design pillars: Unified Platform (seamless workflows connecting logs across the platform), Empowered Search (deeper control over filtering for both novice and expert users), and Uncovering Patterns (transforming raw log data into actionable insights).",
-    },
-    {
-      station_name: "Unified Platform",
-      phase: "Ideate",
-      content: "I designed seamless workflows connecting logs across the platform: Added logs widgets capabilities to dashboards, made logs visible alongside device and service data, and displayed anomalous logs available within alerts. LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure.",
-    },
-    {
-      station_name: "Empowered Search",
-      phase: "Ideate",
-      content: "I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search (edited vs searching vs searched). Gave both novice and expert users deeper control over filtering by emphasizing and injecting features into search.",
-      quote: "I like a big search box and inline support is super helpful.",
-      quoteAuthor: "NOC Engineer at HyeTech Networks"
-    },
-    {
-      station_name: "Visual Analytics",
-      phase: "Prototype",
-      content: "I designed multiple graph types, advanced query operators (count, avg, sum, min, max), and dashboard integration so logs widgets could be embedded alongside system performance metrics. RaySearch could have a dashboard on a TV in their office—a spike in errors would be obvious and immediately easy to assess.",
-    },
-    {
-      station_name: "Launch & Impact",
-      phase: "Test",
-      content: "Through close collaboration across global teams, I helped transform LM Logs from a niche add-on to a flagship product. LogicMonitor did not use its own logs product until my team and I improved and integrated it enough to achieve all its needs.",
-      quote: "We had users complaining that there was a licensing error. Using LogicMonitor's platform, including LM Logs, we were able to trace the issue and do a stop service on a server way down the line. The process took about 10 minutes versus the two to three hours it would have taken without the visibility.",
-      quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
-      impact: {
-        metric1: "2-3 hours → 10 minutes",
-        label1: "Issue Resolution Time",
-        metric2: "Improved Visibility",
-        label2: "Engineers solve complex issues in one tool"
-      }
-    }
-  ]
-};
+const caseStudyData: CaseStudyData = allCaseStudies[0]
+
+interface CaseStudyTemplateProps {
+  onBack: () => void;
+  dataIndex: number; // Add this
+}
 
 interface LogsCaseStudyProps {
   onBack: () => void;
 }
 
 // Main Case Study Component - accepts onBack prop
-export default function LogsCaseStudy({ onBack }: LogsCaseStudyProps) {
+export default function CaseStudyTemplate({ onBack, dataIndex }: CaseStudyTemplateProps) {
+  const caseStudyData = allCaseStudies[dataIndex];
   const [currentStop, setCurrentStop] = useState(0);
   const [showOverview, setShowOverview] = useState(true);
   
@@ -278,7 +233,7 @@ export default function LogsCaseStudy({ onBack }: LogsCaseStudyProps) {
           // Stop Details View
           <div className="space-y-8">
             {/* Progress Bar */}
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <div className="flex justify-between text-sm text-white/40">
                 <span>Stop {currentStop + 1} of {caseStudyData.stops.length}</span>
                 <span>{caseStudyData.stops[currentStop].phase}</span>
@@ -292,7 +247,7 @@ export default function LogsCaseStudy({ onBack }: LogsCaseStudyProps) {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
 
           {/* Stop Details View*/}
           <div className="space-y-8">

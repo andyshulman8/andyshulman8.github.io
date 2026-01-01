@@ -1,7 +1,7 @@
 //import { useState } from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
-import LogsCaseStudy from './pages/logs.tsx'; // Import your new file
+import CaseStudyTemplate from './pages/logs.tsx'; // Import your new file
 
 const THEME_COLOR = '#7DE2D1'; // Change this once to update everywhere
 const SECONDARY_COLOR = '#339989';
@@ -215,10 +215,20 @@ export default function DesignCentralStation() {
 
   const [view, setView] = useState('map');
 
+  const viewToIndex: Record<string, number> = {
+  logs: 0,
+  alerts: 1,
+  data: 2,
+  team: 3,
+  future: 4,
+  health: 5
+};
+
   // Show case study pages
-  if (view === 'logs') {
-    return <LogsCaseStudy onBack={() => setView('map')} />;
+  if (view !== 'map' && viewToIndex[view] !== undefined) {
+  return <CaseStudyTemplate dataIndex={0} onBack={() => setView('map')} />;
   }
+
 
   return (
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
