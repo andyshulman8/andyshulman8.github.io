@@ -54,7 +54,7 @@ interface Stop {
 interface CaseStudyTemplateProps {
   onBack: () => void;
   onNextRoute: () => void;
-  dataIndex: number; // Add this
+  dataIndex: number;
 }
 
 // interface LogsCaseStudyProps {
@@ -103,10 +103,10 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
           >
             <Home size={20} />
-            <span>Back to Map</span>
+            <span>Back to Station</span>
           </button>
           <div className="text-right">
-            <div className="text-sm text-white/40">Line {lineName}</div>
+            <div className="text-sm text-white/40">{caseStudyData.destination}</div>
             <div 
               className="text-xl font-bold"
               style={{ color: lineColor }}
@@ -138,13 +138,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             {/* Prepare for Your Trip */}
             <div className="grid md:grid-cols-2 gap-8 mt-16">
               <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-white/80">📍 Background</h2>
+                <h2 className="text-2xl font-bold text-white/80">Background</h2>
                 <p className="text-white/60 leading-relaxed">
                   {caseStudyData.background}
                 </p>
               </div>
               <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-white/80">🎯 Impact</h2>
+                <h2 className="text-2xl font-bold text-white/80">📍 Destination</h2>
                 <p className="text-white/60 leading-relaxed">
                   {caseStudyData.overview}
                 </p>
@@ -255,6 +255,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
           {/* Stop Details View*/}
           <div className="space-y-8">
+          
             {/* Progress Tracker - NEW DESIGN */}
             <div className="mb-12">
               <div className="relative flex items-center justify-between max-w-4xl mx-auto">
@@ -265,7 +266,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 <div 
                   className="absolute left-0 top-1/2 h-1 -translate-y-1/2 transition-all duration-500 ease-out"
                   style={{ 
-                    width: `${((currentStop + 1) / caseStudyData.stops.length) * 100}%`,
+                    width: `${(currentStop / (caseStudyData.stops.length - 1)) * 100}%`,
                     backgroundColor: lineColor
                   }}
                 />
