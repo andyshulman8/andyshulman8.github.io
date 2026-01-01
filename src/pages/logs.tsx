@@ -17,12 +17,12 @@ const lineColors = {
   green: '#43A047'
 } as const;
 
-const lineNames = {
-  red: 'Stanford d.school',
-  blue: 'Business Strategy',
-  purple: 'Behavior Design',
-  green: 'Sustainability'
-} as const;
+// const lineNames = {
+//   red: 'Stanford d.school',
+//   blue: 'Business Strategy',
+//   purple: 'Behavior Design',
+//   green: 'Sustainability'
+// } as const;
 
 //type LineColor = keyof typeof lineColors;
 //type Phase = 'Empathize' | 'Define' | 'Ideate' | 'Prototype' | 'Test';
@@ -71,7 +71,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   const [showOverview, setShowOverview] = useState(true);
   
   const lineColor = lineColors[caseStudyData.line_color];
-  const lineName = lineNames[caseStudyData.line_color];
+  //const lineName = lineNames[caseStudyData.line_color];
   
     const nextStop = () => {
     if (currentStop < caseStudyData.stops.length - 1) {
