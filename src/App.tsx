@@ -327,7 +327,7 @@ export default function DesignCentralStation() {
                       borderColor: TRAIN_BORDER_COLOR,
                     }}
                   >
-                    <div
+                    {/* <div
                       className="absolute -top-3 left-4 w-3 h-4 rounded-t-sm border-t-2"
                       style={{
                         backgroundColor: TRAIN_BORDER_COLOR,
@@ -337,7 +337,7 @@ export default function DesignCentralStation() {
                       <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
                       <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                    </div>
+                    </div> */}
 
                     {/* Wheels */}
                     <div
@@ -365,10 +365,15 @@ export default function DesignCentralStation() {
                     borderColor: SILVER,
                   }}
                 >
-                  <div
+                  {/* Windows */}
+                  <div className="absolute top-1.5 left-1 right-1 bottom-1 flex gap-1">
+                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
+                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
+                  </div>
+                  {/* <div
                     className="absolute top-1 left-1 right-1 bottom-1 border"
-                    style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }} // ~30% alpha
-                  ></div>
+                    style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }}
+                  ></div> */}
                   <div
                     className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
                     style={{
@@ -392,10 +397,15 @@ export default function DesignCentralStation() {
                     borderColor: TRAIN_BORDER_COLOR,
                   }}
                 >
-                  <div
+                  {/* Windows */}
+                  <div className="absolute top-1.5 left-1 right-1 bottom-1 flex gap-1">
+                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
+                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
+                  </div>
+                  {/* <div
                     className="absolute top-1 left-1 right-1 bottom-1 border"
                     style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }}
-                  ></div>
+                  ></div> */}
                   <div
                     className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
                     style={{
@@ -411,40 +421,85 @@ export default function DesignCentralStation() {
                     }}
                   ></div>
                 </div>
+<div
+  className="relative w-20 h-8 border-2 rounded-sm"
+  style={{
+    backgroundColor: TRAIN_BODY_COLOR,
+    borderColor: TRAIN_BORDER_COLOR,
+    marginTop: "14px",
+  }}
+>
+  {/* Cabin (Back) - Now integrated into the body */}
+  <div
+    className="absolute -top-6 left-0 w-10 h-6 border-2 rounded-t-sm"
+    style={{
+      backgroundColor: TRAIN_BODY_COLOR,
+      borderColor: TRAIN_BORDER_COLOR,
+      borderBottom: 'none' // Blends it into the main body
+    }}
+  >
+    {/* Cabin Window - Now inside the cabin body */}
+    <div
+      className="absolute top-2 left-2 w-5 h-4 border rounded-sm"
+      style={{
+        backgroundColor: `${TRAIN_BORDER_COLOR}33`,
+        borderColor: TRAIN_BORDER_COLOR,
+      }}
+    />
+  </div>
 
-                <div
-                  className="w-14 h-7 rounded-sm border-2 relative"
-                  style={{
-                    backgroundColor: TRAIN_BODY_COLOR,
-                    borderColor: TRAIN_BORDER_COLOR,
-                  }}
-                >
-                  <div
-                    className="absolute -right-1 -bottom-1 w-3 h-2 rounded-sm"
-                    style={{ backgroundColor: TRAIN_BORDER_COLOR }}
-                  ></div>
-                  <div
-                    className="absolute left-1 top-1 bottom-1 w-3 border"
-                    style={{
-                      backgroundColor: `${TRAIN_BORDER_COLOR}33`,
-                      borderRightColor: TRAIN_BORDER_COLOR,
-                    }}
-                  ></div>
-                  <div
-                    className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
-                    style={{
-                      backgroundColor: TRAIN_WHEEL_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  ></div>
-                  <div
-                    className="absolute -bottom-1 right-3 w-2.5 h-2.5 rounded-full border-2"
-                    style={{
-                      backgroundColor: TRAIN_WHEEL_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  ></div>
-                </div>
+  {/* Smokestack (Front) */}
+  <div
+    className="absolute -top-6 right-4 w-3 h-6 border-2 rounded-sm"
+    style={{
+      backgroundColor: TRAIN_BODY_COLOR,
+      borderColor: TRAIN_BORDER_COLOR,
+    }}
+  >
+    {/* Smoke */}
+    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/70 rounded-full animate-pulse" />
+    <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/40 rounded-full animate-pulse" />
+  </div>
+
+  {/* Cowcatcher (Front) - Simplified Path */}
+  <div className="absolute -right-4 bottom-0 w-4 h-4">
+    <svg 
+      width="100%" 
+      height="100%" 
+      viewBox="0 0 100 100" 
+      preserveAspectRatio="none"
+    >
+      <path 
+        d="M 0 0 L 100 100 L 0 100 Z" 
+        fill={TRAIN_BODY_COLOR}
+        stroke={TRAIN_BORDER_COLOR}
+        strokeWidth="8"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </div>
+
+
+  {/* Rear Wheel */}
+  <div
+    className="absolute -bottom-2 left-2 w-3 h-3 rounded-full border-2"
+    style={{
+      backgroundColor: TRAIN_WHEEL_COLOR,
+      borderColor: TRAIN_BORDER_COLOR,
+    }}
+  />
+
+  {/* Front Wheel */}
+  <div
+    className="absolute -bottom-2 right-4 w-3 h-3 rounded-full border-2"
+    style={{
+      backgroundColor: TRAIN_WHEEL_COLOR,
+      borderColor: TRAIN_BORDER_COLOR,
+    }}
+  />
+</div>
+
+                
               </div>
             </div>
           </div>
