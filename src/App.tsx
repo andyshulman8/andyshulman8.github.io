@@ -670,12 +670,12 @@ export default function DesignCentralStation() {
               <div className="absolute inset-0 rounded-lg blur-2xl opacity-70" 
                   style={{ 
                     backgroundColor: INFO_COLOR,
-                    transform: 'scale(1.15)',
+                    transform: 'scale(1)',
                     zIndex: 0
                   }}></div>
               
               {/* Translucent sign face - like a lightbox */}
-              <div className="relative border-4 rounded-lg px-4 py-5 overflow-hidden" 
+              <div className="relative border-4 rounded-lg px-3 py-5 overflow-hidden" 
                   style={{ 
                     borderColor: '#1a1a1a',
                     backgroundColor: `${INFO_COLOR}15`,
@@ -698,7 +698,7 @@ export default function DesignCentralStation() {
                 <div className="relative flex items-center gap-4 z-10">
                   <div className="flex items-center gap-4">
                         <Info className="w-10 h-10 " style={{ color: SILVER }}/>
-                        <h2 className="text-4xl font-bold text-[#FFFAFB] tracking-wide">INFORMATION</h2>
+                        <h2 className="text-3xl font-bold text-[#FFFAFB]">INFORMATION</h2>
                       </div>
                 </div>
                 
