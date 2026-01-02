@@ -288,8 +288,8 @@ export default function DesignCentralStation() {
                   Final destination: <span className='metal-heading'>Impact</span>
                 </h1>
               </div>
-      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">All routes begin with empathy.</h2>
-              <p className="text-white/60">I’m Andy Shulman, a Senior UX Designer with experience simplifying complexity.</p>
+      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity into complex systems</h2>
+              <br/> <h2 className="text-white/60">Andy Shulman · Senior UX Designer</h2>
             </div>
           </div>
         </section>
@@ -461,7 +461,7 @@ export default function DesignCentralStation() {
               <h2
                 className="text-3xl font-bold text-white"
               >
-                Experiences
+                Transit Journeys
               </h2>
             </div>
           </div>
@@ -482,7 +482,7 @@ export default function DesignCentralStation() {
         {/* Short intro under All Aboard */}
         <div className="text-left mt-6 mb-8">
           <p className="text-white/60">
-            Each project is a journey throughout my design transit system, which you can see in detail at the Information Booth.
+            These case studies trace how products move through my design transit system, shown in detail at the Information Booth.
           </p>
         </div>
 
