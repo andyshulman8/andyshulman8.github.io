@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
+import TrainTransition from './train.tsx';
 
 // Color constants - adjust these to change the entire theme
 const SECONDARY_COLOR = '#339989';
@@ -41,11 +42,23 @@ interface CaseStudyTemplateProps {
 }
 
 export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: CaseStudyTemplateProps) {
+  const [showTransition, setShowTransition] = useState(false);
   const caseStudyData: CaseStudyData = allCaseStudies[dataIndex];
   
   const [currentStop, setCurrentStop] = useState(0);
   const [showOverview, setShowOverview] = useState(true);
   const [carouselIndex, setCarouselIndex] = useState(0);
+
+  const startJourney = () => {
+    setShowTransition(true); // Trigger train animation
+    
+    // Wait for animation to finish, then navigate
+    setTimeout(() => {
+      setShowOverview(false);
+      setCurrentStop(0);
+      setShowTransition(false);
+    }, 1200); // Match your longest animation duration
+  };
   
   // Placeholder images for carousel (3 images)
   const placeholderImages = [
@@ -258,25 +271,27 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             {/* Ready to Board - KEPT THE SAME */}
             <div className="text-center mt-16 space-y-6">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
-              <button
-                onClick={() => {
-                  setShowOverview(false);
-                  setCurrentStop(0);
-                }}
-                className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
-                style={{ 
-                  backgroundColor: ACCENT_COLOR,
-                  boxShadow: `0 0 30px ${ACCENT_COLOR}40`
-                }}
-              >
-                Start Journey →
-              </button>
+               <button
+    onClick={startJourney} // Changed from previous onClick
+    className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
+    style={{ 
+      backgroundColor: ACCENT_COLOR,
+      boxShadow: `0 0 30px ${ACCENT_COLOR}40`
+    }}
+  >
+    Start Journey →
+  </button>
               <button 
                 onClick={onNextRoute}
                 className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
               >
                 Or try the next route
-              </button>
+              </button> <TrainTransition 
+    isActive={showTransition}
+    //lineColor="blue" // or map to case study color
+    direction="right"
+  />
+
             </div>
           </div>
         ) : (
