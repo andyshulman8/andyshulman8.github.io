@@ -310,8 +310,8 @@ export default function DesignCentralStation() {
 
           {/* Solid rail placed between train and ties */}
           <div
-            className="absolute left-0 right-0 bottom-4 transform -translate-y-1/3 h-1 z-10"
-            style={{ backgroundColor: `${SILVER}20` }}
+            className="absolute left-0 right-0 bottom-4 transform -translate-y-1/4 h-1 z-10"
+            style={{ backgroundColor: `${SILVER}`,  filter: 'brightness(0.4)'}}
           ></div>
 
           {/* Animated Train - above the solid rail */}
