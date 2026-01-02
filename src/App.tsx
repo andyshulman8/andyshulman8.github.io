@@ -1,8 +1,8 @@
 //import { useState } from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Train, Briefcase, User, Map, MapPin, Info, ChevronRight } from 'lucide-react';
+import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 import CaseStudyTemplate from './pages/logs.tsx'; // Import your new file
-import { color } from 'framer-motion';
+//import { color } from 'framer-motion';
 
 const THEME_COLOR = '#424141'; // Change this once to update everywhere
 const INFO_COLOR = '#2B2C28';
@@ -14,7 +14,7 @@ const TRAIN_BODY_COLOR = THEME_COLOR;         // main car color
 const TRAIN_BORDER_COLOR = SILVER;        // or a darker variant of THEME_COLOR
 const TRAIN_WHEEL_COLOR = "#111827";         // near-black
 const ALL_ABOARD_BG = "#020617";             // dark panel behind text
-const ALL_ABOARD_TEXT = THEME_COLOR;         // or a light accent
+//const ALL_ABOARD_TEXT = THEME_COLOR;         // or a light accent
 const ALL_ABOARD_BORDER = SILVER;
 
 
