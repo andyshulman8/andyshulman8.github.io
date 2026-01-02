@@ -63,15 +63,15 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   
   // Placeholder images for carousel (3 images)
   const placeholderImages = [
-    '/images/Logs/fields.png',
-    '/images/Logs/gap3.png',
-    '/images/Logs/gap1.3.png'
+    '/images/rags/fields.png',
+    '/images/rags/gap3.png',
+    '/images/rags/gap1.3.png'
   ];
 
   // Placeholder before/after
   const beforeAfter: BeforeAfter = {
-    before: '/images/Logs/before.png',
-    after: '/images/Logs/after.png',
+    before: '/images/rags/before.png',
+    after: '/images/rags/after.png',
     label: 'Transformation'
   };
   
