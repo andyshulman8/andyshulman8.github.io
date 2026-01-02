@@ -26,3 +26,69 @@
     opacity: 1; 
   } 
 }
+
+@layer base {
+  * {
+    /* Operating the system outline, dashed train line, bottom line */
+    border-color: rgba(225, 225, 225, 0.755); 
+    border-bottom-color: rgba(225, 225, 225, 0.755); 
+  }
+}
+
+.metal-heading {
+  font-weight: 800;
+  /*letter-spacing: 0.10em;
+  /*text-transform: uppercase;*/
+
+  /* Soft gunmetal gradient – not too flashy */
+  background: linear-gradient(
+    120deg,
+    #d4d4d8 0%,
+    #e5e7eb 30%,
+    #9ca3af 0%,
+    #f4f4f5 0%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Very subtle depth to separate from busy images */
+  text-shadow:
+    0 1px 1px rgba(81, 80, 80, 0.7);
+
+  display: inline-block; /* Allows the gradient to span properly */
+  font-weight: 800;  
+  filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.5));
+}
+
+/* Size variants that you can reuse */
+h1.metal-heading {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+}
+
+h2.metal-heading {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+h3.metal-heading {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+}
+
+/* Info booth sign animation */
+.info-booth-sign {
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Smooth hover effects for panels */
+.bg-black\/60:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}

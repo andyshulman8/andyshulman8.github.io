@@ -1,12 +1,22 @@
 //import { useState } from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
+import { Train, Briefcase, User, Map, MapPin, Info, ChevronRight } from 'lucide-react';
 import CaseStudyTemplate from './pages/logs.tsx'; // Import your new file
+import { color } from 'framer-motion';
 
-const THEME_COLOR = '#7DE2D1'; // Change this once to update everywhere
-const SECONDARY_COLOR = '#339989';
+const THEME_COLOR = '#424141'; // Change this once to update everywhere
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
+const SILVER = '#dfe1e5ff';
+const SECONDARY_COLOR = SILVER;
+
+const TRAIN_BODY_COLOR = THEME_COLOR;         // main car color
+const TRAIN_BORDER_COLOR = SILVER;        // or a darker variant of THEME_COLOR
+const TRAIN_WHEEL_COLOR = "#111827";         // near-black
+const ALL_ABOARD_BG = "#020617";             // dark panel behind text
+const ALL_ABOARD_TEXT = THEME_COLOR;         // or a light accent
+const ALL_ABOARD_BORDER = SILVER;
+
 
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,18 +45,18 @@ const SkillsBoard = () => {
 
   return (
     <div className="mb-12" ref={boardRef}>
-      <h3 className="text-2xl font-bold mb-4" style={{ color: THEME_COLOR }}>Operating the System</h3>
-      <div className="bg-black border-2 rounded-lg p-6 font-mono" style={{ borderColor: `${THEME_COLOR}50` }}>
+      <h3 className="text-white/90 text-2xl font-bold mb-4">Operating the System</h3>
+      <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-6 font-mono shadow-2xl">
         <div className="split-flap-board grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {skillCategories.map((cat, cIdx) => (
             <div key={cIdx} className="space-y-3">
-              <div className="text-sm text-white/60 uppercase tracking-wider">{cat.title}</div>
-              <div className="space-y-2">
+              <div className="text-sm uppercase tracking-wider">{cat.title}</div>
+              <div className="space-y-2" style= {{color: `${SILVER}10`  }}>
                 {cat.items.map((it, iIdx) => (
                   <div
                     key={iIdx}
-                    className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/6 rounded px-3 py-2 text-sm`}
-                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 200}ms` : '0ms', color: THEME_COLOR  }}
+                    className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/20 rounded px-3 py-2 text-sm`}
+                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 200}ms` : '0ms', color: `${SILVER}`  }}
                   >
                     {it}
                   </div>
@@ -273,8 +283,12 @@ export default function DesignCentralStation() {
           <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
           <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
             <div className="text-left">
-              <h1 className="text-4xl md:text-5xl font-bold mb-3">Final destination: <span className="" style={{ color: THEME_COLOR }}>Impact</span></h1>
-              <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">All routes begin with empathy.</h2>
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold mb-3">
+                  Final destination: <span className='metal-heading'>Impact</span>
+                </h1>
+              </div>
+      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">All routes begin with empathy.</h2>
               <p className="text-white/60">I’m Andy Shulman, a Senior UX Designer with experience simplifying complexity.</p>
             </div>
           </div>
@@ -288,11 +302,17 @@ export default function DesignCentralStation() {
         <div className="relative mb-12 h-24 flex items-center">
           {/* Railroad ties (dashed) placed below the rail */}
           <div className="absolute left-0 right-0 bottom-4 flex items-center z-0">
-            <div className="w-full border-t-4 border-dashed" style={{ borderColor: `${THEME_COLOR}40` }}></div>
+            <div
+              className="w-full border-t-4 border-dashed"
+              style={{ borderColor: SILVER }}
+            ></div>
           </div>
 
           {/* Solid rail placed between train and ties */}
-          <div className="absolute left-0 right-0 bottom-4 transform -translate-y-1/2 h-1 z-10" style={{ backgroundColor: THEME_COLOR }}></div>
+          <div
+            className="absolute left-0 right-0 bottom-4 transform -translate-y-1/2 h-1 z-10"
+            style={{ backgroundColor: `${SILVER}3` }}
+          ></div>
 
           {/* Animated Train - above the solid rail */}
           <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
@@ -300,49 +320,153 @@ export default function DesignCentralStation() {
               <div className="flex items-end gap-2">
                 {/* Train engine */}
                 <div className="relative">
-                  <div className="w-14 h-8 bg-teal-400 rounded-r-lg border-2 border-teal-600 relative shadow-lg">
-                    <div className="absolute -top-3 left-4 w-3 h-4 bg-teal-600 rounded-t-sm border-t-2 border-teal-400">
+                  <div
+                    className="w-14 h-8 rounded-r-lg border-2 relative shadow-lg"
+                    style={{
+                      backgroundColor: TRAIN_BODY_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  >
+                    <div
+                      className="absolute -top-3 left-4 w-3 h-4 rounded-t-sm border-t-2"
+                      style={{
+                        backgroundColor: TRAIN_BORDER_COLOR,
+                        borderTopColor: TRAIN_BODY_COLOR,
+                      }}
+                    >
                       <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
                       <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
                     </div>
-                    <div className="absolute -bottom-1 left-3 w-3 h-3 bg-gray-800 rounded-full border-2 border-teal-600"></div>
-                    <div className="absolute -bottom-1 right-3 w-3 h-3 bg-gray-800 rounded-full border-2 border-teal-600"></div>
+
+                    {/* Wheels */}
+                    <div
+                      className="absolute -bottom-1 left-3 w-3 h-3 rounded-full border-2"
+                      style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }}
+                    ></div>
+                    <div
+                      className="absolute -bottom-1 right-3 w-3 h-3 rounded-full border-2"
+                      style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }}
+                    ></div>
                   </div>
                 </div>
 
                 {/* Train cars */}
-                <div className="relative w-14 h-7 bg-teal-400 border-2 border-teal-600 shadow-md">
-                  <div className="absolute top-1 left-1 right-1 bottom-1 border border-teal-600/30"></div>
-                  <div className="absolute -bottom-1 left-3 w-2.5 h-2.5 bg-gray-800 rounded-full border-2 border-teal-600"></div>
-                  <div className="absolute -bottom-1 right-3 w-2.5 h-2.5 bg-gray-800 rounded-full border-2 border-teal-600"></div>
+                <div
+                  className="relative w-14 h-7 border-2 shadow-md"
+                  style={{
+                    backgroundColor: TRAIN_BODY_COLOR,
+                    borderColor: SILVER,
+                  }}
+                >
+                  <div
+                    className="absolute top-1 left-1 right-1 bottom-1 border"
+                    style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }} // ~30% alpha
+                  ></div>
+                  <div
+                    className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
+                    style={{
+                      backgroundColor: TRAIN_WHEEL_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
+                  <div
+                    className="absolute -bottom-1 right-3 w-2.5 h-2.5 rounded-full border-2"
+                    style={{
+                      backgroundColor: TRAIN_WHEEL_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
                 </div>
 
-                <div className="relative w-14 h-7 bg-teal-400 border-2 border-teal-600 shadow-md">
-                  <div className="absolute top-1 left-1 right-1 bottom-1 border border-teal-600/30"></div>
-                  <div className="absolute -bottom-1 left-3 w-2.5 h-2.5 bg-gray-800 rounded-full border-2 border-teal-600"></div>
-                  <div className="absolute -bottom-1 right-3 w-2.5 h-2.5 bg-gray-800 rounded-full border-2 border-teal-600"></div>
+                <div
+                  className="relative w-14 h-7 border-2 shadow-md"
+                  style={{
+                    backgroundColor: TRAIN_BODY_COLOR,
+                    borderColor: TRAIN_BORDER_COLOR,
+                  }}
+                >
+                  <div
+                    className="absolute top-1 left-1 right-1 bottom-1 border"
+                    style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }}
+                  ></div>
+                  <div
+                    className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
+                    style={{
+                      backgroundColor: TRAIN_WHEEL_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
+                  <div
+                    className="absolute -bottom-1 right-3 w-2.5 h-2.5 rounded-full border-2"
+                    style={{
+                      backgroundColor: TRAIN_WHEEL_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
                 </div>
 
-                <div className="w-14 h-7 bg-teal-400 rounded-sm border-2 border-teal-600 relative">
-                  <div className="absolute -right-1 -bottom-1 w-3 h-2 bg-teal-600 rounded-sm"></div>
-                  <div className="absolute left-1 top-1 bottom-1 w-3 bg-teal-600/20 border-r border-teal-600"></div>
-                  <div className="absolute -bottom-1 left-3 w-2.5 h-2.5 bg-gray-800 rounded-full border-2 border-teal-600"></div>
-                  <div className="absolute -bottom-1 right-3 w-2.5 h-2.5 bg-gray-800 rounded-full border-2 border-teal-600"></div>
+                <div
+                  className="w-14 h-7 rounded-sm border-2 relative"
+                  style={{
+                    backgroundColor: TRAIN_BODY_COLOR,
+                    borderColor: TRAIN_BORDER_COLOR,
+                  }}
+                >
+                  <div
+                    className="absolute -right-1 -bottom-1 w-3 h-2 rounded-sm"
+                    style={{ backgroundColor: TRAIN_BORDER_COLOR }}
+                  ></div>
+                  <div
+                    className="absolute left-1 top-1 bottom-1 w-3 border"
+                    style={{
+                      backgroundColor: `${TRAIN_BORDER_COLOR}33`,
+                      borderRightColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
+                  <div
+                    className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
+                    style={{
+                      backgroundColor: TRAIN_WHEEL_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
+                  <div
+                    className="absolute -bottom-1 right-3 w-2.5 h-2.5 rounded-full border-2"
+                    style={{
+                      backgroundColor: TRAIN_WHEEL_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}
+                  ></div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* "All Aboard!" text - highest z-index */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-            <div className="bg-gray-900 px-6 py-3 rounded-full border-2 border-teal-400 shadow-xl">
-              <h2 className="text-3xl font-bold text-teal-400">
-                All Aboard!
+          <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
+            <div
+              className="px-6 py-3 rounded-full border-2 shadow-xl"
+              style={{
+                backgroundColor: ALL_ABOARD_BG,
+                borderColor: ALL_ABOARD_BORDER,
+              }}
+            >
+              <h2
+                className="text-3xl font-bold text-white"
+              >
+                Experiences
               </h2>
             </div>
           </div>
         </div>
+
 
         <style>{`
           @keyframes train-move {
@@ -396,7 +520,7 @@ export default function DesignCentralStation() {
               
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" style={{ color: THEME_COLOR }}/>
+                  <MapPin className="w-4 h-4" style={{ color: SILVER }}/>
                   <span className="text-white/60">{project.impact}</span>
                 </div>
                 
@@ -424,84 +548,187 @@ export default function DesignCentralStation() {
         </div>
       </section>
 
-       {/* Information Booth Section */}
-      <section className="py-16 px-6 bg-black/40">
+       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
-            {/* Info Booth Sign */}
-            <div className="relative inline-block mb-12">
-              <div className="border-4 rounded-lg px-4 py-4 shadow-2xl" style={{ borderColor: `${SECONDARY_COLOR}20`, backgroundColor: BACK_COLOR }} >
-                <div className="flex items-center gap-4">
-                  <Info className="w-10 h-10 " style={{ color: THEME_COLOR }}/>
-                  <h2 className="text-4xl font-bold text-[#FFFAFB] tracking-wide">INFORMATION</h2>
-                </div>
-              </div>
-              {/* Mounting brackets */}
-              <div className="absolute -top-3 -left-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
-              <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
-              <div className="absolute -bottom-3 -left-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
-              <div className="absolute -bottom-3 -right-3 w-4 h-4 rounded-full border-2" style={{ borderColor: `${SECONDARY_COLOR}`, backgroundColor: INFO_COLOR }}></div>
-            </div>
+          {/* Backlit Info Booth Sign */}
+          
 
-          {/* Process Map */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold mb-4" style={{ color: THEME_COLOR }}>The Complete Transit System</h3>
-            <p className="text-white/60 text-left mb-8 mx-auto">
-              This is my design process map. Each project follows a unique route through these stations, 
-              combining methodologies from Stanford d.school, Business Strategy, Behavior Design, and 
-              Sustainability frameworks.
-            </p>
-            <div className="bg-[#f5e6d3] rounded-xl border-1 border-black/20">
-              {/*<div className="text-left text-black/60 text-sm mb-4">
-                [Your subway map image would go here - the one you shared with all the colored lines]
-              </div>*/}
-              <img
-                src="/images/Home/process.jpg"
-                alt="Design process map"
-                className="w-full rounded-lg"
-              />
+          {/* Information Panels - Booth Style */}
+          <div className="grid gap-8">
+            {/* Process Map Panel */}
+            <div className="bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-8 
+                            hover:border-white/20 transition-all duration-300"
+                style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
+              <div className="flex items-start gap-4 mb-6">
+                {/* <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-3 rounded-lg">
+                  <Map className="w-6 h-6 text-blue-400" />
+                </div> */}
+                <div>
+                  <div className="relative inline-block mb-12">
+            {/* Overhead mounting arm *
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-2 h-12 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-sm"></div>
+            
+            {/* Main sign structure */}
+            <div className="relative">
+              {/* Backlight panel - the actual light source */}
+              <div className="absolute inset-0 rounded-lg blur-2xl opacity-70" 
+                  style={{ 
+                    backgroundColor: INFO_COLOR,
+                    transform: 'scale(1.15)',
+                    zIndex: 0
+                  }}></div>
+              
+              {/* Translucent sign face - like a lightbox */}
+              <div className="relative border-4 rounded-lg px-4 py-5 overflow-hidden" 
+                  style={{ 
+                    borderColor: '#1a1a1a',
+                    backgroundColor: `${INFO_COLOR}15`,
+                    backdropFilter: 'blur(8px)',
+                    boxShadow: `
+                      0 0 60px ${INFO_COLOR}60,
+                      inset 0 0 40px ${INFO_COLOR}30,
+                      0 8px 32px rgba(0,0,0,0.4)
+                    `,
+                    zIndex: 1
+                  }}>
+                
+                {/* Inner glow effect */}
+                <div className="absolute inset-0 opacity-40" 
+                    style={{
+                      background: `radial-gradient(circle at 50% 50%, ${INFO_COLOR}40 0%, transparent 70%)`
+                    }}></div>
+                
+                {/* Content */}
+                <div className="relative flex items-center gap-4 z-10">
+                  <div className="flex items-center gap-4">
+                        <Info className="w-10 h-10 " style={{ color: THEME_COLOR }}/>
+                        <h2 className="text-4xl font-bold text-[#FFFAFB] tracking-wide">INFORMATION</h2>
+                      </div>
+                </div>
+                
+                {/* Light rays effect 
+                <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+                  <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-white via-white/50 to-transparent"></div>
+                  <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-white via-white/50 to-transparent"></div>
+                </div>*/}
+              </div>
+              
+              {/* Metal frame edges */}
+              <div className="absolute -inset-1 border-2 rounded-lg pointer-events-none" 
+                  style={{ 
+                    borderColor: '#2a2a2a',
+                    boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.1)'
+                  }}></div>
             </div>
+            {/* Mounting brackets with lights */}
+            <div className="absolute -top-3 -left-3 w-4 h-4 rounded-full border-2 animate-pulse" 
+                style={{ 
+                  borderColor: SECONDARY_COLOR, 
+                  backgroundColor: INFO_COLOR,
+                  boxShadow: `0 0 12px ${INFO_COLOR}`
+                }}></div>
+            <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full border-2 animate-pulse" 
+                style={{ 
+                  borderColor: SECONDARY_COLOR, 
+                  backgroundColor: INFO_COLOR,
+                  boxShadow: `0 0 12px ${INFO_COLOR}`,
+                  animationDelay: '0.5s'
+                }}></div>
+            <div className="absolute -bottom-3 -left-3 w-4 h-4 rounded-full border-2 animate-pulse" 
+                style={{ 
+                  borderColor: SECONDARY_COLOR, 
+                  backgroundColor: INFO_COLOR,
+                  boxShadow: `0 0 12px ${INFO_COLOR}`,
+                  animationDelay: '1s'
+                }}></div>
+            <div className="absolute -bottom-3 -right-3 w-4 h-4 rounded-full border-2 animate-pulse" 
+                style={{ 
+                  borderColor: SECONDARY_COLOR, 
+                  backgroundColor: INFO_COLOR,
+                  boxShadow: `0 0 12px ${INFO_COLOR}`,
+                  animationDelay: '1.5s'
+                }}></div>
           </div>
+                  <h3 className="text-white/90 text-2xl font-bold mb-2">The Complete Transit System</h3>
+                  <p className="text-white/60 text-left">
+                    This is my design process map. Each project follows a unique route through these stations, 
+                    combining methodologies from Stanford d.school, Business Strategy, Behavior Design, and 
+                    Sustainability frameworks.
+                  </p>
+                </div>
+              </div>
+              <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden">
+                <img
+                  src="/images/Home/process.jpg"
+                  alt="Design process map"
+                  className="w-full"
+                />
+              </div>
+              {/* Skills Panel */}
+            <div className="pt-12"
+                style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
+              {/* <div className="flex items-start gap-4 mb-6">
+                <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 p-3 rounded-lg">
+                  <Briefcase className="w-6 h-6 text-green-400" />
+                </div>
+                <h3 className="metal-heading text-2xl font-bold">Station Capabilities</h3>
+              </div> */}
+              <SkillsBoard />
+            </div>
 
-          <SkillsBoard />
-
-          {/* About Me with map preview (heading full-width; grid below) */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold mb-4" style={{ color: THEME_COLOR }}>About the Conductor</h3>
-
-            <div className="grid md:grid-cols-3 gap-6 items-start">
-              <div className="md:col-span-2 space-y-4">
-                <p className="text-white/80 leading-relaxed">
-                  I'm Andy, a Senior UX Designer with 5+ years transforming complex enterprise systems 
-                  into intuitive experiences. I have a Master's in Sustainability Science from Stanford 
-                  and a skillset that brings together design thinking, behavior design, business strategy, and systems thinking.
-                </p>
-                <p className="text-white/80 leading-relaxed">
-                  My work spans enterprise B2B SaaS, health tech, to mission-driven organizations. 
-                  I've designed AI-driven features, laid foundations for IBM partnerships, and helped 
-                  teams from cancer treatment centers to global energy companies work more efficiently.
-                </p>
-                <p className="text-white/80 leading-relaxed">
-                  I am currently based in Montrose, Colorado with my adventure dog, exploring opportunities 
-                  in climate tech and mental health spaces. Check out my adventures:
-                </p>
+            {/* About Me Panel */}
+            <div className="pt-12"
+                style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
+              <div className="flex items-start gap-4 mb-6">
+                {/* <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 p-3 rounded-lg">
+                  <User className="w-6 h-6 text-orange-400" />
+                </div> */}
+                <h3 className="text-white/90 text-2xl font-bold">
+                  About the Conductor
+                </h3>
               </div>
 
-              <aside className="md:col-span-1 h-full">
-                <div className="bg-[#0f0f0f] border border-white/6 rounded-lg overflow-hidden h-full">
-                  <div className="w-full h-full aspect-video">
-                    <iframe
-                      src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
-                      className="w-full h-full"
-                      title="Map preview"
-                      loading="lazy"
-                    ></iframe>
-                  </div>
+              <div className="grid md:grid-cols-3 gap-6 items-start">
+                <div className="md:col-span-2 space-y-4">
+                  <p className="text-white/80 leading-relaxed">
+                    I'm Andy, a Senior UX Designer with 5+ years transforming complex enterprise systems 
+                    into intuitive experiences. I have a Master's in Sustainability Science from Stanford 
+                    and a skillset that brings together design thinking, behavior design, business strategy, 
+                    and systems thinking.
+                  </p>
+                  <p className="text-white/80 leading-relaxed">
+                    My work spans enterprise B2B SaaS, health tech, to mission-driven organizations. 
+                    I've designed AI-driven features, laid foundations for IBM partnerships, and helped 
+                    teams from cancer treatment centers to global energy companies work more efficiently.
+                  </p>
+                  <p className="text-white/80 leading-relaxed">
+                    I am currently based in Montrose, Colorado with my adventure dog, exploring opportunities 
+                    in climate tech and mental health spaces. Check out my adventures:
+                  </p>
                 </div>
-              </aside>
+
+                <aside className="md:col-span-1 h-full">
+                  <div className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full 
+                                  hover:border-white/30 transition-all duration-300"
+                      style={{ boxShadow: `0 0 20px ${INFO_COLOR}20` }}>
+                    <div className="w-full h-full aspect-video">
+                      <iframe
+                        src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
+                        className="w-full h-full"
+                        title="Map preview"
+                        loading="lazy"
+                      ></iframe>
+                    </div>
+                  </div>
+                </aside>
+              </div>
             </div>
+            </div>
+
+            
           </div>
         </div>
-      </section>  
+      </section>
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
       <section className="mb-16 py-10 px-6 max-w-7xl mx-auto" style={{ backgroundColor: BACK_COLOR }}>
@@ -531,7 +758,7 @@ export default function DesignCentralStation() {
                     {/* Decorative Quote - Top Left */}
                     <div 
                       className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
-                      style={{ color: THEME_COLOR }}
+                      style={{ color: SILVER }}
                     >
                       “
                     </div>
@@ -542,24 +769,24 @@ export default function DesignCentralStation() {
                         {testimonial.quote}
                       </p>
 
-                      <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                      <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: SILVER}}>
                         {testimonial.avatar ? (
                           <img
                             src={testimonial.avatar}
                             alt={testimonial.author}
-                            className="w-12 h-12 rounded-full object-cover border-2 border-white/10"
+                            className="w-12 h-12 rounded-full object-cover border-2" style={{color: SILVER, borderColor: SILVER}}
                           />
                         ) : (
                           <div 
                             className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xs" 
-                            style={{ color: BACK_COLOR, backgroundColor: THEME_COLOR }}
+                            style={{ color: BACK_COLOR, backgroundColor: SILVER }}
                           >
                             {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
                           </div>
                         )}
                         
                         <div>
-                          <div className="font-bold text-sm tracking-tight" style={{ color: THEME_COLOR }}>
+                          <div className="font-bold text-sm tracking-tight" style={{ color: SILVER }}>
                             {testimonial.author}
                           </div>
                           <div className="text-[11px] uppercase tracking-widest text-white/40 leading-tight">
@@ -573,7 +800,7 @@ export default function DesignCentralStation() {
                     {/* Decorative Quote - Bottom Right */}
                     <div 
                       className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
-                      style={{ color: THEME_COLOR }}
+                      style={{ color: SILVER }}
                     >
                       ”
                     </div>
