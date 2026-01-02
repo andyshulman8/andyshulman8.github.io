@@ -392,7 +392,7 @@ export default function DesignCentralStation() {
                     </div>
                     {/* Connector / Coupler */}
                     <div
-                      className="absolute top-1/2 -translate-y-1/2 w-4 h-2"
+                      className="absolute top-1/2 translate-y-1 w-4 h-2"
                       style={{
                         left: '-1rem', // Positioned exactly between cars
                         backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
@@ -437,7 +437,7 @@ export default function DesignCentralStation() {
                     </div>
                     {/* Connector / Coupler */}
                     <div
-                      className="absolute top-1/2 -translate-y-1/2 w-4 h-2"
+                      className="absolute top-1/2 translate-y-1 w-4 h-2"
                       style={{
                         left: '-1rem', // Positioned exactly between cars
                         backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
@@ -458,7 +458,7 @@ export default function DesignCentralStation() {
 >
   {/* Connector / Coupler */}
   <div
-    className="absolute top-1/2 -translate-y-1/2 w-4 h-2"
+    className="absolute top-1/2 translate-y-1 w-4 h-2"
     style={{
       left: '-1rem', // Positioned exactly between cars
       backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
