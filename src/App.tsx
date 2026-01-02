@@ -605,7 +605,8 @@ export default function DesignCentralStation() {
 
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <div className="text-xs text-white/60 mb-1">{project.line}</div>
+                  {/* line color for studies */}
+                  {/* <div className="text-xs text-white/60 mb-1">{project.line}</div> */}
                   <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                 </div>
                 <ChevronRight className="w-5 h-5 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />

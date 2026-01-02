@@ -1,31 +1,16 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
-//import { allCaseStudies } from './casedata.tsx'; // Import your new file
-//import Dot from './dot.tsx';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 
-//const THEME_COLOR = '#7DE2D1';
+// Color constants - adjust these to change the entire theme
 const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
+const SILVER = '#dfe1e5ff';
 
-const lineColors = {
-  red: '#E53935',
-  blue: '#1E88E5',
-  purple: '#8E24AA',
-  green: '#43A047'
-} as const;
-
-// const lineNames = {
-//   red: 'Stanford d.school',
-//   blue: 'Business Strategy',
-//   purple: 'Behavior Design',
-//   green: 'Sustainability'
-// } as const;
-
-//type LineColor = keyof typeof lineColors;
-//type Phase = 'Empathize' | 'Define' | 'Ideate' | 'Prototype' | 'Test';
+const ACCENT_COLOR = SILVER; // Primary accent color for buttons, highlights
+const HOVER_COLOR = SECONDARY_COLOR; // Hover states
 
 interface Stop {
   station_name: string;
@@ -40,16 +25,14 @@ interface Stop {
     metric2: string;
     label2: string;
   };
+  images?: string[]; // Array of image URLs for carousel
 }
 
-// interface CaseStudyData {
-//   title: string;
-//   line_color: LineColor;
-//   destination: string;
-//   background: string;
-//   overview: string;
-//   stops: Stop[];
-// }
+interface BeforeAfter {
+  before: string; // Image URL or description
+  after: string; // Image URL or description
+  label?: string;
+}
 
 interface CaseStudyTemplateProps {
   onBack: () => void;
@@ -57,23 +40,28 @@ interface CaseStudyTemplateProps {
   dataIndex: number;
 }
 
-// interface LogsCaseStudyProps {
-//   onBack: () => void;
-// }
-
-// Main Case Study Component - accepts onBack prop
 export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: CaseStudyTemplateProps) {
-  //const caseStudyData = allCaseStudies[dataIndex]
-
   const caseStudyData: CaseStudyData = allCaseStudies[dataIndex];
   
   const [currentStop, setCurrentStop] = useState(0);
   const [showOverview, setShowOverview] = useState(true);
+  const [carouselIndex, setCarouselIndex] = useState(0);
   
-  const lineColor = lineColors[caseStudyData.line_color];
-  //const lineName = lineNames[caseStudyData.line_color];
+  // Placeholder images for carousel (3 images)
+  const placeholderImages = [
+    'https://via.placeholder.com/400x600/2B2C28/7DE2D1?text=Preview+1',
+    'https://via.placeholder.com/400x600/2B2C28/7DE2D1?text=Preview+2',
+    'https://via.placeholder.com/400x600/2B2C28/7DE2D1?text=Preview+3'
+  ];
+
+  // Placeholder before/after
+  const beforeAfter: BeforeAfter = {
+    before: 'https://via.placeholder.com/500x300/2B2C28/E53935?text=Before',
+    after: 'https://via.placeholder.com/500x300/2B2C28/43A047?text=After',
+    label: 'Transformation'
+  };
   
-    const nextStop = () => {
+  const nextStop = () => {
     if (currentStop < caseStudyData.stops.length - 1) {
       setCurrentStop(currentStop + 1);
       setShowOverview(false);
@@ -86,12 +74,10 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     }
   };
   
-  // FIXED: Explicitly typed index as a number
   const goToStop = (index: number) => {
     setCurrentStop(index);
     setShowOverview(false);
   };
-
 
   return (
     <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
@@ -102,15 +88,12 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             onClick={onBack}
             className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
           >
-            <Home size={20} />
+            <ChevronLeft size={20} />
             <span>Back to Station</span>
           </button>
           <div className="text-right">
             <div className="text-sm text-white/40">{caseStudyData.destination}</div>
-            <div 
-              className="text-xl font-bold"
-              style={{ color: lineColor }}
-            >
+            <div className="text-xl font-bold" style={{ color: ACCENT_COLOR }}>
               {caseStudyData.title}
             </div>
           </div>
@@ -121,95 +104,158 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
       <main className="max-w-5xl mx-auto px-6 py-12">
         {showOverview ? (
           // Overview Section
-          <div className="space-y-12">
-            {/* Title & Destination */}
+          <div className="space-y-16">
+            {/* Title */}
             <div className="text-center space-y-4">
-              <h1 className="text-5xl font-bold mb-2">{caseStudyData.title}</h1>
+              <h1 className="text-4xl font-bold mb-2">{caseStudyData.title}</h1>
               <div className="flex items-center justify-center gap-3">
-                <div 
-                  className="h-1 w-24 rounded-full"
-                  style={{ backgroundColor: lineColor }}
-                />
-                <span className="text-xl text-white/60">Final Destination:</span>
+                {/* <div className="h-1 w-24 rounded-full" style={{ backgroundColor: ACCENT_COLOR }} /> */}
+                <span className="text-xl text-white/60">Destination:</span>
                 <span className="text-xl font-semibold">{caseStudyData.destination}</span>
               </div>
             </div>
 
-            {/* Prepare for Your Trip */}
-            <div className="grid md:grid-cols-2 gap-8 mt-16">
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-white/80">Background</h2>
-                <p className="text-white/60 leading-relaxed">
-                  {caseStudyData.background}
-                </p>
-              </div>
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold text-white/80">📍 Destination</h2>
-                <p className="text-white/60 leading-relaxed">
-                  {caseStudyData.overview}
-                </p>
+            {/* Background Section */}
+            <div className="">
+              <h2 className="text-2xl font-bold mb-6 text-white/80">Background</h2>
+              <p className="text-white/60 leading-relaxed text-l">
+                {caseStudyData.background}
+              </p>
+            </div>
+
+            {/* Sneak Peek Section */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8 text-left">Sneak Peek</h2>
+              <div className="grid md:grid-cols-2 gap-12 items-start">
+                {/* Left: Destination (Impact Metrics) */}
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-bold text-white/80">Destination</h3>
+                  <p className="text-white/60 leading-relaxed mb-8">
+                    {caseStudyData.overview}
+                  </p>
+                  {/* Impact metrics in 2-column grid */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
+                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
+                        30%
+                      </div>
+                      <div className="text-white/60 text-sm">
+                        Noise Reduction
+                      </div>
+                    </div>
+                    
+                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
+                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
+                        10min
+                      </div>
+                      <div className="text-white/60 text-sm">
+                        Resolution Time
+                      </div>
+                    </div>
+                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
+                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
+                        1000+
+                      </div>
+                      <div className="text-white/60 text-sm">
+                        Customers Served
+                      </div>
+                    </div>
+                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
+                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
+                        $250K
+                      </div>
+                      <div className="text-white/60 text-sm">
+                        Annual Savings
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Right: Vertical Image Carousel */}
+                <div className="space-y-4">
+                  <div className="relative rounded-lg overflow-hidden" style={{ backgroundColor: INFO_COLOR }}>
+                    <img 
+                      src={placeholderImages[carouselIndex]} 
+                      alt={`Preview ${carouselIndex + 1}`}
+                      className="w-full h-auto"
+                    />
+                    {/* Carousel dots */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                      {placeholderImages.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setCarouselIndex(i)}
+                          className="w-2 h-2 rounded-full transition-all"
+                          style={{ 
+                            backgroundColor: i === carouselIndex ? ACCENT_COLOR : 'rgba(255,255,255,0.3)'
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Carousel navigation */}
+                  <div className="flex gap-2 justify-center">
+                    <button
+                      onClick={() => setCarouselIndex((carouselIndex - 1 + placeholderImages.length) % placeholderImages.length)}
+                      className="px-4 py-2 rounded-lg transition-colors"
+                      style={{ backgroundColor: INFO_COLOR }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = HOVER_COLOR}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={() => setCarouselIndex((carouselIndex + 1) % placeholderImages.length)}
+                      className="px-4 py-2 rounded-lg transition-colors"
+                      style={{ backgroundColor: INFO_COLOR }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = HOVER_COLOR}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                </div>
+
+                
               </div>
             </div>
 
-            {/* Interactive Stops */}
-            <div className="mt-16">
-              <h2 className="text-3xl font-bold mb-8 text-center">🚇 Live Stops</h2>
-              <div className="relative">
-                {/* Subway line visual */}
-                <div 
-                  className="absolute left-8 top-0 bottom-0 w-1 rounded-full"
-                  style={{ backgroundColor: lineColor + '40' }}
-                />
-                
-                <div className="space-y-1">
-                  {caseStudyData.stops.map((stop: Stop, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => goToStop(index)}
-                      className="w-full text-left flex items-start gap-6 p-6 rounded-lg transition-all group"
-                      style={{ backgroundColor: 'transparent' }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.05)'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                    >
-                      {/* Station dot */}
-                      <div className="relative flex-shrink-0">
-                        <div 
-                          className="w-16 h-16 rounded-full border-4 flex items-center justify-center font-bold text-lg group-hover:scale-110 transition-transform"
-                          style={{ 
-                            backgroundColor: lineColor,
-                            borderColor: BACK_COLOR
-                          }}
-                        >
-                          {index + 1}
-                        </div>
-                      </div>
-                      
-                      {/* Station info */}
-                      <div className="flex-1 pt-3">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-xs font-mono text-white/40">
-                            {stop.phase.toUpperCase()}
-                          </span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-white/90">
-                          {stop.station_name}
-                        </h3>
-                        <p className="text-white/50 text-sm line-clamp-2">
-                          {stop.content.substring(0, 120)}...
-                        </p>
-                      </div>
-                      
-                      <ChevronRight 
-                        className="text-white/30 group-hover:text-white/60 transition-colors mt-6" 
-                        size={24} 
-                      />
-                    </button>
-                  ))}
+            {/* Before & After Section */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8 text-left">Before & After</h2>
+              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {/* Before */}
+                <div className="space-y-3">
+                  <div className="text-center text-sm font-mono text-white/40 mb-2">BEFORE</div>
+                  <div className="rounded-lg overflow-hidden" style={{ backgroundColor: INFO_COLOR }}>
+                    <img 
+                      src={beforeAfter.before} 
+                      alt="Before"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  <p className="text-white/50 text-sm text-center">
+                    Fragmented tools, slow troubleshooting
+                  </p>
+                </div>
+                {/* After */}
+                <div className="space-y-3">
+                  <div className="text-center text-sm font-mono text-white/40 mb-2">AFTER</div>
+                  <div className="rounded-lg overflow-hidden" style={{ backgroundColor: INFO_COLOR }}>
+                    <img 
+                      src={beforeAfter.after} 
+                      alt="After"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  <p className="text-white/50 text-sm text-center">
+                    Unified platform, 10-minute resolution
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Ready to Board */}
+            {/* Ready to Board - KEPT THE SAME */}
             <div className="text-center mt-16 space-y-6">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
               <button
@@ -217,61 +263,38 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   setShowOverview(false);
                   setCurrentStop(0);
                 }}
-                className="px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105"
+                className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
                 style={{ 
-                  backgroundColor: lineColor,
-                  boxShadow: `0 0 30px ${lineColor}40`
+                  backgroundColor: ACCENT_COLOR,
+                  boxShadow: `0 0 30px ${ACCENT_COLOR}40`
                 }}
               >
                 Start Journey →
               </button>
               <button 
-        onClick={onNextRoute} // Trigger the function when clicked
-        className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
-      >
-        Or try the next route
-      </button>
+                onClick={onNextRoute}
+                className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
+              >
+                Or try the next route
+              </button>
             </div>
           </div>
         ) : (
           // Stop Details View
           <div className="space-y-8">
-            {/* Progress Bar */}
-            {/* <div className="space-y-2">
-              <div className="flex justify-between text-sm text-white/40">
-                <span>Stop {currentStop + 1} of {caseStudyData.stops.length}</span>
-                <span>{caseStudyData.stops[currentStop].phase}</span>
-              </div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div 
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{ 
-                    width: `${((currentStop + 1) / caseStudyData.stops.length) * 100}%`,
-                    backgroundColor: lineColor
-                  }}
-                />
-              </div>
-            </div> */}
-
-          {/* Stop Details View*/}
-          <div className="space-y-8">
-          
-            {/* Progress Tracker - NEW DESIGN */}
+            {/* Progress Tracker */}
             <div className="mb-12">
               <div className="relative flex items-center justify-between max-w-4xl mx-auto">
-                {/* Background Track */}
                 <div className="absolute left-0 right-0 top-1/2 h-1 bg-white/10 -translate-y-1/2" />
                 
-                {/* Active Progress Line */}
                 <div 
                   className="absolute left-0 top-1/2 h-1 -translate-y-1/2 transition-all duration-500 ease-out"
                   style={{ 
                     width: `${(currentStop / (caseStudyData.stops.length - 1)) * 100}%`,
-                    backgroundColor: lineColor
+                    backgroundColor: ACCENT_COLOR
                   }}
                 />
 
-                {/* Interactive Stop Dots */}
                 {caseStudyData.stops.map((stop: Stop, index: number) => {
                   const isActive = index <= currentStop;
                   const isCurrent = index === currentStop;
@@ -282,15 +305,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       onClick={() => goToStop(index)}
                       className="relative z-10 group focus:outline-none"
                     >
-                      {/* The Dot */}
                       <div 
-                        className={`w-6 h-6 rounded-full border-2 transition-all duration-300`}
+                        className="w-6 h-6 rounded-full border-2 transition-all duration-300"
                         style={{
-                          backgroundColor: isActive ? lineColor : BACK_COLOR,
+                          backgroundColor: isActive ? ACCENT_COLOR : BACK_COLOR,
                           borderColor: isActive ? 'transparent' : 'rgba(255,255,255,0.3)'
                         }}
                       >
-                        {/* Pulse Ring for Current Stop */}
                         {isCurrent && (
                           <div 
                             className="absolute inset-0 rounded-full border-2 border-white animate-pulse"
@@ -299,7 +320,6 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                         )}
                       </div>
 
-                      {/* Tooltip on Hover */}
                       <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                         <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
                           {stop.station_name}
@@ -310,21 +330,20 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 })}
               </div>
             </div>
-            </div>
 
             {/* Station Name */}
             <div className="text-center space-y-2">
               <div className="text-sm font-mono text-white/40">
-                {caseStudyData.stops[currentStop].phase.toUpperCase()} PHASE
+                {/* {caseStudyData.stops[currentStop].phase.toUpperCase()} PHASE */}
               </div>
-              <h2 className="text-4xl font-bold">
+              <h2 className="text-3xl font-bold">
                 {caseStudyData.stops[currentStop].station_name}
               </h2>
             </div>
 
             {/* Content */}
             <div className="prose prose-invert max-w-none">
-              <p className="text-xl text-white/80 leading-relaxed">
+              <p className="text-l text-white/80 leading-relaxed">
                 {caseStudyData.stops[currentStop].content}
               </p>
 
@@ -332,7 +351,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               {caseStudyData.stops[currentStop].quote && (
                 <blockquote 
                   className="border-l-4 pl-6 py-4 my-8 italic text-white/60"
-                  style={{ borderColor: lineColor }}
+                  style={{ borderColor: ACCENT_COLOR }}
                 >
                   "{caseStudyData.stops[currentStop].quote}"
                   <footer className="text-sm mt-2 not-italic text-white/40">
@@ -357,10 +376,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               {caseStudyData.stops[currentStop].impact && (
                 <div className="grid md:grid-cols-2 gap-6 my-8">
                   <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                    <div 
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: lineColor }}
-                    >
+                    <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
                       {caseStudyData.stops[currentStop].impact.metric1}
                     </div>
                     <div className="text-white/60">
@@ -368,10 +384,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                     </div>
                   </div>
                   <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                    <div 
-                      className="text-3xl font-bold mb-2"
-                      style={{ color: lineColor }}
-                    >
+                    <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
                       {caseStudyData.stops[currentStop].impact.metric2}
                     </div>
                     <div className="text-white/60">
@@ -403,7 +416,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = SECONDARY_COLOR}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
               >
-                View All Stops
+                Back to Overview
               </button>
 
               {currentStop < caseStudyData.stops.length - 1 ? (
@@ -411,8 +424,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   onClick={nextStop}
                   className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
                   style={{ 
-                    backgroundColor: lineColor,
-                    boxShadow: `0 0 20px ${lineColor}40`
+                    backgroundColor: ACCENT_COLOR,
+                    boxShadow: `0 0 20px ${ACCENT_COLOR}40`
                   }}
                 >
                   Next Stop
@@ -423,11 +436,11 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   onClick={onBack}
                   className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
                   style={{ 
-                    backgroundColor: lineColor,
-                    boxShadow: `0 0 20px ${lineColor}40`
+                    backgroundColor: ACCENT_COLOR,
+                    boxShadow: `0 0 20px ${ACCENT_COLOR}40`
                   }}
                 >
-                  Back to Map
+                  Next Journey
                   <Home size={20} />
                 </button>
               )}
