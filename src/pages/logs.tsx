@@ -4,6 +4,7 @@ import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
 
+
 // Color constants - adjust these to change the entire theme
 const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
@@ -11,7 +12,7 @@ const BACK_COLOR = '#141515';
 const SILVER = '#dfe1e5ff';
 
 const ACCENT_COLOR = SILVER; // Primary accent color for buttons, highlights
-const HOVER_COLOR = SECONDARY_COLOR; // Hover states
+//const HOVER_COLOR = SECONDARY_COLOR; // Hover states
 
 interface Stop {
   station_name: string;
@@ -62,15 +63,15 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   
   // Placeholder images for carousel (3 images)
   const placeholderImages = [
-    'https://via.placeholder.com/400x600/2B2C28/7DE2D1?text=Preview+1',
-    'https://via.placeholder.com/400x600/2B2C28/7DE2D1?text=Preview+2',
-    'https://via.placeholder.com/400x600/2B2C28/7DE2D1?text=Preview+3'
+    '/images/Logs/fields.png',
+    '/images/Logs/gap3.png',
+    '/images/Logs/gap1.3.png'
   ];
 
   // Placeholder before/after
   const beforeAfter: BeforeAfter = {
-    before: 'https://via.placeholder.com/500x300/2B2C28/E53935?text=Before',
-    after: 'https://via.placeholder.com/500x300/2B2C28/43A047?text=After',
+    before: '/images/Logs/before.png',
+    after: '/images/Logs/after.png',
     label: 'Transformation'
   };
   
@@ -138,16 +139,133 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
             {/* Sneak Peek Section */}
             <div>
-              <h2 className="text-3xl font-bold mb-8 text-left">Sneak Peek</h2>
-              <div className="grid md:grid-cols-2 gap-12 items-start">
+              
+              <div className="grid md:grid-cols-3 gap-8 items-stretch">
                 {/* Left: Destination (Impact Metrics) */}
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-bold text-white/80">Destination</h3>
+                  <h2 className="text-2xl font-bold mb-8 text-left text-white/80">Sneak Peeks</h2>
+                  {/* <h3 className="text-2xl font-bold text-white/80">Destination</h3> */}
                   <p className="text-white/60 leading-relaxed mb-8">
                     {caseStudyData.overview}
                   </p>
+                </div>
+                
+                {/* Right: Train Window Image Carousel */}
+<div className="relative md:col-span-2 space-y-6">
+  {/* Heavy metal train frame */}
+  <div className="relative p-6 rounded-2xl" style={{ 
+    background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
+    border: '4px solid #333',
+    boxShadow: 'inset 0 6px 24px rgba(0,0,0,0.8), 0 12px 40px rgba(0,0,0,0.6)'
+  }}>
+    {/* Riveted inner bezel */}
+    <div className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
+      background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
+      border: '3px solid #444',
+      boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.9), inset 0 0 0 2px rgba(255,255,255,0.05)'
+    }}>
+      {/* Glass pane */}
+      <div className="relative rounded-lg w-full overflow-hidden h-[20rem] w-[20rem]" style={{
+        background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
+        border: '1px solid rgba(255,255,255,0.08)',
+        boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
+      }}>
+        {/* Image */}
+        <img 
+          src={placeholderImages[carouselIndex]} 
+          alt={`Preview ${carouselIndex + 1}`}
+          className="absolute inset-0 w-full h-full object-contain"
+        />
+        
+        {/* Window glare/reflection */}
+        <div className="absolute inset-0" style={{
+          background: `
+            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+            linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
+          `
+        }} />
+        
+        {/* Dust/dirt specks */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: `
+            radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.3), transparent),
+            radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.2), transparent),
+            radial-gradient(1px 1px at 120px 40px, rgba(255,255,255,0.15), transparent)
+          `
+        }} />
+      </div>
+      
+      {/* Window controls - metal levers */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 items-center">
+        {/* Lever-style buttons */}
+        <button
+          onClick={() => setCarouselIndex((carouselIndex - 1 + placeholderImages.length) % placeholderImages.length)}
+          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
+          style={{ 
+            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+            border: '2px solid #555',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+          }}
+        >
+          <ChevronLeft size={16} style={{ color: '#aaa' }} />
+        </button>
+        
+        {/* Dots as indicator lights */}
+        <div className="flex gap-2">
+          {placeholderImages.map((_, i) => (
+            <div
+              key={i}
+              onClick={() => setCarouselIndex(i)}
+              className="w-3 h-3 rounded-full cursor-pointer transition-all hover:scale-125"
+              style={{ 
+                background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
+                boxShadow: i === carouselIndex ? '0 0 8px rgba(170,170,170,0.8)' : 'none',
+                border: '1px solid rgba(255,255,255,0.2)'
+              }}
+            />
+          ))}
+        </div>
+        
+        <button
+          onClick={() => setCarouselIndex((carouselIndex + 1) % placeholderImages.length)}
+          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
+          style={{ 
+            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+            border: '2px solid #555',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+          }}
+        >
+          <ChevronRight size={16} style={{ color: '#aaa' }} />
+        </button>
+      </div>
+      
+      {/* Corner rivets */}
+      {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
+        <div
+          key={i}
+          className={`absolute w-3 h-3 rounded-full shadow-md`}
+          style={{
+            [pos.includes('top') ? 'top' : 'bottom']: '-2px',
+            [pos.includes('left') ? 'left' : 'right']: '-2px',
+            background: 'radial-gradient(circle, #666 30%, #444 70%)',
+            border: '1px solid #888',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.6)'
+          }}
+        />
+      ))}
+    </div>
+  
+      </div>
+      </div>
+
+                
+              </div>
+              
+            </div>
+
                   {/* Impact metrics in 2-column grid */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-4 gap-3">
                     <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
                       <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
                         30%
@@ -182,69 +300,18 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       </div>
                     </div>
                   </div>
-                </div>
-                
-                {/* Right: Vertical Image Carousel */}
-                <div className="space-y-4">
-                  <div className="relative rounded-lg overflow-hidden" style={{ backgroundColor: INFO_COLOR }}>
-                    <img 
-                      src={placeholderImages[carouselIndex]} 
-                      alt={`Preview ${carouselIndex + 1}`}
-                      className="w-full h-auto"
-                    />
-                    {/* Carousel dots */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                      {placeholderImages.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setCarouselIndex(i)}
-                          className="w-2 h-2 rounded-full transition-all"
-                          style={{ 
-                            backgroundColor: i === carouselIndex ? ACCENT_COLOR : 'rgba(255,255,255,0.3)'
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  {/* Carousel navigation */}
-                  <div className="flex gap-2 justify-center">
-                    <button
-                      onClick={() => setCarouselIndex((carouselIndex - 1 + placeholderImages.length) % placeholderImages.length)}
-                      className="px-4 py-2 rounded-lg transition-colors"
-                      style={{ backgroundColor: INFO_COLOR }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = HOVER_COLOR}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
-                    >
-                      <ChevronLeft size={20} />
-                    </button>
-                    <button
-                      onClick={() => setCarouselIndex((carouselIndex + 1) % placeholderImages.length)}
-                      className="px-4 py-2 rounded-lg transition-colors"
-                      style={{ backgroundColor: INFO_COLOR }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = HOVER_COLOR}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
-                    >
-                      <ChevronRight size={20} />
-                    </button>
-                  </div>
-                </div>
-
-                
-              </div>
-            </div>
 
             {/* Before & After Section */}
             <div>
-              <h2 className="text-3xl font-bold mb-8 text-left">Before & After</h2>
               <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {/* Before */}
                 <div className="space-y-3">
-                  <div className="text-center text-sm font-mono text-white/40 mb-2">BEFORE</div>
-                  <div className="rounded-lg overflow-hidden" style={{ backgroundColor: INFO_COLOR }}>
+                  <h2 className="text-xl font-bold text-center text-white/80">Before</h2>
+                  <div className="rounded-lg overflow-hidden h-[400px]" style={{ backgroundColor: INFO_COLOR }}>
                     <img 
                       src={beforeAfter.before} 
                       alt="Before"
-                      className="w-full h-auto"
+                      className="w-full h-full object-cover object-left-top bg-black/20"
                     />
                   </div>
                   <p className="text-white/50 text-sm text-center">
@@ -253,12 +320,12 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 </div>
                 {/* After */}
                 <div className="space-y-3">
-                  <div className="text-center text-sm font-mono text-white/40 mb-2">AFTER</div>
-                  <div className="rounded-lg overflow-hidden" style={{ backgroundColor: INFO_COLOR }}>
+                  <h2 className="text-xl font-bold text-center text-white/80">After</h2>
+                  <div className="rounded-lg overflow-hidden h-[400px]" style={{ backgroundColor: INFO_COLOR }}>
                     <img 
                       src={beforeAfter.after} 
                       alt="After"
-                      className="w-full h-auto"
+                      className="w-full h-full object-cover object-left-top bg-black/20"
                     />
                   </div>
                   <p className="text-white/50 text-sm text-center">
