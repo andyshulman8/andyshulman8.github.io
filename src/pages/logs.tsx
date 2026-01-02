@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
 
 
 // Color constants - adjust these to change the entire theme
+const SILVER = '#dfe1e5ff';
 const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
-const SILVER = '#dfe1e5ff';
+
 
 const ACCENT_COLOR = SILVER; // Primary accent color for buttons, highlights
 //const HOVER_COLOR = SECONDARY_COLOR; // Hover states
@@ -493,10 +494,11 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               
               <button
                 onClick={() => setShowOverview(true)}
-                className="px-6 py-3 rounded-full transition-all"
-                style={{ backgroundColor: INFO_COLOR }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = SECONDARY_COLOR}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
+                className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
+                style={{ backgroundColor: INFO_COLOR,
+                    boxShadow: `0 0 20px ${INFO_COLOR}40` }}
+                // onMouseEnter={(e) => e.currentTarget.style.backgroundColor = SECONDARY_COLOR}
+                // onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
               >
                 Back to Overview
               </button>
@@ -506,8 +508,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   onClick={nextStop}
                   className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
                   style={{ 
-                    backgroundColor: ACCENT_COLOR,
-                    boxShadow: `0 0 20px ${ACCENT_COLOR}40`
+                    backgroundColor: INFO_COLOR,
+                    boxShadow: `0 0 20px ${INFO_COLOR}40`
                   }}
                 >
                   Next Stop
@@ -516,14 +518,14 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               ) : (
                 <button
                   onClick={onBack}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
+                  className="flex items-center gap-2 px-6 py-3 rounded-full text-black transition-all hover:scale-105"
                   style={{ 
                     backgroundColor: ACCENT_COLOR,
                     boxShadow: `0 0 20px ${ACCENT_COLOR}40`
                   }}
                 >
                   Next Journey
-                  <Home size={20} />
+                  <Train size={20} />
                 </button>
               )}
             </div>
