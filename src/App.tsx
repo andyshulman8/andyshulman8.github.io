@@ -299,7 +299,7 @@ export default function DesignCentralStation() {
       {/* All Aboard Section - FIXED */}
       <section className="py-10 px-6 max-w-7xl mx-auto">
         {/* Animated Train Track with proper z-index */}
-        <div className="relative mb-12 h-24 flex items-center">
+        <div className="relative mb-12 h-24 flex items-bottom">
           {/* Railroad ties (dashed) placed below the rail */}
           <div className="absolute left-0 right-0 bottom-4 flex items-center z-0">
             <div
@@ -310,8 +310,8 @@ export default function DesignCentralStation() {
 
           {/* Solid rail placed between train and ties */}
           <div
-            className="absolute left-0 right-0 bottom-4 transform -translate-y-1/2 h-1 z-10"
-            style={{ backgroundColor: `${SILVER}3` }}
+            className="absolute left-0 right-0 bottom-4 transform -translate-y-1/3 h-1 z-10"
+            style={{ backgroundColor: `${SILVER}20` }}
           ></div>
 
           {/* Animated Train - above the solid rail */}
@@ -353,7 +353,8 @@ export default function DesignCentralStation() {
                         backgroundColor: TRAIN_WHEEL_COLOR,
                         borderColor: TRAIN_BORDER_COLOR,
                       }}
-                    ></div>
+                    >
+                    </div>
                   </div>
                 </div>
 
@@ -387,7 +388,20 @@ export default function DesignCentralStation() {
                       backgroundColor: TRAIN_WHEEL_COLOR,
                       borderColor: TRAIN_BORDER_COLOR,
                     }}
-                  ></div>
+                  >
+                    </div>
+                    {/* Connector / Coupler */}
+                    <div
+                      className="absolute top-1/2 -translate-y-1/2 w-4 h-2"
+                      style={{
+                        left: '-1rem', // Positioned exactly between cars
+                        backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
+                        zIndex: -1, // Sits behind the cars
+                      }}
+                    >
+                    {/* Optional: A smaller inner detail to look like a mechanical link */}
+                    <div className="absolute inset-0 m-auto w-2 h-1 bg-gray-400 opacity-50" />
+                  </div>
                 </div>
 
                 <div
@@ -419,7 +433,20 @@ export default function DesignCentralStation() {
                       backgroundColor: TRAIN_WHEEL_COLOR,
                       borderColor: TRAIN_BORDER_COLOR,
                     }}
-                  ></div>
+                  >
+                    </div>
+                    {/* Connector / Coupler */}
+                    <div
+                      className="absolute top-1/2 -translate-y-1/2 w-4 h-2"
+                      style={{
+                        left: '-1rem', // Positioned exactly between cars
+                        backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
+                        zIndex: -1, // Sits behind the cars
+                      }}
+                    >
+                    {/* Optional: A smaller inner detail to look like a mechanical link */}
+                    <div className="absolute inset-0 m-auto w-2 h-1 bg-gray-400 opacity-50" />
+                  </div>
                 </div>
 <div
   className="relative w-20 h-8 border-2 rounded-sm"
@@ -429,6 +456,19 @@ export default function DesignCentralStation() {
     marginTop: "14px",
   }}
 >
+  {/* Connector / Coupler */}
+  <div
+    className="absolute top-1/2 -translate-y-1/2 w-4 h-2"
+    style={{
+      left: '-1rem', // Positioned exactly between cars
+      backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
+      zIndex: -1, // Sits behind the cars
+    }}
+  >
+  {/* Optional: A smaller inner detail to look like a mechanical link */}
+  <div className="absolute inset-0 m-auto w-2 h-1 bg-gray-400 opacity-50" />
+</div>
+
   {/* Cabin (Back) - Now integrated into the body */}
   <div
     className="absolute -top-6 left-0 w-10 h-6 border-2 rounded-t-sm"
@@ -482,7 +522,7 @@ export default function DesignCentralStation() {
 
   {/* Rear Wheel */}
   <div
-    className="absolute -bottom-2 left-2 w-3 h-3 rounded-full border-2"
+    className="absolute -bottom-1 left-2 w-3 h-3 rounded-full border-2"
     style={{
       backgroundColor: TRAIN_WHEEL_COLOR,
       borderColor: TRAIN_BORDER_COLOR,
@@ -491,7 +531,7 @@ export default function DesignCentralStation() {
 
   {/* Front Wheel */}
   <div
-    className="absolute -bottom-2 right-4 w-3 h-3 rounded-full border-2"
+    className="absolute -bottom-1 right-4 w-3 h-3 rounded-full border-2"
     style={{
       backgroundColor: TRAIN_WHEEL_COLOR,
       borderColor: TRAIN_BORDER_COLOR,
@@ -656,7 +696,7 @@ export default function DesignCentralStation() {
                 {/* Content */}
                 <div className="relative flex items-center gap-4 z-10">
                   <div className="flex items-center gap-4">
-                        <Info className="w-10 h-10 " style={{ color: THEME_COLOR }}/>
+                        <Info className="w-10 h-10 " style={{ color: SILVER }}/>
                         <h2 className="text-4xl font-bold text-[#FFFAFB] tracking-wide">INFORMATION</h2>
                       </div>
                 </div>
@@ -732,7 +772,7 @@ export default function DesignCentralStation() {
             </div>
 
             {/* About Me Panel */}
-            <div className="pt-12"
+            <div className="mb-12"
                 style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
               <div className="flex items-start gap-4 mb-6">
                 {/* <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 p-3 rounded-lg">
