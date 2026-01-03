@@ -102,6 +102,7 @@ export default function DesignCentralStation() {
     {
       id: 'logs',
       name: 'Logs: Rags to Riches',
+      year: 2025,
       line: 'Red Line',
       color: '#E53935',
       thumbnail: '/images/Home/Thumbs/1.webp',
@@ -113,6 +114,7 @@ export default function DesignCentralStation() {
     {
       id: 'alerts',
       name: 'Smarter Alerts',
+      year: 2025,
       line: 'Purple Line',
       color: '#8E24AA',
       thumbnail: '/images/Home/Thumbs/2.webp',
@@ -124,6 +126,7 @@ export default function DesignCentralStation() {
     {
       id: 'data',
       name: 'Secure Data',
+      year: 2025,
       line: 'Red + Green Lines',
       color: '#43A047',
       thumbnail: '/images/Home/Thumbs/loyola.webp',
@@ -135,6 +138,7 @@ export default function DesignCentralStation() {
     {
       id: 'team',
       name: 'Empowered Team',
+      year: 2020,
       line: 'Blue Line',
       color: '#1E88E5',
       thumbnail: '/images/Home/Thumbs/align.webp',
@@ -146,6 +150,7 @@ export default function DesignCentralStation() {
     {
       id: 'future',
       name: 'Imagining the Future',
+      year: 2019,
       line: 'Green Line',
       color: '#43A047',
       thumbnail: '/images/Home/Thumbs/sesi.webp',
@@ -157,6 +162,7 @@ export default function DesignCentralStation() {
     {
       id: 'health',
       name: 'Health Frameworks',
+      year: 2019,
       line: 'Purple + Blue Lines',
       color: '#8E24AA',
       thumbnail: '/images/Home/Thumbs/bose.webp',
@@ -571,6 +577,11 @@ export default function DesignCentralStation() {
                     className="w-full h-24 md:h-28 object-cover rounded-md mb-4"
                   />
                 )}
+              </div>
+
+              {/* Year badge (top-right) */}
+              <div className="absolute top-4 right-4 bg-black/60 text-white/70 px-2 py-1 rounded-md text-xs border border-white/10">
+                est: {project.year}
               </div>
 
               <div className="flex items-start justify-between mb-4">
