@@ -81,6 +81,17 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Reset internal state when the parent switches to a different case study
+  useEffect(() => {
+    setShowOverview(true);
+    setCurrentStop(0);
+    setPeekIndex(0);
+    setStopCarouselIndex(0);
+    setIsFullscreen(false);
+    setFullscreenImage(null);
+    setFullscreenSource('peeks');
+  }, [dataIndex]);
+
   useEffect(() => {
     const images = caseStudyData.stops[currentStop].images;
     if (!images || images.length === 0) {
@@ -255,7 +266,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             </div>
 
                   {/* Impact metrics in 2-column grid */}
-                  <div className="grid grid-cols-4 gap-3 mb-12">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
                     <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
                       <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
                         30%
@@ -592,12 +603,12 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               )}
             </div>
 
-            {/* Navigation */}
-            <div className="flex justify-between items-center pt-8 border-t border-white/10">
+            {/* Navigation: stacked on small screens, inline on md+ */}
+            <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3 pt-8 border-t border-white/10">
               <button
                 onClick={prevStop}
                 disabled={currentStop === 0}
-                className="flex items-center gap-2 px-6 py-3 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                className="flex items-center gap-2 px-4 py-3 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all w-full sm:w-auto justify-center"
                 style={{ backgroundColor: INFO_COLOR }}
                 onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = SECONDARY_COLOR)}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
@@ -605,7 +616,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 <ChevronLeft size={20} />
                 Previous Stop
               </button>
-              
+
               <button
                 onClick={() => {
                   setShowOverview(true);
@@ -613,11 +624,9 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   setFullscreenImage(null);
                   setFullscreenSource('peeks');
                 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
+                className="flex items-center gap-2 px-4 py-3 rounded-full transition-all hover:scale-105 w-full sm:w-auto justify-center"
                 style={{ backgroundColor: INFO_COLOR,
                     boxShadow: `0 0 20px ${INFO_COLOR}40` }}
-                // onMouseEnter={(e) => e.currentTarget.style.backgroundColor = SECONDARY_COLOR}
-                // onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
               >
                 Back to Overview
               </button>
@@ -625,7 +634,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               {currentStop < caseStudyData.stops.length - 1 ? (
                 <button
                   onClick={nextStop}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
+                  className="flex items-center gap-2 px-4 py-3 rounded-full transition-all hover:scale-105 w-full sm:w-auto justify-center"
                   style={{ 
                     backgroundColor: INFO_COLOR,
                     boxShadow: `0 0 20px ${INFO_COLOR}40`
@@ -636,8 +645,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 </button>
               ) : (
                 <button
-                  onClick={onBack}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full text-black transition-all hover:scale-105"
+                  onClick={onNextRoute}
+                  className="flex items-center gap-2 px-4 py-3 rounded-full text-black transition-all hover:scale-105 w-full sm:w-auto justify-center"
                   style={{ 
                     backgroundColor: ACCENT_COLOR,
                     boxShadow: `0 0 20px ${ACCENT_COLOR}40`
