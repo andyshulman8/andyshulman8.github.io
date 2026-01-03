@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 interface Item { title: string; description: string }
 interface Props { items: Item[] }
