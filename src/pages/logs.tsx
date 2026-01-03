@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
+import CalloutBox from '../components/CalloutBox';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
@@ -25,6 +26,7 @@ interface Stop {
   quoteAuthor?: string;
   insights?: string[];
   features?: { title: string; description: string }[];
+  callout?: string;
   impact?: {
     metric1: string;
     label1: string;
@@ -573,6 +575,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   )}
                 </div>
               </blockquote>
+            )}
+
+            {/* Callout note if available */}
+            {caseStudyData.stops[currentStop].callout && (
+              <CalloutBox>
+                {caseStudyData.stops[currentStop].callout}
+              </CalloutBox>
             )}
 
               {/* Insights if available */}

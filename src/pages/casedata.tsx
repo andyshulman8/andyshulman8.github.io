@@ -12,6 +12,7 @@ interface Stop {
   quoteImage?: string;
   insights?: string[];
   features?: { title: string; description: string }[];
+  callout?: string;
   impact?: {
     metric1: string;
     label1: string;
@@ -57,16 +58,17 @@ export const allCaseStudies: CaseStudyData[] = [
         quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
         quoteImage: "/images/rags/burriss.png",
-        insights: [
-          "Disconnected Tools: Critical troubleshooting moments are only more stressful with siloed apps; users were forced to juggle various tools and processes",
-          "Inefficient Filtering: Competitors offered advanced search — users asked: 'Why is LM Logs search so small? Where is my recent history?'",
-          "Raw Data Overload: Without diverse and integrated visualizations, the benefit of LM Logs was buried"
+        features: [
+          { title: "Disconnected Tools", description: "Critical troubleshooting moments are only more stressful with siloed apps; users were forced to juggle various tools and processes." },
+          { title: "Inefficient Filtering", description: "Competitors offered advanced search — users asked: 'Why is LM Logs search so small? Where is my recent history?'" },
+          { title: "Raw Data Overload", description: "Without diverse and integrated visualizations, the benefit of LM Logs was buried." }
         ],
       },
       {
         station_name: "Unified Platform",
         phase: "Ideate",
         content: "My solution: unified the platform so engineers didn't have to context-switch. I designed seamless workflows connecting logs across the product, added embeddable logs widgets for dashboards, and surfaced anomalous logs directly within alerts.",
+        callout: "LogicMonitor used a competing tool to monitor its own logs for a long time before I worked with my team to add functionality and better integrate it with the rest of LogicMonitor's tools.",
         images: [
           "/images/rags/gap1.1.png",
           "/images/rags/gap1.2.png",
