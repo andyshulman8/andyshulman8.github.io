@@ -549,29 +549,33 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
             {/* Content */}
             <div className="prose prose-invert max-w-none">
-              <p className="text-l text-white/80 leading-relaxed">
+              <p className="text-l text-white/80 leading-relaxed mb-6">
                 {caseStudyData.stops[currentStop].content}
               </p>
 
              {/* Quote if available */}
             {caseStudyData.stops[currentStop].quote && (
               <blockquote 
-                className="border-l-4 pl-6 py-4 my-8 italic text-white/60 flex items-start gap-4"
-                style={{ borderColor: ACCENT_COLOR }}
+                className="border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
+                style={{ borderColor: ACCENT_COLOR, backgroundColor: '#dfe1e5ff' }}
               >
                 <div className="flex-1">
                   "{caseStudyData.stops[currentStop].quote}"
                   {caseStudyData.stops[currentStop].quoteAuthor && (
-                    <footer className="text-sm mt-4 not-italic text-white/40 flex items-center gap-3 pt-2">
-                      {caseStudyData.stops[currentStop].quoteImage && (
-                        <img 
-                          src={caseStudyData.stops[currentStop].quoteImage} 
-                          alt={caseStudyData.stops[currentStop].quoteAuthor}
-                          className="w-10 h-10 rounded-full object-cover ring-2 ring-white/20"
-                        />
-                      )}
-                      <span>{caseStudyData.stops[currentStop].quoteAuthor}</span>
-                    </footer>
+                    <>
+                      <div className="w-full border-t border-black/30 my-4" />
+                      <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
+                        {caseStudyData.stops[currentStop].quoteImage && (
+                          <img 
+                            src={caseStudyData.stops[currentStop].quoteImage} 
+                            alt={caseStudyData.stops[currentStop].quoteAuthor}
+                            className="w-10 h-10 rounded-full object-cover"
+                            style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset' }}
+                          />
+                        )}
+                        <span>{caseStudyData.stops[currentStop].quoteAuthor}</span>
+                      </footer>
+                    </>
                   )}
                 </div>
               </blockquote>

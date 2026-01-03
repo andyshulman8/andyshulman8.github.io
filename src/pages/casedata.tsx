@@ -129,20 +129,20 @@ export const allCaseStudies: CaseStudyData[] = [
         quote: "We're like headless chickens running around. If you spend your efforts in different directions, the chances of them negating or canceling out are greater.",
         quoteAuthor: "Sankeet Lokhande, Senior Engineer at Schneider Electric",
         quoteImage: '/images/alerts/sankeet.png',
-        insights: [
-          "Alert Fatigue: Thousands of daily alerts buried critical issues in noise",
-          "Slow Troubleshooting: Engineers spent hours diagnosing incidents—even repeated ones",
-          "Reactive Monitoring: Teams discovered problems only after they escalated"
+        features: [
+          { title: "Alert Fatigue", description: "Thousands of daily alerts buried critical issues in noise" },
+          { title: "Slow Troubleshooting", description: "Engineers spent hours diagnosing incidents—even repeated ones" },
+          { title: "Reactive Monitoring", description: "Teams discovered problems only after they escalated" }
         ]
       },
       {
         station_name: "Smarter Alerts",
         phase: "Define",
         content: "I introduced alert groups and 'stateful' alerts that clear automatically when issues resolve. Users could now choose between 3 alert types, build groups of alerts on the fly, group related alerts, define alert logic within time windows, and view all important alert information directly from their email.",
-        insights: [
-          "Users needed to know when getting way more logs of a certain type than normal",
-          "Users needed to know when not receiving a certain log",
-          "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data"
+        features: [
+          { title: "Spike Detection", description: "Users needed to know when getting way more logs of a certain type than normal" },
+          { title: "Missing Log Detection", description: "Users needed to know when not receiving a certain log" },
+          { title: "Reduce False Positives", description: "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data" }
         ]
       },
       {
@@ -187,9 +187,9 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "I led recurring user research sessions, conducting interviews and analyzing workflows to understand where our product was failing. Without proper access controls, one misconfigured permission could expose thousands of student health records or financial aid data: a career-ending mistake for someone like Mike and devastating for students and professors.",
         quote: "We had to manage logs from campus safety systems, VoIP devices, and servers, all with different requirements. Tech changes fast—our tools needed to keep up.",
         quoteAuthor: "Mike Dieter, Senior Systems Engineer at Loyola University of Maryland",
-        insights: [
-          "Access Control Limitations: Existing tools lacked granular permissions, creating potential exposure of sensitive student and staff data",
-          "Log Collection Complexity: Collecting logs from diverse systems (VoIP, security, academic networks) was slow and error-prone"
+        features: [
+          { title: "Access Control Limitations", description: "Existing tools lacked granular permissions, creating potential exposure of sensitive student and staff data" },
+          { title: "Log Collection Complexity", description: "Collecting logs from diverse systems (VoIP, security, academic networks) was slow and error-prone" }
         ]
       },
       {
@@ -201,10 +201,10 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Simplified Collection",
         phase: "Ideate",
         content: "To help Loyola securely manage their evergrowing, complex environment, I designed pre-built templates for common log types, automating ingestion and reducing configuration errors. Users could easily bring in cloud or on-premises logs and instantly start monitoring from one single pane of glass instead of jumping to different platforms.",
-        insights: [
-          "Clear, pre-configured defaults",
-          "Step-by-step forms with inline documentation",
-          "Scalable structure for future log types"
+        features: [
+          { title: "Pre-configured Defaults", description: "Clear, pre-configured defaults" },
+          { title: "Guided Setup", description: "Step-by-step forms with inline documentation" },
+          { title: "Scalable Structure", description: "Scalable structure for future log types" }
         ]
       },
       {
@@ -353,10 +353,10 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Reduce Bottlenecks",
         phase: "Define",
         content: "To streamline collaboration across the Bose Health division, I created a centralized research tracker that improved visibility across design, research, and engineering. The tool included categorized research questions, clear ownership, and criteria for when to consult experts. This reduced expert dependency by 40%.",
-        insights: [
-          "Added 25 new research questions, categorized into 5 workstreams",
-          "Defined when experts should be consulted vs. when teams should move forward independently",
-          "Built tracker first in spreadsheets then in Trello for visibility and accountability"
+        features: [
+          { title: "Expanded Research", description: "Added 25 new research questions, categorized into 5 workstreams" },
+          { title: "Consultation Guidance", description: "Defined when experts should be consulted vs. when teams should move forward independently" },
+          { title: "Research Tracker", description: "Built tracker first in spreadsheets then in Trello for visibility and accountability" }
         ]
       },
       {
