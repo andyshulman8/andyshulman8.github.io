@@ -24,6 +24,7 @@ interface Stop {
   quote?: string;
   quoteAuthor?: string;
   insights?: string[];
+  features?: { title: string; description: string }[];
   impact?: {
     metric1: string;
     label1: string;
@@ -448,7 +449,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
 {/* Images carousel if available */}
 {caseStudyData.stops[currentStop].images && caseStudyData.stops[currentStop].images.length > 0 && (
-  <div className="relative max-w-4xl mx-auto">
+  <div className="relative max-w-4xl mx-auto mb-8">
     {/* Regular train window */}
     <div 
       className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity" 
@@ -583,6 +584,18 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       <li key={i} className="text-white/70">{insight}</li>
                     ))}
                   </ul>
+                </div>
+              )}
+
+              {/* Feature boxes (e.g. multiple graph types, query operators, dashboard widgets) */}
+              {caseStudyData.stops[currentStop].features && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
+                  {caseStudyData.stops[currentStop].features.map((f: any, i: number) => (
+                    <div key={i} className="rounded-lg p-6" style={{ backgroundColor: INFO_COLOR }}>
+                      <h4 className="text-lg font-bold mb-2" style={{ color: ACCENT_COLOR }}>{f.title}</h4>
+                      <p className="text-white/70 text-sm">{f.description}</p>
+                    </div>
+                  ))}
                 </div>
               )}
 

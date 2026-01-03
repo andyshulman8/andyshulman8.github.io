@@ -11,6 +11,7 @@ interface Stop {
   quoteAuthor?: string;
   quoteImage?: string;
   insights?: string[];
+  features?: { title: string; description: string }[];
   impact?: {
     metric1: string;
     label1: string;
@@ -46,9 +47,8 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     before: '/images/rags/before.png',
     after: '/images/rags/after.png',
-    background: "Before LogicMonitor had acquired (and properly integrated) a logs product, users were forced to jump between disconnected tools during critical moments. RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs.",
-    overview: "I joined and took over design for LogicMonitor Logs, helping users bridge the critical gap between knowing that something is wrong and solving the problem. Through close collaboration across global teams, I helped transform LM Logs from a niche add-on to a flagship product that LogicMonitor itself relied on.",
-    
+    background: "When Systems Fail, Lives Are at Risk: RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs. Before LogicMonitor had properly integrated a logs product, users were forced to jump between disconnected tools during critical moments.",
+    overview: "I joined and took over design for LogicMonitor Logs, helping users bridge the critical gap between knowing that something is wrong and solving the problem. Owned end-to-end design for LM Logs acquisition integration; collaborated globally with engineering, PMs, technical writers, and a 10-person design team. Established LM Logs as a competitive player by overhauling search, visualizations, and product cohesion.",
     stops: [
       {
         station_name: "Discovery",
@@ -58,15 +58,15 @@ export const allCaseStudies: CaseStudyData[] = [
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
         quoteImage: "/images/rags/burriss.png",
         insights: [
-          "Disconnected Tools: Critical troubleshooting moments are only more stressful when you have siloed apps, forced to juggle various tools and processes",
-          "Inefficient Filtering: Competitors offered advanced search, while our users react: 'Why is LM Logs search so small? I don't expect a diet logs product'",
-          "Raw Data Overload: Without proper and integrated visualizations, the benefit of LM Logs was buried"
+          "Disconnected Tools: Critical troubleshooting moments are only more stressful with siloed apps; users were forced to juggle various tools and processes",
+          "Inefficient Filtering: Competitors offered advanced search — users asked: 'Why is LM Logs search so small? Where is my recent history?'",
+          "Raw Data Overload: Without diverse and integrated visualizations, the benefit of LM Logs was buried"
         ],
       },
       {
         station_name: "Unified Platform",
         phase: "Ideate",
-        content: "I designed seamless workflows connecting logs across the platform. Added logs widgets capabilities to dashboards, made logs visible alongside device and service data, and displayed anomalous logs available within alerts. LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure.",
+        content: "My solution: unified the platform so engineers didn't have to context-switch. I designed seamless workflows connecting logs across the product, added embeddable logs widgets for dashboards, and surfaced anomalous logs directly within alerts.",
         images: [
           "/images/rags/gap1.1.png",
           "/images/rags/gap1.2.png",
@@ -76,19 +76,24 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "Empowered Search",
         phase: "Ideate",
-        content: "I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search (edited vs searching vs searched). I gave both novice and expert users deeper control over filtering by emphasizing and injecting features into search, including a prominent search box and intuitive fields panel.",
+        content: "Through competitive analysis, I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
         quote: "I like a big search box and inline support is super helpful.",
         quoteAuthor: "NOC Engineer at HyeTech Networks"
       },
       {
         station_name: "Visual Analytics",
         phase: "Prototype",
-        content: "I transformed raw log data into actionable insights through visual analytics. Designed multiple graph types, advanced query operators (count, avg, sum, min, max), and dashboard integration. RaySearch could have a dashboard on a TV in their office—a spike in errors would be obvious and immediately easy to assess.",
+        content: "Rather than reinventing visualization patterns, I leveraged LogicMonitor's design system to surface spikes, anomalies, and trends instantly — turning logs from a wall of text into actionable dashboards.",
+        features: [
+          { title: "Multiple Graph Types", description: "By providing options, users are now more empowered to understand patterns in their data." },
+          { title: "Advanced Query Operators", description: "Count, avg, sum, min, and max operators enabled numerical analysis beyond keyword searches." },
+          { title: "Dashboard Integration", description: "Logs widgets can be embedded in dashboards, helping correlate log data with system performance metrics." }
+        ]
       },
       {
         station_name: "Launch & Impact",
         phase: "Test",
-        content: "Through close collaboration across global teams, I helped transform LM Logs from a niche add-on to a flagship product that LogicMonitor itself relied on. LogicMonitor did not use its own logs product until my team and I improved and integrated it enough to achieve all its needs.",
+        content: "Issue resolution dropped dramatically as teams adopted the integrated workflows and visualizations. Engineers could solve highly complex issues while working in one powerful tool.",
         quote: "We had users complaining that there was a licensing error. Using LogicMonitor's platform, including LM Logs, we were able to trace the issue and do a stop service on a server way down the line. The process took about 10 minutes versus the two to three hours it would have taken without the visibility.",
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
         impact: {
