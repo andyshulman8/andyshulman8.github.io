@@ -643,7 +643,7 @@ export default function DesignCentralStation() {
                       0 0 60px ${INFO_COLOR}60,
                       inset 0 0 40px ${INFO_COLOR}30,
                       0 8px 32px rgba(0,0,0,0.4)
-                    `,
+                    `, paddingLeft: 8, paddingRight:8,
                     zIndex: 1
                   }}>
                 
