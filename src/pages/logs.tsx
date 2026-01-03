@@ -55,6 +55,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     // Wait for animation to finish, then navigate
     setTimeout(() => {
       setShowOverview(false);
+      window.scrollTo(0, 0);
       setCurrentStop(0);
       setShowTransition(false);
     }, 1200); // Match your longest animation duration
@@ -64,18 +65,21 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     if (currentStop < caseStudyData.stops.length - 1) {
       setCurrentStop(currentStop + 1);
       setShowOverview(false);
+      window.scrollTo(0, 0);
     }
   };
   
   const prevStop = () => {
     if (currentStop > 0) {
       setCurrentStop(currentStop - 1);
+      window.scrollTo(0, 0);
     }
   };
   
   const goToStop = (index: number) => {
     setCurrentStop(index);
     setShowOverview(false);
+    window.scrollTo(0, 0);
   };
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
@@ -90,6 +94,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     setIsFullscreen(false);
     setFullscreenImage(null);
     setFullscreenSource('peeks');
+    // ensure we start at top when switching case studies
+    window.scrollTo(0, 0);
   }, [dataIndex]);
 
   useEffect(() => {
