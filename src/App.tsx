@@ -104,7 +104,7 @@ export default function DesignCentralStation() {
       name: 'Logs: Rags to Riches',
       line: 'Red Line',
       color: '#E53935',
-      thumbnail: '/images/Home/Thumbs/1.jpg',
+      thumbnail: '/images/Home/Thumbs/1.webp',
       tagline: 'From niche add-on to flagship product',
       impact: 'Cut troubleshooting from hours to 10 minutes',
       methodology: 'Stanford d.school',
@@ -115,7 +115,7 @@ export default function DesignCentralStation() {
       name: 'Smarter Alerts',
       line: 'Purple Line',
       color: '#8E24AA',
-      thumbnail: '/images/Home/Thumbs/2.jpg',
+      thumbnail: '/images/Home/Thumbs/2.webp',
       tagline: 'Reducing alert noise through behavior design',
       impact: '30% reduction in alert fatigue',
       methodology: 'Behavior Design',
@@ -126,7 +126,7 @@ export default function DesignCentralStation() {
       name: 'Secure Data',
       line: 'Red + Green Lines',
       color: '#43A047',
-      thumbnail: '/images/Home/Thumbs/loyola.jpg',
+      thumbnail: '/images/Home/Thumbs/loyola.webp',
       tagline: 'Privacy-first log management',
       impact: '$250K annual savings for customers',
       methodology: 'Mixed Route',
@@ -137,7 +137,7 @@ export default function DesignCentralStation() {
       name: 'Empowered Team',
       line: 'Blue Line',
       color: '#1E88E5',
-      thumbnail: '/images/Home/Thumbs/align.jpg',
+      thumbnail: '/images/Home/Thumbs/align.webp',
       tagline: 'Teaching design thinking at scale',
       impact: '3 piloted solutions in 12 weeks',
       methodology: 'Business Strategy',
@@ -148,7 +148,7 @@ export default function DesignCentralStation() {
       name: 'Imagining the Future',
       line: 'Green Line',
       color: '#43A047',
-      thumbnail: '/images/Home/Thumbs/sesi.png',
+      thumbnail: '/images/Home/Thumbs/sesi.webp',
       tagline: 'Museum framework for social impact',
       impact: '100K+ visitors since 2022',
       methodology: 'Sustainability',
@@ -159,7 +159,7 @@ export default function DesignCentralStation() {
       name: 'Health Frameworks',
       line: 'Purple + Blue Lines',
       color: '#8E24AA',
-      thumbnail: '/images/Home/Thumbs/bose.png',
+      thumbnail: '/images/Home/Thumbs/bose.webp',
       tagline: 'Hardware + software interaction design',
       impact: '40% reduction in expert dependency',
       methodology: 'Mixed Route',
@@ -176,21 +176,21 @@ export default function DesignCentralStation() {
       author: "David Femino",
       role: "Sr. Manager, PM - Cloud & Logs",
       company: "LogicMonitor",
-      avatar: '/images/Home/David.png'
+      avatar: '/images/Home/David.webp'
     },
     {
       quote: "Beyond the enthusiasm, Andy is a model of professionalism and is extremely knowledgeable about the intricacies of enterprise UX, AI, and AIOps. The next organization will gain a truly valuable team member who elevates the entire design process through smart strategy, collaborative spirit, and a deep technical understanding. Highly recommended!",
       author: "Richard Huddleston",
       role: "Technical Fellow",
       company: "LogicMonitor",
-      avatar: '/images/Home/richard.jpeg'
+      avatar: '/images/Home/richard.webp'
     },
     {
       quote: "He really used his holistic approach to make some real impact for us as a business and for our customers. Andy has been fantastic as a coach, motivator and project leader to our global cross functional teams. His fast approach towards getting empathetic insights from customers and transforming it into iterative testing was refreshing.",
       author: "Volker Probst",
       role: "Customer Experience VP",
       company: "Align Technology",
-      avatar: '/images/Home/volker.png'
+      avatar: '/images/Home/volker.webp'
     }
   ];
 
@@ -227,9 +227,7 @@ export default function DesignCentralStation() {
   // Show case study pages (lazy-loaded to improve initial load)
   if (isCaseView) {
     return (
-      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
         <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />
-      </Suspense>
     );
   }
 
@@ -244,7 +242,7 @@ export default function DesignCentralStation() {
 
             {/* Landing content starts */}
               {/* Hero Section - Station Entrance (commented out) */}
-              <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+              <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.webp')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
           <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
             <div className="text-left">
@@ -710,20 +708,34 @@ export default function DesignCentralStation() {
                   </p>
                 </div>
               </div>
-              <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden relative">
+              <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden relative aspect-video">
+                {/* Skeleton placeholder: visible until the image finishes loading */}
+                <div
+                  aria-hidden={processLoaded}
+                  className={`absolute inset-0 transition-opacity duration-500 ${processLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                >
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full rounded-md bg-gradient-to-br from-[#f2e8df] to-[#e6dccf] animate-pulse" />
+                  </div>
+                </div>
+
+                {/* Circular loader centered over the skeleton while loading */}
                 {!processLoaded && (
-                  <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#f5e6d340]">
+                  <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                     <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
                   </div>
                 )}
+
+                {/* Actual image: decode async, lazy-load, and fade in when ready */}
                 <img
-                  src="/images/Home/process.jpg"
+                  src="/images/Home/process.webp"
                   alt="Design process map"
                   loading="lazy"
+                  decoding="async"
                   onLoad={() => setProcessLoaded(true)}
                   onError={() => setProcessLoaded(true)}
-                  className="cursor-pointer hover:opacity-90 transition-opacity"
-                  onClick={() => setFullscreenImage("/images/Home/process.jpg")}
+                  className={`cursor-pointer hover:opacity-90 transition-opacity duration-500 ${processLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  onClick={() => setFullscreenImage("/images/Home/process.webp")}
                 />
               </div>
               {/* Skills Panel */}
@@ -796,7 +808,7 @@ export default function DesignCentralStation() {
       <section className="mb-16 py-10 px-6 max-w-7xl mx-auto" style={{ backgroundColor: BACK_COLOR }}>
         {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
         <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
-          <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
+          <img src="/images/Home/tickets.webp" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
 
           {/* Content overlay */}
           <div className="relative z-10 max-w-7xl mx-auto">
