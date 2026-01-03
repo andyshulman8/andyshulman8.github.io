@@ -4,6 +4,7 @@ import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
 import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
+import CarouselControls from '../components/CarouselControlsNew';
 
 
 // Color constants - adjust these to change the entire theme
@@ -50,7 +51,9 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   
   const [currentStop, setCurrentStop] = useState(0);
   const [showOverview, setShowOverview] = useState(true);
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [peekIndex, setPeekIndex] = useState(0);
+  const [stopCarouselIndex, setStopCarouselIndex] = useState(0);
+  const [fullscreenSource, setFullscreenSource] = useState<'peeks' | 'stop' | 'single'>('peeks');
 
   const startJourney = () => {
     setShowTransition(true); // Trigger train animation
@@ -94,50 +97,58 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   useEffect(() => {
     const images = caseStudyData.stops[currentStop].images;
     if (!images || images.length === 0) {
-      setCarouselIndex(0);
+      setStopCarouselIndex(0);
       return;
     }
-    if (carouselIndex >= images.length) {
-      setCarouselIndex(0);
+    if (stopCarouselIndex >= images.length) {
+      setStopCarouselIndex(0);
     }
-  }, [currentStop, caseStudyData, carouselIndex]);
+  }, [currentStop, caseStudyData, stopCarouselIndex]);
 
   return (
     
     
     <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
-      {/* Fullscreen Image Viewer */}
-      {/* <FullscreenImageViewer 
-        src={fullscreenImage} 
-        alt="Fullscreen view"
-        onClose={() => setFullscreenImage(null)}
-      /> */}
+        {/* Fullscreen viewer: use shared component for single image or gallery.
+            Controlled with `fullscreenSource` / `fullscreenImage` / indices.
+        */}
+        {isFullscreen && (
+          <FullscreenImageViewer
+            src={fullscreenSource === 'single' ? fullscreenImage : undefined}
+            images={fullscreenSource === 'peeks' ? caseStudyData.peeks : (fullscreenSource === 'stop' ? caseStudyData.stops[currentStop].images : undefined)}
+            currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
+            onChangeIndex={(i) => {
+              if (fullscreenSource === 'peeks') setPeekIndex(i);
+              if (fullscreenSource === 'stop') setStopCarouselIndex(i);
+            }}
+            onClose={() => { setIsFullscreen(false); setFullscreenImage(null); setFullscreenSource('peeks'); }}
+          />
+        )}
 
-
-      {/* Header */}
-      <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button 
-            onClick={onBack}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-          >
-            <ChevronLeft size={20} />
-            <span>Back to Station</span>
-          </button>
-          <div className="text-right">
-            <div className="text-sm text-white/40">{caseStudyData.destination}</div>
-            <div className="text-xl font-bold" style={{ color: ACCENT_COLOR }}>
-              {caseStudyData.title}
+        {/* Header */}
+        <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <button 
+              onClick={onBack}
+              className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
+            >
+              <ChevronLeft size={20} />
+              <span>Back to Station</span>
+            </button>
+            <div className="text-right">
+              <div className="text-sm text-white/40">{caseStudyData.destination}</div>
+              <div className="text-xl font-bold" style={{ color: ACCENT_COLOR }}>
+                {caseStudyData.title}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-6 py-12">
+        <main className="max-w-7xl mx-auto px-6">
+
         {showOverview ? (
           // Overview Section
-          <div className="space-y-16">
+          <div className="max-w-5xl mx-auto px-6 py-12">
             {/* Title */}
             <div className="text-center space-y-4">
               <h1 className="text-4xl font-bold mb-2">{caseStudyData.title}</h1>
@@ -149,7 +160,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             </div>
 
             {/* Background Section */}
-            <div className="">
+            <div className="mb-12">
               <h2 className="text-2xl font-bold mb-6 text-white/80">Background</h2>
               <p className="text-white/60 leading-relaxed text-l">
                 {caseStudyData.background}
@@ -157,8 +168,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             </div>
 
             {/* Sneak Peek Section */}
-            <div>
-              <div className="grid md:grid-cols-3 gap-8 items-stretch">
+            <div className="mb-8">
+              <div className="grid md:grid-cols-3 gap-8 items-start">
                 {/* Left: Destination (Impact Metrics) */}
                 <div className="space-y-6">
                   <h2 className="text-3xl font-bold mb-8 text-left">Sneak Peeks</h2>
@@ -169,127 +180,14 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 
                 {/* Right: Train Window Image Carousel */}
                 <div className="relative md:col-span-2 space-y-6">
-                  {/* Fullscreen overlay */}
-                  {isFullscreen && (
-                    <div 
-                      className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-                      onClick={() => {
-                        setIsFullscreen(false);
-                        setFullscreenImage(null);  // Reset image too
-                      }}
-                    >
-                      <button
-                        onClick={() => setIsFullscreen(false)}
-                        className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg z-10"
-                        style={{ 
-                          background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-                          border: '2px solid #555',
-                          boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-                        }}
-                      >
-                        <X size={24} style={{ color: '#aaa' }} />
-                      </button>
-                      
-                      <div className="relative max-w-7xl w-full" onClick={(e) => e.stopPropagation()}>
-                        {/* Heavy metal train frame - fullscreen version */}
-                        <div className="relative p-8 rounded-2xl" style={{ 
-                          background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
-                          border: '6px solid #333',
-                          boxShadow: 'inset 0 8px 32px rgba(0,0,0,0.8), 0 16px 48px rgba(0,0,0,0.6)'
-                        }}>
-                          <div className="relative p-3 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
-                            background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
-                            border: '4px solid #444',
-                            boxShadow: 'inset 0 3px 12px rgba(0,0,0,0.9), inset 0 0 0 3px rgba(255,255,255,0.05)'
-                          }}>
-                            <div className="relative rounded-lg w-full overflow-hidden h-[70vh]" style={{
-                              background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
-                              border: '2px solid rgba(255,255,255,0.08)',
-                              boxShadow: 'inset 0 0 40px rgba(0,0,0,0.9)'
-                            }}>
-                              <img 
-                                src={fullscreenImage}
-                                alt={`Fullscreen preview`}
-                                className="absolute inset-0 w-full h-full object-contain"
-                              />
-                              
-                              <div className="absolute inset-0" style={{
-                                background: `
-                                  radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
-                                  radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                                  linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
-                                `
-                              }} />
-                            </div>
-                            
-                            {/* Window controls - fullscreen version */}
-                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4 items-center">
-                              <button
-                                onClick={() => setCarouselIndex((carouselIndex - 1 + caseStudyData.peaks.length) % caseStudyData.peaks.length)}
-                                className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-                                style={{ 
-                                  background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-                                  border: '3px solid #555',
-                                  boxShadow: '0 6px 16px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-                                }}
-                              >
-                                <ChevronLeft size={24} style={{ color: '#aaa' }} />
-                              </button>
-                              
-                              <div className="flex gap-3">
-                                {caseStudyData.peaks.map((_, i) => (
-                                  <div
-                                    key={i}
-                                    onClick={() => setCarouselIndex(i)}
-                                    className="w-4 h-4 rounded-full cursor-pointer transition-all hover:scale-125"
-                                    style={{ 
-                                      background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
-                                      boxShadow: i === carouselIndex ? '0 0 12px rgba(170,170,170,0.8)' : 'none',
-                                      border: '2px solid rgba(255,255,255,0.2)'
-                                    }}
-                                  />
-                                ))}
-                              </div>
-                              
-                              <button
-                                onClick={() => setCarouselIndex((carouselIndex + 1) % caseStudyData.peaks.length)}
-                                className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-                                style={{ 
-                                  background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-                                  border: '3px solid #555',
-                                  boxShadow: '0 6px 16px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-                                }}
-                              >
-                                <ChevronRight size={24} style={{ color: '#aaa' }} />
-                              </button>
-                            </div>
-                            
-                            {/* Corner rivets - fullscreen */}
-                            {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
-                              <div
-                                key={i}
-                                className={`absolute w-4 h-4 rounded-full shadow-md`}
-                                style={{
-                                  [pos.includes('top') ? 'top' : 'bottom']: '-3px',
-                                  [pos.includes('left') ? 'left' : 'right']: '-3px',
-                                  background: 'radial-gradient(circle, #666 30%, #444 70%)',
-                                  border: '2px solid #888',
-                                  boxShadow: '0 3px 8px rgba(0,0,0,0.6)'
-                                }}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                   
                   <div 
                     className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity" 
                     onClick={() => {
-                      const currentImages = caseStudyData.stops[currentStop].images;
-                      if (currentImages && currentImages.length > 0) {
-                        setFullscreenImage(currentImages[carouselIndex]);
+                      if (caseStudyData.peeks && caseStudyData.peeks.length) {
+                        setFullscreenSource('peeks');
+                        setPeekIndex(peekIndex);
+                        setFullscreenImage(caseStudyData.peeks[peekIndex]);
                         setIsFullscreen(true);
                       }
                     }}
@@ -313,8 +211,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       }}>
                         {/* Image */}
                         <img 
-                          src={caseStudyData.stops[currentStop].images![carouselIndex]} 
-                          alt={`Stop image ${carouselIndex + 1}`}
+                          src={caseStudyData.peeks[peekIndex]} 
+                          alt={`Peek ${peekIndex + 1}`}
                           className="absolute inset-0 w-full h-full object-contain"
                         />
                         
@@ -338,56 +236,15 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       </div>
                       
                       {/* Window controls - metal levers */}
-                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 items-center z-10">
-                        {/* Lever-style buttons */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCarouselIndex((carouselIndex - 1 + caseStudyData.peaks.length) % caseStudyData.peaks.length);
-                          }}
-                          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-                          style={{ 
-                            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-                            border: '2px solid #555',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-                          }}
-                        >
-                          <ChevronLeft size={16} style={{ color: '#aaa' }} />
-                        </button>
-                        
-                        {/* Dots as indicator lights */}
-                        <div className="flex gap-2">
-                          {caseStudyData.peaks.map((_, i) => (
-                            <div
-                              key={i}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setCarouselIndex(i);
-                              }}
-                              className="w-3 h-3 rounded-full cursor-pointer transition-all hover:scale-125"
-                              style={{ 
-                                background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
-                                boxShadow: i === carouselIndex ? '0 0 8px rgba(170,170,170,0.8)' : 'none',
-                                border: '1px solid rgba(255,255,255,0.2)'
-                              }}
-                            />
-                          ))}
-                        </div>
-                        
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCarouselIndex((carouselIndex + 1) % caseStudyData.peaks.length);
-                          }}
-                          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-                          style={{ 
-                            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-                            border: '2px solid #555',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-                          }}
-                        >
-                          <ChevronRight size={16} style={{ color: '#aaa' }} />
-                        </button>
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 items-center z-10">
+                        <CarouselControls
+                          length={caseStudyData.peeks.length}
+                          activeIndex={peekIndex}
+                          onPrev={() => setPeekIndex((peekIndex - 1 + caseStudyData.peeks.length) % caseStudyData.peeks.length)}
+                          onNext={() => setPeekIndex((peekIndex + 1) % caseStudyData.peeks.length)}
+                          onSelect={(i) => setPeekIndex(i)}
+                          size="small"
+                        />
                       </div>
                       
                       {/* Corner rivets */}
@@ -411,7 +268,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             </div>
 
                   {/* Impact metrics in 2-column grid */}
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-4 gap-3 mb-12">
                     <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
                       <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
                         30%
@@ -459,7 +316,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       src={caseStudyData.before} 
                       alt="Before"
                       className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
-                      onClick={() => caseStudyData.before && setFullscreenImage(caseStudyData.before)}
+                      onClick={() => {
+                        if (caseStudyData.before) {
+                          setFullscreenSource('single');
+                          setFullscreenImage(caseStudyData.before);
+                          setIsFullscreen(true);
+                        }
+                      }}
                     />
                   </div>
                   <p className="text-white/50 text-sm text-center">
@@ -475,7 +338,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                       alt="After"
                       className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
                       // onClick={() => setFullscreenImage(caseStudyData.after)}
-                      onClick={() => caseStudyData.after && setFullscreenImage(caseStudyData.after)}
+                      onClick={() => {
+                        if (caseStudyData.after) {
+                          setFullscreenSource('single');
+                          setFullscreenImage(caseStudyData.after);
+                          setIsFullscreen(true);
+                        }
+                      }}
                     />
                   </div>
                   <p className="text-white/50 text-sm text-center">
@@ -513,7 +382,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
           </div>
         ) : (
           // Stop Details View
-          <div className="space-y-8">
+          <div className="max-w-5xl mx-auto px-6 py-12">
             {/* Progress Tracker */}
             <div className="mb-12">
               <div className="relative flex items-center justify-between max-w-4xl mx-auto">
@@ -564,7 +433,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             </div>
 
             {/* Station Name */}
-<div className="text-center space-y-2">
+            <div className="text-center space-y-2 mt-8 mb-6">
   <div className="text-sm font-mono text-white/40">
     {/* {caseStudyData.stops[currentStop].phase.toUpperCase()} PHASE */}
   </div>
@@ -582,7 +451,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   onClick={() => {
     const currentImages = caseStudyData.stops[currentStop].images;
     if (currentImages && currentImages.length > 0) {
-      setFullscreenImage(currentImages[carouselIndex]);
+      setFullscreenSource('stop');
+      setFullscreenImage(currentImages[stopCarouselIndex]);
       setIsFullscreen(true);
     }
   }}
@@ -606,8 +476,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
         }}>
           {/* Image */}
           <img 
-            src={caseStudyData.stops[currentStop].images[carouselIndex]} 
-            alt={`Stop image ${carouselIndex + 1}`}
+            src={caseStudyData.stops[currentStop].images[stopCarouselIndex]} 
+            alt={`Stop image ${stopCarouselIndex + 1}`}
             className="absolute inset-0 w-full h-full object-contain"
           />
           
@@ -630,62 +500,21 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
           }} />
         </div>
         
-        {/* Window controls - metal levers */}
-{caseStudyData.stops[currentStop].images?.length > 1 && (
-  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 items-center z-10">
-    {/* Lever-style buttons */}
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        const len = caseStudyData.stops[currentStop].images!.length;
-        setCarouselIndex((carouselIndex - 1 + len) % len);
-      }}
-      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-      style={{ 
-        background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-        border: '2px solid #555',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-      }}
-    >
-      <ChevronLeft size={16} style={{ color: '#aaa' }} />
-    </button>
-    
-    {/* Dots as indicator lights */}
-    <div className="flex gap-2">
-      {caseStudyData.stops[currentStop].images!.map((_, i) => (
-        <div
-          key={i}
-          onClick={(e) => {
-            e.stopPropagation();
-            setCarouselIndex(i);
-          }}
-          className="w-3 h-3 rounded-full cursor-pointer transition-all hover:scale-125"
-          style={{ 
-            background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
-            boxShadow: i === carouselIndex ? '0 0 8px rgba(170,170,170,0.8)' : 'none',
-            border: '1px solid rgba(255,255,255,0.2)'
-          }}
-        />
-      ))}
-    </div>
-    
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        const len = caseStudyData.stops[currentStop].images!.length;
-        setCarouselIndex((carouselIndex + 1) % len);
-      }}
-      className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-      style={{ 
-        background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-        border: '2px solid #555',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-      }}
-    >
-      <ChevronRight size={16} style={{ color: '#aaa' }} />
-    </button>
-  </div>
-)}
+                      {/* Window controls - metal levers (extracted to CarouselControls) */}
+                      <CarouselControls
+                        length={caseStudyData.stops[currentStop].images?.length || 0}
+                        activeIndex={stopCarouselIndex}
+                        onPrev={() => {
+                          const len = caseStudyData.stops[currentStop].images!.length;
+                          setStopCarouselIndex((stopCarouselIndex - 1 + len) % len);
+                        }}
+                        onNext={() => {
+                          const len = caseStudyData.stops[currentStop].images!.length;
+                          setStopCarouselIndex((stopCarouselIndex + 1) % len);
+                        }}
+                        onSelect={(i) => setStopCarouselIndex(i)}
+                        size="small"
+                      />
 
         
         {/* Corner rivets */}
@@ -734,7 +563,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                           className="w-10 h-10 rounded-full object-cover ring-2 ring-white/20"
                         />
                       )}
-                      <span>— {caseStudyData.stops[currentStop].quoteAuthor}</span>
+                      <span>{caseStudyData.stops[currentStop].quoteAuthor}</span>
                     </footer>
                   )}
                 </div>
@@ -791,7 +620,12 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               </button>
               
               <button
-                onClick={() => setShowOverview(true)}
+                onClick={() => {
+                  setShowOverview(true);
+                  setIsFullscreen(false);
+                  setFullscreenImage(null);
+                  setFullscreenSource('peeks');
+                }}
                 className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105"
                 style={{ backgroundColor: INFO_COLOR,
                     boxShadow: `0 0 20px ${INFO_COLOR}40` }}

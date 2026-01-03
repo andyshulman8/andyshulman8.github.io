@@ -1,0 +1,241 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Train, MapPin } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+
+const lineColors = {
+  red: { bg: 'bg-red-500', text: 'text-red-400', border: 'border-red-500/30', hex: '#E53935' },
+  blue: { bg: 'bg-blue-500', text: 'text-blue-400', border: 'border-blue-500/30', hex: '#1E88E5' },
+  purple: { bg: 'bg-purple-500', text: 'text-purple-400', border: 'border-purple-500/30', hex: '#8E24AA' },
+  green: { bg: 'bg-green-500', text: 'text-green-400', border: 'border-green-500/30', hex: '#43A047' }
+};
+
+const phaseInfo = {
+  'Empathize': { icon: '👁️', description: 'Understanding the user' },
+  'Define': { icon: '🎯', description: 'Framing the problem' },
+  'Ideate': { icon: '💡', description: 'Exploring solutions' },
+  'Prototype': { icon: '🔧', description: 'Building to learn' },
+  'Test': { icon: '✅', description: 'Validating with users' }
+};
+
+// Default stops if none provided
+const defaultStops = [
+  { station_name: 'Research & Discovery', phase: 'Empathize', content: 'Add your research findings and user insights here...', images: [] },
+  { station_name: 'Problem Definition', phase: 'Define', content: 'Add your problem statement and POV here...', images: [] },
+  { station_name: 'Ideation', phase: 'Ideate', content: 'Add your brainstorming and concepts here...', images: [] },
+  { station_name: 'Prototyping', phase: 'Prototype', content: 'Add your prototype images and process here...', images: [] },
+  { station_name: 'Testing & Results', phase: 'Test', content: 'Add your testing insights and outcomes here...', images: [] }
+];
+
+export default function CaseStudyRide({ caseStudy, onBack }) {
+  const [currentStop, setCurrentStop] = useState(0);
+  const [direction, setDirection] = useState(1);
+  
+  const stops = caseStudy.stops?.length > 0 ? caseStudy.stops : defaultStops;
+  const colors = lineColors[caseStudy.line_color] || lineColors.blue;
+  const currentStopData = stops[currentStop];
+  const phase = phaseInfo[currentStopData?.phase] || phaseInfo['Empathize'];
+
+  const goToStop = (index) => {
+    setDirection(index > currentStop ? 1 : -1);
+    setCurrentStop(index);
+  };
+
+  const nextStop = () => {
+    if (currentStop < stops.length - 1) {
+      setDirection(1);
+      setCurrentStop(currentStop + 1);
+    }
+  };
+
+  const prevStop = () => {
+    if (currentStop > 0) {
+      setDirection(-1);
+      setCurrentStop(currentStop - 1);
+    }
+  };
+
+  return (
+    <motion.div
+      className="min-h-screen bg-[#1a1a1a] text-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      {/* Top bar with line indicator */}
+      <div className={`h-2 ${colors.bg}`} />
+      
+      <div className="p-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <motion.button
+              onClick={onBack}
+              className="flex items-center gap-2 text-white/60 hover:text-white group"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+            >
+              <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+              <span>All Projects</span>
+            </motion.button>
+
+            <div className="flex items-center gap-2">
+              <div className={`w-3 h-3 rounded-full ${colors.bg}`} />
+              <span className={`${colors.text} text-sm font-medium tracking-wider uppercase`}>
+                {caseStudy.line_color} Line
+              </span>
+            </div>
+          </div>
+
+          {/* Project Title */}
+          <motion.div
+            className="mb-12"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h1 className="text-4xl md:text-5xl font-light mb-2">{caseStudy.title}</h1>
+            <p className="text-white/60 text-lg">{caseStudy.subtitle}</p>
+          </motion.div>
+
+          {/* Route Progress */}
+          <motion.div
+            className="mb-12"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="relative flex items-center justify-between">
+              {/* Line connecting dots */}
+              <div className="absolute left-0 right-0 top-1/2 h-1 bg-white/10 -translate-y-1/2" />
+              <motion.div 
+                className={`absolute left-0 top-1/2 h-1 ${colors.bg} -translate-y-1/2`}
+                style={{ width: `${(currentStop / (stops.length - 1)) * 100}%` }}
+                initial={{ width: 0 }}
+                animate={{ width: `${(currentStop / (stops.length - 1)) * 100}%` }}
+                transition={{ duration: 0.5 }}
+              />
+              
+              {/* Stop dots */}
+              {stops.map((stop, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToStop(index)}
+                  className="relative z-10 group"
+                >
+                  <motion.div
+                    className={`w-6 h-6 rounded-full border-2 transition-colors ${
+                      index <= currentStop 
+                        ? `${colors.bg} border-transparent` 
+                        : 'bg-[#1a1a1a] border-white/30'
+                    }`}
+                    whileHover={{ scale: 1.2 }}
+                  >
+                    {index === currentStop && (
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-white"
+                        initial={{ scale: 1, opacity: 1 }}
+                        animate={{ scale: 1.8, opacity: 0 }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      />
+                    )}
+                  </motion.div>
+                  
+                  {/* Stop label tooltip */}
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-xs text-white/60">{stop.station_name}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Current Stop Content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStop}
+              initial={{ x: direction * 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: direction * -100, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className={`rounded-3xl border ${colors.border} bg-white/5 backdrop-blur-sm overflow-hidden`}
+            >
+              {/* Stop Header */}
+              <div className="p-8 border-b border-white/10">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className={`p-3 rounded-xl ${colors.bg}/20`}>
+                    <MapPin className={colors.text} size={24} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-2xl">{phase.icon}</span>
+                      <span className={`${colors.text} text-sm font-medium uppercase tracking-wider`}>
+                        {currentStopData.phase}
+                      </span>
+                    </div>
+                    <h2 className="text-3xl font-light">{currentStopData.station_name}</h2>
+                  </div>
+                </div>
+                <p className="text-white/50">{phase.description}</p>
+              </div>
+
+              {/* Stop Content */}
+              <div className="p-8">
+                <div className="prose prose-invert prose-lg max-w-none">
+                  <p className="text-white/80 leading-relaxed whitespace-pre-wrap">
+                    {currentStopData.content}
+                  </p>
+                </div>
+
+                {/* Images Grid */}
+                {currentStopData.images && currentStopData.images.length > 0 && (
+                  <div className="grid grid-cols-2 gap-4 mt-8">
+                    {currentStopData.images.map((img, i) => (
+                      <motion.div
+                        key={i}
+                        className="aspect-video rounded-xl overflow-hidden bg-white/10"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Navigation */}
+              <div className="p-8 border-t border-white/10 flex items-center justify-between">
+                <Button
+                  variant="ghost"
+                  onClick={prevStop}
+                  disabled={currentStop === 0}
+                  className="text-white/60 hover:text-white disabled:opacity-30"
+                >
+                  <ChevronLeft size={20} className="mr-2" />
+                  Previous Stop
+                </Button>
+
+                <div className="flex items-center gap-2 text-white/40">
+                  <Train size={18} />
+                  <span className="text-sm">Stop {currentStop + 1} of {stops.length}</span>
+                </div>
+
+                <Button
+                  variant="ghost"
+                  onClick={nextStop}
+                  disabled={currentStop === stops.length - 1}
+                  className="text-white/60 hover:text-white disabled:opacity-30"
+                >
+                  Next Stop
+                  <ChevronRight size={20} className="ml-2" />
+                </Button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

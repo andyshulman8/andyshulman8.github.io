@@ -1,0 +1,31 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const lineColors = {
+  red: '#E53935',
+  blue: '#1E88E5',
+  purple: '#8E24AA',
+  green: '#43A047'
+};
+
+export default function SubwayLine({ path, color = 'red', animated = false, delay = 0 }) {
+  const strokeColor = lineColors[color] || color;
+  
+  return (
+    <motion.path
+      d={path}
+      stroke={strokeColor}
+      strokeWidth="8"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={animated ? { pathLength: 0 } : { pathLength: 1 }}
+      animate={{ pathLength: 1 }}
+      transition={{ 
+        duration: 2, 
+        delay,
+        ease: "easeInOut" 
+      }}
+    />
+  );
+}

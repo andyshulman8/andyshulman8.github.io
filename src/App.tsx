@@ -1,9 +1,9 @@
-//import { useState } from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
-import CaseStudyTemplate from './pages/logs.tsx'; // Import your new file
+// Lazy-load case study pages to reduce initial bundle size and improve load time
+const CaseStudyTemplate = lazy(() => import('./pages/logs'));
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
-//import { color } from 'framer-motion';
+// framer-motion import removed — not used here to reduce bundle size
 
 const THEME_COLOR = '#424141'; // Change this once to update everywhere
 const INFO_COLOR = '#2B2C28';
@@ -84,41 +84,7 @@ const SkillsBoard = () => {
 //  stations: string[];
 //  color: string;
 //}
-// Mini Map Component for Case Study Pages
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-{/*}
-function CaseStudyMiniMap({ route, currentStation }: { route: Station; currentStation: string }) {
-  const stations = route.stations;
-  
-  return (
-    <div className="fixed top-20 right-6 bg-black/90 backdrop-blur-md rounded-xl border border-white/20 p-4 w-64 z-50">
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: route.color }}></div>
-        <span className="text-white text-sm font-semibold">{route.name}</span>
-      </div>
-      
-      <div className="space-y-2">
-        {stations.map((station: string, idx: number) => (
-          <div 
-            key={idx}
-            className={`flex items-center gap-2 text-xs transition-all ${
-              currentStation === station ? 'text-[#7DE2D1] font-semibold' : 'text-white/60'
-            }`}
-          >
-            <div className={`w-2 h-2 rounded-full ${
-              currentStation === station ? 'bg-[#7DE2D1]' : 'bg-white/40'
-            }`}></div>
-            <span>{station}</span>
-          </div>
-        ))}
-      </div>
-      
-      <div className="mt-4 pt-3 border-t border-white/20 text-xs text-white/50">
-        Scroll to move along the line
-      </div>
-    </div>
-  );
-} */}
+// Removed an unused MiniMap component to reduce bundle size and remove dead code.
 
 
 
@@ -156,7 +122,7 @@ export default function DesignCentralStation() {
       route: ['User Interviews', 'Clarify Outcome', 'Simplify Behavior', 'Make Easier', 'Build Flows', 'Test']
     },
     {
-      id: 'secure',
+      id: 'data',
       name: 'Secure Data',
       line: 'Red + Green Lines',
       color: '#43A047',
@@ -253,45 +219,32 @@ export default function DesignCentralStation() {
 };
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
-  // const [isFullscreen, setIsFullscreen] = useState(false); for carousels
+  const [processLoaded, setProcessLoaded] = useState(false);
 
-  // Show case study pages
-  if (view !== 'map' && viewToIndex[view] !== undefined) {
-  return <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />;
+  // Whether we're viewing a case study (render inside app shell)
+  const isCaseView = view !== 'map' && viewToIndex[view] !== undefined;
+
+  // Show case study pages (lazy-loaded to improve initial load)
+  if (isCaseView) {
+    return (
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading…</div>}>
+        <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />
+      </Suspense>
+    );
   }
-
 
   return (
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
       <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
             {/* Fullscreen Image Viewer */}
-            <FullscreenImageViewer 
-              src={fullscreenImage} 
-              alt="Fullscreen view"
-              onClose={() => setFullscreenImage(null)}
-            />
-      {/* Hero Section - Station Entrance 
-      <header className="py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left column: narrative (left-aligned) *
-            <div className="text-left">
-              <h1 className="text-4xl md:text-5xl font-bold mb-3">Final destination: <span className="text-[#7DE2D1]">Impact</span></h1>
-              <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">All routes begin with empathy.</h2>
-              <p className="text-white/60 max-w-xl">I’m Andy Shulman, a Senior UX Designer with experience simplifying complexity.</p>
-            </div>
+                  <FullscreenImageViewer 
+                    src={fullscreenImage} 
+                    onClose={() => setFullscreenImage(null)}
+                  />
 
-            {/* Right column: Ticket booth visual (card) *
-            <aside className="flex justify-end md:justify-end">
-              <img src="/images/Home/sublines.png" alt="Subway Lines" className="w-full h-[33vh] object-cover rounded-lg shadow-lg mb-4" />
-              <img src="/images/Home/tickets.jpg" alt="Ticket preview" className="w-full h-[33vh] object-cover" />
-            </aside>
-          </div>
-        </div>
-      </header> 
-      */}
-        {/* Hero Section (single) */}
-        <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: "url('/images/Home/test.png')" }}>
+            {/* Landing content starts */}
+              {/* Hero Section - Station Entrance (commented out) */}
+              <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
           <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
             <div className="text-left">
@@ -600,7 +553,6 @@ export default function DesignCentralStation() {
               key={project.id}
               onClick={() => setView(project.id)}
               // href={`https://ashulman-i4ku6yb.gamma.site/project1`}
-              /*/case/${project.id}*/
               className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
               //onMouseEnter={() => setHoveredProject(project.id)}
               //onMouseLeave={() => setHoveredProject(null)}
@@ -673,10 +625,7 @@ export default function DesignCentralStation() {
                 </div> */}
                 <div>
                   <div className="relative inline-block mb-12">
-            {/* Overhead mounting arm *
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-2 h-12 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-sm"></div>
-            
-            {/* Main sign structure */}
+                {/* Main sign structure */}
             <div className="relative">
               {/* Backlight panel - the actual light source */}
               <div className="absolute inset-0 rounded-lg blur-2xl opacity-70" 
@@ -714,11 +663,7 @@ export default function DesignCentralStation() {
                       </div>
                 </div>
                 
-                {/* Light rays effect 
-                <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
-                  <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-white via-white/50 to-transparent"></div>
-                  <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-white via-white/50 to-transparent"></div>
-                </div>*/}
+                {/* Light rays effect (removed) */}
               </div>
               
               {/* Metal frame edges */}
@@ -765,10 +710,18 @@ export default function DesignCentralStation() {
                   </p>
                 </div>
               </div>
-              <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden">
+              <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden relative">
+                {!processLoaded && (
+                  <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#f5e6d340]">
+                    <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
+                  </div>
+                )}
                 <img
                   src="/images/Home/process.jpg"
                   alt="Design process map"
+                  loading="lazy"
+                  onLoad={() => setProcessLoaded(true)}
+                  onError={() => setProcessLoaded(true)}
                   className="cursor-pointer hover:opacity-90 transition-opacity"
                   onClick={() => setFullscreenImage("/images/Home/process.jpg")}
                 />
@@ -835,90 +788,86 @@ export default function DesignCentralStation() {
             </div>
 
             
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
       <section className="mb-16 py-10 px-6 max-w-7xl mx-auto" style={{ backgroundColor: BACK_COLOR }}>
-      {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
-          <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
-            <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
-            
-            {/* Content overlay */}
-            <div className="relative z-10 max-w-7xl mx-auto">
-              <div className="flex items-left justify-left gap-4">
-                <h3 className="text-3xl font-bold text-white">Passenger Testimonials</h3>
-              </div>
+        {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
+        <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
+          <img src="/images/Home/tickets.png" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
+
+          {/* Content overlay */}
+          <div className="relative z-10 max-w-7xl mx-auto">
+            <div className="flex items-left justify-left gap-4">
+              <h3 className="text-3xl font-bold text-white">Passenger Testimonials</h3>
             </div>
           </div>
-              <div className="flex items-center gap-4 mb-8">
-                
+        </div>
+
+        <div className="flex items-center gap-4 mb-8"></div>
+
+        {/* Passenger Testimonials Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, idx) => (
+            <div 
+              key={idx}
+              className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
+            >
+              <div 
+                className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
+                style={{ color: SILVER }}
+              >
+                “
               </div>
-              {/* Passenger Testimonials Section */}
-              
-              {/* The Grid stays on the outside */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {testimonials.map((testimonial, idx) => (
-                  <div 
-                    key={idx}
-                    className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
-                  >
-                    {/* Decorative Quote - Top Left */}
+
+              <div className="relative z-10 flex flex-col h-full">
+                <p className="text-white/80 italic mb-8 leading-relaxed flex-grow">
+                  {testimonial.quote}
+                </p>
+
+                <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: SILVER}}>
+                  {testimonial.avatar ? (
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.author}
+                      className="w-12 h-12 rounded-full object-cover border-2"
+                      style={{color: SILVER, borderColor: SILVER}}
+                    />
+                  ) : (
                     <div 
-                      className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
-                      style={{ color: SILVER }}
+                      className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xs" 
+                      style={{ color: BACK_COLOR, backgroundColor: SILVER }}
                     >
-                      “
+                      {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
                     </div>
-
-                    {/* Main Content */}
-                    <div className="relative z-10 flex flex-col h-full">
-                      <p className="text-white/80 italic mb-8 leading-relaxed flex-grow">
-                        {testimonial.quote}
-                      </p>
-
-                      <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: SILVER}}>
-                        {testimonial.avatar ? (
-                          <img
-                            src={testimonial.avatar}
-                            alt={testimonial.author}
-                            className="w-12 h-12 rounded-full object-cover border-2" style={{color: SILVER, borderColor: SILVER}}
-                          />
-                        ) : (
-                          <div 
-                            className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xs" 
-                            style={{ color: BACK_COLOR, backgroundColor: SILVER }}
-                          >
-                            {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
-                          </div>
-                        )}
-                        
-                        <div>
-                          <div className="font-bold text-sm tracking-tight" style={{ color: SILVER }}>
-                            {testimonial.author}
-                          </div>
-                          <div className="text-[11px] uppercase tracking-widest text-white/40 leading-tight">
-                            {testimonial.role} <br />
-                            <span className="text-white/20">{testimonial.company}</span>
-                          </div>
-                        </div>
-                      </div>
+                  )}
+                  
+                  <div>
+                    <div className="font-bold text-sm tracking-tight" style={{ color: SILVER }}>
+                      {testimonial.author}
                     </div>
-
-                    {/* Decorative Quote - Bottom Right */}
-                    <div 
-                      className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
-                      style={{ color: SILVER }}
-                    >
-                      ”
+                    <div className="text-[11px] uppercase tracking-widest text-white/40 leading-tight">
+                      {testimonial.role} <br />
+                      <span className="text-white/20">{testimonial.company}</span>
                     </div>
                   </div>
-                ))}
+                </div>
+              </div>
+
+              <div 
+                className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
+                style={{ color: SILVER }}
+              >
+                ”
+              </div>
             </div>
+          ))}
+        </div>
+      </section>
+
             
-            
-        </section>
 
           {/* Contact - Thanks for Riding */}
           <footer className="text-center bg-black/40 py-12 border-t-2 " style={{ borderColor: `${THEME_COLOR}30` }}>
@@ -927,7 +876,7 @@ export default function DesignCentralStation() {
             <p className="text-2xl text-white/80 mb-8">
               Please contact Andy to build your next impactful experience.
             </p>
-            {/*}
+            {/*
             <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">
               <a 
                 href="mailto:andyshulman8@gmail.com" 
@@ -944,7 +893,7 @@ export default function DesignCentralStation() {
              </div>
           </footer>
         </div>
-      {/* </section> */}
-    //</div>
+      </div>
+    // </div>
   );
 }

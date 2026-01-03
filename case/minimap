@@ -1,0 +1,83 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Map } from 'lucide-react';
+
+export default function MiniMap({ currentStation, onStationClick, isExpanded, setIsExpanded }) {
+  const stations = [
+    { id: 'home', label: 'Home', x: 20, y: 50 },
+    { id: 'about', label: 'About', x: 80, y: 50 },
+    { id: 'work', label: 'Work', x: 140, y: 50 },
+    { id: 'contact', label: 'Contact', x: 200, y: 50 }
+  ];
+
+  return (
+    <motion.div
+      className="fixed bottom-6 right-6 z-40"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5 }}
+    >
+      {/* Toggle button */}
+      <motion.button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="absolute -top-12 right-0 p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Map size={20} />
+      </motion.button>
+
+      {/* Mini map panel */}
+      <motion.div
+        className="bg-black/80 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden"
+        initial={false}
+        animate={{
+          width: isExpanded ? 260 : 0,
+          height: isExpanded ? 120 : 0,
+          opacity: isExpanded ? 1 : 0
+        }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      >
+        <svg width="260" height="120" className="p-4">
+          {/* Main line */}
+          <line
+            x1="30"
+            y1="60"
+            x2="230"
+            y2="60"
+            stroke="#E53935"
+            strokeWidth="4"
+            strokeLinecap="round"
+          />
+          
+          {/* Stations */}
+          {stations.map((station) => (
+            <g 
+              key={station.id}
+              onClick={() => onStationClick(station.id)}
+              style={{ cursor: 'pointer' }}
+            >
+              <circle
+                cx={station.x + 10}
+                cy={60}
+                r={currentStation === station.id ? 10 : 8}
+                fill={currentStation === station.id ? '#FFD54F' : 'white'}
+                stroke="#1a1a1a"
+                strokeWidth="2"
+              />
+              <text
+                x={station.x + 10}
+                y={85}
+                textAnchor="middle"
+                className="fill-white text-xs"
+                style={{ fontSize: '10px' }}
+              >
+                {station.label}
+              </text>
+            </g>
+          ))}
+        </svg>
+      </motion.div>
+    </motion.div>
+  );
+}

@@ -25,7 +25,7 @@ export interface CaseStudyData {
   title: string;
   line_color: LineColor; // This is the key part!
   destination: string;
-  peaks: string[];
+  peeks: string[];
   before?: string;
   after?: string;
   background: string;
@@ -39,7 +39,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Logs: Rags to Riches",
     line_color: "red",
     destination: "Cut troubleshooting from hours to 10 minutes",
-    peaks: [
+    peeks: [
           '/images/rags/fields.png',
           '/images/rags/gap3.png',
           '/images/rags/gap1.3.png'
@@ -62,10 +62,6 @@ export const allCaseStudies: CaseStudyData[] = [
           "Inefficient Filtering: Competitors offered advanced search, while our users react: 'Why is LM Logs search so small? I don't expect a diet logs product'",
           "Raw Data Overload: Without proper and integrated visualizations, the benefit of LM Logs was buried"
         ],
-        images: [
-          "/images/rags/discovery-1.jpg",
-          "/images/rags/discovery-2.jpg"
-        ]
       },
       {
         station_name: "Unified Platform",
@@ -109,7 +105,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Smarter Alerts",
     line_color: "purple",
     destination: "30% reduction in alert fatigue",
-    peaks: [
+    peeks: [
           '/images/alerts/proactive.png',
           '/images/alerts/buried3.png',
           '/images/alerts/AI4.png'
@@ -170,7 +166,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Secure Data",
     line_color: "purple",
     destination: "$250K annual savings for customers",
-    peaks: [
+    peeks: [
           '/images/data/natural.png',
           '/images/data/napkin.png',
           '/images/data/access4.3.png'
@@ -229,7 +225,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Empowered Team",
     line_color: "blue",
     destination: "3 piloted solutions in 12 weeks",
-    peaks: [
+    peeks: [
           '/images/rags/fields.png',
           '/images/rags/gap3.png',
           '/images/rags/gap1.3.png'
@@ -283,7 +279,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Imagining the Future",
     line_color: "green",
     destination: "100K+ visitors served since 2022",
-    peaks: [
+    peeks: [
           '/images/rags/fields.png',
           '/images/rags/gap3.png',
           '/images/rags/gap1.3.png'
@@ -331,7 +327,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Health Frameworks",
     line_color: "purple",
     destination: "40% reduction in expert dependency",
-    peaks: [
+    peeks: [
           '/images/rags/fields.png',
           '/images/rags/gap3.png',
           '/images/rags/gap1.3.png'

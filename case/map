@@ -1,0 +1,159 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import SubwayLine from './SubwayLine';
+import StationDot from './StationDot';
+
+export default function SubwayMap({ onStationClick, activeStation }) {
+  const [hoveredStation, setHoveredStation] = useState(null);
+
+  // SVG paths recreating the subway map
+  const lines = {
+    // Red line (Stanford d.school) - main horizontal
+    red: "M 50 200 L 150 200 L 250 200 L 350 200 L 550 200 L 650 200 L 750 200 L 850 200 L 950 200",
+    
+    // Blue line (Business Strategy) - lower curve
+    blue: "M 250 200 Q 300 280 350 320 L 450 320 L 550 320 L 650 320 L 750 320 L 850 320 L 950 320",
+    
+    // Purple line (Behavior Design) - upper curve through middle
+    purple: "M 250 200 Q 300 120 380 100 L 380 100 Q 450 100 500 140 L 550 200 Q 580 240 620 200 L 650 180 Q 700 140 750 200 L 850 200",
+    
+    // Green line (Sustainability) - bottom
+    green: "M 250 200 L 350 320 L 450 400 L 550 400 L 650 400 L 750 400 L 850 400 L 950 400"
+  };
+
+  // Station definitions
+  const stations = [
+    // Red line stations
+    { id: 'user-interviews', x: 50, y: 200, type: 'endpoint', label: 'User Interviews', sublabel: 'Elicit stories', labelPosition: 'bottom-left', line: 'red', clickable: false },
+    { id: 'empathy-maps', x: 150, y: 200, type: 'service', label: 'Empathy Maps', sublabel: 'Say, Think, Do, Feel', labelPosition: 'top', clickable: false },
+    { id: 'seek-surprises', x: 250, y: 200, type: 'transfer', label: 'Seek Surprises', sublabel: 'Tensions, etc.', labelPosition: 'bottom', clickable: false },
+    { id: 'define-problem', x: 350, y: 200, type: 'service', label: 'Define Problem', sublabel: 'Develop a POV', labelPosition: 'top', clickable: false },
+    { id: 'converge', x: 550, y: 200, type: 'transfer', label: 'Converge', sublabel: 'Choose solution', labelPosition: 'bottom', clickable: false },
+    { id: 'build-prototype', x: 650, y: 200, type: 'service', label: 'Build Prototype', labelPosition: 'top', clickable: false },
+    { id: 'build-flows', x: 750, y: 200, type: 'service', label: 'Build Flows', sublabel: 'Routes to behavior', labelPosition: 'top', clickable: false },
+    { id: 'test-concepts', x: 950, y: 200, type: 'endpoint', label: 'Test Concepts', sublabel: 'With users', labelPosition: 'right', clickable: false },
+    
+    // Purple line stations
+    { id: 'clarify-outcome', x: 380, y: 100, type: 'service', label: 'Clarify Outcome', sublabel: 'Aspiration or goal', labelPosition: 'top', clickable: false },
+    { id: 'simplify-behavior', x: 620, y: 160, type: 'service', label: 'Simplify Behavior', sublabel: 'Make concrete', labelPosition: 'top-right', clickable: false },
+    { id: 'make-easier', x: 750, y: 160, type: 'service', label: 'Make Behaviors Easier', labelPosition: 'top', clickable: false },
+    
+    // Blue line stations  
+    { id: 'map-system', x: 350, y: 320, type: 'service', label: 'Map System', sublabel: 'Stakeholders, etc.', labelPosition: 'bottom', clickable: false },
+    { id: 'identify-levers', x: 450, y: 320, type: 'service', label: 'Identify Levers', sublabel: 'Key points, loops, etc.', labelPosition: 'top', clickable: false },
+    { id: 'brainstorm', x: 550, y: 280, type: 'service', label: 'Brainstorm', sublabel: 'Explore solutions', labelPosition: 'top-right', clickable: false },
+    
+    // Green line stations
+    { id: 'identify-causes', x: 450, y: 400, type: 'service', label: 'Identify Causes', sublabel: 'Root and direct', labelPosition: 'bottom', clickable: false },
+    { id: 'design-mechanisms', x: 550, y: 400, type: 'service', label: 'Design Mechanisms', labelPosition: 'bottom', clickable: false },
+    { id: 'shape-strategy', x: 650, y: 400, type: 'service', label: 'Shape Strategy', sublabel: 'Theory of Change', labelPosition: 'bottom', clickable: false },
+    { id: 'plan-test', x: 750, y: 400, type: 'service', label: 'Plan for Test', sublabel: 'Scalability', labelPosition: 'bottom', clickable: false },
+    { id: 'evaluation', x: 850, y: 400, type: 'service', label: 'Evaluation Plan', sublabel: 'Premortem, metrics', labelPosition: 'top', clickable: false },
+    
+    // Navigation stations (clickable)
+    { id: 'home', x: 50, y: 200, type: 'endpoint', label: '', clickable: true, isNav: true },
+    { id: 'about', x: 500, y: 140, type: 'transfer', label: 'About Me', labelPosition: 'top-left', clickable: true, isNav: true },
+    { id: 'work', x: 550, y: 200, type: 'transfer', label: 'My Work', labelPosition: 'bottom-right', clickable: true, isNav: true },
+    { id: 'contact', x: 950, y: 200, type: 'endpoint', label: 'Contact', labelPosition: 'top-right', clickable: true, isNav: true }
+  ];
+
+  // Phase headers
+  const phases = [
+    { label: 'Empathize', x: 100 },
+    { label: 'Define', x: 300 },
+    { label: 'Ideate', x: 500 },
+    { label: 'Prototype', x: 700 },
+    { label: 'Test', x: 900 }
+  ];
+
+  return (
+    <div className="w-full h-full overflow-auto bg-[#1a1a1a]">
+      <svg 
+        viewBox="0 0 1000 520" 
+        className="w-full h-full min-w-[1000px]"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        {/* Background pattern */}
+        <defs>
+          <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+        
+        {/* Phase headers */}
+        {phases.map((phase, i) => (
+          <text
+            key={phase.label}
+            x={phase.x}
+            y={40}
+            textAnchor="middle"
+            className="fill-white/60 text-lg font-light tracking-widest"
+            style={{ fontSize: '18px', fontWeight: 300, letterSpacing: '0.1em' }}
+          >
+            {phase.label}
+          </text>
+        ))}
+        
+        {/* Subway lines */}
+        <SubwayLine path={lines.red} color="red" animated delay={0} />
+        <SubwayLine path={lines.blue} color="blue" animated delay={0.3} />
+        <SubwayLine path={lines.purple} color="purple" animated delay={0.6} />
+        <SubwayLine path={lines.green} color="green" animated delay={0.9} />
+        
+        {/* Non-clickable stations (process steps) */}
+        {stations.filter(s => !s.isNav).map((station) => (
+          <StationDot
+            key={station.id}
+            x={station.x}
+            y={station.y}
+            type={station.type}
+            label={station.label}
+            sublabel={station.sublabel}
+            labelPosition={station.labelPosition}
+            active={activeStation === station.id}
+          />
+        ))}
+        
+        {/* Legend */}
+        <g transform="translate(50, 470)">
+          <circle cx="0" cy="0" r="8" fill="white" stroke="#1a1a1a" strokeWidth="2" />
+          <circle cx="0" cy="0" r="4" fill="#1a1a1a" />
+          <text x="20" y="5" className="fill-white/60" style={{ fontSize: '12px' }}>End point</text>
+          
+          <circle cx="120" cy="0" r="10" fill="white" stroke="#1a1a1a" strokeWidth="2" />
+          <circle cx="120" cy="0" r="5" fill="#1a1a1a" />
+          <text x="140" y="5" className="fill-white/60" style={{ fontSize: '12px' }}>Transfer point</text>
+          
+          <circle cx="260" cy="0" r="6" fill="white" stroke="#1a1a1a" strokeWidth="2" />
+          <text x="280" y="5" className="fill-white/60" style={{ fontSize: '12px' }}>Service point</text>
+        </g>
+        
+        {/* Line legend */}
+        <g transform="translate(450, 470)">
+          <line x1="0" y1="0" x2="30" y2="0" stroke="#E53935" strokeWidth="4" />
+          <text x="40" y="5" className="fill-white/60" style={{ fontSize: '11px' }}>Stanford d.school</text>
+          
+          <line x1="160" y1="0" x2="190" y2="0" stroke="#1E88E5" strokeWidth="4" />
+          <text x="200" y="5" className="fill-white/60" style={{ fontSize: '11px' }}>Business Strategy</text>
+          
+          <line x1="320" y1="0" x2="350" y2="0" stroke="#8E24AA" strokeWidth="4" />
+          <text x="360" y="5" className="fill-white/60" style={{ fontSize: '11px' }}>Behavior Design</text>
+          
+          <line x1="470" y1="0" x2="500" y2="0" stroke="#43A047" strokeWidth="4" />
+          <text x="510" y="5" className="fill-white/60" style={{ fontSize: '11px' }}>Sustainability</text>
+        </g>
+        
+        {/* Universal Design note */}
+        <g transform="translate(500, 430)">
+          <text textAnchor="middle" className="fill-green-400/80" style={{ fontSize: '14px', fontWeight: 500 }}>
+            Universal Design
+          </text>
+          <text y="18" textAnchor="middle" className="fill-white/40" style={{ fontSize: '11px', fontStyle: 'italic' }}>
+            To improve accessibility, consider Universal Design principles in this region.
+          </text>
+        </g>
+      </svg>
+    </div>
+  );
+}
