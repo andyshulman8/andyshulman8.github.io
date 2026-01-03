@@ -112,10 +112,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     }
   }, [currentStop, caseStudyData, stopCarouselIndex]);
 
+  const featureCount = caseStudyData.stops[currentStop].features?.length || 0;
+
   return (
     
     
     <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
+      <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
         {/* Fullscreen viewer: use shared component for single image or gallery.
             Controlled with `fullscreenSource` / `fullscreenImage` / indices.
         */}
@@ -157,7 +160,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
           // Overview Section
           <div className="max-w-5xl mx-auto px-6 py-12">
             {/* Title */}
-            <div className="text-center space-y-4">
+            <div className="text-center space-y-6 mb-8">
               <h1 className="text-4xl font-bold mb-2">{caseStudyData.title}</h1>
               <div className="flex items-center justify-center gap-3">
                 {/* <div className="h-1 w-24 rounded-full" style={{ backgroundColor: ACCENT_COLOR }} /> */}
@@ -569,8 +572,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                           <img 
                             src={caseStudyData.stops[currentStop].quoteImage} 
                             alt={caseStudyData.stops[currentStop].quoteAuthor}
-                            className="w-10 h-10 rounded-full object-cover"
-                            style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset' }}
+                            className="w-10 h-10 rounded-full object-cover border-2"
+                            style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: INFO_COLOR }}
                           />
                         )}
                         <span>{caseStudyData.stops[currentStop].quoteAuthor}</span>
@@ -602,7 +605,10 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
               {/* Feature boxes (e.g. multiple graph types, query operators, dashboard widgets) */}
               {caseStudyData.stops[currentStop].features && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
+                <div
+                  className="grid gap-4 my-8 features-grid"
+                  style={{ ['--cols' as any]: Math.min(Math.max(featureCount, 1), 4) }}
+                >
                   {caseStudyData.stops[currentStop].features.map((f: any, i: number) => (
                     <div key={i} className="rounded-lg p-6" style={{ backgroundColor: INFO_COLOR }}>
                       <h4 className="text-lg font-bold mb-2" style={{ color: ACCENT_COLOR }}>{f.title}</h4>
