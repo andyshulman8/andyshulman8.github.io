@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy } from 'react';
-import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
+import { Train, MapPin, Info, ChevronRight, ChevronUp } from 'lucide-react';
 // Lazy-load case study pages to reduce initial bundle size and improve load time
 const CaseStudyTemplate = lazy(() => import('./pages/logs'));
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
@@ -220,9 +220,17 @@ export default function DesignCentralStation() {
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [processLoaded, setProcessLoaded] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Whether we're viewing a case study (render inside app shell)
   const isCaseView = view !== 'map' && viewToIndex[view] !== undefined;
+
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 320);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Show case study pages (lazy-loaded to improve initial load)
   if (isCaseView) {
@@ -903,7 +911,18 @@ export default function DesignCentralStation() {
             <div className="mt-8 text-white/40 text-sm">
               Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
              </div>
-          </footer>
+            </footer>
+
+            {/* Back to top button */}
+            {showBackToTop && (
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                aria-label="Back to top"
+                className="fixed right-6 bottom-6 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-white/6 hover:bg-white/10 backdrop-blur-md transition-colors shadow-lg"
+              >
+                <ChevronUp className="w-5 h-5 text-white/90" />
+              </button>
+            )}
         </div>
       </div>
     // </div>
