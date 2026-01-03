@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
+import { ChevronLeft, X, ChevronRight, Train } from 'lucide-react';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
+import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
 
 
 // Color constants - adjust these to change the entire theme
@@ -94,8 +95,22 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     setShowOverview(false);
   };
 
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+
   return (
+    
+    
     <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
+      {/* Fullscreen Image Viewer */}
+      <FullscreenImageViewer 
+        src={fullscreenImage} 
+        alt="Fullscreen view"
+        onClose={() => setFullscreenImage(null)}
+      />
+
+
       {/* Header */}
       <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -140,129 +155,248 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
             {/* Sneak Peek Section */}
             <div>
-              
               <div className="grid md:grid-cols-3 gap-8 items-stretch">
                 {/* Left: Destination (Impact Metrics) */}
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-bold mb-8 text-left text-white/80">Sneak Peeks</h2>
-                  {/* <h3 className="text-2xl font-bold text-white/80">Destination</h3> */}
+                  <h2 className="text-3xl font-bold mb-8 text-left">Sneak Peeks</h2>
                   <p className="text-white/60 leading-relaxed mb-8">
                     {caseStudyData.overview}
                   </p>
                 </div>
                 
                 {/* Right: Train Window Image Carousel */}
-<div className="relative md:col-span-2 space-y-6">
-  {/* Heavy metal train frame */}
-  <div className="relative p-6 rounded-2xl" style={{ 
-    background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
-    border: '4px solid #333',
-    boxShadow: 'inset 0 6px 24px rgba(0,0,0,0.8), 0 12px 40px rgba(0,0,0,0.6)'
-  }}>
-    {/* Riveted inner bezel */}
-    <div className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
-      background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
-      border: '3px solid #444',
-      boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.9), inset 0 0 0 2px rgba(255,255,255,0.05)'
-    }}>
-      {/* Glass pane */}
-      <div className="relative rounded-lg w-full overflow-hidden h-[20rem] w-[20rem]" style={{
-        background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
-      }}>
-        {/* Image */}
-        <img 
-          src={placeholderImages[carouselIndex]} 
-          alt={`Preview ${carouselIndex + 1}`}
-          className="absolute inset-0 w-full h-full object-contain"
-        />
-        
-        {/* Window glare/reflection */}
-        <div className="absolute inset-0" style={{
-          background: `
-            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-            linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
-          `
-        }} />
-        
-        {/* Dust/dirt specks */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `
-            radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.3), transparent),
-            radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.2), transparent),
-            radial-gradient(1px 1px at 120px 40px, rgba(255,255,255,0.15), transparent)
-          `
-        }} />
-      </div>
-      
-      {/* Window controls - metal levers */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 items-center">
-        {/* Lever-style buttons */}
-        <button
-          onClick={() => setCarouselIndex((carouselIndex - 1 + placeholderImages.length) % placeholderImages.length)}
-          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-          style={{ 
-            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-            border: '2px solid #555',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-          }}
-        >
-          <ChevronLeft size={16} style={{ color: '#aaa' }} />
-        </button>
-        
-        {/* Dots as indicator lights */}
-        <div className="flex gap-2">
-          {placeholderImages.map((_, i) => (
-            <div
-              key={i}
-              onClick={() => setCarouselIndex(i)}
-              className="w-3 h-3 rounded-full cursor-pointer transition-all hover:scale-125"
-              style={{ 
-                background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
-                boxShadow: i === carouselIndex ? '0 0 8px rgba(170,170,170,0.8)' : 'none',
-                border: '1px solid rgba(255,255,255,0.2)'
-              }}
-            />
-          ))}
-        </div>
-        
-        <button
-          onClick={() => setCarouselIndex((carouselIndex + 1) % placeholderImages.length)}
-          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
-          style={{ 
-            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
-            border: '2px solid #555',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
-          }}
-        >
-          <ChevronRight size={16} style={{ color: '#aaa' }} />
-        </button>
-      </div>
-      
-      {/* Corner rivets */}
-      {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
-        <div
-          key={i}
-          className={`absolute w-3 h-3 rounded-full shadow-md`}
-          style={{
-            [pos.includes('top') ? 'top' : 'bottom']: '-2px',
-            [pos.includes('left') ? 'left' : 'right']: '-2px',
-            background: 'radial-gradient(circle, #666 30%, #444 70%)',
-            border: '1px solid #888',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.6)'
-          }}
-        />
-      ))}
-    </div>
-  
-      </div>
-      </div>
-
-                
+                <div className="relative md:col-span-2 space-y-6">
+                  {/* Fullscreen overlay */}
+                  {isFullscreen && (
+                    <div 
+                      className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+                      onClick={() => setIsFullscreen(false)}
+                    >
+                      <button
+                        onClick={() => setIsFullscreen(false)}
+                        className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg z-10"
+                        style={{ 
+                          background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+                          border: '2px solid #555',
+                          boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+                        }}
+                      >
+                        <X size={24} style={{ color: '#aaa' }} />
+                      </button>
+                      
+                      <div className="relative max-w-7xl w-full" onClick={(e) => e.stopPropagation()}>
+                        {/* Heavy metal train frame - fullscreen version */}
+                        <div className="relative p-8 rounded-2xl" style={{ 
+                          background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
+                          border: '6px solid #333',
+                          boxShadow: 'inset 0 8px 32px rgba(0,0,0,0.8), 0 16px 48px rgba(0,0,0,0.6)'
+                        }}>
+                          <div className="relative p-3 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
+                            background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
+                            border: '4px solid #444',
+                            boxShadow: 'inset 0 3px 12px rgba(0,0,0,0.9), inset 0 0 0 3px rgba(255,255,255,0.05)'
+                          }}>
+                            <div className="relative rounded-lg w-full overflow-hidden h-[70vh]" style={{
+                              background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
+                              border: '2px solid rgba(255,255,255,0.08)',
+                              boxShadow: 'inset 0 0 40px rgba(0,0,0,0.9)'
+                            }}>
+                              <img 
+                                src={placeholderImages[carouselIndex]} 
+                                alt={`Preview ${carouselIndex + 1}`}
+                                className="absolute inset-0 w-full h-full object-contain"
+                              />
+                              
+                              <div className="absolute inset-0" style={{
+                                background: `
+                                  radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
+                                  radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                                  linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
+                                `
+                              }} />
+                            </div>
+                            
+                            {/* Window controls - fullscreen version */}
+                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4 items-center">
+                              <button
+                                onClick={() => setCarouselIndex((carouselIndex - 1 + placeholderImages.length) % placeholderImages.length)}
+                                className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
+                                style={{ 
+                                  background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+                                  border: '3px solid #555',
+                                  boxShadow: '0 6px 16px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+                                }}
+                              >
+                                <ChevronLeft size={24} style={{ color: '#aaa' }} />
+                              </button>
+                              
+                              <div className="flex gap-3">
+                                {placeholderImages.map((_, i) => (
+                                  <div
+                                    key={i}
+                                    onClick={() => setCarouselIndex(i)}
+                                    className="w-4 h-4 rounded-full cursor-pointer transition-all hover:scale-125"
+                                    style={{ 
+                                      background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
+                                      boxShadow: i === carouselIndex ? '0 0 12px rgba(170,170,170,0.8)' : 'none',
+                                      border: '2px solid rgba(255,255,255,0.2)'
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                              
+                              <button
+                                onClick={() => setCarouselIndex((carouselIndex + 1) % placeholderImages.length)}
+                                className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
+                                style={{ 
+                                  background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+                                  border: '3px solid #555',
+                                  boxShadow: '0 6px 16px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+                                }}
+                              >
+                                <ChevronRight size={24} style={{ color: '#aaa' }} />
+                              </button>
+                            </div>
+                            
+                            {/* Corner rivets - fullscreen */}
+                            {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
+                              <div
+                                key={i}
+                                className={`absolute w-4 h-4 rounded-full shadow-md`}
+                                style={{
+                                  [pos.includes('top') ? 'top' : 'bottom']: '-3px',
+                                  [pos.includes('left') ? 'left' : 'right']: '-3px',
+                                  background: 'radial-gradient(circle, #666 30%, #444 70%)',
+                                  border: '2px solid #888',
+                                  boxShadow: '0 3px 8px rgba(0,0,0,0.6)'
+                                }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Regular train window */}
+                  <div 
+                    className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity" 
+                    onClick={() => setIsFullscreen(true)}
+                    style={{ 
+                      background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
+                      border: '4px solid #333',
+                      boxShadow: 'inset 0 6px 24px rgba(0,0,0,0.8), 0 12px 40px rgba(0,0,0,0.6)'
+                    }}
+                  >
+                    {/* Riveted inner bezel */}
+                    <div className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
+                      background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
+                      border: '3px solid #444',
+                      boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.9), inset 0 0 0 2px rgba(255,255,255,0.05)'
+                    }}>
+                      {/* Glass pane */}
+                      <div className="relative rounded-lg w-full overflow-hidden h-[20rem]" style={{
+                        background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
+                      }}>
+                        {/* Image */}
+                        <img 
+                          src={placeholderImages[carouselIndex]} 
+                          alt={`Preview ${carouselIndex + 1}`}
+                          className="absolute inset-0 w-full h-full object-contain"
+                        />
+                        
+                        {/* Window glare/reflection */}
+                        <div className="absolute inset-0" style={{
+                          background: `
+                            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                            linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
+                          `
+                        }} />
+                        
+                        {/* Dust/dirt specks */}
+                        <div className="absolute inset-0 pointer-events-none" style={{
+                          backgroundImage: `
+                            radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                            radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.2), transparent),
+                            radial-gradient(1px 1px at 120px 40px, rgba(255,255,255,0.15), transparent)
+                          `
+                        }} />
+                      </div>
+                      
+                      {/* Window controls - metal levers */}
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 items-center z-10">
+                        {/* Lever-style buttons */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCarouselIndex((carouselIndex - 1 + placeholderImages.length) % placeholderImages.length);
+                          }}
+                          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
+                          style={{ 
+                            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+                            border: '2px solid #555',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+                          }}
+                        >
+                          <ChevronLeft size={16} style={{ color: '#aaa' }} />
+                        </button>
+                        
+                        {/* Dots as indicator lights */}
+                        <div className="flex gap-2">
+                          {placeholderImages.map((_, i) => (
+                            <div
+                              key={i}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setCarouselIndex(i);
+                              }}
+                              className="w-3 h-3 rounded-full cursor-pointer transition-all hover:scale-125"
+                              style={{ 
+                                background: i === carouselIndex ? '#aaa' : 'rgba(170,170,170,0.4)',
+                                boxShadow: i === carouselIndex ? '0 0 8px rgba(170,170,170,0.8)' : 'none',
+                                border: '1px solid rgba(255,255,255,0.2)'
+                              }}
+                            />
+                          ))}
+                        </div>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCarouselIndex((carouselIndex + 1) % placeholderImages.length);
+                          }}
+                          className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
+                          style={{ 
+                            background: 'linear-gradient(145deg, #333 0%, #222 100%)',
+                            border: '2px solid #555',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.6), inset 0 1px rgba(255,255,255,0.1)'
+                          }}
+                        >
+                          <ChevronRight size={16} style={{ color: '#aaa' }} />
+                        </button>
+                      </div>
+                      
+                      {/* Corner rivets */}
+                      {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
+                        <div
+                          key={i}
+                          className={`absolute w-3 h-3 rounded-full shadow-md`}
+                          style={{
+                            [pos.includes('top') ? 'top' : 'bottom']: '-2px',
+                            [pos.includes('left') ? 'left' : 'right']: '-2px',
+                            background: 'radial-gradient(circle, #666 30%, #444 70%)',
+                            border: '1px solid #888',
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.6)'
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-              
             </div>
 
                   {/* Impact metrics in 2-column grid */}
@@ -312,7 +446,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                     <img 
                       src={beforeAfter.before} 
                       alt="Before"
-                      className="w-full h-full object-cover object-left-top bg-black/20"
+                      className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
+                      onClick={() => setFullscreenImage(beforeAfter.before)}
                     />
                   </div>
                   <p className="text-white/50 text-sm text-center">
@@ -326,7 +461,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                     <img 
                       src={beforeAfter.after} 
                       alt="After"
-                      className="w-full h-full object-cover object-left-top bg-black/20"
+                      className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
+                      onClick={() => setFullscreenImage(beforeAfter.after)}
                     />
                   </div>
                   <p className="text-white/50 text-sm text-center">

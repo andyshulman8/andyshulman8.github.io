@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 import CaseStudyTemplate from './pages/logs.tsx'; // Import your new file
+import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
 //import { color } from 'framer-motion';
 
 const THEME_COLOR = '#424141'; // Change this once to update everywhere
@@ -44,6 +45,7 @@ const SkillsBoard = () => {
   ];
 
   return (
+
     <div className="mb-12" ref={boardRef}>
       <h3 className="text-white/90 text-2xl font-bold mb-4">Operating the System</h3>
       <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-6 font-mono shadow-2xl">
@@ -250,6 +252,9 @@ export default function DesignCentralStation() {
   health: 5
 };
 
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   // Show case study pages
   if (view !== 'map' && viewToIndex[view] !== undefined) {
   return <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />;
@@ -258,6 +263,13 @@ export default function DesignCentralStation() {
 
   return (
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
+      <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
+            {/* Fullscreen Image Viewer */}
+            <FullscreenImageViewer 
+              src={fullscreenImage} 
+              alt="Fullscreen view"
+              onClose={() => setFullscreenImage(null)}
+            />
       {/* Hero Section - Station Entrance 
       <header className="py-12">
         <div className="max-w-7xl mx-auto px-6">
@@ -757,7 +769,8 @@ export default function DesignCentralStation() {
                 <img
                   src="/images/Home/process.jpg"
                   alt="Design process map"
-                  className="w-full"
+                  className="cursor-pointer hover:opacity-90 transition-opacity"
+                  onClick={() => setFullscreenImage("/images/Home/process.jpg")}
                 />
               </div>
               {/* Skills Panel */}
@@ -931,7 +944,7 @@ export default function DesignCentralStation() {
              </div>
           </footer>
         </div>
-      //</section>
+      {/* </section> */}
     //</div>
   );
 }
