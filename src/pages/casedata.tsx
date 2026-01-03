@@ -52,7 +52,7 @@ export const allCaseStudies: CaseStudyData[] = [
     overview: "I joined and took over design for LogicMonitor Logs, helping users bridge the critical gap between knowing that something is wrong and solving the problem. Owned end-to-end design for LM Logs acquisition integration; collaborated globally with engineering, PMs, technical writers, and a 10-person design team. Established LM Logs as a competitive player by overhauling search, visualizations, and product cohesion.",
     stops: [
       {
-        station_name: "Discovery",
+        station_name: "Discovery: Three Critical Gaps",
         phase: "Empathize",
         content: "I led recurring user research sessions, conducting Zoom interviews and analyzing users' current workflows to understand where our product was failing. Working with customers like RaySearch Labs (who develop pioneering cancer treatment software), I discovered three critical gaps.",
         quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
@@ -65,7 +65,7 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
       },
       {
-        station_name: "Unified Platform",
+        station_name: "Gap 1: Unified Platform",
         phase: "Ideate",
         content: "My solution: unified the platform so engineers didn't have to context-switch. I designed seamless workflows connecting logs across the product, added embeddable logs widgets for dashboards, and surfaced anomalous logs directly within alerts.",
         callout: "LogicMonitor used a competing tool to monitor its own logs for a long time before I worked with my team to add functionality and better integrate it with the rest of LogicMonitor's tools.",
