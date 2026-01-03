@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 // Lazy-load case study pages to reduce initial bundle size and improve load time
 const CaseStudyTemplate = lazy(() => import('./pages/logs'));
