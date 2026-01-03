@@ -253,7 +253,7 @@ export default function DesignCentralStation() {
 };
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  // const [isFullscreen, setIsFullscreen] = useState(false); for carousels
 
   // Show case study pages
   if (view !== 'map' && viewToIndex[view] !== undefined) {
@@ -599,7 +599,7 @@ export default function DesignCentralStation() {
             <a
               key={project.id}
               onClick={() => setView(project.id)}
-              //href={`https://ashulman-i4ku6yb.gamma.site/project1`}
+              // href={`https://ashulman-i4ku6yb.gamma.site/project1`}
               /*/case/${project.id}*/
               className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
               //onMouseEnter={() => setHoveredProject(project.id)}

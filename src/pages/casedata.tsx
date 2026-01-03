@@ -9,6 +9,7 @@ interface Stop {
   content: string;
   quote?: string;
   quoteAuthor?: string;
+  quoteImage?: string;
   insights?: string[];
   impact?: {
     metric1: string;
@@ -16,6 +17,7 @@ interface Stop {
     metric2: string;
     label2: string;
   };
+  images?: string[];
 }
 
 export interface CaseStudyData {
@@ -23,6 +25,9 @@ export interface CaseStudyData {
   title: string;
   line_color: LineColor; // This is the key part!
   destination: string;
+  peaks: string[];
+  before?: string;
+  after?: string;
   background: string;
   overview: string;
   stops: Stop[];
@@ -34,8 +39,16 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Logs: Rags to Riches",
     line_color: "red",
     destination: "Cut troubleshooting from hours to 10 minutes",
+    peaks: [
+          '/images/rags/fields.png',
+          '/images/rags/gap3.png',
+          '/images/rags/gap1.3.png'
+        ],
+    before: '/images/rags/before.png',
+    after: '/images/rags/after.png',
     background: "Before LogicMonitor had acquired (and properly integrated) a logs product, users were forced to jump between disconnected tools during critical moments. RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs.",
     overview: "I joined and took over design for LogicMonitor Logs, helping users bridge the critical gap between knowing that something is wrong and solving the problem. Through close collaboration across global teams, I helped transform LM Logs from a niche add-on to a flagship product that LogicMonitor itself relied on.",
+    
     stops: [
       {
         station_name: "Discovery",
@@ -43,16 +56,26 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "I led recurring user research sessions, conducting Zoom interviews and analyzing users' current workflows to understand where our product was failing. Working with customers like RaySearch Labs (who develop pioneering cancer treatment software), I discovered three critical gaps.",
         quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
+        quoteImage: "/images/rags/burriss.png",
         insights: [
           "Disconnected Tools: Critical troubleshooting moments are only more stressful when you have siloed apps, forced to juggle various tools and processes",
           "Inefficient Filtering: Competitors offered advanced search, while our users react: 'Why is LM Logs search so small? I don't expect a diet logs product'",
           "Raw Data Overload: Without proper and integrated visualizations, the benefit of LM Logs was buried"
+        ],
+        images: [
+          "/images/rags/discovery-1.jpg",
+          "/images/rags/discovery-2.jpg"
         ]
       },
       {
         station_name: "Unified Platform",
         phase: "Ideate",
         content: "I designed seamless workflows connecting logs across the platform. Added logs widgets capabilities to dashboards, made logs visible alongside device and service data, and displayed anomalous logs available within alerts. LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure.",
+        images: [
+          "/images/rags/gap1.1.png",
+          "/images/rags/gap1.2.png",
+          "/images/rags/gap1.3.png"
+        ]
       },
       {
         station_name: "Empowered Search",
@@ -86,6 +109,13 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Smarter Alerts",
     line_color: "purple",
     destination: "30% reduction in alert fatigue",
+    peaks: [
+          '/images/alerts/proactive.png',
+          '/images/alerts/buried3.png',
+          '/images/alerts/AI4.png'
+        ],
+    before: '/images/alerts/before.png',
+    after: '/images/alerts/after.png',
     background: "Schneider Electric, a 160-year-old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
     overview: "With 25,000+ network devices and a rapidly expanding cloud environment, tool sprawl and alert fatigue had become major obstacles. I designed new alert types, query tracking capabilities, and laid the foundation for Edwin AI—ultimately contributing to LogicMonitor's 2025 partnership with IBM and Red Hat on AI-driven, self-healing infrastructure.",
     stops: [
@@ -95,6 +125,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Through interviews, testing, and journey mapping with a recurring loop of 30+ LogicMonitor customers, three key challenges emerged: Alert Fatigue (thousands of daily alerts buried critical issues), Slow Troubleshooting (engineers spent hours diagnosing incidents—even repeated ones), and Reactive Monitoring (teams discovered problems only after they escalated).",
         quote: "We're like headless chickens running around. If you spend your efforts in different directions, the chances of them negating or canceling out are greater.",
         quoteAuthor: "Sankeet Lokhande, Senior Engineer at Schneider Electric",
+        quoteImage: '/images/alerts/sankeet.png',
         insights: [
           "Alert Fatigue: Thousands of daily alerts buried critical issues in noise",
           "Slow Troubleshooting: Engineers spent hours diagnosing incidents—even repeated ones",
@@ -139,6 +170,11 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Secure Data",
     line_color: "purple",
     destination: "$250K annual savings for customers",
+    peaks: [
+          '/images/data/natural.png',
+          '/images/data/napkin.png',
+          '/images/data/access4.3.png'
+        ],
     background: "In higher education, data security and compliance are mission-critical: breaches risk exposing student records, research data, and financial information. Loyola University of Maryland, serving over 17,000 students across multiple campuses, faced growing challenges as it transitioned to a virtualized network infrastructure.",
     overview: "To meet strict institutional and regulatory requirements, Loyola's Senior Systems Engineer Mike Dieter and IT team needed a secure, efficient way to collect and manage sensitive log data across a sprawling environment. I designed access control features, simplified log collection, and created a natural language translator to democratize log search.",
     stops: [
@@ -193,6 +229,11 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Empowered Team",
     line_color: "blue",
     destination: "3 piloted solutions in 12 weeks",
+    peaks: [
+          '/images/rags/fields.png',
+          '/images/rags/gap3.png',
+          '/images/rags/gap1.3.png'
+        ],
     background: "Align Technology, maker of Invisalign, wanted to improve its relationship with the dentists and orthodontists that fit, use, and sell their products. Their network of dental professionals needed support with their workloads and stronger relationships.",
     overview: "I led team leaders across the company to embed design thinking into their workflows: uncovering pain points, identifying insights, and rapidly prototyping solutions that could make a real difference, fast. I broke the group into 4 teams to ensure each participant was able to engage, and adapted my tools to fit the analytical culture of Align's global teams.",
     stops: [
@@ -242,6 +283,11 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Imagining the Future",
     line_color: "green",
     destination: "100K+ visitors served since 2022",
+    peaks: [
+          '/images/rags/fields.png',
+          '/images/rags/gap3.png',
+          '/images/rags/gap1.3.png'
+        ],
     background: "The Exploratorium and SESI Lab needed to define and structure the theme 'Imagining the Future' for a new museum in Brazil, aligning 20 planned exhibits under one clear vision. The goal was to build confidence in underserved communities facing educational barriers and empower citizens to see themselves as capable of shaping their future.",
     overview: "I worked mostly independently with periodic input from exhibit developers. I synthesized research, strategy, and systems thinking into a shared creative direction for the SESI Lab team, creating a framework that would inspire every visitor to see themselves as capable of changing the future.",
     stops: [
@@ -285,6 +331,11 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Health Frameworks",
     line_color: "purple",
     destination: "40% reduction in expert dependency",
+    peaks: [
+          '/images/rags/fields.png',
+          '/images/rags/gap3.png',
+          '/images/rags/gap1.3.png'
+        ],
     background: "Only 16-30% of people who could benefit from hearing aids actually use them due to stigma, cost, and overwhelming complexity. Meanwhile, 70 million Americans struggle with sleep. Bose saw an opportunity to bring its sound expertise to both hearing and sleep, but fragmented teams needed alignment.",
     overview: "I joined to help design hardware products and their apps. I learned how to align fragmented teams around user needs when the path forward wasn't clear, and how to identify and unify fragmented interaction patterns across hardware and software. Though the products were eventually discontinued, I built frameworks that team members took to their next roles.",
     stops: [
