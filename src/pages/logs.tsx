@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, X, ChevronRight, Train } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
 import { allCaseStudies } from './casedata';
 import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
@@ -33,12 +33,6 @@ interface Stop {
   images?: string[]; // Array of image URLs for carousel
 }
 
-interface BeforeAfter {
-  before: string; // Image URL or description
-  after: string; // Image URL or description
-  label?: string;
-}
-
 interface CaseStudyTemplateProps {
   onBack: () => void;
   onNextRoute: () => void;
@@ -64,13 +58,6 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
       setCurrentStop(0);
       setShowTransition(false);
     }, 1200); // Match your longest animation duration
-  };
-  
-  // Placeholder before/after
-  const beforeAfter: BeforeAfter = {
-    before: '/images/rags/before.png',
-    after: '/images/rags/after.png',
-    label: 'Transformation'
   };
   
   const nextStop = () => {
