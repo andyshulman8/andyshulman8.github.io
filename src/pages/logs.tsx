@@ -278,43 +278,28 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               </div>
             </div>
 
-                  {/* Impact metrics in 2-column grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
-                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
-                        30%
-                      </div>
-                      <div className="text-white/60 text-sm">
-                        Noise Reduction
-                      </div>
-                    </div>
-                    
-                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
-                        10min
-                      </div>
-                      <div className="text-white/60 text-sm">
-                        Resolution Time
-                      </div>
-                    </div>
-                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
-                        1000+
-                      </div>
-                      <div className="text-white/60 text-sm">
-                        Customers Served
-                      </div>
-                    </div>
-                    <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                      <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
-                        $250K
-                      </div>
-                      <div className="text-white/60 text-sm">
-                        Annual Savings
-                      </div>
-                    </div>
+              {caseStudyData.allImpact && caseStudyData.allImpact.length > 0 && (
+            <div className={`grid gap-3 mb-12 ${
+              caseStudyData.allImpact.length === 1 ? 'grid-cols-1' : 
+              caseStudyData.allImpact.length === 2 ? 'grid-cols-2' : 
+              'grid-cols-2 md:grid-cols-4'
+            }`}>
+              {caseStudyData.allImpact.map((item, index) => (
+                <div 
+                  key={index} 
+                  className="rounded-lg p-6 text-center shadow-lg transition-transform hover:scale-105" 
+                  style={{ backgroundColor: INFO_COLOR }}
+                >
+                  <div className="text-3xl font-bold mb-2" style={{ color: SILVER }}>
+                    {item.metric}
                   </div>
-
+                  <div className="text-white/60 text-sm">
+                    {item.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
             {/* Before & After Section */}
             <div>
               {caseStudyData.before && caseStudyData.after && (
@@ -382,7 +367,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 onClick={onNextRoute}
                 className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
               >
-                Or try the next route
+                Or try the next case study
               </button> <TrainTransition 
     isActive={showTransition}
     //lineColor="blue" // or map to case study color
@@ -450,6 +435,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   </div>
   <h2 className="text-3xl font-bold">
     {caseStudyData.stops[currentStop].station_name}
+  </h2>
+</div>
+
+{/* Subtitle if any */}
+<div className="text-center mb-6">
+  <h2 className="text-md font-bold">
+    {caseStudyData.stops[currentStop].subtitle}
   </h2>
 </div>
 
@@ -553,9 +545,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
             {/* Content */}
             <div className="prose prose-invert max-w-none">
-              <p className="text-l text-white/80 leading-relaxed mb-6">
-                {caseStudyData.stops[currentStop].content}
-              </p>
+              
 
              {/* Quote if available */}
             {caseStudyData.stops[currentStop].quote && (
@@ -584,6 +574,10 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 </div>
               </blockquote>
             )}
+
+            <p className="text-l text-white/80 leading-relaxed mb-6 whitespace-pre-line">
+                {caseStudyData.stops[currentStop].content}
+              </p>
 
             {/* Callout note if available */}
             {caseStudyData.stops[currentStop].callout && (

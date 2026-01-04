@@ -5,6 +5,7 @@ type LineColor = 'red' | 'blue' | 'purple' | 'green';
 
 interface Stop {
   station_name: string;
+  subtitle?: string;
   phase: string;
   content: string;
   quote?: string;
@@ -19,6 +20,8 @@ interface Stop {
     label1: string;
     metric2: string;
     label2: string;
+    metric3?: string;
+    label3?: string;
   };
   images?: string[];
 }
@@ -29,6 +32,7 @@ export interface CaseStudyData {
   line_color: LineColor; // This is the key part!
   destination: string;
   peeks: string[];
+  allImpact?: { metric: string; label: string }[]
   before?: string;
   after?: string;
   background: string;
@@ -51,11 +55,15 @@ export const allCaseStudies: CaseStudyData[] = [
     after: '/images/rags/after.png',
     background: "When Systems Fail, Lives Are at Risk: RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs. Before LogicMonitor had properly integrated a logs product, users were forced to jump between disconnected tools during critical moments.",
     overview: "I joined and took over design for LogicMonitor Logs, helping users bridge the critical gap between knowing that something is wrong and solving the problem. Owned end-to-end design for LM Logs acquisition integration; collaborated globally with engineering, PMs, technical writers, and a 10-person design team. Established LM Logs as a competitive player by overhauling search, visualizations, and product cohesion.",
+    allImpact: [{ metric: "2-3 hrs → 10m", label: "Resolution Time" },
+    // { metric: "1000+", label: "Customers Served" },
+    { metric: "$250K", label: "Annual Tool Savings" }],
     stops: [
       {
-        station_name: "Discovery: Three Critical Gaps",
+        station_name: "Three Critical Gaps",
+        subtitle: "Discovery",
         phase: "Empathize",
-        content: "I led recurring user research sessions, conducting Zoom interviews and analyzing users' current workflows to understand where our product was failing. Working with customers like RaySearch Labs (who develop pioneering cancer treatment software), I discovered three critical gaps.",
+        content: "I led recurring user research sessions, conducting Zoom interviews and analyzing users' current workflows to understand where our product was failing. I discovered three critical gaps:",
         quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
         quoteImage: "/images/rags/burriss.png",
@@ -64,12 +72,17 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Inefficient Filtering", description: "Competitors offered advanced search — users asked: 'Why is LM Logs search so small? Where is my recent history?'" },
           { title: "Raw Data Overload", description: "Without diverse and integrated visualizations, the benefit of LM Logs was buried." }
         ],
+        callout: "Our customers weren't the only ones suffering, LogicMonitor itself avoided using LM Logs, forcing us to spend on a competitor."
       },
       {
-        station_name: "Gap 1: Unified Platform",
+        station_name: "Gap 1",
+        subtitle: "Solution: Unified Platform",
         phase: "Ideate",
-        content: "My solution: unified the platform so engineers didn't have to context-switch. I designed seamless workflows connecting logs across the product, added embeddable logs widgets for dashboards, and surfaced anomalous logs directly within alerts.",
-        callout: "LogicMonitor used a competing tool to monitor its own logs for a long time before I worked with my team to add functionality and better integrate it with the rest of LogicMonitor's tools.",
+        content: "LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure. I designed seamless workflows connecting logs across the platform so engineers like John at RaySearch didn't have to context switch in critical moments - a single pane of glass.",
+        features: [
+          { title: "Added logs widgets capabilities to dashboards", description: ""},
+          { title: "Made logs visible alongside device and service data", description: ""},
+          { title: "Display anomalous logs available within alert", description: ""}],
         images: [
           "/images/rags/gap1.1.png",
           "/images/rags/gap1.2.png",
@@ -77,26 +90,30 @@ export const allCaseStudies: CaseStudyData[] = [
         ]
       },
       {
-        station_name: "Empowered Search",
+        station_name: "Gap 2",
+        subtitle: "Solution: Empowered Search",
         phase: "Ideate",
-        content: "Through competitive analysis, I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
+        content: "Through competitive analysis, it was clear that search was the key to engineers finding the needle in the haystack. DataDog, Splunk, Sumologic, and more used queries to power almost everything else in Logs. I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
         quote: "I like a big search box and inline support is super helpful.",
-        quoteAuthor: "NOC Engineer at HyeTech Networks"
+        quoteAuthor: "NOC Engineer at HyeTech Networks",
+        images: ["images/rags/gap2.png", "images/rags/fields.png"]
       },
       {
-        station_name: "Visual Analytics",
+        station_name: "Gap 3",
+        subtitle: "Solution: Visual Analytics",
         phase: "Prototype",
-        content: "Rather than reinventing visualization patterns, I leveraged LogicMonitor's design system to surface spikes, anomalies, and trends instantly — turning logs from a wall of text into actionable dashboards.",
+        content: "RaySearch engineers had plenty of log data but no good way to actually find the specific logs that would help them. \n\n The goal was simple: make spikes, anomalies, and trends obvious enough that a team could put a dashboard on a monitor in their office and instantly spot when something looked off. No more scrolling through thousands of lines of text. \n\n Rather than reinventing visualization patterns, I leveraged LogicMonitor's existing design system for charts and graphs. This ensured consistency and reduced engineering complexity.",
         features: [
           { title: "Multiple Graph Types", description: "By providing options, users are now more empowered to understand patterns in their data." },
           { title: "Advanced Query Operators", description: "Count, avg, sum, min, and max operators enabled numerical analysis beyond keyword searches." },
           { title: "Dashboard Integration", description: "Logs widgets can be embedded in dashboards, helping correlate log data with system performance metrics." }
-        ]
+        ],
+        images: ['images/rags/gap3.png']
       },
       {
-        station_name: "Launch & Impact",
+        station_name: "Impact",
         phase: "Test",
-        content: "Issue resolution dropped dramatically as teams adopted the integrated workflows and visualizations. Engineers could solve highly complex issues while working in one powerful tool.",
+        content: "Through close collaboration across global teams, I helped transform LM Logs from a niche add-on to a flagship product that LogicMonitor itself relied on. \n\nRaySearch develops pioneering software used by cancer clinics worldwide to plan and deliver radiation therapy safely and effectively. By simplifying complexity and integrating logs seamlessly into the platform, I helped ensure that cancer treatment software at RaySearch Labs runs reliably: ultimately supporting better patient care.",
         quote: "We had users complaining that there was a licensing error. Using LogicMonitor's platform, including LM Logs, we were able to trace the issue and do a stop service on a server way down the line. The process took about 10 minutes versus the two to three hours it would have taken without the visibility.",
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
         impact: {
@@ -122,44 +139,60 @@ export const allCaseStudies: CaseStudyData[] = [
     after: '/images/alerts/after.png',
     background: "Schneider Electric, a 160-year-old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
     overview: "With 25,000+ network devices and a rapidly expanding cloud environment, tool sprawl and alert fatigue had become major obstacles. I designed new alert types, query tracking capabilities, and laid the foundation for Edwin AI—ultimately contributing to LogicMonitor's 2025 partnership with IBM and Red Hat on AI-driven, self-healing infrastructure.",
+    allImpact: [{ metric: "40%", label: "reduction in alert noise" },
+    // { metric: "1000+", label: "Customers Served" },
+    { metric: "30 → 5", label: "tools for troubleshooting" }],
     stops: [
       {
         station_name: "Discovery",
         phase: "Empathize",
-        content: "Through interviews, testing, and journey mapping with a recurring loop of 30+ LogicMonitor customers, three key challenges emerged: Alert Fatigue (thousands of daily alerts buried critical issues), Slow Troubleshooting (engineers spent hours diagnosing incidents—even repeated ones), and Reactive Monitoring (teams discovered problems only after they escalated).",
+        content: "Through interviews, testing, and journey mapping with a recurring loop of 30+ LogicMonitor customers, three key challenges emerged:",
         quote: "We're like headless chickens running around. If you spend your efforts in different directions, the chances of them negating or canceling out are greater.",
         quoteAuthor: "Sankeet Lokhande, Senior Engineer at Schneider Electric",
         quoteImage: '/images/alerts/sankeet.png',
         features: [
           { title: "Alert Fatigue", description: "Thousands of daily alerts buried critical issues in noise" },
-          { title: "Slow Troubleshooting", description: "Engineers spent hours diagnosing incidents—even repeated ones" },
+          { title: "Slow Troubleshooting", description: "Engineers spent hours diagnosing incidents, even repeated ones" },
           { title: "Reactive Monitoring", description: "Teams discovered problems only after they escalated" }
-        ]
+        ],
+        images: ['images/alerts/buried1.png', 'images/alerts/buried2.png','images/alerts/buried3.png']
       },
       {
         station_name: "Smarter Alerts",
         phase: "Define",
-        content: "I introduced alert groups and 'stateful' alerts that clear automatically when issues resolve. Users could now choose between 3 alert types, build groups of alerts on the fly, group related alerts, define alert logic within time windows, and view all important alert information directly from their email.",
+        content: "Engineers needed two things that seemed contradictory: more control over their alerts, but less complexity in setting them up. I sketched and tested multiple approaches to ensure a clear alert configuration flow. Now that alerts could clean up after themselves, teams like Schneider Electric saw fewer, smarter alerts tied directly to actionable data. \n\n I introduced alert groups and 'stateful' alerts that clear automatically when issues resolve. Users could now choose between 3 alert types, build groups of alerts on the fly, group related alerts, define alert logic within time windows, and view all important alert information directly from their email.",
         features: [
           { title: "Spike Detection", description: "Users needed to know when getting way more logs of a certain type than normal" },
           { title: "Missing Log Detection", description: "Users needed to know when not receiving a certain log" },
           { title: "Reduce False Positives", description: "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data" }
-        ]
+        ],
+        images: ['images/alerts/smarter.png']
       },
       {
         station_name: "Proactive Monitoring",
         phase: "Ideate",
-        content: "Once the immediate noise problem was solved, I turned to helping teams prevent issues before they caused downtime. I designed Saved Views and Query Tracking, enabling users to save, share, and track search results as metrics over time—for example, automatically monitoring 404 error spikes.",
+        content: "Once the immediate noise problem was solved, I turned to helping teams prevent issues before they caused downtime. I designed Saved Views and Query Tracking, enabling users to save, share, and track search results as metrics over time. \n\n Schneider used this to automatically track spikes in 404 errors and authentication failures across their global clusters.",
+        images: ['images/alerts/proactive.png']
       },
       {
         station_name: "AI Foundation",
         phase: "Prototype",
         content: "Leadership asked me to extend this thinking platform-wide as they needed a unified alerts vision. I designed flows and defined troubleshooting principles: Make leveraging LM's tools seamless, provide clear one-click starting points, and serve value without hunting. This work became the foundation for Edwin AI.",
+        images: ['images/alerts/AI1.png', 'images/alerts/AI2.png','images/alerts/AI3.png', 'images/alerts/AI4.png'],
+        numberedFeatures: [
+          { title: "Make deep investigation across LM's tools seamless and intuitive", description: "" },
+          { title: "Provide a clear, one-click starting point for triage", description: "" },
+          { title: "No hunting for value, value is served to you", description: "" }
+        ],
+        callout: "This work became the foundation for \"Edwin AI\" and positioned LogicMonitor for their [2025 partnership](https://www.logicmonitor.com/partners/ibm) with IBM and Red Hat on AI-driven, self-healing infrastructure."
       },
       {
-        station_name: "Launch & Impact",
+        station_name: "Impact",
         phase: "Test",
-        content: "My initial alert designs became the end result built into Edwin AI. This work positioned LogicMonitor for their 2025 partnership with IBM and Red Hat on AI-driven, self-healing infrastructure. Schneider Electric's improvements freed up their time, energy, and infrastructure resources.",
+        content: "Schneider Electric helps power some of the largest digital and energy ecosystems on the planet including Google and Amazon. My troubleshooting and LM Logs improvements freed up Schneider Electric's time, energy, and infrastructure resources meaning fewer redundant systems running, less compute power wasted, and faster response to issues that can impact energy systems worldwide. ",
+        quote: "There’s been a constant change in the technology we manage today. We were really happy to see that LogicMonitor not only supported where we are today, but where we’re moving. The scalability was very simple.",
+        quoteAuthor: "Arun Mandayam, IT Manager at Schneider Electric",
+        quoteImage: '/images/alerts/arun.png',
         impact: {
           metric1: "30% reduction",
           label1: "Alert Noise Reduction",
@@ -175,9 +208,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "purple",
     destination: "$250K annual savings for customers",
     peeks: [
-          '/images/data/natural.png',
+          '/images/data/natural.jpg',
           '/images/data/napkin.png',
-          '/images/data/access4.3.png'
+          '/images/data/access4.png'
         ],
     background: "In higher education, data security and compliance are mission-critical: breaches risk exposing student records, research data, and financial information. Loyola University of Maryland, serving over 17,000 students across multiple campuses, faced growing challenges as it transitioned to a virtualized network infrastructure.",
     overview: "To meet strict institutional and regulatory requirements, Loyola's Senior Systems Engineer Mike Dieter and IT team needed a secure, efficient way to collect and manage sensitive log data across a sprawling environment. I designed access control features, simplified log collection, and created a natural language translator to democratize log search.",
@@ -185,7 +218,7 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "Discovery",
         phase: "Empathize",
-        content: "I led recurring user research sessions, conducting interviews and analyzing workflows to understand where our product was failing. Without proper access controls, one misconfigured permission could expose thousands of student health records or financial aid data: a career-ending mistake for someone like Mike and devastating for students and professors.",
+        content: "Without proper access controls, one misconfigured permission could expose thousands of student health records or financial aid data: a career-ending mistake for someone like Mike and devastating for students and professors. Compliance management was complex, error-prone, and high-stakes. \n\n I led recurring user research sessions, conducting interviews and analyzing workflows to understand where our product was failing.",
         quote: "We had to manage logs from campus safety systems, VoIP devices, and servers, all with different requirements. Tech changes fast—our tools needed to keep up.",
         quoteAuthor: "Mike Dieter, Senior Systems Engineer at Loyola University of Maryland",
         features: [
@@ -196,34 +229,42 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "Access Control",
         phase: "Define",
-        content: "I designed Partitions: a feature that securely segregates log data so only authorized users have access. Mike could now store all the sensitive logs in a Partition, set up proper access control, and feel confident the logs have no way of getting in the wrong hands. I ran multiple research and validation cycles as we evolved LM's access control model.",
+        content: "I ran multiple research and validation cycles as we evolved LM's access control model. \n\nI designed Partitions: a feature that securely segregates log data so only authorized users have access. Mike could now store all the sensitive logs in a Partition, set up proper access control, and feel confident the logs have no way of getting in the wrong hands.",
+        images: ['images/data/Access.png', 'images/data/access2.png','images/data/access3.png', 'images/data/access4.png'],
+        
       },
       {
         station_name: "Simplified Collection",
         phase: "Ideate",
-        content: "To help Loyola securely manage their evergrowing, complex environment, I designed pre-built templates for common log types, automating ingestion and reducing configuration errors. Users could easily bring in cloud or on-premises logs and instantly start monitoring from one single pane of glass instead of jumping to different platforms.",
+        content: "With secure boundaries established, the next problem was onboarding all those wildly different log types without human error. To help Loyola securely manage their evergrowing, complex environment, I designed pre-built templates for common log types, automating ingestion and reducing configuration errors.\n\nTo support user confidence, I simplified onboarding with:",
         features: [
-          { title: "Pre-configured Defaults", description: "Clear, pre-configured defaults" },
-          { title: "Guided Setup", description: "Step-by-step forms with inline documentation" },
-          { title: "Scalable Structure", description: "Scalable structure for future log types" }
-        ]
+          { title: "Clear, pre-configured defaults", description: "" },
+          { title: "Step-by-step forms with inline documentation", description: "" },
+          { title: "Scalable structure for future log types", description: "" }
+        ],
+        images: ['images/data/napkin.png', 'images/data/complex2.png'],
+        
       },
       {
         station_name: "Natural Language",
         phase: "Prototype",
         content: "As part of simplifying log search, I helped design a Natural Language translator, allowing users to write queries in plain English and click a button to see the technical syntax. Previously, users had to learn complex operators and log field structures. For Loyola, this meant Mike could confidently delegate log investigation to junior staff.",
+        images: ['images/data/natural.jpg'],
+        
       },
       {
-        station_name: "Launch & Impact",
+        station_name: "Impact",
         phase: "Test",
-        content: "By turning complex compliance requirements into intuitive workflows, I helped Loyola University protect data and operate with confidence as privacy laws and log types evolve. My work reinforced LogicMonitor's credibility in regulated enterprise environments.",
+        content: "By turning complex compliance requirements into intuitive workflows with Partitions, templates, and Natural Language Search, I helped Loyola University protect data and operate with confidence as privacy laws and log types evolve. In addition to strengthening customer trust, my work also reinforced LogicMonitor’s credibility in regulated enterprise environments.",
         quote: "For the University, IT infrastructure is evolving far faster in 3-5 years now than it did in the previous 5 years. What we really like about LogicMonitor is that it gives us the flexibility to adapt to those changes as it occurs.",
         quoteAuthor: "Mike Dieter, Senior Systems Engineer at Loyola University of Maryland",
         impact: {
           metric1: "90 seconds",
-          label1: "WiFi controller diagnosis time",
-          metric2: "$250K saved",
-          label2: "Annual cost saving by consolidating to LM Logs"
+          label1: "WiFi controller diagnosis time, down from 2+ hours",
+          metric2: "$2-3K saved",
+          label2: "Annual cost saving for Loyola",
+          metric3: "Added flexibility",
+          label3: "Quicker integration of new logs"
         }
       }
     ]
