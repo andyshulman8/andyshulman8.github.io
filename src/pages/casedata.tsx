@@ -12,6 +12,7 @@ interface Stop {
   quoteImage?: string;
   insights?: string[];
   features?: { title: string; description: string }[];
+  numberedFeatures?: { title: string; description: string }[];
   callout?: string;
   impact?: {
     metric1: string;
@@ -58,7 +59,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
         quoteAuthor: "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
         quoteImage: "/images/rags/burriss.png",
-        features: [
+        numberedFeatures: [
           { title: "Disconnected Tools", description: "Critical troubleshooting moments are only more stressful with siloed apps; users were forced to juggle various tools and processes." },
           { title: "Inefficient Filtering", description: "Competitors offered advanced search — users asked: 'Why is LM Logs search so small? Where is my recent history?'" },
           { title: "Raw Data Overload", description: "Without diverse and integrated visualizations, the benefit of LM Logs was buried." }

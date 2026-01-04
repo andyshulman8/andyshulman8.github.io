@@ -6,7 +6,7 @@ import type { CaseStudyData } from './casedata';
 import TrainTransition from './train.tsx';
 import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
 import CarouselControls from '../components/CarouselControlsNew';
-
+import NumberedFeatures from '../components/NumberedFeatures.tsx';
 
 // Color constants - adjust these to change the entire theme
 const SILVER = '#dfe1e5ff';
@@ -617,6 +617,28 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   ))}
                 </div>
               )}
+
+              {/* Feature boxes (e.g. multiple graph types, query operators, dashboard widgets) */}
+              {/* {caseStudyData.stops[currentStop].numberedFeatures && (
+                <div
+                  className="grid gap-4 my-8 features-grid"
+                  style={{ ['--cols' as any]: Math.min(Math.max(featureCount, 1), 4) }}
+                ><NumberedFeatures>
+                {caseStudyData.stops[currentStop].callout}
+              </NumberedFeatures>
+                  {caseStudyData.stops[currentStop].numberedFeatures.map((f: any, i: number) => (
+                    <div key={i} className="rounded-lg p-6" style={{ backgroundColor: INFO_COLOR }}>
+                      <h4 className="text-lg font-bold mb-2" style={{ color: ACCENT_COLOR }}>{f.title}</h4>
+                      <p className="text-white/70 text-sm">{f.description}</p>
+                    </div>
+                  ))}
+                </div>
+              )} */}
+              {/* Numbered features if available */}
+              {caseStudyData.stops[currentStop].numberedFeatures && (
+                <NumberedFeatures items={caseStudyData.stops[currentStop].numberedFeatures!} />
+              )}
+
 
               {/* Impact if available */}
               {caseStudyData.stops[currentStop].impact && (
