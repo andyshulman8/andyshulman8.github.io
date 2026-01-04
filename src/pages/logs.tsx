@@ -9,6 +9,7 @@ import CarouselControls from '../components/CarouselControlsNew';
 import NumberedFeatures from '../components/NumberedFeatures.tsx';
 
 // Color constants - adjust these to change the entire theme
+const THEME_COLOR = '#424141'; 
 const SILVER = '#dfe1e5ff';
 const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
@@ -559,8 +560,8 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
              {/* Quote if available */}
             {caseStudyData.stops[currentStop].quote && (
               <blockquote 
-                className="border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
-                style={{ borderColor: ACCENT_COLOR, backgroundColor: '#dfe1e5ff' }}
+                className="rounded-lg border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
+                style={{ borderColor: THEME_COLOR, backgroundColor: SILVER }}
               >
                 <div className="flex-1">
                   "{caseStudyData.stops[currentStop].quote}"
@@ -573,7 +574,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                             src={caseStudyData.stops[currentStop].quoteImage} 
                             alt={caseStudyData.stops[currentStop].quoteAuthor}
                             className="w-10 h-10 rounded-full object-cover border-2"
-                            style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: INFO_COLOR }}
+                            style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: THEME_COLOR }}
                           />
                         )}
                         <span>{caseStudyData.stops[currentStop].quoteAuthor}</span>
