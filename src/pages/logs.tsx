@@ -7,6 +7,7 @@ import TrainTransition from './train.tsx';
 import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
 import CarouselControls from '../components/CarouselControlsNew';
 import NumberedFeatures from '../components/NumberedFeatures.tsx';
+import VisionTimeline from '../components/VisionTimeline.tsx';
 
 // Color constants - adjust these to change the entire theme
 const THEME_COLOR = '#424141'; 
@@ -577,7 +578,15 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
             <p className="text-l text-white/80 leading-relaxed mb-6 whitespace-pre-line">
                 {caseStudyData.stops[currentStop].content}
-              </p>
+            </p>
+
+            {/* Vision timeline only for the Vision Definition stop */}
+            {caseStudyData.id === 'future' &&
+            caseStudyData.stops[currentStop].station_name === 'Vision Definition' && (
+              <div className="my-8">
+                <VisionTimeline />
+              </div>
+            )}
 
             {/* Callout note if available */}
             {caseStudyData.stops[currentStop].callout && (

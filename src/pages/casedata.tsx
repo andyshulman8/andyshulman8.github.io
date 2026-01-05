@@ -275,9 +275,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "blue",
     destination: "3 piloted solutions in 12 weeks",
     peeks: [
-          '/images/rags/fields.png',
-          '/images/rags/gap3.png',
-          '/images/rags/gap1.3.png'
+          '/images/team/frame1.png',
+          '/images/team/proto.png',
+          '/images/team/TOC2.jpeg'
         ],
     background: "Align Technology, maker of Invisalign, wanted to improve its relationship with the dentists and orthodontists that fit, use, and sell their products. Their network of dental professionals needed support with their workloads and stronger relationships.",
     overview: "I led team leaders across the company to embed design thinking into their workflows: uncovering pain points, identifying insights, and rapidly prototyping solutions that could make a real difference, fast. I broke the group into 4 teams to ensure each participant was able to engage, and adapted my tools to fit the analytical culture of Align's global teams.",
@@ -288,38 +288,44 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "To help Align's professionals, we first needed to determine their needs. I taught the team user interview techniques, then conducted remote interviews with Align's doctors while team members observed and took notes, building shared understanding. Through empathy maps and brainstorming, we identified surprises and made inferences.",
         quote: "Listening through the customer interviews clarified a reality for many of us.",
         quoteAuthor: "Practice Recovery Experiences concept team",
+        images: ["images/team/empathy.png"]
       },
       {
         station_name: "Teaching Reframing",
         phase: "Define",
         content: "Align's network of dental professionals ultimately needed a stronger village, a stronger community. I taught the team to reframe problems our interviewees faced. The team built their first design frames, learning to focus on needs rather than solutions.",
         quote: "The Design Thinking process provided us a way to design based on the customer needs.",
-        quoteAuthor: "Practice Recovery Experiences concept team"
+        quoteAuthor: "Practice Recovery Experiences concept team",
+        images: ["images/team/frame1.png", "images/team/frame2.png"]
       },
       {
         station_name: "Brainstorming",
         phase: "Ideate",
-        content: "After reframing problems our interviewees faced, I ran workshops where we brainstormed what would be effective to address the targets' needs, and how to make those things happen. I leveraged time-constrained sessions with various constraints, starting with a basic brainstorm around how we may achieve the game-changers each team landed on.",
+        content: "After reframing problems our interviewees faced, I ran workshops where we brainstormed what would be effective to address the targets' needs, and how to make those things happen. I leveraged time constricted sessions with various constraints, starting with a basic brainstorm around how we may achieve the game-changers each team landed on.",
         quote: "Building off of our group's ideas enabled synergy & ability to develop better concepts.",
         quoteAuthor: "IDS Staff Assign concept team"
       },
       {
         station_name: "Rapid Prototyping",
         phase: "Prototype",
-        content: "Before building out our prototypes, I identified a question or two that we aimed to answer by testing each prototype. With a key question in mind, I brought each concept to the team to start brainstorming how we could answer those questions. We tested across media: built physical prototypes, surveys, a Facebook page, and even a popular podcast episode.",
+        content: "Before building out our prototypes, I identified a question or two that we aimed to answer by testing each prototype. With a key question in mind, I brought each concept to the team to start brainstorming how we could answer those questions. \n\nWe tested across media: built physical prototypes, surveys, a Facebook page, and even a (popular) podcast episode. After instructing the team on user testing, I sent the teams off to get results with real doctors who use Align. ",
         quote: "Quick testing could save the team and company time and energy to pressure test an idea long before we utilize resources to execute it completely - AGILITY!",
-        quoteAuthor: "Delighted Doctor concept team"
+        quoteAuthor: "Delighted Doctor concept team",
+        images: ["images/team/proto.png"]
       },
       {
-        station_name: "Launch & Impact",
+        station_name: "Impact",
         phase: "Test",
-        content: "I utilized worksheets to help the group organize our thoughts. 3 of the 5 concepts tested well, achieving the goal of my contract: provide solutions robust enough to pilot. I crafted a Theory of Change for each, as well as conducted a premortem. The impact extended beyond the pilots: Align brought me back for a second engagement to embed design thinking into their global culture transformation.",
+        content: "What started as a one-off training became a movement: a culture shift that empowered professionals to think creatively and act empathetically. By scaling design thinking internally, Align accelerated its ability to identify and test new service ideas faster and with greater team buy-in.",
         impact: {
           metric1: "17 professionals",
           label1: "Trained in design thinking",
           metric2: "3 of 5 concepts",
           label2: "Prototypes handed off to pilot"
-        }
+        },
+        quote: "[4 years later:] We have made great progress on the design thinking front and working on a big program to reimagine billing - kicking the improvements we made into the next gear.",
+        quoteAuthor: "VP of Customer Success at Align Technology, Volker Probst",
+        quoteImage: "images/Home/volker.webp"
       }
     ]
   },
@@ -329,9 +335,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "green",
     destination: "100K+ visitors served since 2022",
     peeks: [
-          '/images/rags/fields.png',
-          '/images/rags/gap3.png',
-          '/images/rags/gap1.3.png'
+          '/images/future/aud4.jpeg',
+          '/images/future/toolkit1.png',
+          '/images/future/feedback.png'
         ],
     background: "The Exploratorium and SESI Lab needed to define and structure the theme 'Imagining the Future' for a new museum in Brazil, aligning 20 planned exhibits under one clear vision. The goal was to build confidence in underserved communities facing educational barriers and empower citizens to see themselves as capable of shaping their future.",
     overview: "I worked mostly independently with periodic input from exhibit developers. I synthesized research, strategy, and systems thinking into a shared creative direction for the SESI Lab team, creating a framework that would inspire every visitor to see themselves as capable of changing the future.",
@@ -339,7 +345,13 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "Audience Research",
         phase: "Empathize",
-        content: "I considered both The Exploratorium's and SESI's brand goals, as well as the overall audience in cultural context. The stakeholders needed to create a distinctive museum experience blending social and physical science, design for repeat visits, and address systemic barriers like broken educational systems that leave people feeling powerless.",
+        content: "I considered both The Exploratorium's and SESI's brand goals, as well as the overall audience in cultural context. The stakeholders needed to create a distinctive museum experience blending social and physical science and design for repeat visits. In context, the overall needs boiled down to the following: ",
+        images: ["images/future/aud1.png", "images/future/aud2.png", "images/future/aud3.png","images/future/aud4.jpeg"],
+        features: [
+          { title: "Build confidence", description: " in underserved communities facing educational barriers" },
+          { title: "Empower citizens", description: "to see themselves as capable of shaping their future" },
+          { title: "Address systemic barriers", description: "that leave people feeling, \"I'm just one person\" or, \"others are smarter\"" }
+        ],
       },
       {
         station_name: "Vision Definition",
@@ -349,15 +361,17 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "Theory of Change",
         phase: "Ideate",
-        content: "For visitors who've been told 'you can't,' confidence doesn't come from one exhibit, it comes from an ecosystem. I facilitated ideation to map how exhibits could work together to shift that narrative. I created a theory of change to provide the framework for our exhibit, outlining key goals and measurable outcomes.",
+        content: "Leveraging my Stanford Graduate School of Business course experience, I created a theory of change to provide the framework for our exhibit, outlining key goals and measurable outcomes to ensure we stayed on track throughout the design process.",
+        images: ["images/future/TOC.png"]
       },
       {
         station_name: "Developer Toolkit",
         phase: "Prototype",
         content: "I built a 6-step developer process that gave exhibit creators the creative freedom they needed while keeping everything tied to our thematic goal. I also designed a decision-making framework to help the manager select the final 20 exhibits. I researched exhibits worldwide and compiled a reference library with methods and outcomes.",
+        images: ["images/future/toolkit1.png", "images/future/toolkit2.png", "images/future/toolkit3.png", "images/future/toolkit4.png"]
       },
       {
-        station_name: "Launch & Impact",
+        station_name: "Impact",
         phase: "Test",
         content: "I established key metrics and identified the optimal method of evaluation for the museum. I also conducted a pre-mortem analysis to identify potential risks and provided actionable next steps. Today the museum is thriving, having served 100,000+ visitors since opening in 2022.",
         quote: "In this creative environment, active participation is encouraged, and the central idea of [SESI Lab] is that learning occurs in a fun and interactive way.",
@@ -365,8 +379,8 @@ export const allCaseStudies: CaseStudyData[] = [
         impact: {
           metric1: "100,000+ visitors",
           label1: "Served since 2022 opening",
-          metric2: "Framework for Impact",
-          label2: "Exhibit developers now have direction rooted in inclusion"
+          metric2: ">2000 Brazilian teachers",
+          label2: "have learned new approaches to science through the new museum since opening in 2022"
         }
       }
     ]
@@ -377,9 +391,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "purple",
     destination: "40% reduction in expert dependency",
     peeks: [
-          '/images/rags/fields.png',
-          '/images/rags/gap3.png',
-          '/images/rags/gap1.3.png'
+          '/images/health/sketch2.png',
+          '/images/health/stickies.avif',
+          '/images/health/LED.png'
         ],
     background: "Only 16-30% of people who could benefit from hearing aids actually use them due to stigma, cost, and overwhelming complexity. Meanwhile, 70 million Americans struggle with sleep. Bose saw an opportunity to bring its sound expertise to both hearing and sleep, but fragmented teams needed alignment.",
     overview: "I joined to help design hardware products and their apps. I learned how to align fragmented teams around user needs when the path forward wasn't clear, and how to identify and unify fragmented interaction patterns across hardware and software. Though the products were eventually discontinued, I built frameworks that team members took to their next roles.",
@@ -387,14 +401,19 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "Discovery",
         phase: "Empathize",
-        content: "Working across two health-focused product lines revealed overlapping challenges: Expert access (audiologists and researchers critical but overextended), Unclear interaction flows (users left confused or embarrassed), and Constant change (business priorities shift often, making alignment difficult without a shared source of truth).",
+        content: "Working across two health-focused product lines revealed overlapping challenges:",
         quote: "I stopped going to restaurants because I couldn't follow conversations.",
         quoteAuthor: "Hearing aid user",
+        features: [
+          { title: "Expert access", description: "Audiologists and researchers are critical but often overextended." },
+          { title: "Unclear interaction flows", description: "Users were left too confused or embarrassed to keep trying" },
+          { title: "Constant change", description: "Business priorities in health shift often, making alignment difficult without a shared source of truth." }
+        ],
       },
       {
         station_name: "Reduce Bottlenecks",
         phase: "Define",
-        content: "To streamline collaboration across the Bose Health division, I created a centralized research tracker that improved visibility across design, research, and engineering. The tool included categorized research questions, clear ownership, and criteria for when to consult experts. This reduced expert dependency by 40%.",
+        content: "To streamline collaboration across the Bose Health division, I created a centralized research tracker that improved visibility across design, research, and engineering. The tool included categorized research questions, clear ownership, and criteria for when to consult experts.",
         features: [
           { title: "Expanded Research", description: "Added 25 new research questions, categorized into 5 workstreams" },
           { title: "Consultation Guidance", description: "Defined when experts should be consulted vs. when teams should move forward independently" },
@@ -405,21 +424,28 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Shared Understanding",
         phase: "Ideate",
         content: "I synthesized Bose's ethnographic research and organized findings across user journey stages: daily, weekly, and occasional interactions. Then I facilitated workshops to balance user needs, technical feasibility, and design consistency, transforming siloed efforts into coordinated decisions across hardware and software.",
+        images: ["images/health/stickies.avif"]
       },
       {
         station_name: "Behavior Design",
         phase: "Prototype",
-        content: "Sleep interventions require habit formation through tiny, easy behaviors with immediate feedback, not complex feature sets. I used Behavior Design methodology, considering for each feature: Desired Behavior, Make it Easier (reduce friction), and Projected Effectiveness. I also explored hardware interface designs balancing accessibility with discretion for stigmatized products.",
+        content: "Sleep interventions require habit formation through tiny, easy behaviors with immediate feedback, not complex feature sets. I used Behavior Design methodology, considering for each feature:",
+        images: ["images/health/sleep.jpg", "images/health/UIDD.jpg"],
+        features: [
+          { title: " Desired Behavior", description: "What specific action should users take? (e.g., \"Set sleep reminder 30 min before bed\")" },
+          { title: "Make it Easier (reduce friction)", description: "Reduce friction: pre-fill times, minimize taps, smart defaults" },
+          { title: "Projected Effectiveness.", description: "Likelihood of habit formation based on barrier analysis" }
+        ]
       },
       {
-        station_name: "Launch & Impact",
+        station_name: "Impact",
         phase: "Test",
-        content: "Not every product survives, but aligned teams navigate uncertainty better. When Bose exited health, the teams I worked with had shared language for user needs, research infrastructure that reduced rework, and frameworks that some took to their next roles. I delivered an On-Product UI Specification and taught Behavior Design practices across teams.",
+        content: "Not every product survives, but aligned teams navigate uncertainty better. When Bose exited health, the teams I worked with had shared language for user needs, research infrastructure that reduced rework, and frameworks that some took to their next roles.",
         impact: {
-          metric1: "40% reduction",
-          label1: "Expert dependency through tracker system",
-          metric2: "7 workshops",
-          label2: "Built alignment across fragmented teams"
+          metric1: "30+% reduction",
+          label1: "reduction in expert dependency",
+          metric2: "2",
+          label2: "cross-functional workshops led"
         }
       }
     ]
