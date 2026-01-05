@@ -225,7 +225,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                         <img 
                           src={caseStudyData.peeks[peekIndex]} 
                           alt={`Peek ${peekIndex + 1}`}
-                          className="absolute inset-0 w-full h-full object-contain"
+                          className="absolute inset-0 w-full h-full object-cover object-left-top"
                         />
                         
                         {/* Window glare/reflection */}
@@ -482,7 +482,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
           <img 
             src={caseStudyData.stops[currentStop].images[stopCarouselIndex]} 
             alt={`Stop image ${stopCarouselIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 w-full h-full object-cover object-left-top"
           />
           
           {/* Window glare/reflection */}
