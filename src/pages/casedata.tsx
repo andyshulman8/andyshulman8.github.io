@@ -249,7 +249,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Natural Language",
         phase: "Prototype",
         content: "As part of simplifying log search, I helped design a Natural Language translator, allowing users to write queries in plain English and click a button to see the technical syntax. Previously, users had to learn complex operators and log field structures. For Loyola, this meant Mike could confidently delegate log investigation to junior staff.",
-        images: ['images/data/natural.jpg'],
+        images: ['images/data/natural.webp'],
         
       },
       {
