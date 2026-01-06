@@ -18,7 +18,6 @@ const ALL_ABOARD_BG = "#020617";             // dark panel behind text
 //const ALL_ABOARD_TEXT = THEME_COLOR;         // or a light accent
 const ALL_ABOARD_BORDER = SILVER;
 
-
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const boardRef = useRef(null);
@@ -45,22 +44,30 @@ const SkillsBoard = () => {
   ];
 
   return (
-
     <div className="mb-12" ref={boardRef}>
       <h3 className="text-white/90 text-2xl font-bold mb-4">Operating the System</h3>
       <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-6 font-mono shadow-2xl">
         <div className="split-flap-board grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {skillCategories.map((cat, cIdx) => (
             <div key={cIdx} className="space-y-3">
-              <div className="text-sm uppercase tracking-wider">{cat.title}</div>
-              <div className="space-y-2" style= {{color: `${SILVER}10`  }}>
+              <div className="text-sm uppercase tracking-wider" style={{ color: SILVER }}>
+                {cat.title}
+              </div>
+              <div className="space-y-2">
                 {cat.items.map((it, iIdx) => (
                   <div
                     key={iIdx}
-                    className={`split-flap-item ${isVisible ? 'is-flipping' : ''} bg-black/80 border border-white/20 rounded px-3 py-2 text-sm`}
-                    style={{ animationDelay: isVisible ? `${(cIdx * 6 + iIdx) * 200}ms` : '0ms', color: `${SILVER}`  }}
+                    className={`split-flap-item ${isVisible ? 'settled' : 'searching'}`}
+                    style={{ 
+                      '--settle-delay': `${(cIdx * 5 + iIdx) * 150}ms`,
+                      color: SILVER
+                    } as React.CSSProperties}
                   >
-                    {it}
+                    {/* The flipping part */}
+                    <div className="flap">
+                      <div className="flap-front">{it}</div>
+                      <div className="flap-back"></div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -68,10 +75,73 @@ const SkillsBoard = () => {
           ))}
         </div>
         <style>{`
-          .split-flap-board { perspective: 1000px; }
-          .split-flap-item { transform: rotateX(-90deg); opacity: 0; transform-origin: top; backface-visibility: hidden; -webkit-backface-visibility: hidden;}
-          .split-flap-item.is-flipping { animation: flap 600ms cubic-bezier(.2,.8,.2,1) forwards; }
-          @keyframes flap { from { transform: rotateX(-90deg); opacity: 0; } to { transform: rotateX(0deg); opacity: 1; } }
+          .split-flap-board { 
+            perspective: 1000px; 
+          }
+          
+          .split-flap-item {
+            position: relative;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.25rem;
+            overflow: hidden;
+          }
+          
+          .flap {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+          }
+          
+          .flap-front,
+          .flap-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 0.75rem;
+            font-size: 0.875rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+          }
+          
+          .flap-front {
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2;
+          }
+          
+          .flap-back {
+            background: rgba(30, 30, 30, 0.9);
+            transform: rotateX(180deg);
+          }
+          
+          /* Searching animation - slower continuous flip */
+          .split-flap-item.searching .flap {
+            animation: flip-search 0.8s linear infinite;
+          }
+          
+          /* Settled animation - final reveal with delay */
+          .split-flap-item.settled .flap {
+            animation: flip-settle 1s cubic-bezier(.2,.8,.2,1) forwards;
+            animation-delay: var(--settle-delay);
+          }
+          
+          @keyframes flip-search {
+            0% { transform: rotateX(0deg); }
+            100% { transform: rotateX(360deg); }
+          }
+          
+          @keyframes flip-settle {
+            0% { transform: rotateX(0deg); }
+            25% { transform: rotateX(90deg); }
+            50% { transform: rotateX(180deg); }
+            75% { transform: rotateX(270deg); }
+            100% { transform: rotateX(360deg); }
+          }
         `}</style>
       </div>
     </div>

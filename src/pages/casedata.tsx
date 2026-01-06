@@ -47,7 +47,7 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "red",
     destination: "Cut troubleshooting from hours to 10 minutes",
     peeks: [
-          '/images/rags/fields.png',
+          '/images/rags/win.png',
           '/images/rags/gap3.png',
           '/images/rags/gap1.3.png'
         ],
@@ -131,9 +131,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "purple",
     destination: "30% reduction in alert fatigue",
     peeks: [
-          '/images/alerts/proactive.png',
-          '/images/alerts/buried3.png',
-          '/images/alerts/AI4.png'
+          '/images/alerts/logsvid.mp4',
+          // '/images/alerts/proactive.png',
+          // '/images/alerts/AI4.png'
         ],
     before: '/images/alerts/before.png',
     after: '/images/alerts/after.png',
@@ -208,7 +208,7 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "purple",
     destination: "$250K annual savings for customers",
     peeks: [
-          '/images/data/natural.jpg',
+          '/images/data/natural.webp',
           '/images/data/napkin.png',
           '/images/data/access4.png'
         ],
@@ -242,14 +242,14 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Step-by-step forms with inline documentation", description: "" },
           { title: "Scalable structure for future log types", description: "" }
         ],
-        images: ['images/data/napkin.png', 'images/data/complex2.png'],
+        images: ['images/data/napkin.png', 'images/data/logsource.webp'],
         
       },
       {
         station_name: "Natural Language",
         phase: "Prototype",
         content: "As part of simplifying log search, I helped design a Natural Language translator, allowing users to write queries in plain English and click a button to see the technical syntax. Previously, users had to learn complex operators and log field structures. For Loyola, this meant Mike could confidently delegate log investigation to junior staff.",
-        images: ['images/data/natural.webp'],
+        images: ['images/data/natural.jpg'],
         
       },
       {
