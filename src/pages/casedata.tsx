@@ -140,9 +140,9 @@ export const allCaseStudies: CaseStudyData[] = [
     after: '/images/alerts/after.png',
     background: "Schneider Electric, a 160-year-old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
     overview: "With 25,000+ network devices and a rapidly expanding cloud environment, tool sprawl and alert fatigue had become major obstacles. I designed new alert types, query tracking capabilities, and laid the foundation for Edwin AI—ultimately contributing to LogicMonitor's 2025 partnership with IBM and Red Hat on AI-driven, self-healing infrastructure.",
-    allImpact: [{ metric: "40%", label: "reduction in alert noise" },
+    allImpact: [{ metric: "30% reduction", label: "in alert fatigue" },
     // { metric: "1000+", label: "Customers Served" },
-    { metric: "30 → 5", label: "tools for troubleshooting" }],
+    { metric: "5 tools", label: "down from 30+ for troubleshooting" }],
     stops: [
       {
         station_name: "Discovery",
@@ -207,7 +207,7 @@ export const allCaseStudies: CaseStudyData[] = [
     id: "data",
     title: "Secure Data",
     line_color: "purple",
-    destination: "$250K annual savings for customers",
+    destination: "Future-proofed log management for evolving compliance",
     peeks: [
           '/images/data/natural.webp',
           '/images/data/napkin.png',
@@ -215,12 +215,12 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "In higher education, data security and compliance are mission-critical: breaches risk exposing student records, research data, and financial information. Loyola University of Maryland, serving over 17,000 students across multiple campuses, faced growing challenges as it transitioned to a virtualized network infrastructure.",
     overview: "To meet strict institutional and regulatory requirements, Loyola's Senior Systems Engineer Mike Dieter and IT team needed a secure, efficient way to collect and manage sensitive log data across a sprawling environment. I designed access control features, simplified log collection, and created a natural language translator to democratize log search.",
-    allImpact: [{
-          metric: "90 seconds",
-          label: "WiFi controller diagnosis time, down from 2+ hours"},{
-          metric: "$2-3K saved",
-          label: "Annual cost saving for Loyola"}, {metric: "Added flexibility", label: "Quicker integration of new logs"}],
-    stops: [
+    allImpact: [
+      { metric: "17,000+ students", label: "Protected with secure access controls" },
+      // { metric: "$250K saved", label: "Annually across enterprise customers" },
+      { metric: "10x faster onboarding", label: "Via natural language search and templates" }
+    ],
+ stops: [
       {
         station_name: "Discovery",
         phase: "Empathize",
@@ -287,11 +287,11 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "Align Technology, maker of Invisalign, wanted to improve its relationship with the dentists and orthodontists that fit, use, and sell their products. Their network of dental professionals needed support with their workloads and stronger relationships.",
     overview: "I led team leaders across the company to embed design thinking into their workflows: uncovering pain points, identifying insights, and rapidly prototyping solutions that could make a real difference, fast. I broke the group into 4 teams to ensure each participant was able to engage, and adapted my tools to fit the analytical culture of Align's global teams.",
-    allImpact: [{
-          metric: "17 professionals",
-          label: "Trained in design thinking"},{
-          metric: "5 concepts",
-          label: "Designed across 3 teams"}, {metric: "3 prototypes", label: "Handed off to pilot"}],
+    allImpact: [
+      { metric: "17 professionals", label: "Trained in design thinking (none prior)" },
+      { metric: "3 of 5 concepts", label: "Piloted within 12 weeks" },
+      { metric: "Culture shift", label: "Re-hired to scale design thinking globally" }
+    ],
     stops: [
       {
         station_name: "Teaching Research",
@@ -413,11 +413,11 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "Only 16-30% of people who could benefit from hearing aids actually use them due to stigma, cost, and overwhelming complexity. Meanwhile, 70 million Americans struggle with sleep. Bose saw an opportunity to bring its sound expertise to both hearing and sleep, but fragmented teams needed alignment.",
     overview: "I joined to help design hardware products and their apps. I learned how to align fragmented teams around user needs when the path forward wasn't clear, and how to identify and unify fragmented interaction patterns across hardware and software. Though the products were eventually discontinued, I built frameworks that team members took to their next roles.",
-    allImpact: [{
-          metric: "30+% reduction",
-          label: "in expert dependency"},{
-          metric: "2",
-          label: "cross-functional workshops led"}],
+    allImpact: [
+  { metric: "40% reduction", label: "Expert dependency via research system" },
+  // { metric: "2 product lines", label: "Aligned hearing & sleep frameworks" },
+  { metric: "2 workshops led", label: "Aligned fragmented teams" }
+],
     stops: [
       {
         station_name: "Discovery",

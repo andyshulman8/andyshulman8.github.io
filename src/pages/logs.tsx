@@ -58,8 +58,8 @@ interface Stop {
   quote?: string;
   quoteAuthor?: string;
   insights?: string[];
-  features?: { title: string; description: string }[];
   callout?: string;
+  features?: { title: string; description: string }[];
   impact?: {
     metric1: string;
     label1: string;
@@ -644,6 +644,12 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               </div>
             )}
 
+            {/* Numbered features if available */}
+              {caseStudyData.stops[currentStop].numberedFeatures && (
+                <NumberedFeatures items={caseStudyData.stops[currentStop].numberedFeatures!} />
+              )}
+
+
             {/* Callout note if available */}
             {caseStudyData.stops[currentStop].callout && (
               <CalloutBox>
@@ -694,11 +700,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   ))}
                 </div>
               )} */}
-              {/* Numbered features if available */}
-              {caseStudyData.stops[currentStop].numberedFeatures && (
-                <NumberedFeatures items={caseStudyData.stops[currentStop].numberedFeatures!} />
-              )}
-
+              
 
               {/* Impact if available */}
               {caseStudyData.stops[currentStop].impact && (
