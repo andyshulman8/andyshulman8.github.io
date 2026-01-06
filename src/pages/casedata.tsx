@@ -86,7 +86,8 @@ export const allCaseStudies: CaseStudyData[] = [
         images: [
           "/images/rags/gap1.1.png",
           "/images/rags/gap1.2.png",
-          "/images/rags/gap1.3.png"
+          "/images/rags/gap1.3.png",
+          "/images/rags/logsInResources.webp"
         ]
       },
       {
@@ -96,7 +97,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Through competitive analysis, it was clear that search was the key to engineers finding the needle in the haystack. DataDog, Splunk, Sumologic, and more used queries to power almost everything else in Logs. I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
         quote: "I like a big search box and inline support is super helpful.",
         quoteAuthor: "NOC Engineer at HyeTech Networks",
-        images: ["images/rags/gap2.png", "images/rags/fields.png"]
+        images: ["images/rags/logsquery.png", "images/rags/fields.png"]
       },
       {
         station_name: "Gap 3",
@@ -108,7 +109,7 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Advanced Query Operators", description: "Count, avg, sum, min, and max operators enabled numerical analysis beyond keyword searches." },
           { title: "Dashboard Integration", description: "Logs widgets can be embedded in dashboards, helping correlate log data with system performance metrics." }
         ],
-        images: ['images/rags/gap3.png']
+        images: ['images/rags/gap3.png', 'images/rags/donut.webp']
       },
       {
         station_name: "Impact",
@@ -166,7 +167,7 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Missing Log Detection", description: "Users needed to know when not receiving a certain log" },
           { title: "Reduce False Positives", description: "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data" }
         ],
-        images: ['images/alerts/smarter.png']
+        images: ['images/alerts/newLogAlert.webp', 'images/alerts/NewLogAlert.png']
       },
       {
         station_name: "Proactive Monitoring",
@@ -249,7 +250,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Natural Language",
         phase: "Prototype",
         content: "As part of simplifying log search, I helped design a Natural Language translator, allowing users to write queries in plain English and click a button to see the technical syntax. Previously, users had to learn complex operators and log field structures. For Loyola, this meant Mike could confidently delegate log investigation to junior staff.",
-        images: ['images/data/natural.jpg'],
+        images: ['images/data/natural.webp'],
         
       },
       {
