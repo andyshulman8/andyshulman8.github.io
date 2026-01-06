@@ -362,235 +362,144 @@ export default function DesignCentralStation() {
           ></div>
 
           {/* Animated Train - above the solid rail */}
-          <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
-            <div className="train-animation">
-              <div className="flex items-end gap-2">
-                {/* Train engine */}
-                <div className="relative">
-                  <div
-                    className="w-14 h-8 rounded-r-lg border-2 relative shadow-lg"
-                    style={{
-                      backgroundColor: TRAIN_BODY_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  >
-                    {/* <div
-                      className="absolute -top-3 left-4 w-3 h-4 rounded-t-sm border-t-2"
-                      style={{
-                        backgroundColor: TRAIN_BORDER_COLOR,
-                        borderTopColor: TRAIN_BODY_COLOR,
-                      }}
-                    >
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/60 rounded-full animate-pulse"></div>
-                    </div> */}
+<div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
+  <div className="train-animation">
+    <div className="flex items-end gap-0"> {/* No gap - cars are connected */}
+      
+      {/* Rear car - tail car (now at back of train) */}
+      <div className="relative w-16 h-10 rounded-l-3xl border-2 shadow-lg flex-shrink-0" style={{
+        backgroundColor: TRAIN_BODY_COLOR,
+        borderColor: TRAIN_BORDER_COLOR,
+      }}>
+        {/* Door stripe */}
+        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
+        
+        {/* Windows row */}
+        <div className="absolute top-2 left-3 right-1 h-5 flex gap-0.5">
+          <div className="flex-1 border border-white/30 bg-white/10" />
+          <div className="w-1 bg-current opacity-20" />
+          <div className="flex-1 border border-white/30 bg-white/10" />
+        </div>
+        
+        {/* Rear light */}
+        <div className="absolute top-7 left-2 w-2 h-2 bg-red-500 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
+        
+        {/* Wheels */}
+        <div className="absolute -bottom-1.5 left-3 w-2.5 h-2.5 rounded-full border-2" style={{
+          backgroundColor: TRAIN_WHEEL_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }} />
+        <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+          backgroundColor: TRAIN_WHEEL_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }} />
+        
+        {/* Accordion connector to next car */}
+        <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
+          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
+        }} />
+      </div>
 
-                    {/* Wheels */}
-                    <div
-                      className="absolute -bottom-1 left-3 w-3 h-3 rounded-full border-2"
-                      style={{
-                        backgroundColor: TRAIN_WHEEL_COLOR,
-                        borderColor: TRAIN_BORDER_COLOR,
-                      }}
-                    ></div>
-                    <div
-                      className="absolute -bottom-1 right-3 w-3 h-3 rounded-full border-2"
-                      style={{
-                        backgroundColor: TRAIN_WHEEL_COLOR,
-                        borderColor: TRAIN_BORDER_COLOR,
-                      }}
-                    >
-                    </div>
-                  </div>
-                </div>
+      {/* Subway car 2 - passenger car */}
+      <div className="relative w-16 h-10 border-y-2 border-r-2 shadow-lg flex-shrink-0" style={{
+        backgroundColor: TRAIN_BODY_COLOR,
+        borderColor: TRAIN_BORDER_COLOR,
+      }}>
+        {/* Door stripe */}
+        <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
+        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
+        
+        {/* Windows row */}
+        <div className="absolute top-2 left-1 right-1 h-5 flex gap-0.5">
+          <div className="flex-1 border border-white/30 bg-white/10" />
+          <div className="w-1 bg-current opacity-20" />
+          <div className="flex-1 border border-white/30 bg-white/10" />
+          <div className="w-1 bg-current opacity-20" />
+          <div className="flex-1 border border-white/30 bg-white/10" />
+        </div>
+        
+        {/* Wheels */}
+        <div className="absolute -bottom-1.5 left-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+          backgroundColor: TRAIN_WHEEL_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }} />
+        <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+          backgroundColor: TRAIN_WHEEL_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }} />
+        
+        {/* Accordion connector */}
+        <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
+          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
+        }} />
+      </div>
 
-                {/* Train cars */}
-                <div
-                  className="relative w-14 h-7 border-2 shadow-md"
-                  style={{
-                    backgroundColor: TRAIN_BODY_COLOR,
-                    borderColor: SILVER,
-                  }}
-                >
-                  {/* Windows */}
-                  <div className="absolute top-1.5 left-1 right-1 bottom-1 flex gap-1">
-                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
-                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
-                  </div>
-                  {/* <div
-                    className="absolute top-1 left-1 right-1 bottom-1 border"
-                    style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }}
-                  ></div> */}
-                  <div
-                    className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
-                    style={{
-                      backgroundColor: TRAIN_WHEEL_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  ></div>
-                  <div
-                    className="absolute -bottom-1 right-3 w-2.5 h-2.5 rounded-full border-2"
-                    style={{
-                      backgroundColor: TRAIN_WHEEL_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  >
-                    </div>
-                    {/* Connector / Coupler */}
-                    <div
-                      className="absolute top-1/2 translate-y-1 w-4 h-2"
-                      style={{
-                        left: '-1rem', // Positioned exactly between cars
-                        backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
-                        zIndex: -1, // Sits behind the cars
-                      }}
-                    >
-                    {/* Optional: A smaller inner detail to look like a mechanical link */}
-                    <div className="absolute inset-0 m-auto w-2 h-1 bg-gray-400 opacity-50" />
-                  </div>
-                </div>
+      {/* Subway car 1 - passenger car */}
+      <div className="relative w-16 h-10 border-y-2 border-r-2 shadow-lg flex-shrink-0" style={{
+        backgroundColor: TRAIN_BODY_COLOR,
+        borderColor: TRAIN_BORDER_COLOR,
+      }}>
+        {/* Door stripe */}
+        <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
+        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
+        
+        {/* Windows row */}
+        <div className="absolute top-2 left-1 right-1 h-5 flex gap-0.5">
+          <div className="flex-1 border border-white/30 bg-white/10" />
+          <div className="w-1 bg-current opacity-20" />
+          <div className="flex-1 border border-white/30 bg-white/10" />
+          <div className="w-1 bg-current opacity-20" />
+          <div className="flex-1 border border-white/30 bg-white/10" />
+        </div>
+        
+        {/* Wheels */}
+        <div className="absolute -bottom-1.5 left-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+          backgroundColor: TRAIN_WHEEL_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }} />
+        <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+          backgroundColor: TRAIN_WHEEL_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }} />
+        
+        {/* Accordion connector */}
+        <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
+          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
+        }} />
+      </div>
 
-                <div
-                  className="relative w-14 h-7 border-2 shadow-md"
-                  style={{
-                    backgroundColor: TRAIN_BODY_COLOR,
-                    borderColor: TRAIN_BORDER_COLOR,
-                  }}
-                >
-                  {/* Windows */}
-                  <div className="absolute top-1.5 left-1 right-1 bottom-1 flex gap-1">
-                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
-                    <div className="flex-1 border rounded-sm" style={{ borderColor: TRAIN_BORDER_COLOR, backgroundColor: `${TRAIN_BORDER_COLOR}20` }}></div>
-                  </div>
-                  {/* <div
-                    className="absolute top-1 left-1 right-1 bottom-1 border"
-                    style={{ borderColor: `${TRAIN_BORDER_COLOR}4d` }}
-                  ></div> */}
-                  <div
-                    className="absolute -bottom-1 left-3 w-2.5 h-2.5 rounded-full border-2"
-                    style={{
-                      backgroundColor: TRAIN_WHEEL_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  ></div>
-                  <div
-                    className="absolute -bottom-1 right-3 w-2.5 h-2.5 rounded-full border-2"
-                    style={{
-                      backgroundColor: TRAIN_WHEEL_COLOR,
-                      borderColor: TRAIN_BORDER_COLOR,
-                    }}
-                  >
-                    </div>
-                    {/* Connector / Coupler */}
-                    <div
-                      className="absolute top-1/2 translate-y-1 w-4 h-2"
-                      style={{
-                        left: '-1rem', // Positioned exactly between cars
-                        backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
-                        zIndex: -1, // Sits behind the cars
-                      }}
-                    >
-                    {/* Optional: A smaller inner detail to look like a mechanical link */}
-                    <div className="absolute inset-0 m-auto w-2 h-1 bg-gray-400 opacity-50" />
-                  </div>
-                </div>
-<div
-  className="relative w-20 h-8 border-2 rounded-sm"
-  style={{
+      {/* Front car - rounded subway nose (now at front) */}
+<div className="relative">
+  <div className="w-16 h-10 rounded-r-3xl border-2 shadow-xl relative overflow-visible" style={{
     backgroundColor: TRAIN_BODY_COLOR,
     borderColor: TRAIN_BORDER_COLOR,
-    marginTop: "14px",
-  }}
->
-  {/* Connector / Coupler */}
-  <div
-    className="absolute top-1/2 translate-y-1 w-4 h-2"
-    style={{
-      left: '-1rem', // Positioned exactly between cars
-      backgroundColor: TRAIN_BORDER_COLOR, // Usually looks best in the border color
-      zIndex: -1, // Sits behind the cars
-    }}
-  >
-  {/* Optional: A smaller inner detail to look like a mechanical link */}
-  <div className="absolute inset-0 m-auto w-2 h-1 bg-gray-400 opacity-50" />
-</div>
-
-  {/* Cabin (Back) - Now integrated into the body */}
-  <div
-    className="absolute -top-6 left-0 w-10 h-6 border-2 rounded-t-sm"
-    style={{
-      backgroundColor: TRAIN_BODY_COLOR,
-      borderColor: TRAIN_BORDER_COLOR,
-      borderBottom: 'none' // Blends it into the main body
-    }}
-  >
-    {/* Cabin Window - Now inside the cabin body */}
-    <div
-      className="absolute top-2 left-2 w-5 h-4 border rounded-sm"
-      style={{
-        backgroundColor: `${TRAIN_BORDER_COLOR}33`,
-        borderColor: TRAIN_BORDER_COLOR,
-      }}
-    />
-  </div>
-
-  {/* Smokestack (Front) */}
-  <div
-    className="absolute -top-6 right-4 w-3 h-6 border-2 rounded-sm"
-    style={{
-      backgroundColor: TRAIN_BODY_COLOR,
-      borderColor: TRAIN_BORDER_COLOR,
-    }}
-  >
-    {/* Smoke */}
-    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-white/70 rounded-full animate-pulse" />
-    <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/40 rounded-full animate-pulse" />
-  </div>
-
-  {/* Cowcatcher (Front) - Simplified Path */}
-  <div className="absolute -right-4 bottom-0 w-4 h-4">
-    <svg 
-      width="100%" 
-      height="100%" 
-      viewBox="0 0 100 100" 
-      preserveAspectRatio="none"
-    >
-      <path 
-        d="M 0 0 L 100 100 L 0 100 Z" 
-        fill={TRAIN_BODY_COLOR}
-        stroke={TRAIN_BORDER_COLOR}
-        strokeWidth="8"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </div>
-
-
-  {/* Rear Wheel */}
-  <div
-    className="absolute -bottom-1 left-2 w-3 h-3 rounded-full border-2"
-    style={{
+  }}>
+    {/* Destination sign strip on top */}
+    <div className="absolute top-0 left-0 right-0 h-2 bg-orange-500/80 flex items-center justify-center rounded-tr-3xl overflow-hidden">
+      <div className="text-[6px] font-bold text-white">EXPRESS</div>
+    </div>
+    
+    {/* Large front windshield */}
+    <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
+    
+    {/* Headlight - at the very front */}
+    <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
+    
+    {/* Wheels - fully visible */}
+    <div className="absolute -bottom-1.5 left-3 w-3 h-3 rounded-full border-2 shadow-md" style={{
       backgroundColor: TRAIN_WHEEL_COLOR,
       borderColor: TRAIN_BORDER_COLOR,
-    }}
-  />
-
-  {/* Front Wheel */}
-  <div
-    className="absolute -bottom-1 right-4 w-3 h-3 rounded-full border-2"
-    style={{
+    }} />
+    <div className="absolute -bottom-1.5 right-4 w-3 h-3 rounded-full border-2 shadow-md" style={{
       backgroundColor: TRAIN_WHEEL_COLOR,
       borderColor: TRAIN_BORDER_COLOR,
-    }}
-  />
+    }} />
+  </div>
 </div>
 
-                
-              </div>
-            </div>
-          </div>
-
+    </div>
+  </div>
+</div>
           {/* "All Aboard!" text - highest z-index */}
           <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
             <div
