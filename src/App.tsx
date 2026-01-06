@@ -14,9 +14,9 @@ const SECONDARY_COLOR = SILVER;
 const TRAIN_BODY_COLOR = THEME_COLOR;         // main car color
 const TRAIN_BORDER_COLOR = SILVER;        // or a darker variant of THEME_COLOR
 const TRAIN_WHEEL_COLOR = "#111827";         // near-black
-const ALL_ABOARD_BG = "#020617";             // dark panel behind text
+// const ALL_ABOARD_BG = "#020617";             // dark panel behind text
 //const ALL_ABOARD_TEXT = THEME_COLOR;         // or a light accent
-const ALL_ABOARD_BORDER = SILVER;
+// const ALL_ABOARD_BORDER = SILVER;
 
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
