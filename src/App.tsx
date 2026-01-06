@@ -344,7 +344,7 @@ export default function DesignCentralStation() {
 
       
       {/* All Aboard Section - FIXED */}
-      <section className="py-10 px-6 max-w-7xl mx-auto">
+      <section className=" px-6 max-w-7xl mx-auto">
         {/* Animated Train Track with proper z-index */}
         <div className="relative mb-12 h-24 flex items-bottom">
           {/* Railroad ties (dashed) placed below the rail */}
@@ -469,39 +469,39 @@ export default function DesignCentralStation() {
       </div>
 
       {/* Front car - rounded subway nose (now at front) */}
-<div className="relative">
-  <div className="w-16 h-10 rounded-r-3xl border-2 shadow-xl relative overflow-visible" style={{
-    backgroundColor: TRAIN_BODY_COLOR,
-    borderColor: TRAIN_BORDER_COLOR,
-  }}>
-    {/* Destination sign strip on top */}
-    <div className="absolute top-0 left-0 right-0 h-2 bg-orange-500/80 flex items-center justify-center rounded-tr-3xl overflow-hidden">
-      <div className="text-[6px] font-bold text-white">EXPRESS</div>
-    </div>
-    
-    {/* Large front windshield */}
-    <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
-    
-    {/* Headlight - at the very front */}
-    <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
-    
-    {/* Wheels - fully visible */}
-    <div className="absolute -bottom-1.5 left-3 w-3 h-3 rounded-full border-2 shadow-md" style={{
-      backgroundColor: TRAIN_WHEEL_COLOR,
-      borderColor: TRAIN_BORDER_COLOR,
-    }} />
-    <div className="absolute -bottom-1.5 right-4 w-3 h-3 rounded-full border-2 shadow-md" style={{
-      backgroundColor: TRAIN_WHEEL_COLOR,
-      borderColor: TRAIN_BORDER_COLOR,
-    }} />
-  </div>
-</div>
+      <div className="relative">
+        <div className="w-16 h-10 rounded-r-3xl border-2 shadow-xl relative overflow-visible" style={{
+          backgroundColor: TRAIN_BODY_COLOR,
+          borderColor: TRAIN_BORDER_COLOR,
+        }}>
+          {/* Destination sign strip on top */}
+          <div className="absolute top-0 left-0 right-0 h-2 bg-orange-500/80 flex items-center justify-center rounded-tr-3xl overflow-hidden">
+            <div className="text-[6px] font-bold text-white">EXPRESS</div>
+          </div>
+          
+          {/* Large front windshield */}
+          <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
+          
+          {/* Headlight - at the very front */}
+          <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
+          
+          {/* Wheels - fully visible */}
+          <div className="absolute -bottom-1.5 left-3 w-3 h-3 rounded-full border-2 shadow-md" style={{
+            backgroundColor: TRAIN_WHEEL_COLOR,
+            borderColor: TRAIN_BORDER_COLOR,
+          }} />
+          <div className="absolute -bottom-1.5 right-4 w-3 h-3 rounded-full border-2 shadow-md" style={{
+            backgroundColor: TRAIN_WHEEL_COLOR,
+            borderColor: TRAIN_BORDER_COLOR,
+          }} />
+        </div>
+      </div>
 
     </div>
   </div>
 </div>
           {/* "All Aboard!" text - highest z-index */}
-          <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
+          {/* <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
             <div
               className="px-6 py-3 rounded-full border-2 shadow-xl"
               style={{
@@ -514,8 +514,8 @@ export default function DesignCentralStation() {
               >
                 Transit Journeys
               </h2>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
 
 
@@ -531,7 +531,27 @@ export default function DesignCentralStation() {
         `}</style>
 
         {/* Short intro under All Aboard */}
+        {/* <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
+            <div
+              className="px-6 py-3 rounded-full border-2 shadow-xl"
+              style={{
+                backgroundColor: ALL_ABOARD_BG,
+                borderColor: ALL_ABOARD_BORDER,
+              }}
+            >
+              <h2
+                className="text-3xl font-bold text-white"
+              >
+                Transit Journeys
+              </h2>
+            </div>
+            </div> */}
         <div className="text-left mt-6 mb-8">
+          <h2
+                className="text-3xl font-bold text-white mb-6"
+              >
+                Transit Journeys
+              </h2>
           <p className="text-white/60">
             These case studies trace how products move through my design transit system, shown in detail at the Information Booth.
           </p>
