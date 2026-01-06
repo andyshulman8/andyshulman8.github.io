@@ -194,24 +194,33 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
         */}
         {isFullscreen && (
   <FullscreenImageViewer
-    src={fullscreenSource === 'single' ? 
-      (typeof fullscreenImage === 'string' ? fullscreenImage : fullscreenImage?.src) : 
-      undefined
+    src={
+      fullscreenSource === 'single'
+        ? (typeof fullscreenImage === 'string'
+            ? fullscreenImage
+            : fullscreenImage?.src)
+        : undefined
     }
     images={
-  fullscreenSource === 'peeks' 
-    ? caseStudyData.peeks.map(item => typeof item === 'string' ? item : item.src) as string[]
-    : undefined
-}
-    currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
+      fullscreenSource === 'peeks'
+        ? caseStudyData.peeks.map(item =>
+            typeof item === 'string' ? item : item.src
+          ) as string[]
+        : fullscreenSource === 'stop'
+        ? caseStudyData.stops[currentStop].images ?? undefined
+        : undefined
+    }
+    currentIndex={
+      fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex
+    }
     onChangeIndex={(i) => {
       if (fullscreenSource === 'stop') setStopCarouselIndex(i);
       else if (fullscreenSource === 'peeks') setPeekIndex(i);
     }}
-    onClose={() => { 
-      setIsFullscreen(false); 
-      setFullscreenImage(null); 
-      setFullscreenSource('peeks'); 
+    onClose={() => {
+      setIsFullscreen(false);
+      setFullscreenImage(null);
+      setFullscreenSource('peeks');
     }}
   />
 )}
