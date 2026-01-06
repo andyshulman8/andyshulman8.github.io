@@ -338,7 +338,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               {caseStudyData.allImpact.map((item, index) => (
                 <div 
                   key={index} 
-                  className="rounded-lg p-6 text-center shadow-lg transition-transform hover:scale-105" 
+                  className="rounded-lg p-6 text-center shadow-lg transition-transform" 
                   style={{ backgroundColor: INFO_COLOR }}
                 >
                   <div className="text-3xl font-bold mb-2" style={{ color: SILVER }}>
