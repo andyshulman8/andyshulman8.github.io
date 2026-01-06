@@ -27,7 +27,6 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
   const mediaSrc = typeof src === 'string' ? src : src.src;
   const isVideo = mediaSrc.toLowerCase().endsWith('.mp4') || 
                   (typeof src !== 'string' && src.type === 'video');
-  
 
                   
   return (
@@ -52,6 +51,44 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
   );
 };
 
+
+// Helper: turn [label](url) into links
+const renderMarkdownLinks = (text: string) => {
+  const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    const [full, label, url] = match;
+    const start = match.index;
+
+    if (start > lastIndex) {
+      parts.push(text.slice(lastIndex, start));
+    }
+
+    parts.push(
+      <a
+        key={start}
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className="underline text-blue-800 hover:text-blue-500"
+      >
+        {label}
+      </a>
+    );
+
+    lastIndex = start + full.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts;
+};
 
 interface Stop {
   station_name: string;
@@ -157,31 +194,37 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   const hasImages = !!stop.images && stop.images.length > 0;
 
   const quoteBlock = stop.quote && (
-    <blockquote 
-      className="rounded-lg border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
-      style={{ borderColor: THEME_COLOR, backgroundColor: SILVER }}
-    >
-      <div className="flex-1">
-        "{stop.quote}"
-        {stop.quoteAuthor && (
-          <>
-            <div className="w-full border-t border-black/30 my-4" />
-            <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
-              {stop.quoteImage && (
-                <img 
-                  src={stop.quoteImage} 
-                  alt={stop.quoteAuthor}
-                  className="w-10 h-10 rounded-full object-cover border-2"
-                  style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: THEME_COLOR }}
-                />
-              )}
-              <span>{stop.quoteAuthor}</span>
-            </footer>
-          </>
-        )}
-      </div>
-    </blockquote>
-  );
+  <blockquote 
+    className="rounded-lg border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
+    style={{ borderColor: THEME_COLOR, backgroundColor: SILVER }}
+  >
+    <div className="flex-1">
+      {stop.quotePreface && (
+        <div className="text-xs font-semibold uppercase tracking-wide text-black/60 mb-1">
+          {stop.quotePreface}
+        </div>
+      )}
+      “{stop.quote}”
+      {stop.quoteAuthor && (
+        <>
+          <div className="w-full border-t border-black/30 my-4" />
+          <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
+            {stop.quoteImage && (
+              <img 
+                src={stop.quoteImage} 
+                alt={stop.quoteAuthor}
+                className="w-10 h-10 rounded-full object-cover border-2"
+                style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: INFO_COLOR }}
+              />
+            )}
+            <span>{stop.quoteAuthor}</span>
+          </footer>
+        </>
+      )}
+    </div>
+  </blockquote>
+);
+
 
 
   return (
@@ -497,6 +540,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 {caseStudyData.stops.map((stop: Stop, index: number) => {
   const isActive = index <= currentStop;
   const isCurrent = index === currentStop;
+  
 
   return (
     <button
@@ -671,8 +715,11 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
               {/* Callout note if available */}
               {stop.callout && (
-                <CalloutBox>{stop.callout}</CalloutBox>
+                <CalloutBox>
+                  {renderMarkdownLinks(stop.callout)}
+                </CalloutBox>
               )}
+
 
               {/* Insights if available */}
               {stop.insights && (

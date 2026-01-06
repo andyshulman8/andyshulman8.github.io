@@ -9,6 +9,7 @@ interface Stop {
   phase: string;
   content: string;
   quote?: string;
+  quotePreface?: string;
   quoteAuthor?: string;
   quoteImage?: string;
   insights?: string[];
@@ -334,7 +335,8 @@ export const allCaseStudies: CaseStudyData[] = [
           metric2: "3 of 5 concepts",
           label2: "Prototypes handed off to pilot"
         },
-        quote: "[4 years later:] We have made great progress on the design thinking front and working on a big program to reimagine billing - kicking the improvements we made into the next gear.",
+        quotePreface: "4 years later", 
+        quote: "We have made great progress on the design thinking front and working on a big program to reimagine billing - kicking the improvements we made into the next gear.",
         quoteAuthor: "VP of Customer Success at Align Technology, Volker Probst",
         quoteImage: "images/Home/volker.webp"
       }
