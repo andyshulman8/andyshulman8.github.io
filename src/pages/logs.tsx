@@ -28,6 +28,8 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
   const isVideo = mediaSrc.toLowerCase().endsWith('.mp4') || 
                   (typeof src !== 'string' && src.type === 'video');
   
+
+                  
   return (
     <div className="absolute inset-0 w-full h-full">
       {isVideo ? (
@@ -53,12 +55,15 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
 
 interface Stop {
   station_name: string;
+  subtitle?: string;
   phase: string;
   content: string;
   quote?: string;
   quoteAuthor?: string;
+  quoteImage?: string;
   insights?: string[];
   callout?: string;
+  numberedFeatures?: { title: string; description: string }[];
   features?: { title: string; description: string }[];
   impact?: {
     metric1: string;
@@ -66,8 +71,9 @@ interface Stop {
     metric2: string;
     label2: string;
   };
-  images?: string[]; // Array of image URLs for carousel
+  images?: string[];
 }
+
 
 interface CaseStudyTemplateProps {
   onBack: () => void;
@@ -146,6 +152,37 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
   }, [currentStop, caseStudyData, stopCarouselIndex]);
 
   const featureCount = caseStudyData.stops[currentStop].features?.length || 0;
+
+    const stop = caseStudyData.stops[currentStop];
+  const hasImages = !!stop.images && stop.images.length > 0;
+
+  const quoteBlock = stop.quote && (
+    <blockquote 
+      className="rounded-lg border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
+      style={{ borderColor: THEME_COLOR, backgroundColor: SILVER }}
+    >
+      <div className="flex-1">
+        "{stop.quote}"
+        {stop.quoteAuthor && (
+          <>
+            <div className="w-full border-t border-black/30 my-4" />
+            <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
+              {stop.quoteImage && (
+                <img 
+                  src={stop.quoteImage} 
+                  alt={stop.quoteAuthor}
+                  className="w-10 h-10 rounded-full object-cover border-2"
+                  style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: THEME_COLOR }}
+                />
+              )}
+              <span>{stop.quoteAuthor}</span>
+            </footer>
+          </>
+        )}
+      </div>
+    </blockquote>
+  );
+
 
   return (
     
@@ -449,38 +486,39 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 />
 
                 {caseStudyData.stops.map((stop: Stop, index: number) => {
-                  const isActive = index <= currentStop;
-                  const isCurrent = index === currentStop;
+  const isActive = index <= currentStop;
+  const isCurrent = index === currentStop;
 
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => goToStop(index)}
-                      className="relative z-10 group focus:outline-none"
-                    >
-                      <div 
-                        className="w-6 h-6 rounded-full border-2 transition-all duration-300"
-                        style={{
-                          backgroundColor: isActive ? ACCENT_COLOR : BACK_COLOR,
-                          borderColor: isActive ? 'transparent' : 'rgba(255,255,255,0.3)'
-                        }}
-                      >
-                        {isCurrent && (
-                          <div 
-                            className="absolute inset-0 rounded-full border-2 border-white animate-pulse"
-                            style={{ transform: 'scale(1.8)', opacity: 1 }}
-                          />
-                        )}
-                      </div>
+  return (
+    <button
+      key={index}
+      onClick={() => goToStop(index)}
+      className="relative z-10 group focus:outline-none"
+    >
+      <div 
+        className="w-6 h-6 rounded-full border-2 transition-all duration-300"
+        style={{
+          backgroundColor: isActive ? ACCENT_COLOR : BACK_COLOR,
+          borderColor: isActive ? 'transparent' : 'rgba(255,255,255,0.3)'
+        }}
+      >
+        {isCurrent && (
+          <div 
+            className="absolute inset-0 rounded-full border-2 border-white animate-pulse"
+            style={{ transform: 'scale(1.8)', opacity: 1 }}
+          />
+        )}
+      </div>
 
-                      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                          {stop.station_name}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+        <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
+          {stop.station_name}
+        </span>
+      </div>
+    </button>
+  );
+})}
+
               </div>
             </div>
 
@@ -600,82 +638,52 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
 
             
 
-            {/* Content */}
+                        {/* Content */}
             <div className="prose prose-invert max-w-none">
-              
+              {/* If NO images: quote before content */}
+              {!hasImages && quoteBlock}
 
-             {/* Quote if available */}
-            {caseStudyData.stops[currentStop].quote && (
-              <blockquote 
-                className="rounded-lg border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
-                style={{ borderColor: THEME_COLOR, backgroundColor: SILVER }}
-              >
-                <div className="flex-1">
-                  "{caseStudyData.stops[currentStop].quote}"
-                  {caseStudyData.stops[currentStop].quoteAuthor && (
-                    <>
-                      <div className="w-full border-t border-black/30 my-4" />
-                      <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
-                        {caseStudyData.stops[currentStop].quoteImage && (
-                          <img 
-                            src={caseStudyData.stops[currentStop].quoteImage} 
-                            alt={caseStudyData.stops[currentStop].quoteAuthor}
-                            className="w-10 h-10 rounded-full object-cover border-2"
-                            style={{ boxShadow: '0 0 0 2px rgba(0,0,0,0.04) inset', borderColor: THEME_COLOR }}
-                          />
-                        )}
-                        <span>{caseStudyData.stops[currentStop].quoteAuthor}</span>
-                      </footer>
-                    </>
-                  )}
-                </div>
-              </blockquote>
-            )}
+              <p className="text-l text-white/80 leading-relaxed mb-6 whitespace-pre-line">
+                {stop.content}
+              </p>
 
-            <p className="text-l text-white/80 leading-relaxed mb-6 whitespace-pre-line">
-                {caseStudyData.stops[currentStop].content}
-            </p>
-
-            {/* Vision timeline only for the Vision Definition stop */}
-            {caseStudyData.id === 'future' &&
-            caseStudyData.stops[currentStop].station_name === 'Vision Definition' && (
-              <div className="my-8">
-                <VisionTimeline />
-              </div>
-            )}
-
-            {/* Numbered features if available */}
-              {caseStudyData.stops[currentStop].numberedFeatures && (
-                <NumberedFeatures items={caseStudyData.stops[currentStop].numberedFeatures!} />
+              {/* Vision timeline only for the Vision Definition stop */}
+              {caseStudyData.id === 'future' &&
+                stop.station_name === 'Vision Definition' && (
+                  <div className="my-8">
+                    <VisionTimeline />
+                  </div>
               )}
 
+              {/* Numbered features if available */}
+              {stop.numberedFeatures && (
+                <NumberedFeatures items={stop.numberedFeatures} />
+              )}
 
-            {/* Callout note if available */}
-            {caseStudyData.stops[currentStop].callout && (
-              <CalloutBox>
-                {caseStudyData.stops[currentStop].callout}
-              </CalloutBox>
-            )}
+              {/* Callout note if available */}
+              {stop.callout && (
+                <CalloutBox>{stop.callout}</CalloutBox>
+              )}
 
               {/* Insights if available */}
-              {caseStudyData.stops[currentStop].insights && (
+              {stop.insights && (
                 <div className="rounded-lg p-6 my-8" style={{ backgroundColor: INFO_COLOR }}>
                   <h3 className="text-lg font-bold mb-4 text-white/90">Key Insights</h3>
                   <ul className="space-y-2">
-                    {caseStudyData.stops[currentStop].insights.map((insight: string, i: number) => (
+                    {stop.insights.map((insight: string, i: number) => (
                       <li key={i} className="text-white/70">{insight}</li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Feature boxes (e.g. multiple graph types, query operators, dashboard widgets) */}
-              {caseStudyData.stops[currentStop].features && (
+              {/* Feature boxes */}
+              {stop.features && (
                 <div
                   className="grid gap-4 my-8 features-grid"
                   style={{ ['--cols' as any]: Math.min(Math.max(featureCount, 1), 4) }}
                 >
-                  {caseStudyData.stops[currentStop].features.map((f: any, i: number) => (
+                  {stop.features.map((f: any, i: number) => (
                     <div key={i} className="rounded-lg p-6" style={{ backgroundColor: INFO_COLOR }}>
                       <h4 className="text-lg font-bold mb-2" style={{ color: ACCENT_COLOR }}>{f.title}</h4>
                       <p className="text-white/70 text-sm">{f.description}</p>
@@ -684,46 +692,32 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 </div>
               )}
 
-              {/* Feature boxes (e.g. multiple graph types, query operators, dashboard widgets) */}
-              {/* {caseStudyData.stops[currentStop].numberedFeatures && (
-                <div
-                  className="grid gap-4 my-8 features-grid"
-                  style={{ ['--cols' as any]: Math.min(Math.max(featureCount, 1), 4) }}
-                ><NumberedFeatures>
-                {caseStudyData.stops[currentStop].callout}
-              </NumberedFeatures>
-                  {caseStudyData.stops[currentStop].numberedFeatures.map((f: any, i: number) => (
-                    <div key={i} className="rounded-lg p-6" style={{ backgroundColor: INFO_COLOR }}>
-                      <h4 className="text-lg font-bold mb-2" style={{ color: ACCENT_COLOR }}>{f.title}</h4>
-                      <p className="text-white/70 text-sm">{f.description}</p>
-                    </div>
-                  ))}
-                </div>
-              )} */}
-              
+              {/* If images exist: quote goes LAST in the block */}
+              {hasImages && quoteBlock}
 
               {/* Impact if available */}
-              {caseStudyData.stops[currentStop].impact && (
+              {stop.impact && (
                 <div className="grid md:grid-cols-2 gap-6 my-8">
                   <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
                     <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
-                      {caseStudyData.stops[currentStop].impact.metric1}
+                      {stop.impact.metric1}
                     </div>
                     <div className="text-white/60">
-                      {caseStudyData.stops[currentStop].impact.label1}
+                      {stop.impact.label1}
                     </div>
                   </div>
                   <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
                     <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
-                      {caseStudyData.stops[currentStop].impact.metric2}
+                      {stop.impact.metric2}
                     </div>
                     <div className="text-white/60">
-                      {caseStudyData.stops[currentStop].impact.label2}
+                      {stop.impact.label2}
                     </div>
                   </div>
                 </div>
               )}
             </div>
+
 
             {/* Navigation: stacked on small screens, inline on md+ */}
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3 pt-8 border-t border-white/10">
