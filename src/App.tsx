@@ -846,9 +846,20 @@ export default function DesignCentralStation() {
                 {/* <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 p-3 rounded-lg">
                   <User className="w-6 h-6 text-orange-400" />
                 </div> */}
-                <h3 className="text-white/90 text-2xl font-bold">
-                  About the Conductor
-                </h3>
+                {/* Headshot - circular, floating left */}
+  <div className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 border-white/20 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+    <img 
+      src="/images/Home/headshot.png"
+      alt="Andy Shulman"
+      className="w-full h-full object-cover"
+      loading="lazy"
+    />
+  </div>
+  
+  {/* Title next to image */}
+  <h3 className="text-white/90 text-2xl font-bold self-center">
+    About the Conductor
+  </h3>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6 items-start">
