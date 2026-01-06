@@ -847,10 +847,11 @@ export default function DesignCentralStation() {
                   <User className="w-6 h-6 text-orange-400" />
                 </div> */}
                 {/* Headshot - circular, floating left */}
-  <div className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 border-white/20 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
+  <div className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
     <img 
       src="/images/Home/headshot.png"
       alt="Andy Shulman"
+      style={{border: SILVER }}
       className="w-full h-full object-cover"
       loading="lazy"
     />
