@@ -31,7 +31,7 @@ export interface CaseStudyData {
   title: string;
   line_color: LineColor; // This is the key part!
   destination: string;
-  peeks: string[];
+  peeks: (string | { src: string; type: 'image' | 'video' })[];
   allImpact?: { metric: string; label: string }[]
   before?: string;
   after?: string;

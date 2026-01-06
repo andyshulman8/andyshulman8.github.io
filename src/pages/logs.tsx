@@ -20,6 +20,37 @@ const BACK_COLOR = '#141515';
 const ACCENT_COLOR = SILVER; // Primary accent color for buttons, highlights
 //const HOVER_COLOR = SECONDARY_COLOR; // Hover states
 
+// Add this helper component at the top of your file (after imports)
+// Add this COMPLETE helper component after your imports
+const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'video' } }) => {
+  // Extract string src whether it's a string or object
+  const mediaSrc = typeof src === 'string' ? src : src.src;
+  const isVideo = mediaSrc.toLowerCase().endsWith('.mp4') || 
+                  (typeof src !== 'string' && src.type === 'video');
+  
+  return (
+    <div className="absolute inset-0 w-full h-full">
+      {isVideo ? (
+        <video
+          src={mediaSrc}
+          className="w-full h-full object-cover object-left-top"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      ) : (
+        <img 
+          src={mediaSrc}
+          alt=""
+          className="w-full h-full object-cover object-left-top"
+        />
+      )}
+    </div>
+  );
+};
+
+
 interface Stop {
   station_name: string;
   phase: string;
@@ -87,7 +118,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     window.scrollTo(0, 0);
   };
 
-  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [fullscreenImage, setFullscreenImage] = useState<string | { src: string; type: 'image' | 'video' } | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Reset internal state when the parent switches to a different case study
@@ -125,17 +156,32 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             Controlled with `fullscreenSource` / `fullscreenImage` / indices.
         */}
         {isFullscreen && (
-          <FullscreenImageViewer
-            src={fullscreenSource === 'single' ? fullscreenImage : undefined}
-            images={fullscreenSource === 'peeks' ? caseStudyData.peeks : (fullscreenSource === 'stop' ? caseStudyData.stops[currentStop].images : undefined)}
-            currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
-            onChangeIndex={(i) => {
-              if (fullscreenSource === 'peeks') setPeekIndex(i);
-              if (fullscreenSource === 'stop') setStopCarouselIndex(i);
-            }}
-            onClose={() => { setIsFullscreen(false); setFullscreenImage(null); setFullscreenSource('peeks'); }}
-          />
-        )}
+  <FullscreenImageViewer
+    src={fullscreenSource === 'single' ? 
+      (typeof fullscreenImage === 'string' ? fullscreenImage : fullscreenImage?.src) : 
+      undefined
+    }
+    images={
+  fullscreenSource === 'peeks' 
+    ? caseStudyData.peeks.map(item => typeof item === 'string' ? item : item.src) as string[]
+    : undefined
+}
+    currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
+    onChangeIndex={(i) => {
+      if (fullscreenSource === 'stop') setStopCarouselIndex(i);
+      else if (fullscreenSource === 'peeks') setPeekIndex(i);
+    }}
+    onClose={() => { 
+      setIsFullscreen(false); 
+      setFullscreenImage(null); 
+      setFullscreenSource('peeks'); 
+    }}
+  />
+)}
+
+
+
+
 
         {/* Header */}
         <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
@@ -196,13 +242,16 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   <div 
                     className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity" 
                     onClick={() => {
-                      if (caseStudyData.peeks && caseStudyData.peeks.length) {
-                        setFullscreenSource('peeks');
-                        setPeekIndex(peekIndex);
-                        setFullscreenImage(caseStudyData.peeks[peekIndex]);
-                        setIsFullscreen(true);
-                      }
-                    }}
+  if (caseStudyData.peeks && caseStudyData.peeks.length) {
+    setFullscreenSource('peeks');
+    setPeekIndex(peekIndex);
+    // Extract string src for fullscreenImage
+    const mediaItem = caseStudyData.peeks[peekIndex];
+    setFullscreenImage(typeof mediaItem === 'string' ? mediaItem : mediaItem.src);
+    setIsFullscreen(true);
+  }
+}}
+
                     style={{ 
                       background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
                       border: '4px solid #333',
@@ -222,12 +271,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                         boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
                       }}>
                         {/* Image */}
-                        <img 
+                        {/* <img 
                           src={caseStudyData.peeks[peekIndex]} 
                           alt={`Peek ${peekIndex + 1}`}
                           className="absolute inset-0 w-full h-full object-cover object-left-top"
-                        />
-                        
+                        /> */}
+                        <WindowMedia src={caseStudyData.peeks[peekIndex]} />
+
                         {/* Window glare/reflection */}
                         <div className="absolute inset-0" style={{
                           background: `
@@ -479,12 +529,13 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
           boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
         }}>
           {/* Image */}
-          <img 
+          {/* <img 
             src={caseStudyData.stops[currentStop].images[stopCarouselIndex]} 
             alt={`Stop image ${stopCarouselIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover object-left-top"
-          />
-          
+          /> */}
+          <WindowMedia src={caseStudyData.stops[currentStop].images![stopCarouselIndex]} />
+
           {/* Window glare/reflection */}
           <div className="absolute inset-0" style={{
             background: `
