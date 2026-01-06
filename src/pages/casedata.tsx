@@ -215,6 +215,11 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "In higher education, data security and compliance are mission-critical: breaches risk exposing student records, research data, and financial information. Loyola University of Maryland, serving over 17,000 students across multiple campuses, faced growing challenges as it transitioned to a virtualized network infrastructure.",
     overview: "To meet strict institutional and regulatory requirements, Loyola's Senior Systems Engineer Mike Dieter and IT team needed a secure, efficient way to collect and manage sensitive log data across a sprawling environment. I designed access control features, simplified log collection, and created a natural language translator to democratize log search.",
+    allImpact: [{
+          metric: "90 seconds",
+          label: "WiFi controller diagnosis time, down from 2+ hours"},{
+          metric: "$2-3K saved",
+          label: "Annual cost saving for Loyola"}, {metric: "Added flexibility", label: "Quicker integration of new logs"}],
     stops: [
       {
         station_name: "Discovery",
@@ -282,6 +287,11 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "Align Technology, maker of Invisalign, wanted to improve its relationship with the dentists and orthodontists that fit, use, and sell their products. Their network of dental professionals needed support with their workloads and stronger relationships.",
     overview: "I led team leaders across the company to embed design thinking into their workflows: uncovering pain points, identifying insights, and rapidly prototyping solutions that could make a real difference, fast. I broke the group into 4 teams to ensure each participant was able to engage, and adapted my tools to fit the analytical culture of Align's global teams.",
+    allImpact: [{
+          metric: "17 professionals",
+          label: "Trained in design thinking"},{
+          metric: "5 concepts",
+          label: "Designed across 3 teams"}, {metric: "3 prototypes", label: "Handed off to pilot"}],
     stops: [
       {
         station_name: "Teaching Research",
@@ -342,6 +352,11 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "The Exploratorium and SESI Lab needed to define and structure the theme 'Imagining the Future' for a new museum in Brazil, aligning 20 planned exhibits under one clear vision. The goal was to build confidence in underserved communities facing educational barriers and empower citizens to see themselves as capable of shaping their future.",
     overview: "I worked mostly independently with periodic input from exhibit developers. I synthesized research, strategy, and systems thinking into a shared creative direction for the SESI Lab team, creating a framework that would inspire every visitor to see themselves as capable of changing the future.",
+    allImpact: [{
+          metric: ">2000 teachers",
+          label: "have learned new approaches to science through the new museum since opening in 2022"},{
+          metric: "Empowered 100k+",
+          label: "visitors since opening in 2022"}],
     stops: [
       {
         station_name: "Audience Research",
@@ -398,6 +413,11 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     background: "Only 16-30% of people who could benefit from hearing aids actually use them due to stigma, cost, and overwhelming complexity. Meanwhile, 70 million Americans struggle with sleep. Bose saw an opportunity to bring its sound expertise to both hearing and sleep, but fragmented teams needed alignment.",
     overview: "I joined to help design hardware products and their apps. I learned how to align fragmented teams around user needs when the path forward wasn't clear, and how to identify and unify fragmented interaction patterns across hardware and software. Though the products were eventually discontinued, I built frameworks that team members took to their next roles.",
+    allImpact: [{
+          metric: "30+% reduction",
+          label: "in expert dependency"},{
+          metric: "2",
+          label: "cross-functional workshops led"}],
     stops: [
       {
         station_name: "Discovery",
@@ -444,7 +464,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Not every product survives, but aligned teams navigate uncertainty better. When Bose exited health, the teams I worked with had shared language for user needs, research infrastructure that reduced rework, and frameworks that some took to their next roles.",
         impact: {
           metric1: "30+% reduction",
-          label1: "reduction in expert dependency",
+          label1: "in expert dependency",
           metric2: "2",
           label2: "cross-functional workshops led"
         }

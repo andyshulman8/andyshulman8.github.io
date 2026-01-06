@@ -328,29 +328,34 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                 </div>
               </div>
             </div>
+{caseStudyData.allImpact && caseStudyData.allImpact.length > 0 && (
+  <div className="grid gap-4 mb-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-fr w-full" style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '1rem',
+    alignItems: 'stretch'
+  }}>
+    {caseStudyData.allImpact.map((item, index) => (
+      <div 
+        key={index} 
+        className="rounded-lg p-6 text-center shadow-lg transition-transform" 
+        style={{ 
+          backgroundColor: INFO_COLOR,
+          minHeight: '100%' // Ensures equal height
+        }}
+      >
+        <div className="text-3xl font-bold mb-2" style={{ color: SILVER }}>
+          {item.metric}
+        </div>
+        <div className="text-white/60 text-sm">
+          {item.label}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
 
-              {caseStudyData.allImpact && caseStudyData.allImpact.length > 0 && (
-            <div className={`grid gap-3 mb-12 ${
-              caseStudyData.allImpact.length === 1 ? 'grid-cols-1' : 
-              caseStudyData.allImpact.length === 2 ? 'grid-cols-2' : 
-              'grid-cols-2 md:grid-cols-4'
-            }`}>
-              {caseStudyData.allImpact.map((item, index) => (
-                <div 
-                  key={index} 
-                  className="rounded-lg p-6 text-center shadow-lg transition-transform" 
-                  style={{ backgroundColor: INFO_COLOR }}
-                >
-                  <div className="text-3xl font-bold mb-2" style={{ color: SILVER }}>
-                    {item.metric}
-                  </div>
-                  <div className="text-white/60 text-sm">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+
             {/* Before & After Section */}
             <div>
               {caseStudyData.before && caseStudyData.after && (
