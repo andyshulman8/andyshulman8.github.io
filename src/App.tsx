@@ -907,7 +907,7 @@ useEffect(() => {
                   {testimonial.avatar ? (
                     <img
                       src={testimonial.avatar}
-                      alt={testimonial.author}
+                      alt=""//{testimonial.author}
                       className="w-12 h-12 rounded-full object-cover border-2"
                       style={{color: SILVER, borderColor: SILVER}}
                     />
