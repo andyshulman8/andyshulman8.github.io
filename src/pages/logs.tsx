@@ -34,6 +34,7 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
       {isVideo ? (
         <video
           src={mediaSrc}
+          title="Video of Smarter Alerts Experience"
           className="w-full h-full object-cover object-left-top"
           autoPlay
           loop
@@ -43,7 +44,7 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
       ) : (
         <img 
           src={mediaSrc}
-          alt=""
+          alt="Sneak Peek"
           className="w-full h-full object-cover object-left-top"
         />
       )}
@@ -278,6 +279,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             <button 
               onClick={onBack}
               className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
+              aria-label="Back to Station"
             >
               <ChevronLeft size={20} />
               <span>Back to Station</span>
@@ -499,18 +501,20 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             <div className="text-center mt-16 space-y-6">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
                <button
-    onClick={startJourney} // Changed from previous onClick
-    className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
-    style={{ 
-      backgroundColor: ACCENT_COLOR,
-      boxShadow: `0 0 30px ${ACCENT_COLOR}40`
-    }}
-  >
+                onClick={startJourney} // Changed from previous onClick
+                className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
+                style={{ 
+                  backgroundColor: ACCENT_COLOR,
+                  boxShadow: `0 0 30px ${ACCENT_COLOR}40`
+                }}
+                aria-label="Start Journey"
+              >
     Start Journey →
   </button>
               <button 
                 onClick={onNextRoute}
                 className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
+                aria-label="Or try the next case study"
               >
                 Or try the next case study
               </button> <TrainTransition 
@@ -546,6 +550,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
     <button
       key={index}
       onClick={() => goToStop(index)}
+      aria-label="Go to Stop"
       className="relative z-10 group focus:outline-none"
     >
       <div 
@@ -779,6 +784,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
             <div className="flex flex-col sm:flex-row sm:justify-between items-center gap-3 pt-8 border-t border-white/10">
               <button
                 onClick={prevStop}
+                aria-label="Previous Stop"
                 disabled={currentStop === 0}
                 className="flex items-center gap-2 px-4 py-3 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all w-full sm:w-auto justify-center"
                 style={{ backgroundColor: INFO_COLOR }}
@@ -796,6 +802,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                   setFullscreenImage(null);
                   setFullscreenSource('peeks');
                 }}
+                aria-label="Back to Overview"
                 className="flex items-center gap-2 px-4 py-3 rounded-full transition-all hover:scale-105 w-full sm:w-auto justify-center"
                 style={{ backgroundColor: INFO_COLOR,
                     boxShadow: `0 0 20px ${INFO_COLOR}40` }}
@@ -806,6 +813,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
               {currentStop < caseStudyData.stops.length - 1 ? (
                 <button
                   onClick={nextStop}
+                  aria-label="Next Stop"
                   className="flex items-center gap-2 px-4 py-3 rounded-full transition-all hover:scale-105 w-full sm:w-auto justify-center"
                   style={{ 
                     backgroundColor: INFO_COLOR,
@@ -823,6 +831,7 @@ export default function CaseStudyTemplate({ onBack, onNextRoute, dataIndex }: Ca
                     backgroundColor: ACCENT_COLOR,
                     boxShadow: `0 0 20px ${ACCENT_COLOR}40`
                   }}
+                  aria-label="Next Journey"
                 >
                   Next Journey
                   <Train size={20} />
