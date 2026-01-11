@@ -669,7 +669,7 @@ useEffect(() => {
       <div className="relative flex justify-center mb-10">
         <div className="relative">
           {/* Blue rectangle banner */}
-          <div className="h-20 px-12 bg-blue-600 flex items-center justify-center relative">
+          <div className="h-20 px-4 bg-blue-600 flex items-center justify-center relative">
             {/* Glowing INFORMATION sign - INSIDE the banner */}
             <div className="relative inline-block">
               {/* Backlight glow */}
