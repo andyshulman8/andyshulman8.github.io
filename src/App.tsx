@@ -16,7 +16,10 @@ const THEME_COLOR = '#424141'; // Change this once to update everywhere
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const SILVER = '#dfe1e5ff';
-const SECONDARY_COLOR = SILVER;
+const TEXT_SECONDARY = '#a8adb3'; // replaces text-white/40 - 4.5:1 contrast
+const TEXT_TERTIARY = '#868b92';  // replaces text-white/60 - 4.5:1 contrast
+const TEXT_MUTED = '#6b7178';     // replaces text-white/20 - meets 3:1 for large text
+// const SECONDARY_COLOR = SILVER;
 // If you want Google Analytics too, you can manually inject the script
 const GA_ID = 'G-5KXX19NNJM'; 
 
@@ -353,6 +356,14 @@ useEffect(() => {
   return (
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
       <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
+            
+            {/* Hero Section */}
+      <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover"
+        style={{ 
+          backgroundImage: 'url("/images/Home/test.webp")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center'
+        }}>
             {/* Fullscreen Image Viewer */}
                   <FullscreenImageViewer 
                     src={fullscreenImage} 
@@ -371,15 +382,16 @@ useEffect(() => {
                 </h1>
               </div>
       <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity into complex systems</h2>
-              <br/> <h2 className="text-white/60">Andy Shulman · Senior UX Designer</h2>
+              <br/> <h2 className="" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
             </div>
           </div>
-        </section>
+        </section></header>
       
-
+      {/* Main content */}
+      <main>
       
       {/* All Aboard Section - FIXED */}
-      <section className=" px-6 w-full mx-auto">
+      <section className=" px-6 w-full mx-auto" aria-label="Train">
         {/* Animated Train Track with proper z-index */}
         <div className="relative mb-12 h-24 flex items-bottom">
           {/* Railroad ties (dashed) placed below the rail */}
@@ -511,7 +523,7 @@ useEffect(() => {
         }}>
           {/* Destination sign strip on top */}
           <div className="absolute top-0 left-0 right-0 h-2 bg-orange-500/80 flex items-center justify-center rounded-tr-3xl overflow-hidden">
-            <div className="text-[6px] font-bold text-white">EXPRESS</div>
+            <div className="text-[8px] font-bold text-white">EXPRESS</div>
           </div>
           
           {/* Large front windshield */}
@@ -587,12 +599,14 @@ useEffect(() => {
               >
                 Transit Journeys
               </h2>
-          <p className="text-white/60">
+          <p className="" style={{ color: TEXT_TERTIARY }}>
             These case studies trace how products move through my design transit system, shown in detail at the Information Booth.
           </p>
         </div>
+        </section>
 
         {/* Case Studies Grid */}
+        <section className="py-16 px-6 w-full mx-auto" aria-label="Case studies">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((project) => (
             <a
@@ -624,7 +638,7 @@ useEffect(() => {
                   {/* <div className="text-xs text-white/60 mb-1">{project.line}</div> */}
                   <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                 </div>
-                <ChevronRight className="w-5 h-5 text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                <ChevronRight className="w-5 h-5 group-hover:text-white group-hover:translate-x-1 transition-all" style={{ color: TEXT_SECONDARY }}/>
               </div>
               
               <p className="text-white/70 text-sm mb-4">{project.tagline}</p>
@@ -632,7 +646,7 @@ useEffect(() => {
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" style={{ color: SILVER }}/>
-                  <span className="text-white/60">{project.impact}</span>
+                  <span className="" style={{ color: TEXT_TERTIARY }}>{project.impact}</span>
                 </div>
                 
               </div>
@@ -658,7 +672,7 @@ useEffect(() => {
           ))}
         </div>
       </section>
-<section className="py-16 px-6">
+<section className="py-16 px-6" aria-label="Information Booth">
   <div className="grid gap-8">
     {/* Information Booth Panel */}
     <div
@@ -743,7 +757,7 @@ useEffect(() => {
         <h3 className="text-white/90 text-2xl font-bold mb-4">
           The Complete Transit System
         </h3>
-        <p className="text-white/60 text-left mb-6">
+        <p className="text-left mb-6" style={{ color: TEXT_TERTIARY }}>
           This is my design process map. Each project follows a unique route
           through these stations, combining methodologies from Stanford d.school,
           Business Strategy, Behavior Design, and Sustainability frameworks.
@@ -851,7 +865,7 @@ useEffect(() => {
 </section>
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
-      <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: BACK_COLOR }}>
+      <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: BACK_COLOR }} aria-label="Passenger Testimonials">
         {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
         <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
           <img src="/images/Home/tickets.webp" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
@@ -906,9 +920,9 @@ useEffect(() => {
                     <div className="font-bold text-sm tracking-tight" style={{ color: SILVER }}>
                       {testimonial.author}
                     </div>
-                    <div className="text-[11px] uppercase tracking-widest text-white/40 leading-tight">
+                    <div className="text-[11px] uppercase tracking-widest leading-tight" style={{ color: TEXT_SECONDARY }}>
                       {testimonial.role} <br />
-                      <span className="text-white/20">{testimonial.company}</span>
+                      <span className="" style={{ color: TEXT_MUTED }}>{testimonial.company}</span>
                     </div>
                   </div>
                 </div>
@@ -924,7 +938,7 @@ useEffect(() => {
           ))}
         </div>
       </section>
-
+</main>
             
 
           {/* Contact - Thanks for Riding */}
@@ -946,7 +960,7 @@ useEffect(() => {
               
             </div>
             */}
-            <div className="mt-8 text-white/40 text-sm">
+            <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
               Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
              </div>
             </footer>
