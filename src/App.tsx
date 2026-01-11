@@ -658,216 +658,197 @@ useEffect(() => {
           ))}
         </div>
       </section>
-
-       <section className="py-16 px-6">
-        <div className="w-full mx-auto">
-          {/* Backlit Info Booth Sign */}
+<section className="py-16 px-6">
+  <div className="grid gap-8">
+    {/* Information Booth Panel */}
+    <div
+      className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:border-white/20 transition-all duration-300"
+      style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}
+    >
+      {/* Top chevron banner with glowing INFORMATION sign inside */}
+      <div className="relative flex justify-center mb-10">
+        <div className="relative">
+          {/* Blue rectangle banner */}
+          <div className="h-20 px-12 bg-blue-600 flex items-center justify-center relative">
+            {/* Glowing INFORMATION sign - INSIDE the banner */}
+            <div className="relative inline-block">
+              {/* Backlight glow */}
+              <div
+                className="absolute inset-0 rounded-lg blur-xl opacity-50"
+                style={{
+                  backgroundColor: INFO_COLOR,
+                  transform: 'scale(1.2)',
+                }}
+              />
+              
+              {/* Sign face */}
+              <div className="relative flex items-center gap-3 px-4 py-2">
+                <Info className="w-8 h-8 relative z-10" style={{ color: SILVER }} />
+                <h2 className="text-3xl font-bold text-white relative z-10 tracking-wide">
+                  INFORMATION
+                </h2>
+              </div>
+              
+              {/* Corner accent lights */}
+              <div
+                className="absolute -top-2 -left-2 w-3 h-3 rounded-full animate-pulse"
+                style={{
+                  backgroundColor: SILVER,
+                  boxShadow: `0 0 10px ${SILVER}`,
+                }}
+              />
+              <div
+                className="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-pulse"
+                style={{
+                  backgroundColor: SILVER,
+                  boxShadow: `0 0 10px ${SILVER}`,
+                  animationDelay: '0.5s',
+                }}
+              />
+              <div
+                className="absolute -bottom-2 -left-2 w-3 h-3 rounded-full animate-pulse"
+                style={{
+                  backgroundColor: SILVER,
+                  boxShadow: `0 0 10px ${SILVER}`,
+                  animationDelay: '1s',
+                }}
+              />
+              <div
+                className="absolute -bottom-2 -right-2 w-3 h-3 rounded-full animate-pulse"
+                style={{
+                  backgroundColor: SILVER,
+                  boxShadow: `0 0 10px ${SILVER}`,
+                  animationDelay: '1.5s',
+                }}
+              />
+            </div>
+          </div>
           
+          {/* Downward chevron triangle
+          <div
+            className="absolute left-1/2 -bottom-6 -translate-x-1/2"
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: '48px solid transparent',
+              borderRight: '48px solid transparent',
+              borderTop: '24px solid rgb(37, 99, 235)',
+            }}
+          /> */}
+        </div>
+      </div>
 
-          {/* Information Panels - Booth Style */}
-          <div className="grid gap-8">
-            {/* Process Map Panel */}
-            <div className="bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-8 
-                            hover:border-white/20 transition-all duration-300"
-                style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
-              <div className="flex items-start gap-4 mb-6">
-                {/* <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-3 rounded-lg">
-                  <Map className="w-6 h-6 text-blue-400" />
-                </div> */}
-                <div>
-                  <div className="relative inline-block mb-12">
-                {/* Main sign structure */}
-            <div className="relative">
-              {/* Backlight panel - the actual light source */}
-              <div className="absolute inset-0 rounded-lg blur-2xl opacity-70" 
-                  style={{ 
-                    backgroundColor: INFO_COLOR,
-                    transform: 'scale(1)',
-                    zIndex: 0
-                  }}></div>
-              
-              {/* Translucent sign face - like a lightbox */}
-              <div className="relative border-4 rounded-lg px-3 py-5 overflow-hidden" 
-                  style={{ 
-                    borderColor: '#1a1a1a',
-                    backgroundColor: `${INFO_COLOR}15`,
-                    backdropFilter: 'blur(8px)',
-                    boxShadow: `
-                      0 0 60px ${INFO_COLOR}60,
-                      inset 0 0 40px ${INFO_COLOR}30,
-                      0 8px 32px rgba(0,0,0,0.4)
-                    `, paddingLeft: 8, paddingRight:8,
-                    zIndex: 1
-                  }}>
-                
-                {/* Inner glow effect */}
-                <div className="absolute inset-0 opacity-40" 
-                    style={{
-                      background: `radial-gradient(circle at 50% 50%, ${INFO_COLOR}40 0%, transparent 70%)`
-                    }}></div>
-                
-                {/* Content */}
-                <div className="relative flex items-center gap-4 z-10">
-                  <div className="flex items-center gap-4">
-                        <Info className="w-10 h-10 " style={{ color: SILVER }}/>
-                        <h2 className="text-3xl font-bold text-[#FFFAFB]">INFORMATION</h2>
-                      </div>
-                </div>
-                
-                {/* Light rays effect (removed) */}
-              </div>
-              
-              {/* Metal frame edges */}
-              <div className="absolute -inset-1 border-2 rounded-lg pointer-events-none" 
-                  style={{ 
-                    borderColor: '#2a2a2a',
-                    boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.1)'
-                  }}></div>
+      {/* Content below chevron */}
+      <div className="mt-8">
+        <h3 className="text-white/90 text-2xl font-bold mb-4">
+          The Complete Transit System
+        </h3>
+        <p className="text-white/60 text-left mb-6">
+          This is my design process map. Each project follows a unique route
+          through these stations, combining methodologies from Stanford d.school,
+          Business Strategy, Behavior Design, and Sustainability frameworks.
+        </p>
+
+        {/* Process Map Image */}
+        <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden relative aspect-video">
+          {/* Loading skeleton */}
+          <div
+            aria-hidden={processLoaded}
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              processLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-full h-full rounded-md bg-gradient-to-br from-[#f2e8df] to-[#e6dccf] animate-pulse" />
             </div>
-            {/* Mounting brackets with lights */}
-            <div className="absolute -top-3 -left-3 w-4 h-4 rounded-full border-2 animate-pulse" 
-                style={{ 
-                  borderColor: SECONDARY_COLOR, 
-                  backgroundColor: INFO_COLOR,
-                  boxShadow: `0 0 12px ${INFO_COLOR}`
-                }}></div>
-            <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full border-2 animate-pulse" 
-                style={{ 
-                  borderColor: SECONDARY_COLOR, 
-                  backgroundColor: INFO_COLOR,
-                  boxShadow: `0 0 12px ${INFO_COLOR}`,
-                  animationDelay: '0.5s'
-                }}></div>
-            <div className="absolute -bottom-3 -left-3 w-4 h-4 rounded-full border-2 animate-pulse" 
-                style={{ 
-                  borderColor: SECONDARY_COLOR, 
-                  backgroundColor: INFO_COLOR,
-                  boxShadow: `0 0 12px ${INFO_COLOR}`,
-                  animationDelay: '1s'
-                }}></div>
-            <div className="absolute -bottom-3 -right-3 w-4 h-4 rounded-full border-2 animate-pulse" 
-                style={{ 
-                  borderColor: SECONDARY_COLOR, 
-                  backgroundColor: INFO_COLOR,
-                  boxShadow: `0 0 12px ${INFO_COLOR}`,
-                  animationDelay: '1.5s'
-                }}></div>
           </div>
-                  <h3 className="text-white/90 text-2xl font-bold mb-2">The Complete Transit System</h3>
-                  <p className="text-white/60 text-left">
-                    This is my design process map. Each project follows a unique route through these stations, 
-                    combining methodologies from Stanford d.school, Business Strategy, Behavior Design, and 
-                    Sustainability frameworks.
-                  </p>
-                </div>
-              </div>
-              <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden relative aspect-video">
-                {/* Skeleton placeholder: visible until the image finishes loading */}
-                <div
-                  aria-hidden={processLoaded}
-                  className={`absolute inset-0 transition-opacity duration-500 ${processLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-                >
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-full h-full rounded-md bg-gradient-to-br from-[#f2e8df] to-[#e6dccf] animate-pulse" />
-                  </div>
-                </div>
 
-                {/* Circular loader centered over the skeleton while loading */}
-                {!processLoaded && (
-                  <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                    <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
-                  </div>
-                )}
+          {/* Spinner while loading */}
+          {!processLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+              <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
+            </div>
+          )}
 
-                {/* Actual image: decode async, lazy-load, and fade in when ready */}
-                <img
-                  src="/images/Home/process.webp"
-                  alt="Design process map"
+          {/* Actual image */}
+          <img
+            src="/images/Home/process.webp"
+            alt="Design process map"
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setProcessLoaded(true)}
+            onError={() => setProcessLoaded(true)}
+            className={`cursor-pointer hover:opacity-90 transition-opacity duration-500 ${
+              processLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onClick={() => setFullscreenImage('/images/Home/process.webp')}
+          />
+        </div>
+      </div>
+
+      {/* Skills Panel */}
+      <div className="pt-12">
+        <SkillsBoard />
+      </div>
+
+      {/* About Me Panel */}
+      <div className="pt-12">
+        <div className="flex items-start gap-4 mb-6">
+          {/* Headshot */}
+          <div className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
+               style={{ borderColor: SILVER }}>
+            <img
+              src="/images/Home/headshot.png"
+              alt="Andy Shulman"
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+
+          <h3 className="text-white/90 text-2xl font-bold self-center">
+            About the Conductor
+          </h3>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+          <div className="md:col-span-2 space-y-4">
+            <p className="text-white/80 leading-relaxed">
+              I'm Andy, a Senior UX Designer with 5+ years transforming complex enterprise systems
+              into intuitive experiences. I have a Master's in Sustainability Science from Stanford
+              and a skillset that brings together design thinking, behavior design, business strategy,
+              and systems thinking.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              My work spans enterprise B2B SaaS, health tech, to mission-driven organizations.
+              I've designed AI-driven features, laid foundations for IBM partnerships, and helped
+              teams from cancer treatment centers to global energy companies work more efficiently.
+            </p>
+            <p className="text-white/80 leading-relaxed">
+              I am currently based in Montrose, Colorado with my adventure dog, exploring opportunities
+              in climate tech and mental health spaces. Check out my adventures:
+            </p>
+          </div>
+
+          <aside className="md:col-span-1 h-full">
+            <div
+              className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"
+              style={{ boxShadow: `0 0 20px ${INFO_COLOR}20` }}
+            >
+              <div className="w-full h-full aspect-video">
+                <iframe
+                  src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
+                  className="w-full h-full"
+                  title="Map preview"
                   loading="lazy"
-                  decoding="async"
-                  onLoad={() => setProcessLoaded(true)}
-                  onError={() => setProcessLoaded(true)}
-                  className={`cursor-pointer hover:opacity-90 transition-opacity duration-500 ${processLoaded ? 'opacity-100' : 'opacity-0'}`}
-                  onClick={() => setFullscreenImage("/images/Home/process.webp")}
-                />
+                ></iframe>
               </div>
-              {/* Skills Panel */}
-            <div className="pt-12"
-                style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
-              {/* <div className="flex items-start gap-4 mb-6">
-                <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 p-3 rounded-lg">
-                  <Briefcase className="w-6 h-6 text-green-400" />
-                </div>
-                <h3 className="metal-heading text-2xl font-bold">Station Capabilities</h3>
-              </div> */}
-              <SkillsBoard />
             </div>
-
-            {/* About Me Panel */}
-            <div className="mb-12"
-                style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}>
-              <div className="flex items-start gap-4 mb-6">
-                {/* <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 p-3 rounded-lg">
-                  <User className="w-6 h-6 text-orange-400" />
-                </div> */}
-                {/* Headshot - circular, floating left */}
-  <div className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105">
-    <img 
-      src="/images/Home/headshot.png"
-      alt="Andy Shulman"
-      style={{border: SILVER }}
-      className="w-full h-full object-cover"
-      loading="lazy"
-    />
+          </aside>
+        </div>
+      </div>
+    </div>
   </div>
-  
-  {/* Title next to image */}
-  <h3 className="text-white/90 text-2xl font-bold self-center">
-    About the Conductor
-  </h3>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-6 items-start">
-                <div className="md:col-span-2 space-y-4">
-                  <p className="text-white/80 leading-relaxed">
-                    I'm Andy, a Senior UX Designer with 5+ years transforming complex enterprise systems 
-                    into intuitive experiences. I have a Master's in Sustainability Science from Stanford 
-                    and a skillset that brings together design thinking, behavior design, business strategy, 
-                    and systems thinking.
-                  </p>
-                  <p className="text-white/80 leading-relaxed">
-                    My work spans enterprise B2B SaaS, health tech, to mission-driven organizations. 
-                    I've designed AI-driven features, laid foundations for IBM partnerships, and helped 
-                    teams from cancer treatment centers to global energy companies work more efficiently.
-                  </p>
-                  <p className="text-white/80 leading-relaxed">
-                    I am currently based in Montrose, Colorado with my adventure dog, exploring opportunities 
-                    in climate tech and mental health spaces. Check out my adventures:
-                  </p>
-                </div>
-
-                <aside className="md:col-span-1 h-full">
-                  <div className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full 
-                                  hover:border-white/30 transition-all duration-300"
-                      style={{ boxShadow: `0 0 20px ${INFO_COLOR}20` }}>
-                    <div className="w-full h-full aspect-video">
-                      <iframe
-                        src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
-                        className="w-full h-full"
-                        title="Map preview"
-                        loading="lazy"
-                      ></iframe>
-                    </div>
-                  </div>
-                </aside>
-              </div>
-            </div>
-            </div>
-
-            
-            </div>
-          </div>
-        </section>
+</section>
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
       <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: BACK_COLOR }}>
