@@ -28,7 +28,13 @@ const TRAIN_WHEEL_COLOR = "#111827";         // near-black
 // const ALL_ABOARD_BORDER = SILVER;
 
 const SkillsBoard = () => {
-  const [isVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+useEffect(() => {
+  // Trigger the settling animation after component mounts
+  const timer = setTimeout(() => setIsVisible(true), 100);
+  return () => clearTimeout(timer);
+}, []);
   const boardRef = useRef(null);
 
   useEffect(() => {
