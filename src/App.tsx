@@ -1,15 +1,24 @@
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 import { useState, useEffect, useRef, lazy } from 'react';
 import { Train, MapPin, Info, ChevronRight, ChevronUp } from 'lucide-react';
 // Lazy-load case study pages to reduce initial bundle size and improve load time
 const CaseStudyTemplate = lazy(() => import('./pages/logs'));
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
 // framer-motion import removed — not used here to reduce bundle size
+import { Analytics } from "@vercel/analytics/react" 
 
 const THEME_COLOR = '#424141'; // Change this once to update everywhere
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const SILVER = '#dfe1e5ff';
 const SECONDARY_COLOR = SILVER;
+// If you want Google Analytics too, you can manually inject the script
+const GA_ID = 'G-5KXX19NNJM'; 
 
 const TRAIN_BODY_COLOR = THEME_COLOR;         // main car color
 const TRAIN_BORDER_COLOR = SILVER;        // or a darker variant of THEME_COLOR
@@ -19,21 +28,27 @@ const TRAIN_WHEEL_COLOR = "#111827";         // near-black
 // const ALL_ABOARD_BORDER = SILVER;
 
 const SkillsBoard = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible] = useState(false);
   const boardRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (boardRef.current) observer.observe(boardRef.current);
-    return () => observer.disconnect();
+    const scriptId = 'ga-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      // Use standard JS function inside useEffect to avoid 'gtag not found'
+      function gtag(...args: any[]) {
+        window.dataLayer.push(args);
+      }
+      
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    }
   }, []);
 
   const skillCategories = [
@@ -161,12 +176,26 @@ const SkillsBoard = () => {
 
 // Main Portfolio Component
 export default function DesignCentralStation() {
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   //const [activeSection, setActiveSection] = useState('hero');
   //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+useEffect(() => {
+    if (!window.dataLayer) {
+      const script = document.createElement("script");
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      script.async = true;
+      document.head.appendChild(script);
 
+      window.dataLayer = window.dataLayer || [];
+      // @ts-ignore
+      function gtag(){dataLayer.push(arguments);}
+      // @ts-ignore
+      gtag('js', new Date());
+      // @ts-ignore
+      gtag('config', GA_ID);
+    }
+  }, []);
 
   const caseStudies = [
     {
@@ -946,6 +975,7 @@ export default function DesignCentralStation() {
               </button>
             )}
         </div>
+         <Analytics /> 
       </div>
     // </div>
   );
