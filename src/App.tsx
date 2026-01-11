@@ -379,7 +379,7 @@ useEffect(() => {
 
       
       {/* All Aboard Section - FIXED */}
-      <section className=" px-6 max-w-7xl mx-auto">
+      <section className=" px-6 w-full mx-auto">
         {/* Animated Train Track with proper z-index */}
         <div className="relative mb-12 h-24 flex items-bottom">
           {/* Railroad ties (dashed) placed below the rail */}
@@ -660,7 +660,7 @@ useEffect(() => {
       </section>
 
        <section className="py-16 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full mx-auto">
           {/* Backlit Info Booth Sign */}
           
 
@@ -870,13 +870,13 @@ useEffect(() => {
         </section>
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
-      <section className="mb-16 py-10 px-6 max-w-7xl mx-auto" style={{ backgroundColor: BACK_COLOR }}>
+      <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: BACK_COLOR }}>
         {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
         <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
           <img src="/images/Home/tickets.webp" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
 
           {/* Content overlay */}
-          <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="relative z-10 w-full mx-auto">
             <div className="flex items-left justify-left gap-4">
               <h3 className="text-3xl font-bold text-white">Passenger Testimonials</h3>
             </div>
