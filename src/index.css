@@ -35,6 +35,26 @@
   }
 }
 
+.skip-link {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-120%);
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100;
+  border: 2px solid #fff;
+}
+
+/* When focused by keyboard, move it into view */
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+
 .metal-heading {
   font-weight: 800;
   /*letter-spacing: 0.10em;

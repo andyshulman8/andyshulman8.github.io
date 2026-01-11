@@ -357,6 +357,10 @@ useEffect(() => {
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
       <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
             
+        <a href="#main-content" className="skip-link">
+            Skip to main content
+        </a>
+
             {/* Hero Section */}
       <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover"
         style={{ 
@@ -388,7 +392,7 @@ useEffect(() => {
         </section></header>
       
       {/* Main content */}
-      <main>
+      <main id="main-content" tabIndex={-1}>
       
       {/* All Aboard Section - FIXED */}
       <section className=" px-6 w-full mx-auto" aria-label="Train">
