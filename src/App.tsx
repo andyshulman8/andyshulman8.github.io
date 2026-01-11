@@ -18,7 +18,7 @@ const BACK_COLOR = '#141515';
 const SILVER = '#dfe1e5ff';
 const TEXT_SECONDARY = '#a8adb3'; // replaces text-white/40 - 4.5:1 contrast
 const TEXT_TERTIARY = '#868b92';  // replaces text-white/60 - 4.5:1 contrast
-const TEXT_MUTED = '#6b7178';     // replaces text-white/20 - meets 3:1 for large text
+const TEXT_MUTED = '#9ca3af';     // replaces text-white/20 - meets 3:1 for large text
 // const SECONDARY_COLOR = SILVER;
 // If you want Google Analytics too, you can manually inject the script
 const GA_ID = 'G-5KXX19NNJM'; 
@@ -522,7 +522,7 @@ useEffect(() => {
           borderColor: TRAIN_BORDER_COLOR,
         }}>
           {/* Destination sign strip on top */}
-          <div className="absolute top-0 left-0 right-0 h-2 bg-orange-500/80 flex items-center justify-center rounded-tr-3xl overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-2 bg-orange-700 flex items-center justify-center rounded-tr-3xl overflow-hidden">
             <div className="text-[8px] font-bold text-white">EXPRESS</div>
           </div>
           
@@ -843,7 +843,7 @@ useEffect(() => {
             </p>
           </div>
 
-          <aside className="md:col-span-1 h-full">
+          <div className="md:col-span-1 h-full">
             <div
               className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"
               style={{ boxShadow: `0 0 20px ${INFO_COLOR}20` }}
@@ -857,7 +857,7 @@ useEffect(() => {
                 ></iframe>
               </div>
             </div>
-          </aside>
+          </div>
         </div>
       </div>
     </div>
