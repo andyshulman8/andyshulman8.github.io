@@ -53,23 +53,26 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
       {isVideo ? (
         <video
           src={mediaSrc}
-          title="Video of Experience"
+          title="Video Preview"
           className="w-full h-full object-cover object-left-top"
           autoPlay
           loop
           muted
           playsInline
+          preload="metadata"
         />
       ) : (
         <img 
           src={mediaSrc}
-          alt="Sneak Peek"
+          alt="Preview"
           className="w-full h-full object-cover object-left-top"
+          loading="lazy"
         />
       )}
     </div>
   );
 };
+
 
 // Helper: turn [label](url) into links
 const renderMarkdownLinks = (text: string) => {
@@ -294,31 +297,32 @@ useEffect(() => {
       <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
       
       {isFullscreen && (
-        <FullscreenImageViewer
-          src={
-            fullscreenSource === 'single'
-              ? (typeof fullscreenImage === 'string' ? fullscreenImage : fullscreenImage?.src)
-              : undefined
-          }
-          images={
-            fullscreenSource === 'peeks'
-              ? caseStudyData.peeks.map(item => typeof item === 'string' ? item : item.src) as string[]
-              : fullscreenSource === 'stop'
-              ? caseStudyData.stops[currentStop].images ?? undefined
-              : undefined
-          }
-          currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
-          onChangeIndex={(i) => {
-            if (fullscreenSource === 'stop') setStopCarouselIndex(i);
-            else if (fullscreenSource === 'peeks') setPeekIndex(i);
-          }}
-          onClose={() => {
-            setIsFullscreen(false);
-            setFullscreenImage(null);
-            setFullscreenSource('peeks');
-          }}
-        />
-      )}
+  <FullscreenImageViewer
+    src={
+      fullscreenSource === 'single'
+        ? (typeof fullscreenImage === 'string' ? fullscreenImage : fullscreenImage?.src)
+        : undefined
+    }
+    images={
+      fullscreenSource === 'peeks'
+        ? caseStudyData.peeks  // ✅ Pass full objects
+        : fullscreenSource === 'stop'
+        ? caseStudyData.stops[currentStop].images  // ✅ Pass full objects - NO .map()!
+        : undefined
+    }
+    currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
+    onChangeIndex={(i) => {
+      if (fullscreenSource === 'stop') setStopCarouselIndex(i);
+      else if (fullscreenSource === 'peeks') setPeekIndex(i);
+    }}
+    onClose={() => {
+      setIsFullscreen(false);
+      setFullscreenImage(null);
+      setFullscreenSource('peeks');
+    }}
+  />
+)}
+
 
       <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -655,7 +659,7 @@ useEffect(() => {
             {hasImages && (
               <div className="relative max-w-4xl mx-auto mb-8">
                 <div 
-                  className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity" 
+                  className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity " 
                   onClick={() => {
                     const currentImages = caseStudyData.stops[currentStop].images;
                     if (currentImages && currentImages.length > 0) {

@@ -133,7 +133,8 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "purple",
     destination: "30% reduction in alert fatigue",
     peeks: [
-          '/images/alerts/logsvid.mp4',
+          // '/images/alerts/logsvid.mp4',
+          { src: '/images/alerts/logsvid.mp4', type: 'video' }, 
           // '/images/alerts/proactive.png',
           // '/images/alerts/AI4.png'
         ],
