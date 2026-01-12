@@ -70,7 +70,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quoteImage: "/images/rags/burriss.png",
         numberedFeatures: [
           { title: "Disconnected Tools", description: "Critical troubleshooting moments are only more stressful with siloed apps; users were forced to juggle various tools and processes." },
-          { title: "Inefficient Filtering", description: "Competitors offered advanced search — users asked: 'Why is LM Logs search so small? Where is my recent history?'" },
+          { title: "Inefficient Filtering", description: "Competitors offered advanced search, so our users asked: 'Why is LM Logs search so small? Where is my recent history?'" },
           { title: "Raw Data Overload", description: "Without diverse and integrated visualizations, the benefit of LM Logs was buried." }
         ],
         callout: "Our customers weren't the only ones suffering, LogicMonitor itself avoided using LM Logs, forcing us to spend on a competitor."
@@ -79,7 +79,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Gap 1",
         subtitle: "Solution: Unified Platform",
         phase: "Ideate",
-        content: "LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure. I designed seamless workflows connecting logs across the platform so engineers like John at RaySearch didn't have to context switch in critical moments - a single pane of glass.",
+        content: "LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure. I designed seamless workflows connecting logs across the platform so engineers like John at RaySearch didn't have to context switch in critical moments: reducing tool sprawl and creating a single pane of glass.",
         features: [
           { title: "Added logs widgets capabilities to dashboards", description: ""},
           { title: "Made logs visible alongside device and service data", description: ""},
@@ -140,8 +140,8 @@ export const allCaseStudies: CaseStudyData[] = [
         ],
     before: '/images/alerts/before.png',
     after: '/images/alerts/after.png',
-    background: "Schneider Electric, a 160-year-old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
-    overview: "With 25,000+ network devices and a rapidly expanding cloud environment, tool sprawl and alert fatigue had become major obstacles. I designed new alert types, query tracking capabilities, and laid the foundation for Edwin AI—ultimately contributing to LogicMonitor's 2025 partnership with IBM and Red Hat on AI-driven, self-healing infrastructure.",
+    background: "Schneider Electric, a 160 year old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
+    overview: "With 25,000+ network devices and a rapidly expanding cloud environment, tool sprawl and alert fatigue had become major obstacles. I designed new alert types, query tracking capabilities, and laid the foundation for LogicMonitor's 2025 partnership with IBM and Red Hat on AI driven, self-healing infrastructure.",
     allImpact: [{ metric: "30% reduction", label: "in alert fatigue" },
     // { metric: "1000+", label: "Customers Served" },
     { metric: "5 tools", label: "down from 30+ for troubleshooting" }],
@@ -180,7 +180,7 @@ export const allCaseStudies: CaseStudyData[] = [
       {
         station_name: "AI Foundation",
         phase: "Prototype",
-        content: "Leadership asked me to extend this thinking platform-wide as they needed a unified alerts vision. I designed flows and defined troubleshooting principles: Make leveraging LM's tools seamless, provide clear one-click starting points, and serve value without hunting. This work became the foundation for Edwin AI.",
+        content: "Leadership asked me to extend this thinking platform-wide as they needed a unified alerts vision. I designed flows and defined troubleshooting principles, laying the groundwork for Edwin AI.",
         images: ['/images/alerts/AI1.png', '/images/alerts/AI2.png','/images/alerts/AI3.png', '/images/alerts/AI4.png'],
         numberedFeatures: [
           { title: "Make deep investigation across LM's tools seamless and intuitive", description: "" },
@@ -227,7 +227,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Discovery",
         phase: "Empathize",
         content: "Without proper access controls, one misconfigured permission could expose thousands of student health records or financial aid data: a career-ending mistake for someone like Mike and devastating for students and professors. Compliance management was complex, error-prone, and high-stakes. \n\n I led recurring user research sessions, conducting interviews and analyzing workflows to understand where our product was failing.",
-        quote: "We had to manage logs from campus safety systems, VoIP devices, and servers, all with different requirements. Tech changes fast—our tools needed to keep up.",
+        quote: "We had to manage logs from campus safety systems, VoIP devices, and servers, all with different requirements. Tech changes fast. Our tools needed to keep up.",
         quoteAuthor: "Mike Dieter, Senior Systems Engineer at Loyola University of Maryland",
         features: [
           { title: "Access Control Limitations", description: "Existing tools lacked granular permissions, creating potential exposure of sensitive student and staff data" },
