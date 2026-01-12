@@ -1,17 +1,21 @@
+import { useState, useEffect, useRef } from 'react';
+import { Train, MapPin, Info, ChevronRight, ChevronUp } from 'lucide-react';
+import { Analytics } from "@vercel/analytics/react";
+import { useNavigate, Link } from 'react-router-dom';
+import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
+
+
+export {};
+
 declare global {
   interface Window {
     dataLayer: any[];
   }
 }
 
-import { useState, useEffect, useRef, lazy } from 'react';
-import { Train, MapPin, Info, ChevronRight, ChevronUp } from 'lucide-react';
-// Lazy-load case study pages to reduce initial bundle size and improve load time
-const CaseStudyTemplate = lazy(() => import('./pages/logs'));
-import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
-// framer-motion import removed — not used here to reduce bundle size
-import { Analytics } from "@vercel/analytics/react" 
-
+// const root = ReactDOM.createRoot(
+//   document.getElementById('root') as HTMLElement
+// );
 const THEME_COLOR = '#424141'; // Change this once to update everywhere
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
@@ -59,6 +63,9 @@ useEffect(() => {
       gtag('config', GA_ID);
     }
   }, []);
+
+
+  // root.render(<DesignCentralStation />);
 
   const skillCategories = [
     { title: 'User Research', items: ['Pendo', 'Accessibility', 'User Interviews', 'Usability Testing', 'Heuristic Evaluation'] },
@@ -185,6 +192,8 @@ useEffect(() => {
 
 // Main Portfolio Component
 export default function DesignCentralStation() {
+
+  const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   //const [activeSection, setActiveSection] = useState('hero');
@@ -308,36 +317,36 @@ useEffect(() => {
     }
   ];
 
-  const routeOrder = ['logs', 'alerts', 'data', 'team', 'future', 'health'];
+  // const routeOrder = ['logs', 'alerts', 'data', 'team', 'future', 'health'];
 
-  const [view, setView] = useState('map');
+  // const [view, setView] = useState('map');
 
-  const handleNextRoute = () => {
+  // const handleNextRoute = () => {
   // Find where we are currently
-  const currentIndex = routeOrder.indexOf(view);
+  // const currentIndex = routeOrder.indexOf(view);
   // Get the next one (loop back to 0 if at the end)
-  const nextIndex = (currentIndex + 1) % routeOrder.length;
+  // const nextIndex = (currentIndex + 1) % routeOrder.length;
   // Change the view
-  setView(routeOrder[nextIndex]);
+  // setView(routeOrder[nextIndex]);
   // Optional: Scroll to top when changing routes
-  window.scrollTo(0, 0);
-};
+  // window.scrollTo(0, 0);
+// };
 
-  const viewToIndex: Record<string, number> = {
-  logs: 0,
-  alerts: 1,
-  data: 2,
-  team: 3,
-  future: 4,
-  health: 5
-};
+//   const viewToIndex: Record<string, number> = {
+//   logs: 0,
+//   alerts: 1,
+//   data: 2,
+//   team: 3,
+//   future: 4,
+//   health: 5
+// };
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [processLoaded, setProcessLoaded] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Whether we're viewing a case study (render inside app shell)
-  const isCaseView = view !== 'map' && viewToIndex[view] !== undefined;
+  // const isCaseView = view !== 'map' && viewToIndex[view] !== undefined;
 
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 320);
@@ -347,15 +356,29 @@ useEffect(() => {
   }, []);
 
   // Show case study pages (lazy-loaded to improve initial load)
-  if (isCaseView) {
-    return (
-        <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />
-    );
-  }
+  // if (isCaseView) {
+  //   return (
+  //       <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />
+  //   );
+  // }
 
   return (
+
+    // <Router>
+    //   <Routes>
+    //     {/* Home page */}
+    //     <Route path="/" element={<DesignCentralStation />} />
+        
+    //     {/* Case study overview (e.g., /logs) */}
+    //     <Route path="/:caseId" element={<CaseStudyWrapper />} />
+        
+    //     {/* Individual stop (e.g., /logs/stop/1) */}
+    //     <Route path="/:caseId/:stopIndex" element={<CaseStudyWrapper />} />
+    //   </Routes>
+    // </Router>
+
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
-      <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
+      <div className="text-white" style={{ backgroundColor: BACK_COLOR }}>
             
         <a href="#main-content" className="skip-link">
             Skip to main content
@@ -369,10 +392,13 @@ useEffect(() => {
           backgroundPosition: 'center center'
         }}>
             {/* Fullscreen Image Viewer */}
-                  <FullscreenImageViewer 
-                    src={fullscreenImage} 
+                {fullscreenImage && (
+                  <FullscreenImageViewer
+                    src={fullscreenImage}
                     onClose={() => setFullscreenImage(null)}
                   />
+                )}
+
 
             {/* Landing content starts */}
               {/* Hero Section - Station Entrance (commented out) */}
@@ -597,6 +623,9 @@ useEffect(() => {
               </h2>
             </div>
             </div> */}
+            </section>
+            <section className="py-1 px-6 w-full mx-auto" aria-label="Case studies">
+        
         <div className="text-left mt-6 mb-8">
           <h2
                 className="text-3xl font-bold text-white mb-6"
@@ -607,15 +636,17 @@ useEffect(() => {
             These case studies trace how products move through my design transit system, shown in detail at the Information Booth.
           </p>
         </div>
-        </section>
+        
 
         {/* Case Studies Grid */}
-        <section className="py-16 px-6 w-full mx-auto" aria-label="Case studies">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((project) => (
-            <a
+            <Link
               key={project.id}
-              onClick={() => setView(project.id)}
+              to={`/${project.id}`}
+              // href={`/${project.id}`}
+              onClick={() => navigate(`/${project.id}`)} // Changed from setView
+              // onClick={() => setView(project.id)}
               // href={`https://ashulman-i4ku6yb.gamma.site/project1`}
               className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
               //onMouseEnter={() => setHoveredProject(project.id)}
@@ -672,7 +703,7 @@ useEffect(() => {
                   </div>
                 </div>
               )}*/}
-            </a>
+            </Link>
           ))}
         </div>
       </section>
