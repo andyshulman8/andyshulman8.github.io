@@ -44,26 +44,6 @@ useEffect(() => {
 }, []);
   const boardRef = useRef(null);
 
-  useEffect(() => {
-    const scriptId = 'ga-script';
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-      script.async = true;
-      document.head.appendChild(script);
-
-      window.dataLayer = window.dataLayer || [];
-      // Use standard JS function inside useEffect to avoid 'gtag not found'
-      function gtag(...args: any[]) {
-        window.dataLayer.push(args);
-      }
-      
-      gtag('js', new Date());
-      gtag('config', GA_ID);
-    }
-  }, []);
-
 
   // root.render(<DesignCentralStation />);
 
@@ -198,6 +178,25 @@ export default function DesignCentralStation() {
 
   //const [activeSection, setActiveSection] = useState('hero');
   //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  useEffect(() => {
+    const scriptId = 'ga-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      // Use standard JS function inside useEffect to avoid 'gtag not found'
+      function gtag(...args: any[]) {
+        window.dataLayer.push(args);
+      }
+      
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    }
+  }, []);
 useEffect(() => {
     if (!window.dataLayer) {
       const script = document.createElement("script");
