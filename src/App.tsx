@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight, ChevronUp } from 'lucide-react';
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useNavigate, Link } from 'react-router-dom';
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
 
@@ -1022,6 +1023,7 @@ export default function DesignCentralStation() {
             )}
         </div>
          <Analytics /> 
+         <SpeedInsights />
       </div>
     // </div>
   );
