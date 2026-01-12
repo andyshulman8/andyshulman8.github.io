@@ -98,7 +98,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Through competitive analysis, it was clear that search was the key to engineers finding the needle in the haystack. DataDog, Splunk, Sumologic, and more used queries to power almost everything else in Logs. I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
         quote: "I like a big search box and inline support is super helpful.",
         quoteAuthor: "NOC Engineer at HyeTech Networks",
-        images: ["images/rags/logsquery.png", "images/rags/fields.png"]
+        images: ["/images/rags/logsquery.png", "/images/rags/fields.png"]
       },
       {
         station_name: "Gap 3",
@@ -110,7 +110,7 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Advanced Query Operators", description: "Count, avg, sum, min, and max operators enabled numerical analysis beyond keyword searches." },
           { title: "Dashboard Integration", description: "Logs widgets can be embedded in dashboards, helping correlate log data with system performance metrics." }
         ],
-        images: ['images/rags/gap3.png', 'images/rags/donut.webp']
+        images: ['/images/rags/gap3.png', '/images/rags/donut.webp']
       },
       {
         station_name: "Impact",
@@ -157,7 +157,7 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Slow Troubleshooting", description: "Engineers spent hours diagnosing incidents, even repeated ones" },
           { title: "Reactive Monitoring", description: "Teams discovered problems only after they escalated" }
         ],
-        images: ['images/alerts/buried1.png', 'images/alerts/buried2.png','images/alerts/buried3.png']
+        images: ['/images/alerts/buried1.png', '/images/alerts/buried2.png','/images/alerts/buried3.png']
       },
       {
         station_name: "Smarter Alerts",
@@ -168,19 +168,19 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Missing Log Detection", description: "Users needed to know when not receiving a certain log" },
           { title: "Reduce False Positives", description: "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data" }
         ],
-        images: ['images/alerts/newLogAlert.webp', 'images/alerts/NewLogAlert.png']
+        images: ['/images/alerts/newLogAlert.webp', '/images/alerts/NewLogAlert.png']
       },
       {
         station_name: "Proactive Monitoring",
         phase: "Ideate",
         content: "Once the immediate noise problem was solved, I turned to helping teams prevent issues before they caused downtime. I designed Saved Views and Query Tracking, enabling users to save, share, and track search results as metrics over time. \n\n Schneider used this to automatically track spikes in 404 errors and authentication failures across their global clusters.",
-        images: ['images/alerts/proactive.png']
+        images: ['/images/alerts/proactive.png']
       },
       {
         station_name: "AI Foundation",
         phase: "Prototype",
         content: "Leadership asked me to extend this thinking platform-wide as they needed a unified alerts vision. I designed flows and defined troubleshooting principles: Make leveraging LM's tools seamless, provide clear one-click starting points, and serve value without hunting. This work became the foundation for Edwin AI.",
-        images: ['images/alerts/AI1.png', 'images/alerts/AI2.png','images/alerts/AI3.png', 'images/alerts/AI4.png'],
+        images: ['/images/alerts/AI1.png', '/images/alerts/AI2.png','/images/alerts/AI3.png', '/images/alerts/AI4.png'],
         numberedFeatures: [
           { title: "Make deep investigation across LM's tools seamless and intuitive", description: "" },
           { title: "Provide a clear, one-click starting point for triage", description: "" },
@@ -237,7 +237,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Access Control",
         phase: "Define",
         content: "I ran multiple research and validation cycles as we evolved LM's access control model. \n\nI designed Partitions: a feature that securely segregates log data so only authorized users have access. Mike could now store all the sensitive logs in a Partition, set up proper access control, and feel confident the logs have no way of getting in the wrong hands.",
-        images: ['images/data/Access.png', 'images/data/access2.png','images/data/access3.png', 'images/data/access4.png'],
+        images: ['/images/data/Access.png', '/images/data/access2.png','/images/data/access3.png', '/images/data/access4.png'],
         
       },
       {
@@ -249,14 +249,14 @@ export const allCaseStudies: CaseStudyData[] = [
           { title: "Step-by-step forms with inline documentation", description: "" },
           { title: "Scalable structure for future log types", description: "" }
         ],
-        images: ['images/data/napkin.png', 'images/data/logsource.webp'],
+        images: ['/images/data/napkin.png', '/images/data/logsource.webp'],
         
       },
       {
         station_name: "Natural Language",
         phase: "Prototype",
         content: "As part of simplifying log search, I helped design a Natural Language translator, allowing users to write queries in plain English and click a button to see the technical syntax. Previously, users had to learn complex operators and log field structures. For Loyola, this meant Mike could confidently delegate log investigation to junior staff.",
-        images: ['images/data/natural.webp'],
+        images: ['/images/data/natural.webp'],
         
       },
       {
@@ -300,7 +300,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "To help Align's professionals, we first needed to determine their needs. I taught the team user interview techniques, then conducted remote interviews with Align's doctors while team members observed and took notes, building shared understanding. Through empathy maps and brainstorming, we identified surprises and made inferences.",
         quote: "Listening through the customer interviews clarified a reality for many of us.",
         quoteAuthor: "Practice Recovery Experiences concept team",
-        images: ["images/team/empathy.png"]
+        images: ["/images/team/empathy.png"]
       },
       {
         station_name: "Teaching Reframing",
@@ -308,7 +308,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Align's network of dental professionals ultimately needed a stronger village, a stronger community. I taught the team to reframe problems our interviewees faced. The team built their first design frames, learning to focus on needs rather than solutions.",
         quote: "The Design Thinking process provided us a way to design based on the customer needs.",
         quoteAuthor: "Practice Recovery Experiences concept team",
-        images: ["images/team/frame1.png", "images/team/frame2.png"]
+        images: ["/images/team/frame1.png", "images/team/frame2.png"]
       },
       {
         station_name: "Brainstorming",
@@ -323,7 +323,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Before building out our prototypes, I identified a question or two that we aimed to answer by testing each prototype. With a key question in mind, I brought each concept to the team to start brainstorming how we could answer those questions. \n\nWe tested across media: built physical prototypes, surveys, a Facebook page, and even a (popular) podcast episode. After instructing the team on user testing, I sent the teams off to get results with real doctors who use Align. ",
         quote: "Quick testing could save the team and company time and energy to pressure test an idea long before we utilize resources to execute it completely - AGILITY!",
         quoteAuthor: "Delighted Doctor concept team",
-        images: ["images/team/proto.png"]
+        images: ["/images/team/proto.png"]
       },
       {
         station_name: "Impact",
@@ -338,7 +338,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quotePreface: "4 years later", 
         quote: "We have made great progress on the design thinking front and working on a big program to reimagine billing - kicking the improvements we made into the next gear.",
         quoteAuthor: "VP of Customer Success at Align Technology, Volker Probst",
-        quoteImage: "images/Home/volker.webp"
+        quoteImage: "/images/Home/volker.webp"
       }
     ]
   },
@@ -364,7 +364,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Audience Research",
         phase: "Empathize",
         content: "I considered both The Exploratorium's and SESI's brand goals, as well as the overall audience in cultural context. The stakeholders needed to create a distinctive museum experience blending social and physical science and design for repeat visits. In context, the overall needs boiled down to the following: ",
-        images: ["images/future/aud1.png", "images/future/aud2.png", "images/future/aud3.png","images/future/aud4.jpeg"],
+        images: ["/images/future/aud1.png", "/images/future/aud2.png", "/images/future/aud3.png","/images/future/aud4.jpeg"],
         features: [
           { title: "Build confidence", description: " in underserved communities facing educational barriers" },
           { title: "Empower citizens", description: "to see themselves as capable of shaping their future" },
@@ -380,13 +380,13 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Theory of Change",
         phase: "Ideate",
         content: "Leveraging my Stanford Graduate School of Business course experience, I created a theory of change to provide the framework for our exhibit, outlining key goals and measurable outcomes to ensure we stayed on track throughout the design process.",
-        images: ["images/future/TOC.png"]
+        images: ["/images/future/TOC.png"]
       },
       {
         station_name: "Developer Toolkit",
         phase: "Prototype",
         content: "I built a 6-step developer process that gave exhibit creators the creative freedom they needed while keeping everything tied to our thematic goal. I also designed a decision-making framework to help the manager select the final 20 exhibits. I researched exhibits worldwide and compiled a reference library with methods and outcomes.",
-        images: ["images/future/toolkit1.png", "images/future/toolkit2.png", "images/future/toolkit3.png", "images/future/toolkit4.png"]
+        images: ["/images/future/toolkit1.png", "/images/future/toolkit2.png", "/images/future/toolkit3.png", "/images/future/toolkit4.png"]
       },
       {
         station_name: "Impact",
@@ -447,13 +447,13 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Shared Understanding",
         phase: "Ideate",
         content: "I synthesized Bose's ethnographic research and organized findings across user journey stages: daily, weekly, and occasional interactions. Then I facilitated workshops to balance user needs, technical feasibility, and design consistency, transforming siloed efforts into coordinated decisions across hardware and software.",
-        images: ["images/health/stickies.avif"]
+        images: ["/images/health/stickies.avif"]
       },
       {
         station_name: "Behavior Design",
         phase: "Prototype",
         content: "Sleep interventions require habit formation through tiny, easy behaviors with immediate feedback, not complex feature sets. I used Behavior Design methodology, considering for each feature:",
-        images: ["images/health/sleep.jpg", "images/health/UIDD.jpg"],
+        images: ["/images/health/sleep.jpg", "/images/health/UIDD.jpg"],
         features: [
           { title: " Desired Behavior", description: "What specific action should users take? (e.g., \"Set sleep reminder 30 min before bed\")" },
           { title: "Make it Easier (reduce friction)", description: "Reduce friction: pre-fill times, minimize taps, smart defaults" },
