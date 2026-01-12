@@ -178,46 +178,52 @@ export default function DesignCentralStation() {
 
   //const [activeSection, setActiveSection] = useState('hero');
   //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  // In App.tsx, replace your useEffect with this:
   useEffect(() => {
     const scriptId = 'ga-script';
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-      script.async = true;
-      document.head.appendChild(script);
+    
+    // Only load once
+    if (document.getElementById(scriptId)) return;
+    
+    // Create script tag
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    script.async = true;
+    document.head.appendChild(script);
 
-      window.dataLayer = window.dataLayer || [];
-      
-      // CRITICAL FIX: Attach gtag to the window object so Google's script can find it
-      // @ts-ignore
-      window.gtag = function(...args: any[]) {
-        window.dataLayer.push(args);
-      };
-      
-      // @ts-ignore
-      window.gtag('js', new Date());
-      // @ts-ignore
-      window.gtag('config', GA_ID);
+    // Initialize dataLayer
+    window.dataLayer = window.dataLayer || [];
+    
+    // Define gtag function BEFORE Google's script loads
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
     }
+    
+    // Configure GA
+    gtag('js', new Date());
+    gtag('config', GA_ID, {
+      page_path: window.location.pathname,
+    });
+    
   }, []);
 
-useEffect(() => {
-    if (!window.dataLayer) {
-      const script = document.createElement("script");
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-      script.async = true;
-      document.head.appendChild(script);
+// useEffect(() => {
+//     if (!window.dataLayer) {
+//       const script = document.createElement("script");
+//       script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+//       script.async = true;
+//       document.head.appendChild(script);
 
-      window.dataLayer = window.dataLayer || [];
-      // @ts-ignore
-      function gtag(){dataLayer.push(arguments);}
-      // @ts-ignore
-      gtag('js', new Date());
-      // @ts-ignore
-      gtag('config', GA_ID);
-    }
-  }, []);
+//       window.dataLayer = window.dataLayer || [];
+//       // @ts-ignore
+//       function gtag(){dataLayer.push(arguments);}
+//       // @ts-ignore
+//       gtag('js', new Date());
+//       // @ts-ignore
+//       gtag('config', GA_ID);
+//     }
+//   }, []);
 
   const caseStudies = [
     {

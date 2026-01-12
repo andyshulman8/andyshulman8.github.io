@@ -10,28 +10,9 @@ import NumberedFeatures from '../components/NumberedFeatures.tsx';
 import VisionTimeline from '../components/VisionTimeline.tsx';
 // import { useLocation } from 'react-router-dom';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import CaseStudyWrapper from '../components/CaseStudyWrapper.tsx'; // adjust path
-import DesignCentralStation from '../App.tsx'; // optional landing page
 // import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DesignCentralStation />} />
-        <Route path="/:caseid" element={<CaseStudyWrapper />} />
-        <Route path="/:caseid/:stop" element={<CaseStudyWrapper />} />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
-);
-
 
 
 // Color constants
