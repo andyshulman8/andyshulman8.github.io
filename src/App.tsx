@@ -398,7 +398,7 @@ export default function DesignCentralStation() {
             {/* Hero Section */}
       <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover"
         style={{ 
-          backgroundImage: 'url("/images/Home/test.webp")',
+          backgroundImage: 'url("/images/Home/hero2.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center center'
         }}>
@@ -422,7 +422,7 @@ export default function DesignCentralStation() {
                   Final destination: <span className='metal-heading'>Impact</span>
                 </h1>
               </div>
-      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity into complex systems</h2>
+      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing for clarity under pressure</h2>
               <br/> <h2 className="" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
             </div>
           </div>
@@ -641,10 +641,10 @@ export default function DesignCentralStation() {
           <h2
                 className="text-3xl font-bold text-white mb-6"
               >
-                Transit Journeys
+                Case Studies
               </h2>
           <p className="" style={{ color: TEXT_TERTIARY }}>
-            These case studies trace how products move through my design transit system, shown in detail at the Information Booth.
+            I navigate design through constraints, handoffs, and pressure.
           </p>
         </div>
         
