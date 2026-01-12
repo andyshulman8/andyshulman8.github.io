@@ -635,7 +635,7 @@ export default function DesignCentralStation() {
             </div>
             </div> */}
             </section>
-            <section className="py-1 px-6 w-full mx-auto" aria-label="Case studies">
+            <section className="px-6 w-full mx-auto" aria-label="Case studies">
         
         <div className="text-left mt-6 mb-8">
           <h2
