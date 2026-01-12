@@ -512,7 +512,7 @@ export default function CaseStudyTemplate({
           </div>
         ) : (
           <div className="max-w-5xl mx-auto px-6 py-12">
-            <div className="mb-12">
+            <div className="mb-16">
               <div className="relative flex items-center justify-between max-w-4xl mx-auto">
                 <div className="absolute left-0 right-0 top-1/2 h-1 bg-white/10 -translate-y-1/2" />
                 
@@ -529,34 +529,44 @@ export default function CaseStudyTemplate({
                   const isCurrent = index === currentStop;
 
                   return (
-                    <button
-                      key={index}
-                      onClick={() => goToStop(index)}
-                      aria-label={`Go to ${stop.station_name}`}
-                      className="relative z-10 group focus:outline-none"
+                  <button
+                    key={index}
+                    onClick={() => goToStop(index)}
+                    aria-label={`Go to ${stop.station_name}`}
+                    className="relative z-10 group focus:outline-none"
+                  >
+                    {/* The Stop Circle */}
+                    <div 
+                      className="w-6 h-6 rounded-full border-2 transition-all duration-300"
+                      style={{
+                        backgroundColor: isActive ? ACCENT_COLOR : BACK_COLOR,
+                        borderColor: isActive ? 'transparent' : 'rgba(255,255,255,0.3)'
+                      }}
                     >
-                      <div 
-                        className="w-6 h-6 rounded-full border-2 transition-all duration-300"
-                        style={{
-                          backgroundColor: isActive ? ACCENT_COLOR : BACK_COLOR,
-                          borderColor: isActive ? 'transparent' : 'rgba(255,255,255,0.3)'
-                        }}
-                      >
-                        {isCurrent && (
-                          <div 
-                            className="absolute inset-0 rounded-full border-2 border-white animate-pulse"
-                            style={{ transform: 'scale(1.8)', opacity: 1 }}
-                          />
-                        )}
-                      </div>
+                      {isCurrent && (
+                        <div 
+                          className="absolute inset-0 rounded-full border-2 border-white animate-pulse"
+                          style={{ transform: 'scale(1.8)', opacity: 1 }}
+                        />
+                      )}
+                    </div>
 
-                      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <span className="text-xs font-medium text-white/80 uppercase tracking-wider">
-                          {stop.station_name}
-                        </span>
-                      </div>
-                    </button>
-                  );
+                    {/* The Station Name - Responsive Visibility */}
+                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none 
+                                    opacity-0 group-hover:opacity-100 md:opacity-100 transition-opacity duration-300">
+                      <span 
+                        className={`text-xs mb-3 font-medium uppercase tracking-wider transition-colors duration-300 ${
+                          isActive || isCurrent 
+                            ? 'text-[#dfe1e5ff]'           // Current and Past stops
+                            : 'text-[#424141]'       // Future stops (Silver)
+                        }`}
+                      >
+                        {stop.station_name}
+                      </span>
+                    </div>
+                  </button>
+                );
+
                 })}
               </div>
             </div>
