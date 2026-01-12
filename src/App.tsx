@@ -188,15 +188,20 @@ export default function DesignCentralStation() {
       document.head.appendChild(script);
 
       window.dataLayer = window.dataLayer || [];
-      // Use standard JS function inside useEffect to avoid 'gtag not found'
-      function gtag(...args: any[]) {
-        window.dataLayer.push(args);
-      }
       
-      gtag('js', new Date());
-      gtag('config', GA_ID);
+      // CRITICAL FIX: Attach gtag to the window object so Google's script can find it
+      // @ts-ignore
+      window.gtag = function(...args: any[]) {
+        window.dataLayer.push(args);
+      };
+      
+      // @ts-ignore
+      window.gtag('js', new Date());
+      // @ts-ignore
+      window.gtag('config', GA_ID);
     }
   }, []);
+
 useEffect(() => {
     if (!window.dataLayer) {
       const script = document.createElement("script");
