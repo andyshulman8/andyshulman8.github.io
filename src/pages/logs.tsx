@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
 import CalloutBox from '../components/CalloutBox';
 import { allCaseStudies } from './casedata.tsx';
@@ -8,12 +8,15 @@ import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
 import CarouselControls from '../components/CarouselControlsNew';
 import NumberedFeatures from '../components/NumberedFeatures.tsx';
 import VisionTimeline from '../components/VisionTimeline.tsx';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CaseStudyWrapper from '../components/CaseStudyWrapper.tsx'; // adjust path
 import DesignCentralStation from '../App.tsx'; // optional landing page
+// import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
@@ -144,6 +147,23 @@ export default function CaseStudyTemplate({
   dataIndex, 
   initialStop 
 }: CaseStudyTemplateProps) {
+const navigate = useNavigate();  
+const [showDropdown, setShowDropdown] = useState<boolean>(false);
+const dropdownRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setShowDropdown(false);
+    }
+  };
+
+  if (showDropdown) {
+    document.addEventListener('mousedown', handleClickOutside);
+  }
+
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, [showDropdown]);
 
   const location = useLocation();
 
@@ -302,23 +322,70 @@ export default function CaseStudyTemplate({
 
       <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button 
-            onClick={onBack}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-            aria-label="Back to Station"
-          >
+          <button onClick={onBack} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
             <ChevronLeft size={20} />
             <span>Back to Station</span>
           </button>
-          <div className="text-right">
-            <div className="text-sm text-white/40">{caseStudyData.destination}</div>
-            <div className="text-xl font-bold" style={{ color: ACCENT_COLOR }}>
+
+          {/* CENTER: Title + Impact */}
+          <div className="flex flex-col items-center flex-1 mx-8 text-center" ref={dropdownRef}>
+            <div className="text-xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>
               {caseStudyData.title}
             </div>
+            <div className="text-sm text-white/40 max-w-xs">
+              {caseStudyData.destination}
+            </div>
           </div>
+
+          {/* RIGHT: Case Study Dropdown */}
+      <div className="relative" ref={dropdownRef}>
+        <button 
+          className="flex items-center gap-2 cursor-pointer group p-2 rounded-lg hover:bg-white/10 transition-all"
+          onClick={() => setShowDropdown(prev => !prev)} 
+        >
+          <div className="text-sm text-white/60 group-hover:text-white transition-colors">
+            All Journeys
+          </div>
+          <svg 
+            className="w-4 h-4 text-white/60 group-hover:text-white transition-all duration-200" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+            style={{ 
+              transform: showDropdown ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 0.2s ease'
+            }}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        {/* Dropdown Menu */}
+        {showDropdown && (
+          <div className="absolute top-full right-0 mt-2 w-72 bg-black/95 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl z-50 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+            <div className="p-2">
+              {allCaseStudies.map((study, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    navigate(`/${study.id}`);
+                    setShowDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-3 hover:bg-white/10 transition-all flex items-center gap-3 group"
+                >
+                  {/* <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: ACCENT_COLOR }} /> */}
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-white truncate">{study.title}</div>
+                    <div className="text-xs text-white/60 truncate">{study.destination}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
         </div>
       </header>
-
       <main className="max-w-7xl mx-auto px-6">
         {showOverview ? (
           <div className="max-w-5xl mx-auto px-6 py-12">
