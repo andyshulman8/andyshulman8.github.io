@@ -90,7 +90,7 @@ useEffect(() => {
                     key={iIdx}
                     className={`split-flap-item ${isVisible ? 'settled' : 'searching'}`}
                     style={{ 
-                      '--settle-delay': `${(cIdx * 5 + iIdx) * 150}ms`,
+                      '--settle-delay': `${(cIdx * 5 + iIdx) * 300}ms`,
                       color: SILVER
                     } as React.CSSProperties}
                   >
