@@ -396,11 +396,11 @@ export default function DesignCentralStation() {
         </a>
 
             {/* Hero Section */}
-      <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover"
+      <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover bg-[url('/images/Home/hero1.png')] md:bg-[url('/images/Home/hero2.png')]"
         style={{ 
-          backgroundImage: 'url("/images/Home/hero2.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center'
+          // backgroundImage: 'url("/images/Home/hero2.png")',
+          // backgroundSize: 'cover',
+          // backgroundPosition: 'center center'
         }}>
             {/* Fullscreen Image Viewer */}
                 {fullscreenImage && (
