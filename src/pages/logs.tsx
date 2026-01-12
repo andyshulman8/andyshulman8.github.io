@@ -16,7 +16,7 @@ import CaseStudyWrapper from '../components/CaseStudyWrapper.tsx'; // adjust pat
 import DesignCentralStation from '../App.tsx'; // optional landing page
 // import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
