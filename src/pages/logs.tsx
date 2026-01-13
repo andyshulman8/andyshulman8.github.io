@@ -22,6 +22,7 @@ const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const ACCENT_COLOR = SILVER;
+const TEXT_SECONDARY = '#a8adb3';
 
 // Helper component for video/image in windows
 const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'video' } }) => {
@@ -822,6 +823,28 @@ useEffect(() => {
           </div>
         )}
       </main>
+      <footer className="text-center bg-black/40 py-12 border-t-2 " style={{ borderColor: `${THEME_COLOR}30` }}>
+                  <Train className="w-16 h-16 mx-auto mb-6" style={{ color: THEME_COLOR }}/>
+                  <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
+                  <p className="text-2xl text-white/80 mb-8">
+                    Let's build your next impactful experience
+                  </p>
+                  {/*
+                  <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">
+                    <a 
+                      href="mailto:andyshulman8@gmail.com" 
+                      className="flex items-center gap-2 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors"
+                    >
+                      <Mail className="w-5 h-5" />
+                      Email Andy
+                    </a>
+                    
+                  </div>
+                  */}
+                  <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
+                    Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
+                   </div>
+                  </footer>
     </div>
   );
 }
