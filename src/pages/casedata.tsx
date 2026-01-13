@@ -61,8 +61,8 @@ export const allCaseStudies: CaseStudyData[] = [
     { metric: "$250K", label: "Annual Tool Savings" }],
     stops: [
       {
-        station_name: "Three Critical Gaps",
-        subtitle: "Discovery",
+        station_name: "Critical Gaps",
+        // subtitle: "Discovery",
         phase: "Empathize",
         content: "I led recurring user research sessions, conducting Zoom interviews and analyzing users' current workflows to understand where our product was failing. I discovered three critical gaps:",
         quote: "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
@@ -76,8 +76,8 @@ export const allCaseStudies: CaseStudyData[] = [
         callout: "Our customers weren't the only ones suffering, LogicMonitor itself avoided using LM Logs, forcing us to spend on a competitor."
       },
       {
-        station_name: "Gap 1",
-        subtitle: "Solution: Unified Platform",
+        station_name: "Unified Platform",
+        // subtitle: "Solution: Unified Platform",
         phase: "Ideate",
         content: "LogicMonitor allows its users to access a plethora of tools to help monitor their infrastructure. I designed seamless workflows connecting logs across the platform so engineers like John at RaySearch didn't have to context switch in critical moments: reducing tool sprawl and creating a single pane of glass.",
         features: [
@@ -92,8 +92,8 @@ export const allCaseStudies: CaseStudyData[] = [
         ]
       },
       {
-        station_name: "Gap 2",
-        subtitle: "Solution: Empowered Search",
+        station_name: "Empowered Search",
+        // subtitle: "Solution: Empowered Search",
         phase: "Ideate",
         content: "Through competitive analysis, it was clear that search was the key to engineers finding the needle in the haystack. DataDog, Splunk, Sumologic, and more used queries to power almost everything else in Logs. I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
         quote: "I like a big search box and inline support is super helpful.",
@@ -101,8 +101,8 @@ export const allCaseStudies: CaseStudyData[] = [
         images: ["/images/rags/logsquery.png", "/images/rags/fields.png"]
       },
       {
-        station_name: "Gap 3",
-        subtitle: "Solution: Visual Analytics",
+        station_name: "Visual Analytics",
+        // subtitle: "Solution: Visual Analytics",
         phase: "Prototype",
         content: "RaySearch engineers had plenty of log data but no good way to actually find the specific logs that would help them. \n\n The goal was simple: make spikes, anomalies, and trends obvious enough that a team could put a dashboard on a monitor in their office and instantly spot when something looked off. No more scrolling through thousands of lines of text. \n\n Rather than reinventing visualization patterns, I leveraged LogicMonitor's existing design system for charts and graphs. This ensured consistency and reduced engineering complexity.",
         features: [
