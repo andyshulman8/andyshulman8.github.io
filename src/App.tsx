@@ -872,12 +872,31 @@ export default function DesignCentralStation() {
 
         <div className="grid md:grid-cols-3 gap-6 items-start">
           <div className="md:col-span-2 space-y-4">
+
             <p className="text-white/80 leading-relaxed">
-              I'm Andy, a Senior UX Designer with 5+ years transforming complex enterprise systems
-              into intuitive experiences. I have a Master's in Sustainability Science from Stanford
-              and a skillset that brings together design thinking, behavior design, business strategy,
-              and systems thinking.
+              I'm Andy, a Senior UX Designer with{' '}
+              <span className="relative inline-block group">
+                <u>
+                  <a 
+                    aria-label="Andy Shulman's resume (opens in new tab)" 
+                    href="https://drive.google.com/file/d/1m1BwzMNuZySV6jw0Jr3FmXCiecmqptiu/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    over 5 years experience
+                  </a>
+                </u>
+                {/* Tooltip */}
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  See Resume →
+                </span>
+              </span>{' '}
+              transforming complex enterprise systems into intuitive experiences. I have a Master's in Sustainability Science from Stanford
+                          and a skillset that brings together design thinking, behavior design, business strategy,
+                          and systems thinking.
             </p>
+          
             <p className="text-white/80 leading-relaxed">
               My work spans enterprise B2B SaaS, health tech, to mission-driven organizations.
               I've designed AI-driven features, laid foundations for IBM partnerships, and helped
