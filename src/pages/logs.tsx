@@ -329,7 +329,7 @@ useEffect(() => {
           onClick={() => setShowDropdown(prev => !prev)} 
         >
           <div className="text-sm text-white/60 group-hover:text-white transition-colors">
-            All Journeys
+            Case Studies
           </div>
           <svg 
             className="w-4 h-4 text-white/60 group-hover:text-white transition-all duration-200" 

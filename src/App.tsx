@@ -422,7 +422,7 @@ export default function DesignCentralStation() {
                   Final destination: <span className='metal-heading'>Impact</span>
                 </h1>
               </div>
-      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing for clarity under pressure</h2>
+      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity for high-stakes systems</h2>
               <br/> <h2 className="" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
             </div>
           </div>
@@ -643,9 +643,9 @@ export default function DesignCentralStation() {
               >
                 Case Studies
               </h2>
-          <p className="" style={{ color: TEXT_TERTIARY }}>
+          {/* <p className="" style={{ color: TEXT_TERTIARY }}>
             I navigate design through constraints, handoffs, and pressure.
-          </p>
+          </p> */}
         </div>
         
 
