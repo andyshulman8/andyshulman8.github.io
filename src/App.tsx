@@ -992,7 +992,7 @@ export default function DesignCentralStation() {
             <Train className="w-16 h-16 mx-auto mb-6" style={{ color: THEME_COLOR }}/>
             <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
             <p className="text-2xl text-white/80 mb-8">
-              Please contact Andy to build your next impactful experience.
+              Let's build your next impactful experience.
             </p>
             {/*
             <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">

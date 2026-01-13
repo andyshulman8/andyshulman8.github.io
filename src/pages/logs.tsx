@@ -548,9 +548,9 @@ useEffect(() => {
                   backgroundColor: ACCENT_COLOR,
                   boxShadow: `0 0 30px ${ACCENT_COLOR}40`
                 }}
-                aria-label="Start Journey"
+                aria-label="View full case study"
               >
-                Start Journey →
+                View full case study →
               </button>
               <button 
                 onClick={onNextRoute}
