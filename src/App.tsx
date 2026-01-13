@@ -722,7 +722,7 @@ export default function DesignCentralStation() {
   <div className="grid gap-8">
     {/* Information Booth Panel */}
     <div
-      className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-8 hover:border-white/20 transition-all duration-300"
+      className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:border-white/20 transition-all duration-300"
       style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}
     >
       {/* Top chevron banner with glowing INFORMATION sign inside */}
@@ -742,7 +742,7 @@ export default function DesignCentralStation() {
               />
               
               {/* Sign face */}
-              <div className="relative flex items-center gap-3 px-4 py-2">
+              <div className="relative flex items-center gap-3 px-1 py-2">
                 <Info className="w-8 h-8 relative z-10" style={{ color: SILVER }} />
                 <h2 className="text-3xl font-bold text-white relative z-10 tracking-wide">
                   INFORMATION
