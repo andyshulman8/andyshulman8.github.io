@@ -147,7 +147,7 @@ export const allCaseStudies: CaseStudyData[] = [
     { metric: "5 tools", label: "down from 30+ for troubleshooting" }],
     stops: [
       {
-        station_name: "Discovery",
+        station_name: "Alert Chaos",
         phase: "Empathize",
         content: "Through interviews, testing, and journey mapping with a recurring loop of 30+ LogicMonitor customers, three key challenges emerged:",
         quote: "We're like headless chickens running around. If you spend your efforts in different directions, the chances of them negating or canceling out are greater.",
@@ -224,7 +224,7 @@ export const allCaseStudies: CaseStudyData[] = [
     ],
  stops: [
       {
-        station_name: "Discovery",
+        station_name: "Pain Points",
         phase: "Empathize",
         content: "Without proper access controls, one misconfigured permission could expose thousands of student health records or financial aid data: a career-ending mistake for someone like Mike and devastating for students and professors. Compliance management was complex, error-prone, and high-stakes. \n\n I led recurring user research sessions, conducting interviews and analyzing workflows to understand where our product was failing.",
         quote: "We had to manage logs from campus safety systems, VoIP devices, and servers, all with different requirements. Tech changes fast. Our tools needed to keep up.",
@@ -296,7 +296,7 @@ export const allCaseStudies: CaseStudyData[] = [
     ],
     stops: [
       {
-        station_name: "Teaching Research",
+        station_name: "Shared Insight",
         phase: "Empathize",
         content: "To help Align's professionals, we first needed to determine their needs. I taught the team user interview techniques, then conducted remote interviews with Align's doctors while team members observed and took notes, building shared understanding. Through empathy maps and brainstorming, we identified surprises and made inferences.",
         quote: "Listening through the customer interviews clarified a reality for many of us.",
@@ -304,7 +304,7 @@ export const allCaseStudies: CaseStudyData[] = [
         images: ["/images/team/empathy.png"]
       },
       {
-        station_name: "Teaching Reframing",
+        station_name: "Reframed Needs",
         phase: "Define",
         content: "Align's network of dental professionals ultimately needed a stronger village, a stronger community. I taught the team to reframe problems our interviewees faced. The team built their first design frames, learning to focus on needs rather than solutions.",
         quote: "The Design Thinking process provided us a way to design based on the customer needs.",
@@ -362,7 +362,7 @@ export const allCaseStudies: CaseStudyData[] = [
           label: "visitors since opening in 2022"}],
     stops: [
       {
-        station_name: "Audience Research",
+        station_name: "Audience",
         phase: "Empathize",
         content: "I considered both The Exploratorium's and SESI's brand goals, as well as the overall audience in cultural context. The stakeholders needed to create a distinctive museum experience blending social and physical science and design for repeat visits. In context, the overall needs boiled down to the following: ",
         images: ["/images/future/aud1.png", "/images/future/aud2.png", "/images/future/aud3.png","/images/future/aud4.jpeg"],
@@ -423,7 +423,7 @@ export const allCaseStudies: CaseStudyData[] = [
 ],
     stops: [
       {
-        station_name: "Discovery",
+        station_name: "Pain Points",
         phase: "Empathize",
         content: "Working across two health-focused product lines revealed overlapping challenges:",
         quote: "I stopped going to restaurants because I couldn't follow conversations.",
