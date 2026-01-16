@@ -238,24 +238,38 @@ export default function DesignCentralStation() {
   useEffect(() => {
     const scriptId = 'ga-script';
     
+    // Only load once
     if (document.getElementById(scriptId)) return;
     
+    // Initialize dataLayer FIRST
+    window.dataLayer = window.dataLayer || [];
+    
+    // Define gtag function globally on window object
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
+    }
+    
+    // Make gtag available globally
+    (window as any).gtag = gtag;
+    
+    // Configure GA with current time and settings
+    gtag('js', new Date());
+    gtag('config', GA_ID, {
+      page_path: window.location.pathname,
+      send_page_view: true
+    });
+    
+    // NOW create and load the script
     const script = document.createElement("script");
     script.id = scriptId;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
     script.async = true;
     document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
     
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
+    // Debug logging
+    console.log('✅ GA initialized with ID:', GA_ID);
+    console.log('📊 dataLayer:', window.dataLayer);
     
-    gtag('js', new Date());
-    gtag('config', GA_ID, {
-      page_path: window.location.pathname,
-    });
   }, []);
 
   const caseStudies = [
