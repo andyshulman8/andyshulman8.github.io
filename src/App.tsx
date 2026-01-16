@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useNavigate, Link } from 'react-router-dom';
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
-import ReactGA from "react-ga4";
+// import ReactGA from "react-ga4";
 
 // ReactGA.initialize("G-5KXX19NNJM");
 // ReactGA.send({
