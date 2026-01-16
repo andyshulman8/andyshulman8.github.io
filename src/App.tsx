@@ -5,7 +5,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useNavigate, Link } from 'react-router-dom';
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
 
-
 export {};
 
 declare global {
@@ -14,39 +13,60 @@ declare global {
   }
 }
 
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-const THEME_COLOR = '#424141'; // Change this once to update everywhere
+interface Spark {
+  id: number;
+  angle: number;
+  distance: number;
+  duration: number;
+  x: number;
+  y: number;
+}
+
+const THEME_COLOR = '#424141';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const SILVER = '#dfe1e5ff';
-const TEXT_SECONDARY = '#a8adb3'; // replaces text-white/40 - 4.5:1 contrast
-const TEXT_TERTIARY = '#868b92';  // replaces text-white/60 - 4.5:1 contrast
-const TEXT_MUTED = '#9ca3af';     // replaces text-white/20 - meets 3:1 for large text
-// const SECONDARY_COLOR = SILVER;
-// If you want Google Analytics too, you can manually inject the script
+const TEXT_SECONDARY = '#a8adb3';
+const TEXT_TERTIARY = '#868b92';
+const TEXT_MUTED = '#9ca3af';
 const GA_ID = 'G-5KXX19NNJM'; 
 
-const TRAIN_BODY_COLOR = THEME_COLOR;         // main car color
-const TRAIN_BORDER_COLOR = SILVER;        // or a darker variant of THEME_COLOR
-const TRAIN_WHEEL_COLOR = "#111827";         // near-black
-// const ALL_ABOARD_BG = "#020617";             // dark panel behind text
-//const ALL_ABOARD_TEXT = THEME_COLOR;         // or a light accent
-// const ALL_ABOARD_BORDER = SILVER;
+const TRAIN_BODY_COLOR = THEME_COLOR;
+const TRAIN_BORDER_COLOR = SILVER;
+const TRAIN_WHEEL_COLOR = "#111827";
 
 const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const boardRef = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  // Trigger the settling animation after component mounts
-  const timer = setTimeout(() => setIsVisible(true), 100);
-  return () => clearTimeout(timer);
-}, []);
-  const boardRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            // Add delay before starting animation
+            setTimeout(() => {
+              setIsVisible(true);
+            }, 500); // 500ms delay after becoming visible
+          }
+        });
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of element is visible
+        rootMargin: '0px'
+      }
+    );
 
+    if (boardRef.current) {
+      observer.observe(boardRef.current);
+    }
 
-  // root.render(<DesignCentralStation />);
+    return () => {
+      if (boardRef.current) {
+        observer.unobserve(boardRef.current);
+      }
+    };
+  }, [isVisible]);
 
   const skillCategories = [
     { title: 'User Research', items: ['Pendo', 'Accessibility', 'User Interviews', 'Usability Testing', 'Heuristic Evaluation'] },
@@ -75,7 +95,6 @@ useEffect(() => {
                       color: SILVER
                     } as React.CSSProperties}
                   >
-                    {/* The flipping part */}
                     <div className="flap">
                       <div className="flap-front">{it}</div>
                       <div className="flap-back"></div>
@@ -131,12 +150,10 @@ useEffect(() => {
             transform: rotateX(180deg);
           }
           
-          /* Searching animation - slower continuous flip */
           .split-flap-item.searching .flap {
             animation: flip-search 0.8s linear infinite;
           }
           
-          /* Settled animation - final reveal with delay */
           .split-flap-item.settled .flap {
             animation: flip-settle 1s cubic-bezier(.2,.8,.2,1) forwards;
             animation-delay: var(--settle-delay);
@@ -160,71 +177,86 @@ useEffect(() => {
   );
 };
 
-
-//interface Station {
-//  name: string;
-//  stations: string[];
-//  color: string;
-//}
-// Removed an unused MiniMap component to reduce bundle size and remove dead code.
-
-
-
-
-// Main Portfolio Component
 export default function DesignCentralStation() {
-
   const navigate = useNavigate();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  //const [activeSection, setActiveSection] = useState('hero');
-  //const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-  // In App.tsx, replace your useEffect with this:
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [processLoaded, setProcessLoaded] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  
+  // Train interaction states
+  // const [setTrainClicked] = useState(false);
+  // const [trainMessage, setTrainMessage] = useState('');
+  const [sparks, setSparks] = useState<Spark[]>([]);
+
+  // const trainMessages = [
+  //   "🚇 Express to Portfolio!",
+  //   "Stand clear of closing doors!",
+  //   "Next stop: Case Studies!",
+  //   "All aboard the design train!",
+  //   "DING DING 🔔",
+  //   "Arriving at: Your Next Hire",
+  //   "Now departing!",
+  //   "Mind the gap!"
+  // ];
+
+  const handleTrainClick = () => {
+    // const randomMessage = trainMessages[Math.floor(Math.random() * trainMessages.length)];
+    // setTrainMessage(randomMessage);
+    // setTrainClicked(true);
+    // setTimeout(() => setTrainClicked(false), 3000);
+
+    // Get the position of the rear car (first car in the flex layout)
+    const trainElement = document.querySelector('.train-animation');
+    const rearCar = trainElement?.querySelector('.rear-car');
+    
+    if (rearCar) {
+      const rect = rearCar.getBoundingClientRect();
+      // Position sparks at the bottom-left of the rear car
+      const sparkX = rect.left + 8; // Small offset from left edge
+      const sparkY = rect.bottom - 4; // Bottom of the car
+
+      console.log('Spark position:', sparkX, sparkY); // Debug
+
+      const newSparks: Spark[] = Array.from({ length: 8 }, (_, i) => ({
+        id: Date.now() + i,
+        angle: Math.random() * 90 - 45,
+        distance: 20 + Math.random() * 30,
+        duration: 0.5 + Math.random() * 0.5,
+        x: sparkX,
+        y: sparkY
+      }));
+      
+      console.log('Created sparks:', newSparks); // Debug
+      setSparks(newSparks);
+      setTimeout(() => setSparks([]), 1000);
+    } else {
+      console.log('Rear car not found!'); // Debug
+    }
+  };
+
   useEffect(() => {
     const scriptId = 'ga-script';
     
-    // Only load once
     if (document.getElementById(scriptId)) return;
     
-    // Create script tag
     const script = document.createElement("script");
     script.id = scriptId;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
     script.async = true;
     document.head.appendChild(script);
 
-    // Initialize dataLayer
     window.dataLayer = window.dataLayer || [];
     
-    // Define gtag function BEFORE Google's script loads
     function gtag(...args: any[]) {
       window.dataLayer.push(args);
     }
     
-    // Configure GA
     gtag('js', new Date());
     gtag('config', GA_ID, {
       page_path: window.location.pathname,
     });
-    
   }, []);
-
-// useEffect(() => {
-//     if (!window.dataLayer) {
-//       const script = document.createElement("script");
-//       script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-//       script.async = true;
-//       document.head.appendChild(script);
-
-//       window.dataLayer = window.dataLayer || [];
-//       // @ts-ignore
-//       function gtag(){dataLayer.push(arguments);}
-//       // @ts-ignore
-//       gtag('js', new Date());
-//       // @ts-ignore
-//       gtag('config', GA_ID);
-//     }
-//   }, []);
 
   const caseStudies = [
     {
@@ -301,9 +333,6 @@ export default function DesignCentralStation() {
     }
   ];
 
-
-  //const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
   const testimonials = [
     {
       quote: "Andy played a crucial role in launching this new product: from shaping the user experience and performing deep UX research to ensuring seamless integration of design and workflows across the broader LogicMonitor platform. What impressed me most was his ability to translate complex technical requirements into intuitive user experiences.",
@@ -328,37 +357,6 @@ export default function DesignCentralStation() {
     }
   ];
 
-  // const routeOrder = ['logs', 'alerts', 'data', 'team', 'future', 'health'];
-
-  // const [view, setView] = useState('map');
-
-  // const handleNextRoute = () => {
-  // Find where we are currently
-  // const currentIndex = routeOrder.indexOf(view);
-  // Get the next one (loop back to 0 if at the end)
-  // const nextIndex = (currentIndex + 1) % routeOrder.length;
-  // Change the view
-  // setView(routeOrder[nextIndex]);
-  // Optional: Scroll to top when changing routes
-  // window.scrollTo(0, 0);
-// };
-
-//   const viewToIndex: Record<string, number> = {
-//   logs: 0,
-//   alerts: 1,
-//   data: 2,
-//   team: 3,
-//   future: 4,
-//   health: 5
-// };
-
-  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
-  const [processLoaded, setProcessLoaded] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  // Whether we're viewing a case study (render inside app shell)
-  // const isCaseView = view !== 'map' && viewToIndex[view] !== undefined;
-
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 320);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -366,28 +364,7 @@ export default function DesignCentralStation() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Show case study pages (lazy-loaded to improve initial load)
-  // if (isCaseView) {
-  //   return (
-  //       <CaseStudyTemplate dataIndex={viewToIndex[view]} onBack={() => setView('map')} onNextRoute={handleNextRoute} />
-  //   );
-  // }
-
   return (
-
-    // <Router>
-    //   <Routes>
-    //     {/* Home page */}
-    //     <Route path="/" element={<DesignCentralStation />} />
-        
-    //     {/* Case study overview (e.g., /logs) */}
-    //     <Route path="/:caseId" element={<CaseStudyWrapper />} />
-        
-    //     {/* Individual stop (e.g., /logs/stop/1) */}
-    //     <Route path="/:caseId/:stopIndex" element={<CaseStudyWrapper />} />
-    //   </Routes>
-    // </Router>
-
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
       <div className="text-white" style={{ backgroundColor: BACK_COLOR }}>
             
@@ -395,329 +372,281 @@ export default function DesignCentralStation() {
             Skip to main content
         </a>
 
-            {/* Hero Section */}
-      <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover bg-[url('/images/Home/hero1.png')] md:bg-[url('/images/Home/hero2.png')]"
-        style={{ 
-          // backgroundImage: 'url("/images/Home/hero2.png")',
-          // backgroundSize: 'cover',
-          // backgroundPosition: 'center center'
-        }}>
-            {/* Fullscreen Image Viewer */}
-                {fullscreenImage && (
-                  <FullscreenImageViewer
-                    src={fullscreenImage}
-                    onClose={() => setFullscreenImage(null)}
-                  />
-                )}
+        <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover bg-[url('/images/Home/hero1.png')] md:bg-[url('/images/Home/hero2.png')]">
+          {fullscreenImage && (
+            <FullscreenImageViewer
+              src={fullscreenImage}
+              onClose={() => setFullscreenImage(null)}
+            />
+          )}
 
-
-            {/* Landing content starts */}
-              {/* Hero Section - Station Entrance (commented out) */}
-              <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.webp')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-          <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
-          <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
-            <div className="text-left">
-              <div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                  Final destination: <span className='metal-heading'>Impact</span>
-                </h1>
-              </div>
-      <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity for high-stakes systems</h2>
-              <br/> <h2 className="" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
-            </div>
-          </div>
-        </section></header>
-      
-      {/* Main content */}
-      <main id="main-content" tabIndex={-1}>
-      
-      {/* All Aboard Section - FIXED */}
-      <section className=" px-6 w-full mx-auto" aria-label="Train">
-        {/* Animated Train Track with proper z-index */}
-        <div className="relative mb-12 h-24 flex items-bottom">
-          {/* Railroad ties (dashed) placed below the rail */}
-          <div className="absolute left-0 right-0 bottom-4 flex items-center z-0">
-            <div
-              className="w-full border-t-4 border-dashed"
-              style={{ borderColor: SILVER }}
-            ></div>
-          </div>
-
-          {/* Solid rail placed between train and ties */}
-          <div
-            className="absolute left-0 right-0 bottom-4 transform -translate-y-1/4 h-1 z-10"
-            style={{ backgroundColor: `${SILVER}`,  filter: 'brightness(0.4)'}}
-          ></div>
-
-          {/* Animated Train - above the solid rail */}
-<div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
-  <div className="train-animation">
-    <div className="flex items-end gap-0"> {/* No gap - cars are connected */}
-      
-      {/* Rear car - tail car (now at back of train) */}
-      <div className="relative w-16 h-10 rounded-l-3xl border-2 shadow-lg flex-shrink-0" style={{
-        backgroundColor: TRAIN_BODY_COLOR,
-        borderColor: TRAIN_BORDER_COLOR,
-      }}>
-        {/* Door stripe */}
-        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
-        
-        {/* Windows row */}
-        <div className="absolute top-2 left-3 right-1 h-5 flex gap-0.5">
-          <div className="flex-1 border border-white/30 bg-white/10" />
-          <div className="w-1 bg-current opacity-20" />
-          <div className="flex-1 border border-white/30 bg-white/10" />
-        </div>
-        
-        {/* Rear light */}
-        <div className="absolute top-7 left-2 w-2 h-2 bg-red-500 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
-        
-        {/* Wheels */}
-        <div className="absolute -bottom-1.5 left-3 w-2.5 h-2.5 rounded-full border-2" style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }} />
-        <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }} />
-        
-        {/* Accordion connector to next car */}
-        <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
-          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
-        }} />
-      </div>
-
-      {/* Subway car 2 - passenger car */}
-      <div className="relative w-16 h-10 border-y-2 border-r-2 shadow-lg flex-shrink-0" style={{
-        backgroundColor: TRAIN_BODY_COLOR,
-        borderColor: TRAIN_BORDER_COLOR,
-      }}>
-        {/* Door stripe */}
-        <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
-        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
-        
-        {/* Windows row */}
-        <div className="absolute top-2 left-1 right-1 h-5 flex gap-0.5">
-          <div className="flex-1 border border-white/30 bg-white/10" />
-          <div className="w-1 bg-current opacity-20" />
-          <div className="flex-1 border border-white/30 bg-white/10" />
-          <div className="w-1 bg-current opacity-20" />
-          <div className="flex-1 border border-white/30 bg-white/10" />
-        </div>
-        
-        {/* Wheels */}
-        <div className="absolute -bottom-1.5 left-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }} />
-        <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }} />
-        
-        {/* Accordion connector */}
-        <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
-          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
-        }} />
-      </div>
-
-      {/* Subway car 1 - passenger car */}
-      <div className="relative w-16 h-10 border-y-2 border-r-2 shadow-lg flex-shrink-0" style={{
-        backgroundColor: TRAIN_BODY_COLOR,
-        borderColor: TRAIN_BORDER_COLOR,
-      }}>
-        {/* Door stripe */}
-        <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
-        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
-        
-        {/* Windows row */}
-        <div className="absolute top-2 left-1 right-1 h-5 flex gap-0.5">
-          <div className="flex-1 border border-white/30 bg-white/10" />
-          <div className="w-1 bg-current opacity-20" />
-          <div className="flex-1 border border-white/30 bg-white/10" />
-          <div className="w-1 bg-current opacity-20" />
-          <div className="flex-1 border border-white/30 bg-white/10" />
-        </div>
-        
-        {/* Wheels */}
-        <div className="absolute -bottom-1.5 left-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }} />
-        <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }} />
-        
-        {/* Accordion connector */}
-        <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
-          clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
-        }} />
-      </div>
-
-      {/* Front car - rounded subway nose (now at front) */}
-      <div className="relative">
-        <div className="w-16 h-10 rounded-r-3xl border-2 shadow-xl relative overflow-visible" style={{
-          backgroundColor: TRAIN_BODY_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }}>
-          {/* Destination sign strip on top */}
-          <div className="absolute top-0 left-0 right-0 h-2 bg-orange-700 flex items-center justify-center rounded-tr-3xl overflow-hidden">
-            <div className="text-[8px] font-bold text-white">EXPRESS</div>
-          </div>
-          
-          {/* Large front windshield */}
-          <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
-          
-          {/* Headlight - at the very front */}
-          <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
-          
-          {/* Wheels - fully visible */}
-          <div className="absolute -bottom-1.5 left-3 w-3 h-3 rounded-full border-2 shadow-md" style={{
-            backgroundColor: TRAIN_WHEEL_COLOR,
-            borderColor: TRAIN_BORDER_COLOR,
-          }} />
-          <div className="absolute -bottom-1.5 right-4 w-3 h-3 rounded-full border-2 shadow-md" style={{
-            backgroundColor: TRAIN_WHEEL_COLOR,
-            borderColor: TRAIN_BORDER_COLOR,
-          }} />
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-          {/* "All Aboard!" text - highest z-index */}
-          {/* <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
-            <div
-              className="px-6 py-3 rounded-full border-2 shadow-xl"
-              style={{
-                backgroundColor: ALL_ABOARD_BG,
-                borderColor: ALL_ABOARD_BORDER,
-              }}
-            >
-              <h2
-                className="text-3xl font-bold text-white"
-              >
-                Transit Journeys
-              </h2>
-            </div> */}
-          {/* </div> */}
-        </div>
-
-
-        <style>{`
-          @keyframes train-move {
-            0% { transform: translateX(-200px); }
-            100% { transform: translateX(calc(100vw + 200px)); }
-          }
-          
-          .train-animation {
-            animation: train-move 15s linear infinite;
-          }
-        `}</style>
-
-        {/* Short intro under All Aboard */}
-        {/* <div className="absolute inset-0 flex items-center justify-left pointer-events-none z-20">
-            <div
-              className="px-6 py-3 rounded-full border-2 shadow-xl"
-              style={{
-                backgroundColor: ALL_ABOARD_BG,
-                borderColor: ALL_ABOARD_BORDER,
-              }}
-            >
-              <h2
-                className="text-3xl font-bold text-white"
-              >
-                Transit Journeys
-              </h2>
-            </div>
-            </div> */}
-            </section>
-            <section className="px-6 w-full mx-auto" aria-label="Case studies">
-        
-        <div className="text-left mt-6 mb-8">
-          <h2
-                className="text-3xl font-bold text-white mb-6"
-              >
-                Case Studies
-              </h2>
-          {/* <p className="" style={{ color: TEXT_TERTIARY }}>
-            I navigate design through constraints, handoffs, and pressure.
-          </p> */}
-        </div>
-        
-
-        {/* Case Studies Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {caseStudies.map((project) => (
-            <Link
-              key={project.id}
-              to={`/${project.id}`}
-              // href={`/${project.id}`}
-              onClick={() => navigate(`/${project.id}`)} // Changed from setView
-              // onClick={() => setView(project.id)}
-              // href={`https://ashulman-i4ku6yb.gamma.site/project1`}
-              className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
-              //onMouseEnter={() => setHoveredProject(project.id)}
-              //onMouseLeave={() => setHoveredProject(null)}
-            >
-              <div className="mb-4">
-                {project.thumbnail && (
-                  <img
-                    src={project.thumbnail}
-                    alt={`${project.name} thumbnail`}
-                    className="w-full h-24 md:h-28 object-cover rounded-md mb-4"
-                  />
-                )}
-              </div>
-
-              {/* Year badge (top-right) */}
-              <div className="absolute top-4 right-4 bg-black/60 text-white/70 px-2 py-1 rounded-md text-xs border border-white/10">
-                est: {project.year}
-              </div>
-
-              <div className="flex items-start justify-between mb-4">
+          <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.webp')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
+            <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
+              <div className="text-left">
                 <div>
-                  {/* line color for studies */}
-                  {/* <div className="text-xs text-white/60 mb-1">{project.line}</div> */}
-                  <h3 className="text-xl font-bold mb-2">{project.name}</h3>
+                  <h1 className="text-4xl md:text-5xl font-bold mb-3">
+                    Final destination: <span className='metal-heading'>Impact</span>
+                  </h1>
                 </div>
-                <ChevronRight className="w-5 h-5 group-hover:text-white group-hover:translate-x-1 transition-all" style={{ color: TEXT_SECONDARY }}/>
+                <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity for high-stakes systems</h2>
+                <br/> <h2 className="" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
               </div>
+            </div>
+          </section>
+        </header>
+      
+        <main id="main-content" tabIndex={-1}>
+      
+          <section className=" px-6 w-full mx-auto" aria-label="Train">
+            <div className="relative mb-12 h-24 flex items-bottom">
               
-              <p className="text-white/70 text-sm mb-4">{project.tagline}</p>
-              
-              <div className="space-y-2 text-xs">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" style={{ color: SILVER }}/>
-                  <span className="" style={{ color: TEXT_TERTIARY }}>{project.impact}</span>
-                </div>
-                
-              </div>
-
-              {/* Route preview on hover
-              {hoveredProject === project.id && (
-                <div className="absolute inset-0 bg-black/95 backdrop-blur-sm p-6 flex flex-col justify-center">
-                  <div className="text-xs text-white/60 mb-3">Route Preview:</div>
-                  <div className="space-y-2">
-                    {project.route.map((station, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <div 
-                          className="w-2 h-2 rounded-full" 
-                          style={{ backgroundColor: project.color }}
-                        ></div>
-                        <span className="text-sm">{station}</span>
-                      </div>
-                    ))}
+              {/* {trainClicked && (
+                <div className="absolute left-1/2 top-0 -translate-x-1/2 z-30 animate-bounce-in">
+                  <div className="relative bg-white text-gray-900 px-4 py-2 rounded-lg shadow-xl border-2 border-gray-300 whitespace-nowrap">
+                    <span className="font-bold text-sm">{trainMessage}</span>
+                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white" />
+                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-3 w-0 h-0 border-l-9 border-r-9 border-t-9 border-transparent border-t-gray-300" />
                   </div>
                 </div>
-              )}*/}
-            </Link>
-          ))}
-        </div>
-      </section>
+              )} */}
+              
+              {sparks.map((spark) => (
+                <div
+                  key={spark.id}
+                  className="fixed z-30 pointer-events-none"
+                  style={{
+                    left: `${spark.x}px`,
+                    top: `${spark.y}px`,
+                    transform: `rotate(${spark.angle}deg) translateY(-${spark.distance}px)`,
+                    animation: `spark-fly ${spark.duration}s ease-out forwards`,
+                    '--angle': `${spark.angle}deg`
+                  } as React.CSSProperties}
+                >
+                  <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-lg" 
+                       style={{ boxShadow: '0 0 10px rgba(251, 191, 36, 0.8)' }} />
+                </div>
+              ))}
+
+              <div className="absolute left-0 right-0 bottom-4 flex items-center z-0">
+                <div
+                  className="w-full border-t-4 border-dashed"
+                  style={{ borderColor: SILVER }}
+                ></div>
+              </div>
+
+              <div
+                className="absolute left-0 right-0 bottom-4 transform -translate-y-1/4 h-1 z-10"
+                style={{ backgroundColor: `${SILVER}`,  filter: 'brightness(0.4)'}}
+              ></div>
+
+              <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
+                <div 
+                  className="train-animation cursor-pointer"
+                  onClick={handleTrainClick}
+                  role="button"
+                  aria-label="Click for train announcement"
+                  tabIndex={0}
+                  onKeyPress={(e) => e.key === 'Enter' && handleTrainClick()}
+                >
+                  <div className="flex items-end gap-0">
+                    
+                    <div className="rear-car relative w-16 h-10 rounded-l-3xl border-2 shadow-lg flex-shrink-0" style={{
+                      backgroundColor: TRAIN_BODY_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}>
+                      <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
+                      
+                      <div className="absolute top-2 left-3 right-1 h-5 flex gap-0.5">
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                        <div className="w-1 bg-current opacity-20" />
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                      </div>
+                      
+                      <div className="absolute top-7 left-2 w-2 h-2 bg-red-500 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
+                      
+                      <div className="absolute -bottom-1.5 left-3 w-2.5 h-2.5 rounded-full border-2" style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }} />
+                      <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }} />
+                      
+                      <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
+                        clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
+                      }} />
+                    </div>
+
+                    <div className="relative w-16 h-10 border-y-2 border-r-2 shadow-lg flex-shrink-0" style={{
+                      backgroundColor: TRAIN_BODY_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}>
+                      <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
+                      <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
+                      
+                      <div className="absolute top-2 left-1 right-1 h-5 flex gap-0.5">
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                        <div className="w-1 bg-current opacity-20" />
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                        <div className="w-1 bg-current opacity-20" />
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                      </div>
+                      
+                      <div className="absolute -bottom-1.5 left-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }} />
+                      <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }} />
+                      
+                      <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
+                        clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
+                      }} />
+                    </div>
+
+                    <div className="relative w-16 h-10 border-y-2 border-r-2 shadow-lg flex-shrink-0" style={{
+                      backgroundColor: TRAIN_BODY_COLOR,
+                      borderColor: TRAIN_BORDER_COLOR,
+                    }}>
+                      <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
+                      <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
+                      
+                      <div className="absolute top-2 left-1 right-1 h-5 flex gap-0.5">
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                        <div className="w-1 bg-current opacity-20" />
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                        <div className="w-1 bg-current opacity-20" />
+                        <div className="flex-1 border border-white/30 bg-white/10" />
+                      </div>
+                      
+                      <div className="absolute -bottom-1.5 left-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }} />
+                      <div className="absolute -bottom-1.5 right-2.5 w-2.5 h-2.5 rounded-full border-2" style={{
+                        backgroundColor: TRAIN_WHEEL_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }} />
+                      
+                      <div className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20" style={{
+                        clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)'
+                      }} />
+                    </div>
+
+                    <div className="relative">
+                      <div className="w-16 h-10 rounded-r-3xl border-2 shadow-xl relative overflow-visible" style={{
+                        backgroundColor: TRAIN_BODY_COLOR,
+                        borderColor: TRAIN_BORDER_COLOR,
+                      }}>
+                        <div className="absolute top-0 left-0 right-0 h-2 bg-orange-700 flex items-center justify-center rounded-tr-3xl overflow-hidden">
+                          <div className="text-[8px] font-bold text-white">EXPRESS</div>
+                        </div>
+                        
+                        <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
+                        
+                        <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
+                        
+                        <div className="absolute -bottom-1.5 left-3 w-3 h-3 rounded-full border-2 shadow-md" style={{
+                          backgroundColor: TRAIN_WHEEL_COLOR,
+                          borderColor: TRAIN_BORDER_COLOR,
+                        }} />
+                        <div className="absolute -bottom-1.5 right-4 w-3 h-3 rounded-full border-2 shadow-md" style={{
+                          backgroundColor: TRAIN_WHEEL_COLOR,
+                          borderColor: TRAIN_BORDER_COLOR,
+                        }} />
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <style>{`
+              @keyframes train-move {
+                0% { transform: translateX(-200px); }
+                100% { transform: translateX(calc(100vw + 200px)); }
+              }
+              
+              .train-animation {
+                animation: train-move 15s linear infinite;
+              }
+              
+              @keyframes bounce-in {
+                0% { transform: translateX(-50%) scale(0); opacity: 0; }
+                50% { transform: translateX(-50%) scale(1.1); }
+                100% { transform: translateX(-50%) scale(1); opacity: 1; }
+              }
+              
+              .animate-bounce-in {
+                animation: bounce-in 0.3s ease-out forwards;
+              }
+              
+              @keyframes spark-fly {
+                0% { 
+                  opacity: 1; 
+                  transform: rotate(var(--angle)) translateY(0) scale(1);
+                }
+                100% { 
+                  opacity: 0; 
+                  transform: rotate(var(--angle)) translateY(-50px) scale(0.3);
+                }
+              }
+            `}</style>
+          </section>
+
+          <section className="px-6 w-full mx-auto" aria-label="Case studies">
+            <div className="text-left mt-6 mb-8">
+              <h2 className="text-3xl font-bold text-white mb-6">
+                Case Studies
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {caseStudies.map((project) => (
+                <Link
+                  key={project.id}
+                  to={`/${project.id}`}
+                  onClick={() => navigate(`/${project.id}`)}
+                  className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
+                >
+                  <div className="mb-4">
+                    {project.thumbnail && (
+                      <img
+                        src={project.thumbnail}
+                        alt={`${project.name} thumbnail`}
+                        className="w-full h-24 md:h-28 object-cover rounded-md mb-4"
+                      />
+                    )}
+                  </div>
+
+                  <div className="absolute top-4 right-4 bg-black/60 text-white/70 px-2 py-1 rounded-md text-xs border border-white/10">
+                    est: {project.year}
+                  </div>
+
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-xl font-bold mb-2">{project.name}</h3>
+                    </div>
+                    <ChevronRight className="w-5 h-5 group-hover:text-white group-hover:translate-x-1 transition-all" style={{ color: TEXT_SECONDARY }}/>
+                  </div>
+                  
+                  <p className="text-white/70 text-sm mb-4">{project.tagline}</p>
+                  
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4" style={{ color: SILVER }}/>
+                      <span className="" style={{ color: TEXT_TERTIARY }}>{project.impact}</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
 <section className="py-16 px-6" aria-label="Information Booth">
   <div className="grid gap-8">
     {/* Information Booth Panel */}
@@ -946,7 +875,7 @@ export default function DesignCentralStation() {
         <div className="flex items-center gap-4 mb-8"></div>
 
         {/* Passenger Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, idx) => (
             <div 
               key={idx}
