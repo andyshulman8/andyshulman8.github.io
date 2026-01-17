@@ -223,7 +223,6 @@ export default function DesignCentralStation() {
       const sparkX = rect.left + 8; // Small offset from left edge
       const sparkY = rect.bottom - 4; // Bottom of the car
 
-      console.log('Spark position:', sparkX, sparkY); // Debug
 
       const newSparks: Spark[] = Array.from({ length: 8 }, (_, i) => ({
         id: Date.now() + i,
@@ -234,11 +233,8 @@ export default function DesignCentralStation() {
         y: sparkY
       }));
       
-      console.log('Created sparks:', newSparks); // Debug
       setSparks(newSparks);
       setTimeout(() => setSparks([]), 1000);
-    } else {
-      console.log('Rear car not found!'); // Debug
     }
   };
 
@@ -450,7 +446,7 @@ export default function DesignCentralStation() {
               <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
                 <div 
                   className="train-animation cursor-pointer"
-                  onClick={handleTrainClick}
+                  onMouseOver={handleTrainClick}
                   role="button"
                   aria-label="Click for train announcement"
                   tabIndex={0}
