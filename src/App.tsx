@@ -36,7 +36,7 @@ const SILVER = '#dfe1e5ff';
 const TEXT_SECONDARY = '#a8adb3';
 const TEXT_TERTIARY = '#868b92';
 const TEXT_MUTED = '#9ca3af';
-const GA_ID = 'G-5KXX19NNJM'; 
+// const GA_ID = 'G-5KXX19NNJM'; 
 
 const TRAIN_BODY_COLOR = THEME_COLOR;
 const TRAIN_BORDER_COLOR = SILVER;
@@ -285,28 +285,9 @@ export default function DesignCentralStation() {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [processLoaded, setProcessLoaded] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  
-  // Train interaction states
-  // const [setTrainClicked] = useState(false);
-  // const [trainMessage, setTrainMessage] = useState('');
+
   const [sparks, setSparks] = useState<Spark[]>([]);
-
-  // const trainMessages = [
-  //   "🚇 Express to Portfolio!",
-  //   "Stand clear of closing doors!",
-  //   "Next stop: Case Studies!",
-  //   "All aboard the design train!",
-  //   "DING DING 🔔",
-  //   "Arriving at: Your Next Hire",
-  //   "Now departing!",
-  //   "Mind the gap!"
-  // ];
-
   const handleTrainClick = () => {
-    // const randomMessage = trainMessages[Math.floor(Math.random() * trainMessages.length)];
-    // setTrainMessage(randomMessage);
-    // setTrainClicked(true);
-    // setTimeout(() => setTrainClicked(false), 3000);
 
     // Get the position of the rear car (first car in the flex layout)
     const trainElement = document.querySelector('.train-animation');
@@ -333,28 +314,28 @@ export default function DesignCentralStation() {
     }
   };
 
-  useEffect(() => {
-    const scriptId = 'ga-script';
+  // useEffect(() => {
+  //   const scriptId = 'ga-script';
     
-    if (document.getElementById(scriptId)) return;
+  //   if (document.getElementById(scriptId)) return;
     
-    const script = document.createElement("script");
-    script.id = scriptId;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-    script.async = true;
-    document.head.appendChild(script);
+  //   const script = document.createElement("script");
+  //   script.id = scriptId;
+  //   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+  //   script.async = true;
+  //   document.head.appendChild(script);
 
-    window.dataLayer = window.dataLayer || [];
+  //   window.dataLayer = window.dataLayer || [];
     
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
+  //   function gtag(...args: any[]) {
+  //     window.dataLayer.push(args);
+  //   }
     
-    gtag('js', new Date());
-    gtag('config', GA_ID, {
-      page_path: window.location.pathname,
-    });
-  }, []);
+  //   gtag('js', new Date());
+  //   gtag('config', GA_ID, {
+  //     page_path: window.location.pathname,
+  //   });
+  // }, []);
 
   const caseStudies = [
     {
