@@ -219,7 +219,7 @@ export const allCaseStudies: CaseStudyData[] = [
     overview: "To meet strict institutional and regulatory requirements, Loyola's Senior Systems Engineer Mike Dieter and IT team needed a secure, efficient way to collect and manage sensitive log data across a sprawling environment. I designed access control features, simplified log collection, and created a natural language translator to democratize log search.",
     allImpact: [
       { metric: "17,000+ students", label: "Protected with secure access controls" },
-      // { metric: "$250K saved", label: "Annually across enterprise customers" },
+      { metric: "3x integration support", label: "Expanded from a few native integrations to various cloud + on-prem options" },
       { metric: "10x faster onboarding", label: "Via natural language search and templates" }
     ],
  stops: [
@@ -395,6 +395,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "I established key metrics and identified the optimal method of evaluation for the museum. I also conducted a pre-mortem analysis to identify potential risks and provided actionable next steps. Today the museum is thriving, having served 100,000+ visitors since opening in 2022.",
         quote: "In this creative environment, active participation is encouraged, and the central idea of [SESI Lab] is that learning occurs in a fun and interactive way.",
         quoteAuthor: "Fabio Gatti, SESI Lab visitor",
+        quoteImage: "/images/future/fabio.png",
         impact: {
           metric1: "100,000+ visitors",
           label1: "Served since 2022 opening",

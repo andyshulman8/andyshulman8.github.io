@@ -539,6 +539,83 @@ useEffect(() => {
                 </div>
               </div>
             )}
+{!caseStudyData.before &&
+  !caseStudyData.after &&
+  caseStudyData.stops[caseStudyData.stops.length - 1]?.quote && (
+    <section
+      className="mb-16 py-10 px-6 w-full mx-auto"
+      style={{ backgroundColor: BACK_COLOR }}
+      aria-label="Passenger Testimonials"
+    >
+
+
+      {/* Single Case Study Testimonial (uses same card format) */}
+      <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+        <div
+          className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
+        >
+          <div
+            className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
+            style={{ color: SILVER }}
+          >
+            “
+          </div>
+<div className="relative z-10 flex flex-col h-full">
+            <p className="text-white/80 italic mb-8 leading-relaxed flex-grow">
+              {caseStudyData.stops[caseStudyData.stops.length - 1].quote}
+            </p>
+
+            <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: SILVER}}>
+              {(() => {
+                const authorString = caseStudyData.stops[caseStudyData.stops.length - 1].quoteAuthor || '';
+                const name = authorString.split(',')[0]?.trim() || '';
+                const [firstLine, ...restLines] = authorString
+                  .replace(/,\s*/g, '\n')
+                  .replace(/\sat\s/i, '\n')
+                  .split('\n');
+
+                return (
+                  
+                  <>
+                  
+                    {caseStudyData.stops[caseStudyData.stops.length - 1].quoteImage && (
+                      <img 
+                        src={caseStudyData.stops[caseStudyData.stops.length - 1].quoteImage}
+                        alt={name}
+                        className="w-12 h-12 rounded-full object-cover border-2"
+                        style={{borderColor: SILVER}}
+                      />
+                    )}
+                    
+                    <div
+                      className="text-[11px] tracking-widest leading-tight whitespace-pre-line"
+                      style={{ color: TEXT_SECONDARY }}
+                    >
+                      <span className="font-bold text-sm tracking-tight" style={{color: SILVER}}>{firstLine}</span>
+                      <span className="uppercase"> {restLines.length > 0 && (
+                        <>
+                          {'\n'}
+                          {restLines.join('\n')}
+                        </>
+                      )}</span>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+
+          <div
+            className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
+            style={{ color: SILVER }}
+          >
+            ”
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
 
             <div className="text-center mt-16 space-y-6">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
