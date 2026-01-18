@@ -604,7 +604,7 @@ useEffect(() => {
                   <div
                     className="fixed inset-x-0 bottom-0 pointer-events-none"
                     style={{
-                      height: '240px',
+                      height: '120px',
                       background:
                         'linear-gradient(to bottom, rgba(20,21,21,0), rgba(20,21,21,0.85))',
                       zIndex: 39
@@ -615,7 +615,7 @@ useEffect(() => {
               <button
                 onClick={startJourney}
                 className={`px-8 py-4 rounded-full font-bold text-black text-lg hover:scale-105 ${
-                  isDocked ? 'relative mt-6 mb-6' : 'fixed'
+                  isDocked ? 'relative mt-6 mb-6 px-8 py-4 text-lg' : 'fixed px-5 py-3 text-sm'
                 }`}
                 style={{
                   backgroundColor: ACCENT_COLOR,
