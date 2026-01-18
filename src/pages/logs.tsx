@@ -21,6 +21,13 @@ const BACK_COLOR = '#141515';
 const ACCENT_COLOR = SILVER;
 const TEXT_SECONDARY = '#a8adb3';
 
+// Fullscreen state type
+type FullscreenState =
+  | { type: 'closed' }
+  | { type: 'peeks'; index: number }
+  | { type: 'stop'; index: number }
+  | { type: 'single'; src: string | { src: string; type: 'image' | 'video' } };
+
 // Helper component for video/image in windows
 const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'video' } }) => {
   const mediaSrc = typeof src === 'string' ? src : src.src;
@@ -163,9 +170,7 @@ useEffect(() => {
   
   const [peekIndex, setPeekIndex] = useState(0);
   const [stopCarouselIndex, setStopCarouselIndex] = useState(0);
-  const [fullscreenSource, setFullscreenSource] = useState<'peeks' | 'stop' | 'single'>('peeks');
-  const [fullscreenImage, setFullscreenImage] = useState<string | { src: string; type: 'image' | 'video' } | null>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [fullscreen, setFullscreen] = useState<FullscreenState>({ type: 'closed' });
 
   // Sync state when URL changes
   useEffect(() => {
@@ -228,9 +233,7 @@ useEffect(() => {
 
   const handleBackToOverview = () => {
     setShowOverview(true);
-    setIsFullscreen(false);
-    setFullscreenImage(null);
-    setFullscreenSource('peeks');
+    setFullscreen({ type: 'closed' });
     onOverview();
     window.scrollTo(0, 0);
   };
@@ -275,32 +278,35 @@ useEffect(() => {
     <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
       <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
       
-      {isFullscreen && (
-  <FullscreenImageViewer
-    src={
-      fullscreenSource === 'single'
-        ? (typeof fullscreenImage === 'string' ? fullscreenImage : fullscreenImage?.src)
-        : undefined
-    }
-    images={
-      fullscreenSource === 'peeks'
-        ? caseStudyData.peeks
-        : fullscreenSource === 'stop'
-        ? caseStudyData.stops[currentStop].images
-        : undefined
-    }
-    currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
-    onChangeIndex={(i) => {
-      if (fullscreenSource === 'stop') setStopCarouselIndex(i);
-      else if (fullscreenSource === 'peeks') setPeekIndex(i);
-    }}
-    onClose={() => {
-      setIsFullscreen(false);
-      setFullscreenImage(null);
-      setFullscreenSource('peeks');
-    }}
-  />
-)}
+      {fullscreen.type !== 'closed' && (
+        <FullscreenImageViewer
+          src={
+            fullscreen.type === 'single'
+              ? typeof fullscreen.src === 'string'
+                ? fullscreen.src
+                : fullscreen.src.src
+              : undefined
+          }
+          images={
+            fullscreen.type === 'peeks'
+              ? caseStudyData.peeks
+              : fullscreen.type === 'stop'
+              ? caseStudyData.stops[currentStop].images
+              : undefined
+          }
+          currentIndex={
+            fullscreen.type === 'peeks' || fullscreen.type === 'stop'
+              ? fullscreen.index
+              : undefined
+          }
+          onChangeIndex={(i) => {
+            if (fullscreen.type === 'peeks' || fullscreen.type === 'stop') {
+              setFullscreen({ ...fullscreen, index: i });
+            }
+          }}
+          onClose={() => setFullscreen({ type: 'closed' })}
+        />
+      )}
 
 
       <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
@@ -400,11 +406,7 @@ useEffect(() => {
                   <WindowFrame
                     onClick={() => {
                       if (caseStudyData.peeks && caseStudyData.peeks.length) {
-                        setFullscreenSource('peeks');
-                        setPeekIndex(peekIndex);
-                        const mediaItem = caseStudyData.peeks[peekIndex];
-                        setFullscreenImage(typeof mediaItem === 'string' ? mediaItem : mediaItem.src);
-                        setIsFullscreen(true);
+                        setFullscreen({ type: 'peeks', index: peekIndex });
                       }
                     }}
                   >
@@ -468,9 +470,7 @@ useEffect(() => {
                       className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => {
                         if (caseStudyData.before) {
-                          setFullscreenSource('single');
-                          setFullscreenImage(caseStudyData.before);
-                          setIsFullscreen(true);
+                          setFullscreen({ type: 'single', src: caseStudyData.before });
                         }
                       }}
                     />
@@ -488,9 +488,7 @@ useEffect(() => {
                       className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => {
                         if (caseStudyData.after) {
-                          setFullscreenSource('single');
-                          setFullscreenImage(caseStudyData.after);
-                          setIsFullscreen(true);
+                          setFullscreen({ type: 'single', src: caseStudyData.after });
                         }
                       }}
                     />
@@ -680,9 +678,7 @@ useEffect(() => {
                   onClick={() => {
                     const currentImages = caseStudyData.stops[currentStop].images;
                     if (currentImages && currentImages.length > 0) {
-                      setFullscreenSource('stop');
-                      setFullscreenImage(currentImages[stopCarouselIndex]);
-                      setIsFullscreen(true);
+                      setFullscreen({ type: 'stop', index: stopCarouselIndex });
                     }
                   }}
                 >
