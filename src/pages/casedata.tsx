@@ -338,7 +338,7 @@ export const allCaseStudies: CaseStudyData[] = [
         },
         quotePreface: "4 years later", 
         quote: "We have made great progress on the design thinking front and working on a big program to reimagine billing - kicking the improvements we made into the next gear.",
-        quoteAuthor: "VP of Customer Success at Align Technology, Volker Probst",
+        quoteAuthor: "Volker Probst, VP of Customer Success at Align Technology",
         quoteImage: "/images/Home/volker.webp"
       }
     ]

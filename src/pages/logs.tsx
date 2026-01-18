@@ -543,14 +543,14 @@ useEffect(() => {
   !caseStudyData.after &&
   caseStudyData.stops[caseStudyData.stops.length - 1]?.quote && (
     <section
-      className="mb-16 py-10 px-6 w-full mx-auto"
+      className="mb-16 py-10 w-full mx-auto"
       style={{ backgroundColor: BACK_COLOR }}
       aria-label="Passenger Testimonials"
     >
 
 
       {/* Single Case Study Testimonial (uses same card format) */}
-      <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-1 gap-8">
         <div
           className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
         >

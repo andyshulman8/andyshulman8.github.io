@@ -4,21 +4,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useNavigate, Link } from 'react-router-dom';
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
-// import ReactGA from "react-ga4";
-
-// ReactGA.initialize("G-5KXX19NNJM");
-// ReactGA.send({
-//   hitType: "pageview",
-//   page: window.location.pathname + window.location.search,
-// });
-
-export {};
-
-declare global {
-  interface Window {
-    dataLayer: any[];
-  }
-}
+import './styles/animations.css';
+import { caseStudies } from './data/caseStudies';
+import { testimonials } from './data/testimonials';
+import { skillCategories } from './data/skills';
 
 interface Spark {
   id: number;
@@ -36,7 +25,7 @@ const SILVER = '#dfe1e5ff';
 const TEXT_SECONDARY = '#a8adb3';
 const TEXT_TERTIARY = '#868b92';
 const TEXT_MUTED = '#9ca3af';
-// const GA_ID = 'G-5KXX19NNJM'; 
+const GA_ID = 'G-5KXX19NNJM'; 
 
 const TRAIN_BODY_COLOR = THEME_COLOR;
 const TRAIN_BORDER_COLOR = SILVER;
@@ -170,13 +159,6 @@ const SkillsBoard = () => {
     };
   }, [isVisible]);
 
-  const skillCategories = [
-    { title: 'User Research', items: ['Pendo', 'Accessibility', 'User Interviews', 'Usability Testing', 'Heuristic Evaluation'] },
-    { title: 'Infrastructure', items: ['Design Systems', 'Information Architecture', 'Systems Design', 'Behavior Design', 'Material UI'] },
-    { title: 'Interaction', items: ['Figma', 'Rapid Prototyping', 'User Flows', 'Journey Mapping', 'AI Design'] },
-    { title: 'Engineering', items: ['Python, HTML, CSS, C++', 'Prompt Design', 'Cursor & Framer', 'APIs & Automation', 'Git'] }
-  ];
-
   return (
     <div className="mb-12" ref={boardRef}>
       <h3 className="text-white/90 text-2xl font-bold mb-4">Operating the System</h3>
@@ -207,73 +189,7 @@ const SkillsBoard = () => {
             </div>
           ))}
         </div>
-        <style>{`
-          .split-flap-board { 
-            perspective: 1000px; 
-          }
-          
-          .split-flap-item {
-            position: relative;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.25rem;
-            overflow: hidden;
-          }
-          
-          .flap {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-          }
-          
-          .flap-front,
-          .flap-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 0.75rem;
-            font-size: 0.875rem;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-          }
-          
-          .flap-front {
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2;
-          }
-          
-          .flap-back {
-            background: rgba(30, 30, 30, 0.9);
-            transform: rotateX(180deg);
-          }
-          
-          .split-flap-item.searching .flap {
-            animation: flip-search 0.8s linear infinite;
-          }
-          
-          .split-flap-item.settled .flap {
-            animation: flip-settle 1s cubic-bezier(.2,.8,.2,1) forwards;
-            animation-delay: var(--settle-delay);
-          }
-          
-          @keyframes flip-search {
-            0% { transform: rotateX(0deg); }
-            100% { transform: rotateX(360deg); }
-          }
-          
-          @keyframes flip-settle {
-            0% { transform: rotateX(0deg); }
-            25% { transform: rotateX(90deg); }
-            50% { transform: rotateX(180deg); }
-            75% { transform: rotateX(270deg); }
-            100% { transform: rotateX(360deg); }
-          }
-        `}</style>
+
       </div>
     </div>
   );
@@ -287,18 +203,22 @@ export default function DesignCentralStation() {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   const [sparks, setSparks] = useState<Spark[]>([]);
-  const handleTrainClick = () => {
+  const trainRef = useRef<HTMLDivElement>(null);
+  const rearCarRef = useRef<HTMLDivElement>(null);
 
-    // Get the position of the rear car (first car in the flex layout)
-    const trainElement = document.querySelector('.train-animation');
-    const rearCar = trainElement?.querySelector('.rear-car');
+  const handleTrainClick = () => {
+    // const randomMessage = trainMessages[Math.floor(Math.random() * trainMessages.length)];
+    // setTrainMessage(randomMessage);
+    // setTrainClicked(true);
+    // setTimeout(() => setTrainClicked(false), 3000);
+
+    const rearCar = rearCarRef.current;
     
     if (rearCar) {
       const rect = rearCar.getBoundingClientRect();
       // Position sparks at the bottom-left of the rear car
       const sparkX = rect.left + 8; // Small offset from left edge
       const sparkY = rect.bottom - 4; // Bottom of the car
-
 
       const newSparks: Spark[] = Array.from({ length: 8 }, (_, i) => ({
         id: Date.now() + i,
@@ -314,127 +234,28 @@ export default function DesignCentralStation() {
     }
   };
 
-  // useEffect(() => {
-  //   const scriptId = 'ga-script';
+  useEffect(() => {
+    const scriptId = 'ga-script';
     
-  //   if (document.getElementById(scriptId)) return;
+    if (document.getElementById(scriptId)) return;
     
-  //   const script = document.createElement("script");
-  //   script.id = scriptId;
-  //   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-  //   script.async = true;
-  //   document.head.appendChild(script);
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    script.async = true;
+    document.head.appendChild(script);
 
-  //   window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || [];
     
-  //   function gtag(...args: any[]) {
-  //     window.dataLayer.push(args);
-  //   }
-    
-  //   gtag('js', new Date());
-  //   gtag('config', GA_ID, {
-  //     page_path: window.location.pathname,
-  //   });
-  // }, []);
-
-  const caseStudies = [
-    {
-      id: 'logs',
-      name: 'Logs: Rags to Riches',
-      year: 2025,
-      line: 'Red Line',
-      color: '#E53935',
-      thumbnail: '/images/Home/Thumbs/1.webp',
-      tagline: 'From niche add-on to flagship product',
-      impact: 'Cut troubleshooting from hours to 10 minutes',
-      methodology: 'Stanford d.school',
-      route: ['User Interviews', 'Empathy Maps', 'Define Problem', 'Converge', 'Build Prototype', 'Test']
-    },
-    {
-      id: 'alerts',
-      name: 'Smarter Alerts',
-      year: 2025,
-      line: 'Purple Line',
-      color: '#8E24AA',
-      thumbnail: '/images/Home/Thumbs/2.webp',
-      tagline: 'Cut alert noise 30% and laid AI foundation',
-      impact: '30% reduction in alert fatigue',
-      methodology: 'Behavior Design',
-      route: ['User Interviews', 'Clarify Outcome', 'Simplify Behavior', 'Make Easier', 'Build Flows', 'Test']
-    },
-    {
-      id: 'data',
-      name: 'Secure Data',
-      year: 2025,
-      line: 'Red + Green Lines',
-      color: '#43A047',
-      thumbnail: '/images/Home/Thumbs/loyola.webp',
-      tagline: 'Protected 17,000 students with AI-powered search',
-      impact: 'Future-proofed log management for compliance',
-      methodology: 'Mixed Route',
-      route: ['User Interviews', 'Define Problem', 'Identify Causes', 'Design Mechanisms', 'Build Prototype', 'Test']
-    },
-    {
-      id: 'team',
-      name: 'Empowered Team',
-      year: 2020,
-      line: 'Blue Line',
-      color: '#1E88E5',
-      thumbnail: '/images/Home/Thumbs/align.webp',
-      tagline: 'Scaled design thinking across 17 global leaders',
-      impact: '3 piloted solutions in 12 weeks',
-      methodology: 'Business Strategy',
-      route: ['User Interviews', 'Map System', 'Identify Levers', 'Brainstorm', 'Shape Strategy', 'Test']
-    },
-    {
-      id: 'future',
-      name: 'Imagining the Future',
-      year: 2019,
-      line: 'Green Line',
-      color: '#43A047',
-      thumbnail: '/images/Home/Thumbs/sesi.webp',
-      tagline: 'Built confidence framework into new museum',
-      impact: '100K+ visitors since 2022',
-      methodology: 'Sustainability',
-      route: ['User Interviews', 'Map System', 'Identify Causes', 'Shape Strategy', 'Evaluation Plan', 'Test']
-    },
-    {
-      id: 'health',
-      name: 'Health Frameworks',
-      year: 2019,
-      line: 'Purple + Blue Lines',
-      color: '#8E24AA',
-      thumbnail: '/images/Home/Thumbs/bose.webp',
-      tagline: 'Aligned fragmented health teams under uncertainty',
-      impact: '40% reduction in expert dependency',
-      methodology: 'Mixed Route',
-      route: ['User Interviews', 'Clarify Outcome', 'Map System', 'Build Prototype', 'Test']
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
     }
-  ];
-
-  const testimonials = [
-    {
-      quote: "Andy played a crucial role in launching this new product: from shaping the user experience and performing deep UX research to ensuring seamless integration of design and workflows across the broader LogicMonitor platform. What impressed me most was his ability to translate complex technical requirements into intuitive user experiences.",
-      author: "David Femino",
-      role: "Sr. Manager, PM - Cloud & Logs",
-      company: "LogicMonitor",
-      avatar: '/images/Home/David.webp'
-    },
-    {
-      quote: "Beyond the enthusiasm, Andy is a model of professionalism and is extremely knowledgeable about the intricacies of enterprise UX, AI, and AIOps. The next organization will gain a truly valuable team member who elevates the entire design process through smart strategy, collaborative spirit, and a deep technical understanding. Highly recommended!",
-      author: "Richard Huddleston",
-      role: "Technical Fellow",
-      company: "LogicMonitor",
-      avatar: '/images/Home/richard.webp'
-    },
-    {
-      quote: "He really used his holistic approach to make some real impact for us as a business and for our customers. Andy has been fantastic as a coach, motivator and project leader to our global cross functional teams. His fast approach towards getting empathetic insights from customers and transforming it into iterative testing was refreshing.",
-      author: "Volker Probst",
-      role: "Customer Experience VP",
-      company: "Align Technology",
-      avatar: '/images/Home/volker.webp'
-    }
-  ];
+    
+    gtag('js', new Date());
+    gtag('config', GA_ID, {
+      page_path: window.location.pathname,
+    });
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 320);
@@ -480,16 +301,6 @@ export default function DesignCentralStation() {
           <section className=" px-6 w-full mx-auto" aria-label="Train">
             <div className="relative mb-12 h-24 flex items-bottom">
               
-              {/* {trainClicked && (
-                <div className="absolute left-1/2 top-0 -translate-x-1/2 z-30 animate-bounce-in">
-                  <div className="relative bg-white text-gray-900 px-4 py-2 rounded-lg shadow-xl border-2 border-gray-300 whitespace-nowrap">
-                    <span className="font-bold text-sm">{trainMessage}</span>
-                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white" />
-                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-3 w-0 h-0 border-l-9 border-r-9 border-t-9 border-transparent border-t-gray-300" />
-                  </div>
-                </div>
-              )} */}
-              
               {sparks.map((spark) => (
                 <div
                   key={spark.id}
@@ -521,6 +332,7 @@ export default function DesignCentralStation() {
 
               <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
                 <div 
+                  ref={trainRef}
                   className="train-animation cursor-pointer"
                   onMouseOver={handleTrainClick}
                   role="button"
@@ -529,7 +341,7 @@ export default function DesignCentralStation() {
                   onKeyPress={(e) => e.key === 'Enter' && handleTrainClick()}
                 >
                   <div className="flex items-end gap-0">
-                    <div className="rear-car">
+                    <div ref={rearCarRef} className="rear-car">
                       <TrainCar variant="rear" />
                     </div>
                     <TrainCar variant="middle" />
@@ -540,37 +352,7 @@ export default function DesignCentralStation() {
               </div>
             </div>
 
-            <style>{`
-              @keyframes train-move {
-                0% { transform: translateX(-200px); }
-                100% { transform: translateX(calc(100vw + 200px)); }
-              }
-              
-              .train-animation {
-                animation: train-move 15s linear infinite;
-              }
-              
-              @keyframes bounce-in {
-                0% { transform: translateX(-50%) scale(0); opacity: 0; }
-                50% { transform: translateX(-50%) scale(1.1); }
-                100% { transform: translateX(-50%) scale(1); opacity: 1; }
-              }
-              
-              .animate-bounce-in {
-                animation: bounce-in 0.3s ease-out forwards;
-              }
-              
-              @keyframes spark-fly {
-                0% { 
-                  opacity: 1; 
-                  transform: rotate(var(--angle)) translateY(0) scale(1);
-                }
-                100% { 
-                  opacity: 0; 
-                  transform: rotate(var(--angle)) translateY(-50px) scale(0.3);
-                }
-              }
-            `}</style>
+
           </section>
 
           <section className="px-6 w-full mx-auto" aria-label="Case studies">
