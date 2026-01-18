@@ -488,6 +488,8 @@ useEffect(() => {
                     <img 
                       src={caseStudyData.before} 
                       alt="Before"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => {
                         if (caseStudyData.before) {
@@ -506,6 +508,8 @@ useEffect(() => {
                     <img 
                       src={caseStudyData.after} 
                       alt="After"
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
                       onClick={() => {
                         if (caseStudyData.after) {
@@ -558,6 +562,8 @@ useEffect(() => {
                       <img 
                         src={caseStudyData.stops[caseStudyData.stops.length - 1].quoteImage}
                         alt={name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-12 h-12 rounded-full object-cover border-2"
                         style={BORDER_SILVER_STYLE}
                       />

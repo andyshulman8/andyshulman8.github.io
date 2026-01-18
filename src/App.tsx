@@ -54,11 +54,19 @@ export default function DesignCentralStation() {
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [processLoaded, setProcessLoaded] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const showBackToTop = useBackToTop(UI.backToTopThreshold);
 
   const [sparks, setSparks] = useState<Spark[]>([]);
   const trainRef = useRef<HTMLDivElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const MapSkeleton = () => (
+  <div className="relative w-full h-full animate-pulse bg-neutral-900">
+    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/60 to-neutral-900/60" />
+    {/* <div className="absolute bottom-4 left-4 h-4 w-32 rounded bg-neutral-700/60" /> */}
+  </div>
+);
 
   /**
    * Generates spark particles when train is clicked
@@ -91,6 +99,30 @@ export default function DesignCentralStation() {
     const randomCaseStudy = caseStudies[Math.floor(Math.random() * caseStudies.length)];
     navigate(`/${randomCaseStudy.id}`);
   };
+
+  /**
+   * Lazy load maps iframe when element becomes visible
+   * Uses Intersection Observer to defer iframe loading until needed
+   * This prevents blocking page render and improves performance
+   */
+  useEffect(() => {
+  if (!mapRef.current) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        setMapLoaded(true);
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+
+  observer.observe(mapRef.current);
+
+  return () => observer.disconnect();
+}, []);
+
 
   /**
    * Initialize Google Analytics on mount
@@ -232,6 +264,8 @@ export default function DesignCentralStation() {
                         src={project.thumbnail}
                         alt={`${project.name} thumbnail`}
                         className="w-full h-24 md:h-28 object-cover rounded-md mb-4"
+                        loading="lazy"
+                        decoding="async"
                       />
                     )}
                   </div>
@@ -391,6 +425,7 @@ export default function DesignCentralStation() {
               alt="Andy Shulman"
               className="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
           </div>
 
@@ -439,18 +474,29 @@ export default function DesignCentralStation() {
 
           <div className="md:col-span-1 h-full">
             <div
-              className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"
-              style={{ boxShadow: `0 0 20px ${INFO_COLOR}${Math.round(UI.shadowOpacities.default * 255).toString(16).padStart(2, '0')}` }}
-            >
-              <div className="w-full h-full aspect-video">
-                <iframe
-                  src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
-                  className="w-full h-full"
-                  title="Map preview"
-                  loading="lazy"
-                ></iframe>
-              </div>
-            </div>
+  ref={mapRef}
+  className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"
+  style={{
+    boxShadow: `0 0 20px ${INFO_COLOR}${Math.round(
+      UI.shadowOpacities.default * 255
+    )
+      .toString(16)
+      .padStart(2, '0')}`,
+  }}
+>
+  <div className="w-full h-full aspect-video">
+    {mapLoaded ? (
+      <iframe
+        src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
+        className="w-full h-full"
+        title="Map preview"
+      />
+    ) : (
+      <MapSkeleton />
+    )}
+  </div>
+</div>
+
           </div>
         </div>
       </div>
@@ -462,7 +508,7 @@ export default function DesignCentralStation() {
       <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: BACK_COLOR }} aria-label="Passenger Testimonials">
         {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
         <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
-          <img src="/images/Home/tickets.webp" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
+          <img loading="lazy" decoding="async" src="/images/Home/tickets.webp" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
 
           {/* Content overlay */}
           <div className="relative z-10 w-full mx-auto">
@@ -500,6 +546,8 @@ export default function DesignCentralStation() {
                       alt=""
                       className="w-12 h-12 rounded-full object-cover border-2"
                       style={{color: SILVER, borderColor: SILVER}}
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div 
