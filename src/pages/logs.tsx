@@ -314,7 +314,7 @@ useEffect(() => {
             <div className="text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
               {caseStudyData.title}
             </div>
-            <div className="text-sm text-white/40 max-w-xs">
+            <div className="hidden sm:flex text-sm text-white/40 max-w-xs">
               {caseStudyData.destination}
             </div>
           </div>
