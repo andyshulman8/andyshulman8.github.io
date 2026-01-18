@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
 import CalloutBox from '../components/CalloutBox';
 import { allCaseStudies } from './casedata.tsx';
@@ -8,11 +7,9 @@ import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
 import CarouselControls from '../components/CarouselControlsNew';
 import NumberedFeatures from '../components/NumberedFeatures.tsx';
 import VisionTimeline from '../components/VisionTimeline.tsx';
-// import { useLocation } from 'react-router-dom';
-import React from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { WindowFrame, WindowContent, WindowCornerAccents } from '../components/WindowFrame';
 import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
 
 
 // Color constants
@@ -287,9 +284,9 @@ useEffect(() => {
     }
     images={
       fullscreenSource === 'peeks'
-        ? caseStudyData.peeks  // ✅ Pass full objects
+        ? caseStudyData.peeks
         : fullscreenSource === 'stop'
-        ? caseStudyData.stops[currentStop].images  // ✅ Pass full objects - NO .map()!
+        ? caseStudyData.stops[currentStop].images
         : undefined
     }
     currentIndex={fullscreenSource === 'peeks' ? peekIndex : stopCarouselIndex}
@@ -400,8 +397,7 @@ useEffect(() => {
                 </div>
                 
                 <div className="relative md:col-span-2 space-y-6">
-                  <div 
-                    className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity" 
+                  <WindowFrame
                     onClick={() => {
                       if (caseStudyData.peeks && caseStudyData.peeks.length) {
                         setFullscreenSource('peeks');
@@ -411,56 +407,22 @@ useEffect(() => {
                         setIsFullscreen(true);
                       }
                     }}
-                    style={{ 
-                      background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
-                      border: '4px solid #333',
-                      boxShadow: 'inset 0 6px 24px rgba(0,0,0,0.8), 0 12px 40px rgba(0,0,0,0.6)'
-                    }}
                   >
-                    <div className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
-                      background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
-                      border: '3px solid #444',
-                      boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.9), inset 0 0 0 2px rgba(255,255,255,0.05)'
-                    }}>
-                      <div className="relative rounded-lg w-full overflow-hidden h-[20rem]" style={{
-                        background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                        boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
-                      }}>
-                        <WindowMedia src={caseStudyData.peeks[peekIndex]} />
-                        <div className="absolute inset-0" style={{
-                          background: `
-                            radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
-                            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                            linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
-                          `
-                        }} />
-                      </div>
-                      
-                      <CarouselControls
-                        length={caseStudyData.peeks.length}
-                        activeIndex={peekIndex}
-                        onPrev={() => setPeekIndex((peekIndex - 1 + caseStudyData.peeks.length) % caseStudyData.peeks.length)}
-                        onNext={() => setPeekIndex((peekIndex + 1) % caseStudyData.peeks.length)}
-                        onSelect={(i) => setPeekIndex(i)}
-                        size="small"
-                      />
+                    <WindowContent>
+                      <WindowMedia src={caseStudyData.peeks[peekIndex]} />
+                    </WindowContent>
+                    
+                    <CarouselControls
+                      length={caseStudyData.peeks.length}
+                      activeIndex={peekIndex}
+                      onPrev={() => setPeekIndex((peekIndex - 1 + caseStudyData.peeks.length) % caseStudyData.peeks.length)}
+                      onNext={() => setPeekIndex((peekIndex + 1) % caseStudyData.peeks.length)}
+                      onSelect={(i) => setPeekIndex(i)}
+                      size="small"
+                    />
 
-                      {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
-                        <div
-                          key={i}
-                          className={`absolute w-3 h-3 rounded-full shadow-md`}
-                          style={{
-                            [pos.includes('top') ? 'top' : 'bottom']: '-2px',
-                            [pos.includes('left') ? 'left' : 'right']: '-2px',
-                            background: 'radial-gradient(circle, #666 30%, #444 70%)',
-                            border: '1px solid #888',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.6)'
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
+                    <WindowCornerAccents />
+                  </WindowFrame>
                 </div>
               </div>
             </div>
@@ -547,9 +509,6 @@ useEffect(() => {
       style={{ backgroundColor: BACK_COLOR }}
       aria-label="Passenger Testimonials"
     >
-
-
-      {/* Single Case Study Testimonial (uses same card format) */}
       <div className="grid md:grid-cols-1 gap-8">
         <div
           className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
@@ -717,8 +676,7 @@ useEffect(() => {
 
             {hasImages && (
               <div className="relative max-w-4xl mx-auto mb-8">
-                <div 
-                  className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity " 
+                <WindowFrame
                   onClick={() => {
                     const currentImages = caseStudyData.stops[currentStop].images;
                     if (currentImages && currentImages.length > 0) {
@@ -727,62 +685,28 @@ useEffect(() => {
                       setIsFullscreen(true);
                     }
                   }}
-                  style={{ 
-                    background: 'linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 50%, #000 100%)',
-                    border: '4px solid #333',
-                    boxShadow: 'inset 0 6px 24px rgba(0,0,0,0.8), 0 12px 40px rgba(0,0,0,0.6)'
-                  }}
                 >
-                  <div className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center" style={{
-                    background: 'radial-gradient(circle at center, #2a2a2a 0%, #1a1a1a 70%)',
-                    border: '3px solid #444',
-                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.9), inset 0 0 0 2px rgba(255,255,255,0.05)'
-                  }}>
-                    <div className="relative rounded-lg w-full overflow-hidden h-[20rem]" style={{
-                      background: 'linear-gradient(145deg, #1f1f1f 0%, #111 100%)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      boxShadow: 'inset 0 0 30px rgba(0,0,0,0.9)'
-                    }}>
-                      <WindowMedia src={caseStudyData.stops[currentStop].images![stopCarouselIndex]} />
-                      <div className="absolute inset-0" style={{
-                        background: `
-                          radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
-                          radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                          linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
-                        `
-                      }} />
-                    </div>
-                    
-                    <CarouselControls
-                      length={caseStudyData.stops[currentStop].images?.length || 0}
-                      activeIndex={stopCarouselIndex}
-                      onPrev={() => {
-                        const len = caseStudyData.stops[currentStop].images!.length;
-                        setStopCarouselIndex((stopCarouselIndex - 1 + len) % len);
-                      }}
-                      onNext={() => {
-                        const len = caseStudyData.stops[currentStop].images!.length;
-                        setStopCarouselIndex((stopCarouselIndex + 1) % len);
-                      }}
-                      onSelect={(i) => setStopCarouselIndex(i)}
-                      size="small"
-                    />
+                  <WindowContent>
+                    <WindowMedia src={caseStudyData.stops[currentStop].images![stopCarouselIndex]} />
+                  </WindowContent>
+                  
+                  <CarouselControls
+                    length={caseStudyData.stops[currentStop].images?.length || 0}
+                    activeIndex={stopCarouselIndex}
+                    onPrev={() => {
+                      const len = caseStudyData.stops[currentStop].images!.length;
+                      setStopCarouselIndex((stopCarouselIndex - 1 + len) % len);
+                    }}
+                    onNext={() => {
+                      const len = caseStudyData.stops[currentStop].images!.length;
+                      setStopCarouselIndex((stopCarouselIndex + 1) % len);
+                    }}
+                    onSelect={(i) => setStopCarouselIndex(i)}
+                    size="small"
+                  />
 
-                    {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((pos, i) => (
-                      <div
-                        key={i}
-                        className={`absolute w-3 h-3 rounded-full shadow-md`}
-                        style={{
-                          [pos.includes('top') ? 'top' : 'bottom']: '-2px',
-                          [pos.includes('left') ? 'left' : 'right']: '-2px',
-                          background: 'radial-gradient(circle, #666 30%, #444 70%)',
-                          border: '1px solid #888',
-                          boxShadow: '0 2px 6px rgba(0,0,0,0.6)'
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
+                  <WindowCornerAccents />
+                </WindowFrame>
               </div>
             )}
 
@@ -906,18 +830,6 @@ useEffect(() => {
                   <p className="text-2xl text-white/80 mb-8">
                     Let's build your next impactful experience
                   </p>
-                  {/*
-                  <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">
-                    <a 
-                      href="mailto:andyshulman8@gmail.com" 
-                      className="flex items-center gap-2 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors"
-                    >
-                      <Mail className="w-5 h-5" />
-                      Email Andy
-                    </a>
-                    
-                  </div>
-                  */}
                   <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
                     Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
                    </div>
