@@ -155,6 +155,10 @@ useEffect(() => {
   const [peekIndex, setPeekIndex] = useState(0);
   const [stopCarouselIndex, setStopCarouselIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState<FullscreenState>({ type: 'closed' });
+  
+  // Floating CTA button docking state
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const [isDocked, setIsDocked] = useState(false);
 
   // Sync state when URL changes
   useEffect(() => {
@@ -166,6 +170,42 @@ useEffect(() => {
     }
     window.scrollTo(0, 0);
   }, [initialStop]);
+
+  // ============================================================
+  // Floating CTA Docking Logic
+  // ============================================================
+  /**
+   * Detects when the viewport bottom reaches the "Ready to Board?"
+   * section and switches the button from floating to docked.
+   * 
+   * The button floats at the viewport bottom until the user scrolls
+   * to the section where it naturally lives, then it docks into place.
+   */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ctaRef.current) return;
+
+      const rect = ctaRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      /**
+       * When the top of the CTA container enters the lower viewport
+       * area (with 96px breathing room), dock the floating button.
+       * This prevents a "snap" and allows graceful handoff to layout flow.
+       */
+      const shouldDock = rect.top <= viewportHeight - 96;
+      setIsDocked(shouldDock);
+    };
+
+    handleScroll(); // run once on mount
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
 
   // Reset carousel when stop changes
   useEffect(() => {
@@ -558,19 +598,41 @@ useEffect(() => {
   )}
 
 
-            <div className="text-center mt-16 space-y-6">
+            <div ref={ctaRef} className="text-center mt-16  relative">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
+                {!isDocked && (
+                  <div
+                    className="fixed inset-x-0 bottom-0 pointer-events-none"
+                    style={{
+                      height: '240px',
+                      background:
+                        'linear-gradient(to bottom, rgba(20,21,21,0), rgba(20,21,21,0.85))',
+                      zIndex: 39
+                    }}
+                  />
+                )}
+
               <button
                 onClick={startJourney}
-                className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
-                style={{ 
+                className={`px-8 py-4 rounded-full font-bold text-black text-lg hover:scale-105 ${
+                  isDocked ? 'relative mt-6 mb-6' : 'fixed'
+                }`}
+                style={{
                   backgroundColor: ACCENT_COLOR,
+                  ...(!isDocked && {
+                    bottom: `calc(24px + env(safe-area-inset-bottom))`,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 40
+                  }),
                   ...largeGlowStyle(ACCENT_COLOR)
                 }}
                 aria-label="View full case study"
               >
                 View full case study →
               </button>
+
+
               <button 
                 onClick={onNextRoute}
                 className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
