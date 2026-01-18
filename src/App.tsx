@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useNavigate, Link } from 'react-router-dom';
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
 import { TrainCar } from './components/Train/TrainCar.tsx';
@@ -24,6 +24,10 @@ import {
 } from './constants/theme';
 import { useBackToTop } from './hooks/index';
 
+/**
+ * Spark animation particle interface
+ * Represents a single spark element ejected from the train
+ */
 interface Spark {
   id: number;
   angle: number;
@@ -33,6 +37,18 @@ interface Spark {
   y: number;
 }
 
+/**
+ * DesignCentralStation - Main application entry point
+ *
+ * The portfolio homepage showcasing:
+ * - Interactive train animation with spark effects
+ * - Case study grid with navigation
+ * - Information booth with design process map
+ * - Skills panel and about section
+ * - Passenger testimonials carousel
+ *
+ * Analytics: Integrates Google Analytics via Vercel
+ */
 export default function DesignCentralStation() {
   const navigate = useNavigate();
 
@@ -44,14 +60,18 @@ export default function DesignCentralStation() {
   const trainRef = useRef<HTMLDivElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Generates spark particles when train is clicked
+   * Sparks emit from the rear car's bottom-left position
+   * with randomized angles and durations
+   */
   const handleTrainClick = () => {
     const rearCar = rearCarRef.current;
-    
+
     if (rearCar) {
       const rect = rearCar.getBoundingClientRect();
-      // Position sparks at the bottom-left of the rear car
-      const sparkX = rect.left + 8; // Small offset from left edge
-      const sparkY = rect.bottom - 4; // Bottom of the car
+      const sparkX = rect.left + 8;
+      const sparkY = rect.bottom - 4;
 
       const newSparks: Spark[] = Array.from({ length: UI.sparkCount }, (_, i) => ({
         id: Date.now() + i,
@@ -61,17 +81,22 @@ export default function DesignCentralStation() {
         x: sparkX,
         y: sparkY
       }));
-      
+
       setSparks(newSparks);
       setTimeout(() => setSparks([]), ANIMATION.sparkFly);
     }
   };
 
+  /**
+   * Initialize Google Analytics on mount
+   * Prevents duplicate script loading via scriptId check
+   * Tracks page views for the portfolio
+   */
   useEffect(() => {
     const scriptId = 'ga-script';
-    
+
     if (document.getElementById(scriptId)) return;
-    
+
     const script = document.createElement("script");
     script.id = scriptId;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
@@ -79,11 +104,11 @@ export default function DesignCentralStation() {
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
-    
+
     function gtag(...args: any[]) {
       window.dataLayer.push(args);
     }
-    
+
     gtag('js', new Date());
     gtag('config', GA_ID, {
       page_path: window.location.pathname,
@@ -93,9 +118,8 @@ export default function DesignCentralStation() {
   return (
     <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
       <div className="text-white" style={{ backgroundColor: BACK_COLOR }}>
-            
         <a href="#main-content" className="skip-link">
-            Skip to main content
+          Skip to main content
         </a>
 
         <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover bg-[url('/images/Home/hero1.png')] md:bg-[url('/images/Home/hero2.png')]">
@@ -107,7 +131,7 @@ export default function DesignCentralStation() {
           )}
 
           <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.webp')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <div className="absolute inset-0"  style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
+            <div className="absolute inset-0" style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
             <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
               <div className="text-left">
                 <div>
@@ -116,15 +140,15 @@ export default function DesignCentralStation() {
                   </h1>
                 </div>
                 <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity for high-stakes systems</h2>
-                <br/> <h2 className="" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
+                <h2 className="text-base md:text-lg" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
               </div>
             </div>
           </section>
         </header>
-      
+
         <main id="main-content" tabIndex={-1}>
-      
-          <section className=" px-6 w-full mx-auto" aria-label="Train">
+          {/* Train Animation Section */}
+          <section className="px-6 w-full mx-auto" aria-label="Train">
             <div className="relative mb-12 h-24 flex items-bottom">
               
               {sparks.map((spark) => (

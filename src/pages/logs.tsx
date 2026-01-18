@@ -9,93 +9,34 @@ import NumberedFeatures from '../components/NumberedFeatures.tsx';
 import VisionTimeline from '../components/VisionTimeline.tsx';
 import { WindowFrame, WindowContent, WindowCornerAccents } from '../components/WindowFrame';
 import { useNavigate, useLocation } from 'react-router-dom';
-import React, { useState, useEffect, useRef } from 'react';
+import { renderMarkdownLinks } from '../utils/renderMarkdownLinks';
+import { TRANSITION_DURATION_MS, PANEL_STYLE, TEXT_ACCENT_STYLE, TEXT_SECONDARY_STYLE, BORDER_SILVER_STYLE, glowStyle, largeGlowStyle } from '../utils/caseStudyConstants';
+import { useState, useEffect, useRef } from 'react';
 
+// ============================================================
+// Color Constants
+// ============================================================
 
-// Color constants
-const THEME_COLOR = '#424141'; 
+const THEME_COLOR = '#424141';
 const SILVER = '#dfe1e5ff';
-const SECONDARY_COLOR = '#339989';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const ACCENT_COLOR = SILVER;
 const TEXT_SECONDARY = '#a8adb3';
 
-// Fullscreen state type
+// ============================================================
+// Type Definitions
+// ============================================================
+
+/**
+ * Discriminated union for fullscreen viewer state
+ * Prevents state drift by encoding type + data together
+ */
 type FullscreenState =
   | { type: 'closed' }
   | { type: 'peeks'; index: number }
   | { type: 'stop'; index: number }
   | { type: 'single'; src: string | { src: string; type: 'image' | 'video' } };
-
-// Helper component for video/image in windows
-const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'video' } }) => {
-  const mediaSrc = typeof src === 'string' ? src : src.src;
-  const isVideo = mediaSrc.toLowerCase().endsWith('.mp4') || 
-                  (typeof src !== 'string' && src.type === 'video');
-
-  return (
-    <div className="absolute inset-0 w-full h-full">
-      {isVideo ? (
-        <video
-          src={mediaSrc}
-          title="Video Preview"
-          className="w-full h-full object-cover object-left-top"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
-      ) : (
-        <img 
-          src={mediaSrc}
-          alt="Preview"
-          className="w-full h-full object-cover object-left-top"
-          loading="lazy"
-        />
-      )}
-    </div>
-  );
-};
-
-
-// Helper: turn [label](url) into links
-const renderMarkdownLinks = (text: string) => {
-  const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
-  const parts: React.ReactNode[] = [];
-  let lastIndex = 0;
-  let match: RegExpExecArray | null;
-
-  while ((match = linkRegex.exec(text)) !== null) {
-    const [full, label, url] = match;
-    const start = match.index;
-
-    if (start > lastIndex) {
-      parts.push(text.slice(lastIndex, start));
-    }
-
-    parts.push(
-      <a
-        key={start}
-        href={url}
-        target="_blank"
-        rel="noreferrer"
-        className="underline text-blue-800 hover:text-blue-500"
-      >
-        {label}
-      </a>
-    );
-
-    lastIndex = start + full.length;
-  }
-
-  if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
-  }
-
-  return parts;
-};
 
 interface Stop {
   station_name: string;
@@ -128,17 +69,60 @@ interface CaseStudyTemplateProps {
   initialStop?: number;
 }
 
-export default function CaseStudyTemplate({ 
-  onBack, 
-  onNextRoute, 
+// ============================================================
+// Components
+// ============================================================
+
+/**
+ * WindowMedia
+ *
+ * Renders either an image or video inside a WindowFrame.
+ * Accepts a string URL for backward compatibility or
+ * a typed object when explicit media type is required.
+ *
+ * @param src - Media source (string URL or {src, type} object)
+ */
+const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'video' } }) => {
+  const mediaSrc = typeof src === 'string' ? src : src.src;
+  const isVideo = mediaSrc.toLowerCase().endsWith('.mp4') ||
+    (typeof src !== 'string' && src.type === 'video');
+
+  return (
+    <div className="absolute inset-0 w-full h-full">
+      {isVideo ? (
+        <video
+          src={mediaSrc}
+          title="Video Preview"
+          className="w-full h-full object-cover object-left-top"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+        />
+      ) : (
+        <img
+          src={mediaSrc}
+          alt="Preview"
+          className="w-full h-full object-cover object-left-top"
+          loading="lazy"
+        />
+      )}
+    </div>
+  );
+};
+
+export default function CaseStudyTemplate({
+  onBack,
+  onNextRoute,
   onStopChange,
   onOverview,
-  dataIndex, 
-  initialStop 
+  dataIndex,
+  initialStop
 }: CaseStudyTemplateProps) {
-const navigate = useNavigate();  
-const [showDropdown, setShowDropdown] = useState<boolean>(false);
-const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
 useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
@@ -203,7 +187,7 @@ useEffect(() => {
       setCurrentStop(0);
       setShowTransition(false);
       onStopChange(0);
-    }, 1200);
+    }, TRANSITION_DURATION_MS);
   };
   
   const nextStop = () => {
@@ -245,7 +229,10 @@ useEffect(() => {
   const quoteBlock = stop.quote && (
     <blockquote 
       className="rounded-lg border-l-4 pl-6 pr-6 py-4 my-8 italic text-black flex items-start gap-4"
-      style={{ borderColor: THEME_COLOR, backgroundColor: SILVER }}
+    style={{ 
+      borderColor: THEME_COLOR, 
+      backgroundColor: SILVER
+    }}
     >
       <div className="flex-1">
         {stop.quotePreface && (
@@ -317,8 +304,8 @@ useEffect(() => {
           </button>
 
           {/* CENTER: Title + Impact */}
-          <div className="flex flex-col items-center flex-1 mx-8 text-center" ref={dropdownRef}>
-            <div className="text-xl font-bold mb-1" style={{ color: ACCENT_COLOR }}>
+          <div className="flex flex-col items-center flex-1 mx-8 text-center">
+            <div className="text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
               {caseStudyData.title}
             </div>
             <div className="text-sm text-white/40 max-w-xs">
@@ -362,7 +349,6 @@ useEffect(() => {
                   }}
                   className="w-full text-left px-4 py-3 hover:bg-white/10 transition-all flex items-center gap-3 group"
                 >
-                  {/* <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: ACCENT_COLOR }} /> */}
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold text-white truncate">{study.title}</div>
                     <div className="text-xs text-white/60 truncate">{study.destination}</div>
@@ -446,9 +432,9 @@ useEffect(() => {
                   <div 
                     key={index} 
                     className="rounded-lg p-6 text-center shadow-lg transition-transform" 
-                    style={{ backgroundColor: INFO_COLOR, minHeight: '100%' }}
+                    style={PANEL_STYLE}
                   >
-                    <div className="text-3xl font-bold mb-2" style={{ color: SILVER }}>
+                    <div className="text-3xl font-bold mb-2" style={TEXT_ACCENT_STYLE}>
                       {item.metric}
                     </div>
                     <div className="text-white/60 text-sm">
@@ -460,10 +446,10 @@ useEffect(() => {
             )}
 
             {caseStudyData.before && caseStudyData.after && (
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8 w-full mx-auto">
                 <div className="space-y-3">
                   <h2 className="text-xl font-bold text-center text-white/80">Before</h2>
-                  <div className="rounded-lg overflow-hidden h-[400px]" style={{ backgroundColor: INFO_COLOR }}>
+                  <div className="rounded-lg overflow-hidden h-[400px]" style={PANEL_STYLE}>
                     <img 
                       src={caseStudyData.before} 
                       alt="Before"
@@ -481,7 +467,7 @@ useEffect(() => {
                 </div>
                 <div className="space-y-3">
                   <h2 className="text-xl font-bold text-center text-white/80">After</h2>
-                  <div className="rounded-lg overflow-hidden h-[400px]" style={{ backgroundColor: INFO_COLOR }}>
+                  <div className="rounded-lg overflow-hidden h-[400px]" style={PANEL_STYLE}>
                     <img 
                       src={caseStudyData.after} 
                       alt="After"
@@ -511,18 +497,18 @@ useEffect(() => {
         <div
           className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
         >
-          <div
-            className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
-            style={{ color: SILVER }}
-          >
-            “
-          </div>
-<div className="relative z-10 flex flex-col h-full">
+        <div
+          className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
+          style={TEXT_ACCENT_STYLE}
+        >
+          “
+        </div>
+        <div className="relative z-10 flex flex-col h-full">
             <p className="text-white/80 italic mb-8 leading-relaxed flex-grow">
               {caseStudyData.stops[caseStudyData.stops.length - 1].quote}
             </p>
 
-            <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: SILVER}}>
+            <div className="flex items-center gap-4 pt-6 border-t" style={BORDER_SILVER_STYLE}>
               {(() => {
                 const authorString = caseStudyData.stops[caseStudyData.stops.length - 1].quoteAuthor || '';
                 const name = authorString.split(',')[0]?.trim() || '';
@@ -532,23 +518,21 @@ useEffect(() => {
                   .split('\n');
 
                 return (
-                  
                   <>
-                  
                     {caseStudyData.stops[caseStudyData.stops.length - 1].quoteImage && (
                       <img 
                         src={caseStudyData.stops[caseStudyData.stops.length - 1].quoteImage}
                         alt={name}
                         className="w-12 h-12 rounded-full object-cover border-2"
-                        style={{borderColor: SILVER}}
+                        style={BORDER_SILVER_STYLE}
                       />
                     )}
                     
                     <div
                       className="text-[11px] tracking-widest leading-tight whitespace-pre-line"
-                      style={{ color: TEXT_SECONDARY }}
+                      style={TEXT_SECONDARY_STYLE}
                     >
-                      <span className="font-bold text-sm tracking-tight" style={{color: SILVER}}>{firstLine}</span>
+                      <span className="font-bold text-sm tracking-tight" style={TEXT_ACCENT_STYLE}>{firstLine}</span>
                       <span className="uppercase"> {restLines.length > 0 && (
                         <>
                           {'\n'}
@@ -564,7 +548,7 @@ useEffect(() => {
 
           <div
             className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
-            style={{ color: SILVER }}
+            style={TEXT_ACCENT_STYLE}
           >
             ”
           </div>
@@ -581,7 +565,7 @@ useEffect(() => {
                 className="px-8 py-4 rounded-full font-bold text-black text-lg transition-all hover:scale-105"
                 style={{ 
                   backgroundColor: ACCENT_COLOR,
-                  boxShadow: `0 0 30px ${ACCENT_COLOR}40`
+                  ...largeGlowStyle(ACCENT_COLOR)
                 }}
                 aria-label="View full case study"
               >
@@ -728,7 +712,7 @@ useEffect(() => {
               )}
 
               {stop.insights && (
-                <div className="rounded-lg p-6 my-8" style={{ backgroundColor: INFO_COLOR }}>
+                <div className="rounded-lg p-6 my-8" style={PANEL_STYLE}>
                   <h3 className="text-lg font-bold mb-4 text-white/90">Key Insights</h3>
                   <ul className="space-y-2">
                     {stop.insights.map((insight: string, i: number) => (
@@ -744,8 +728,8 @@ useEffect(() => {
                   style={{ ['--cols' as any]: Math.min(Math.max(featureCount, 1), 4) }}
                 >
                   {stop.features.map((f: any, i: number) => (
-                    <div key={i} className="rounded-lg p-6" style={{ backgroundColor: INFO_COLOR }}>
-                      <h4 className="text-lg font-bold mb-2" style={{ color: ACCENT_COLOR }}>{f.title}</h4>
+                    <div key={i} className="rounded-lg p-6" style={PANEL_STYLE}>
+                      <h4 className="text-lg font-bold mb-2" style={TEXT_ACCENT_STYLE}>{f.title}</h4>
                       <p className="text-white/70 text-sm">{f.description}</p>
                     </div>
                   ))}
@@ -778,8 +762,8 @@ useEffect(() => {
                 aria-label="Previous Stop"
                 disabled={currentStop === 0}
                 className="flex items-center gap-2 px-4 py-3 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all w-full sm:w-auto justify-center"
-                style={{ backgroundColor: INFO_COLOR }}
-                onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = SECONDARY_COLOR)}
+                  style={PANEL_STYLE}
+                onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#339989')}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
               >
                 <ChevronLeft size={20} />
@@ -790,7 +774,7 @@ useEffect(() => {
                 onClick={handleBackToOverview}
                 aria-label="Back to Overview"
                 className="flex items-center gap-2 px-4 py-3 rounded-full transition-all hover:scale-105 w-full sm:w-auto justify-center"
-                style={{ backgroundColor: INFO_COLOR, boxShadow: `0 0 20px ${INFO_COLOR}40` }}
+                style={{ ...PANEL_STYLE, ...glowStyle(INFO_COLOR) }}
               >
                 Back to Overview
               </button>
@@ -800,7 +784,7 @@ useEffect(() => {
                   onClick={nextStop}
                   aria-label="Next Stop"
                   className="flex items-center gap-2 px-4 py-3 rounded-full transition-all hover:scale-105 w-full sm:w-auto justify-center"
-                  style={{ backgroundColor: INFO_COLOR, boxShadow: `0 0 20px ${INFO_COLOR}40` }}
+                  style={{ ...PANEL_STYLE, ...glowStyle(INFO_COLOR) }}
                 >
                   Next Stop
                   <ChevronRight size={20} />
@@ -809,7 +793,7 @@ useEffect(() => {
                 <button
                   onClick={onNextRoute}
                   className="flex items-center gap-2 px-4 py-3 rounded-full text-black transition-all hover:scale-105 w-full sm:w-auto justify-center"
-                  style={{ backgroundColor: ACCENT_COLOR, boxShadow: `0 0 20px ${ACCENT_COLOR}40` }}
+                  style={{ backgroundColor: ACCENT_COLOR, ...largeGlowStyle(ACCENT_COLOR) }}
                   aria-label="Next Journey"
                 >
                   Next Journey
@@ -821,15 +805,15 @@ useEffect(() => {
         )}
       </main>
       <footer className="text-center bg-black/40 py-12 border-t-2 " style={{ borderColor: `${THEME_COLOR}30` }}>
-                  <Train className="w-16 h-16 mx-auto mb-6" style={{ color: THEME_COLOR }}/>
-                  <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
-                  <p className="text-2xl text-white/80 mb-8">
-                    Let's build your next impactful experience
-                  </p>
-                  <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
-                    Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
-                   </div>
-                  </footer>
+          <Train className="w-16 h-16 mx-auto mb-6" style={{ color: THEME_COLOR }}/>
+          <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
+          <p className="text-2xl text-white/80 mb-8">
+            Let's build your next impactful experience
+          </p>
+          <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
+            Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
+            </div>
+          </footer>
     </div>
   );
 }
