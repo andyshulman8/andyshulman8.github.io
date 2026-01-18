@@ -13,10 +13,8 @@ import { testimonials } from './data/testimonials';
 import {
   THEME_COLOR,
   INFO_COLOR,
-  BACK_COLOR,
   SILVER,
   TEXT_SECONDARY,
-  TEXT_TERTIARY,
   TEXT_MUTED,
   GA_ID,
   ANIMATION,
@@ -153,8 +151,8 @@ export default function DesignCentralStation() {
   }, []);
 
   return (
-    <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: BACK_COLOR }}>
-      <div className="text-white" style={{ backgroundColor: BACK_COLOR }}>
+    <div className="min-h-screen text-[#FFFAFB]" style={{ backgroundColor: 'var(--color-back)' }}>
+      <div className="text-white" style={{ backgroundColor: 'var(--color-back)' }}>
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
@@ -168,7 +166,7 @@ export default function DesignCentralStation() {
           )}
 
           <section className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover" style={{ backgroundImage: `url('/images/Home/test.webp')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <div className="absolute inset-0" style={{ backgroundColor: `${BACK_COLOR}60` }}></div>
+            <div className="absolute inset-0" style={{ backgroundColor: 'rgba(20, 21, 21, 0.375)' }}></div>
             <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
               <div className="text-left">
                 <div>
@@ -177,7 +175,7 @@ export default function DesignCentralStation() {
                   </h1>
                 </div>
                 <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">Designing clarity for high-stakes systems</h2>
-                <h2 className="text-base md:text-lg" style={{ color: TEXT_TERTIARY }}>Andy Shulman · Senior UX Designer</h2>
+                <h2 className="text-base md:text-lg" style={{ color: 'var(--color-text-tertiary)' }}>Andy Shulman · Senior UX Designer</h2>
               </div>
             </div>
           </section>
@@ -208,13 +206,13 @@ export default function DesignCentralStation() {
               <div className="absolute left-0 right-0 bottom-4 flex items-center z-0">
                 <div
                   className="w-full border-t-4 border-dashed"
-                  style={{ borderColor: SILVER }}
+                  style={{ borderColor: 'var(--color-silver)' }}
                 ></div>
               </div>
 
               <div
                 className="absolute left-0 right-0 bottom-4 transform -translate-y-1/4 h-1 z-10"
-                style={{ backgroundColor: `${SILVER}`,  filter: 'brightness(0.4)'}}
+                style={{ backgroundColor: 'var(--color-silver)',  filter: 'brightness(0.4)'}}
               ></div>
 
               <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
@@ -278,15 +276,15 @@ export default function DesignCentralStation() {
                     <div>
                       <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                     </div>
-                    <ChevronRight className="w-5 h-5 group-hover:text-white group-hover:translate-x-1 transition-all" style={{ color: TEXT_SECONDARY }}/>
+                    <ChevronRight className="w-5 h-5 group-hover:text-white group-hover:translate-x-1 transition-all" style={{ color: 'var(--color-text-secondary)' }}/>
                   </div>
                   
                   <p className="text-white/70 text-sm mb-4">{project.tagline}</p>
                   
                   <div className="space-y-2 text-xs">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4" style={{ color: SILVER }}/>
-                      <span className="" style={{ color: TEXT_TERTIARY }}>{project.impact}</span>
+                      <MapPin className="w-4 h-4" style={{ color: 'var(--color-silver)' }}/>
+                      <span className="" style={{ color: 'var(--color-text-tertiary)' }}>{project.impact}</span>
                     </div>
                   </div>
                 </Link>
@@ -318,7 +316,7 @@ export default function DesignCentralStation() {
               
               {/* Sign face */}
               <div className="relative flex items-center gap-3 px-1 py-2">
-                <Info className="w-8 h-8 relative z-10" style={{ color: SILVER }} />
+                <Info className="w-8 h-8 relative z-10" style={{ color: 'var(--color-silver)' }} />
                 <h2 className="text-3xl font-bold text-white relative z-10 tracking-wide">
                   INFORMATION
                 </h2>
@@ -366,7 +364,7 @@ export default function DesignCentralStation() {
         <h3 className="text-white/90 text-2xl font-bold mb-4">
           The Complete Transit System
         </h3>
-        <p className="text-left mb-6" style={{ color: TEXT_TERTIARY }}>
+        <p className="text-left mb-6" style={{ color: 'var(--color-text-tertiary)' }}>
           This is my design process map. Each project follows a unique route
           through these stations, combining methodologies from Stanford d.school,
           Business Strategy, Behavior Design, and Sustainability frameworks.
@@ -505,9 +503,9 @@ export default function DesignCentralStation() {
 </section>
 
       {/* Passenger Testimonials (section background matching All Aboard) */}
-      <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: BACK_COLOR }} aria-label="Passenger Testimonials">
+      <section className="mb-16 py-10 px-6 w-full mx-auto" style={{ backgroundColor: 'var(--color-back)' }} aria-label="Passenger Testimonials">
         {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
-        <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: BACK_COLOR }}>
+        <div className="relative py-12 px-6 overflow-hidden border-y-0" style={{ backgroundColor: 'var(--color-back)' }}>
           <img loading="lazy" decoding="async" src="/images/Home/tickets.webp" alt="Tickets banner" className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0" />
 
           {/* Content overlay */}
@@ -529,7 +527,7 @@ export default function DesignCentralStation() {
             >
               <div 
                 className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
-                style={{ color: SILVER }}
+                style={{ color: 'var(--color-silver)' }}
               >
                 “
               </div>
@@ -539,30 +537,30 @@ export default function DesignCentralStation() {
                   {testimonial.quote}
                 </p>
 
-                <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: SILVER}}>
+                <div className="flex items-center gap-4 pt-6 border-t" style={{borderColor: 'var(--color-silver)'}}>
                   {testimonial.avatar ? (
                     <img
                       src={testimonial.avatar}
                       alt=""
                       className="w-12 h-12 rounded-full object-cover border-2"
-                      style={{color: SILVER, borderColor: SILVER}}
+                      style={{color: 'var(--color-silver)', borderColor: 'var(--color-silver)'}}
                       loading="lazy"
                       decoding="async"
                     />
                   ) : (
                     <div 
                       className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xs" 
-                      style={{ color: BACK_COLOR, backgroundColor: SILVER }}
+                      style={{ color: 'var(--color-back)', backgroundColor: 'var(--color-silver)' }}
                     >
                       {testimonial.author.split(' ').map(n => n[0]).slice(0,2).join('')}
                     </div>
                   )}
                   
                   <div>
-                    <div className="font-bold text-sm tracking-tight" style={{ color: SILVER }}>
+                    <div className="font-bold text-sm tracking-tight" style={{ color: 'var(--color-silver)' }}>
                       {testimonial.author}
                     </div>
-                    <div className="text-[11px] uppercase tracking-widest leading-tight" style={{ color: TEXT_SECONDARY }}>
+                    <div className="text-[11px] uppercase tracking-widest leading-tight" style={{ color: 'var(--color-text-secondary)' }}>
                       {testimonial.role} <br />
                       <span className="" style={{ color: TEXT_MUTED }}>{testimonial.company}</span>
                     </div>
@@ -572,7 +570,7 @@ export default function DesignCentralStation() {
 
               <div 
                 className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
-                style={{ color: SILVER }}
+                style={{ color: 'var(--color-silver)' }}
               >
                 ”
               </div>

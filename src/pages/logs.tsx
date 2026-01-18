@@ -24,7 +24,6 @@ const SILVER = '#dfe1e5ff';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const ACCENT_COLOR = SILVER;
-const TEXT_SECONDARY = '#a8adb3';
 
 // ============================================================
 // Type Definitions
@@ -264,7 +263,7 @@ useEffect(() => {
   );
 
   return (
-    <div className="min-h-screen text-white" style={{ backgroundColor: BACK_COLOR }}>
+    <div className="min-h-screen text-white bg-[color:var(--color-back)]">
       <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
       
       {fullscreen.type !== 'closed' && (
@@ -298,9 +297,9 @@ useEffect(() => {
       )}
 
 
-      <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50" style={{ backgroundColor: INFO_COLOR + 'CC' }}>
+      <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50 bg-[color:var(--color-info)]/[0.8]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <button onClick={onBack} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
+          <button onClick={() => { window.scrollTo(0, 0); onBack(); }} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
             <ChevronLeft size={20} />
             <span>Back to Station</span>
           </button>
@@ -525,7 +524,7 @@ useEffect(() => {
   caseStudyData.stops[caseStudyData.stops.length - 1]?.quote && (
     <section
       className="mb-16 py-10 w-full mx-auto"
-      style={{ backgroundColor: BACK_COLOR }}
+      style={{ backgroundColor: 'var(--color-back)' }}
       aria-label="Passenger Testimonials"
     >
       <div className="grid md:grid-cols-1 gap-8">
@@ -786,14 +785,14 @@ useEffect(() => {
 
               {stop.impact && (
                 <div className="grid md:grid-cols-2 gap-6 my-8">
-                  <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                    <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
+                  <div className="rounded-lg p-6 text-center bg-[color:var(--color-info)]">
+                    <div className="text-3xl font-bold mb-2 text-[color:var(--color-accent)]">
                       {stop.impact.metric1}
                     </div>
                     <div className="text-white/60">{stop.impact.label1}</div>
                   </div>
-                  <div className="rounded-lg p-6 text-center" style={{ backgroundColor: INFO_COLOR }}>
-                    <div className="text-3xl font-bold mb-2" style={{ color: ACCENT_COLOR }}>
+                  <div className="rounded-lg p-6 text-center bg-[color:var(--color-info)]">
+                    <div className="text-3xl font-bold mb-2 text-[color:var(--color-accent)]">
                       {stop.impact.metric2}
                     </div>
                     <div className="text-white/60">{stop.impact.label2}</div>
@@ -850,13 +849,13 @@ useEffect(() => {
           </div>
         )}
       </main>
-      <footer className="text-center bg-black/40 py-12 border-t-2 " style={{ borderColor: `${THEME_COLOR}30` }}>
-          <Train className="w-16 h-16 mx-auto mb-6" style={{ color: THEME_COLOR }}/>
+      <footer className="text-center bg-black/40 py-12 border-t-2 border-[color:var(--color-theme)]/[0.19]">
+          <Train className="w-16 h-16 mx-auto mb-6 text-[color:var(--color-theme)]" />
           <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
           <p className="text-2xl text-white/80 mb-8">
             Let's build your next impactful experience
           </p>
-          <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
+          <div className="mt-8 text-sm text-[color:var(--color-text-secondary)]">
             Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
             </div>
           </footer>

@@ -28,6 +28,18 @@
 }
 
 @layer base {
+  :root {
+    /* Color Design Tokens */
+    --color-back: #141515;
+    --color-theme: #424141;
+    --color-info: #2B2C28;
+    --color-silver: #dfe1e5ff;
+    --color-text-secondary: #a8adb3;
+    --color-text-tertiary: #a8adb3;
+    --color-text-muted: #7a7f86;
+    --color-accent: var(--color-silver);
+  }
+
   * {
     /* Operating the system outline, dashed train line, bottom line */
     border-color: rgba(225, 225, 225, 0.755); 
