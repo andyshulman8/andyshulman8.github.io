@@ -65,7 +65,7 @@ export default function DesignCentralStation() {
    * Sparks emit from the rear car's bottom-left position
    * with randomized angles and durations
    */
-  const handleTrainClick = () => {
+  const handleTrainHover = () => {
     const rearCar = rearCarRef.current;
 
     if (rearCar) {
@@ -85,6 +85,11 @@ export default function DesignCentralStation() {
       setSparks(newSparks);
       setTimeout(() => setSparks([]), ANIMATION.sparkFly);
     }
+  }
+  const handleTrainClick = () => {
+      // Navigate to random case study (first "stop")
+    const randomCaseStudy = caseStudies[Math.floor(Math.random() * caseStudies.length)];
+    navigate(`/${randomCaseStudy.id}`);
   };
 
   /**
@@ -184,7 +189,8 @@ export default function DesignCentralStation() {
                 <div 
                   ref={trainRef}
                   className="train-animation cursor-pointer"
-                  onMouseOver={handleTrainClick}
+                  onClick={handleTrainClick} 
+                  onMouseOver={handleTrainHover}
                   role="button"
                   aria-label="Click for train announcement"
                   tabIndex={0}

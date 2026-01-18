@@ -36,19 +36,21 @@ export const TrainCar = ({ variant = 'middle' }: TrainCarProps) => {
       )}
 
       {/* Windows */}
-      <div className={`absolute top-2 ${isRear ? 'left-3 right-1' : 'left-1 right-1'} h-5 flex ${isRear ? 'gap-0.5' : isMiddle ? 'gap-0.5' : 'gap-0'}`}>
-        {Array.from({ length: windowCount }).map((_, i) => (
-          <div key={i} className="flex-1 border border-white/30 bg-white/10" />
-        ))}
-        {isMiddle && (
-          <>
-            <div className="w-1 bg-current opacity-20" />
-            <div className="flex-1 border border-white/30 bg-white/10" />
-            <div className="w-1 bg-current opacity-20" />
-            <div className="flex-1 border border-white/30 bg-white/10" />
-          </>
-        )}
-      </div>
+      {!isFront && (
+        <div className={`absolute top-2 ${isRear ? 'left-3 right-1' : 'left-1 right-1'} h-5 flex ${isRear ? 'gap-0.5' : isMiddle ? 'gap-0.5' : 'gap-0'}`}>
+          {Array.from({ length: windowCount }).map((_, i) => (
+            <div key={i} className="flex-1 border border-white/30 bg-white/10" />
+          ))}
+          {isMiddle && (
+            <>
+              <div className="w-1 bg-current opacity-20" />
+              <div className="flex-1 border border-white/30 bg-white/10" />
+              <div className="w-1 bg-current opacity-20" />
+              <div className="flex-1 border border-white/30 bg-white/10" />
+            </>
+          )}
+        </div>
+      )}
 
       {/* Red light indicator (rear only) */}
       {hasRedLight && (
@@ -90,7 +92,7 @@ export const TrainCar = ({ variant = 'middle' }: TrainCarProps) => {
             <div className="text-[8px] font-bold text-white">EXPRESS</div>
           </div>
 
-          <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
+          <div className="absolute top-3 left-2 right-3 h-5 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
 
           <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
         </>

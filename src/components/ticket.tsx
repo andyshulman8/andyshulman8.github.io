@@ -105,13 +105,14 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
       >
         01 · OUT
       </text>
-       <image className='scaleX(-1)'
+       <image
           href={barcode}
-          x="192"
+          x="7"
           y="60"
           width="40"
           height="40"
           preserveAspectRatio="xMidYMid meet"
+          style={{ transform: 'scale(-1, 1)', transformOrigin: 'center' }}
         />
 
       {/* Hover punch-hole on stub */}
