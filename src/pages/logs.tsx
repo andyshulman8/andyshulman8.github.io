@@ -12,6 +12,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { renderMarkdownLinks } from '../utils/renderMarkdownLinks';
 import { TRANSITION_DURATION_MS, PANEL_STYLE, TEXT_ACCENT_STYLE, TEXT_SECONDARY_STYLE, BORDER_SILVER_STYLE, glowStyle, largeGlowStyle } from '../utils/caseStudyConstants';
 import { useState, useEffect, useRef } from 'react';
+import { ExpressTicketCTA } from '../components/ticket.tsx';
+
 
 // ============================================================
 // Color Constants
@@ -158,7 +160,7 @@ useEffect(() => {
   
   // Floating CTA button docking state
   const ctaRef = useRef<HTMLDivElement>(null);
-  const [isDocked, setIsDocked] = useState(false);
+  const [isDocked] = useState(false);
 
   // Sync state when URL changes
   useEffect(() => {
@@ -170,42 +172,6 @@ useEffect(() => {
     }
     window.scrollTo(0, 0);
   }, [initialStop]);
-
-  // ============================================================
-  // Floating CTA Docking Logic
-  // ============================================================
-  /**
-   * Detects when the viewport bottom reaches the "Ready to Board?"
-   * section and switches the button from floating to docked.
-   * 
-   * The button floats at the viewport bottom until the user scrolls
-   * to the section where it naturally lives, then it docks into place.
-   */
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!ctaRef.current) return;
-
-      const rect = ctaRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      /**
-       * When the top of the CTA container enters the lower viewport
-       * area (with 96px breathing room), dock the floating button.
-       * This prevents a "snap" and allows graceful handoff to layout flow.
-       */
-      const shouldDock = rect.top <= viewportHeight - 96;
-      setIsDocked(shouldDock);
-    };
-
-    handleScroll(); // run once on mount
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
 
   // Reset carousel when stop changes
   useEffect(() => {
@@ -404,13 +370,42 @@ useEffect(() => {
       <main className="max-w-7xl mx-auto px-6">
         {showOverview ? (
           <div className="max-w-5xl mx-auto px-6 py-12">
-            <div className="text-center space-y-6 mb-8">
-              <h1 className="text-4xl font-bold mb-2">{caseStudyData.title}</h1>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-xl text-white/60">Destination:</span>
-                <span className="text-xl font-semibold">{caseStudyData.destination}</span>
-              </div>
-            </div>
+            {/* Header row - flex with ticket pushed to right */}
+            <div className="w-full lg:w-auto">
+  {/* Flex container that wraps */}
+  <div className="flex flex-wrap items-start gap-4">
+    <div className="flex-1 min-w-[250px]">
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
+        {caseStudyData.title}
+      </h1>
+
+      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mt-2">
+        <span className="text-lg sm:text-xl text-white/60 block sm:inline">
+          Destination:
+        </span>
+        <span className="text-lg sm:text-xl font-semibold">
+          {caseStudyData.destination}
+        </span>
+      </div>
+    </div>
+
+    {/* Ticket CTA will wrap to next line if it doesn't fit */}
+    <div className="w-full sm:w-auto mb-[24px]">
+      <ExpressTicketCTA
+        onClick={() => {
+          setShowTransition(true);
+          setTimeout(() => {
+            setShowOverview(false);
+            setCurrentStop(0);
+            setShowTransition(false);
+            onStopChange(0);
+          }, TRANSITION_DURATION_MS);
+        }}
+      />
+    </div>
+  </div>
+</div>
+
 
             <div className="mb-12">
               <h2 className="text-2xl font-bold mb-6 text-white/80">Background</h2>
@@ -600,7 +595,7 @@ useEffect(() => {
 
             <div ref={ctaRef} className="text-center mt-16  relative">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
-                {!isDocked && (
+                {/* {!isDocked && (
                   <div
                     className="fixed inset-x-0 bottom-0 pointer-events-none"
                     style={{
@@ -610,19 +605,17 @@ useEffect(() => {
                       zIndex: 39
                     }}
                   />
-                )}
+                )} */}
 
               <button
                 onClick={startJourney}
                 className={`px-8 py-4 rounded-full font-bold text-black text-lg hover:scale-105 ${
-                  isDocked ? 'relative mt-6 mb-6 px-8 py-4 text-lg' : 'fixed px-5 py-3 text-sm'
+                  'relative mt-12 mb-1 px-8 py-4 text-lg'
                 }`}
                 style={{
                   backgroundColor: ACCENT_COLOR,
-                  ...(!isDocked && {
+                  ...({
                     bottom: `calc(24px + env(safe-area-inset-bottom))`,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
                     zIndex: 40
                   }),
                   ...largeGlowStyle(ACCENT_COLOR)
