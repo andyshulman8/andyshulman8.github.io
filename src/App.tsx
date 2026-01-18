@@ -1,13 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
-import { Train, MapPin, Info, ChevronRight, ChevronUp } from 'lucide-react';
+import { Train, MapPin, Info, ChevronRight } from 'lucide-react';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useNavigate, Link } from 'react-router-dom';
 import { FullscreenImageViewer } from './components/FullscreenImageViewer.tsx';
+import { TrainCar } from './components/Train/TrainCar.tsx';
+import { SkillsBoard } from './components/Skills/SkillsBoard.tsx';
+import { BackToTopButton } from './components/Layout/BackToTopButton.tsx';
 import './styles/animations.css';
 import { caseStudies } from './data/caseStudies';
 import { testimonials } from './data/testimonials';
-import { skillCategories } from './data/skills';
+import {
+  THEME_COLOR,
+  INFO_COLOR,
+  BACK_COLOR,
+  SILVER,
+  TEXT_SECONDARY,
+  TEXT_TERTIARY,
+  TEXT_MUTED,
+  GA_ID,
+} from './constants/theme';
+import { useBackToTop } from './hooks/index';
 
 interface Spark {
   id: number;
@@ -18,200 +31,18 @@ interface Spark {
   y: number;
 }
 
-const THEME_COLOR = '#424141';
-const INFO_COLOR = '#2B2C28';
-const BACK_COLOR = '#141515';
-const SILVER = '#dfe1e5ff';
-const TEXT_SECONDARY = '#a8adb3';
-const TEXT_TERTIARY = '#868b92';
-const TEXT_MUTED = '#9ca3af';
-const GA_ID = 'G-5KXX19NNJM'; 
-
-const TRAIN_BODY_COLOR = THEME_COLOR;
-const TRAIN_BORDER_COLOR = SILVER;
-const TRAIN_WHEEL_COLOR = "#111827";
-
-interface TrainCarProps {
-  variant?: 'rear' | 'middle' | 'front';
-}
-
-const TrainCar = ({ variant = 'middle' }: TrainCarProps) => {
-  const isRear = variant === 'rear';
-  const isFront = variant === 'front';
-  const isMiddle = variant === 'middle';
-
-  // Rear car has 2 windows, middle cars have 5 windows, front car has 1 large window
-  const windowCount = isRear ? 2 : isFront ? 1 : 5;
-  const hasRedLight = isRear;
-
-  return (
-    <div
-      className={`relative w-16 h-10 border-2 shadow-lg flex-shrink-0 ${
-        isRear ? 'rounded-l-3xl' : isFront ? 'rounded-r-3xl' : ''
-      } ${isMiddle ? 'border-y-2 border-r-2' : ''}`}
-      style={{
-        backgroundColor: TRAIN_BODY_COLOR,
-        borderColor: TRAIN_BORDER_COLOR,
-      }}
-    >
-      {/* Side lights */}
-      {(!isRear && !isFront) && (
-      <div className="absolute top-2 left-3 bottom-3 w-0.5 bg-yellow-400/60" />
-      )}
-      {(!isRear && !isFront) && (
-        <div className="absolute top-2 right-3 bottom-3 w-0.5 bg-yellow-400/60" />
-      )}
-
-      {/* Windows */}
-      <div className={`absolute top-2 ${isRear ? 'left-3 right-1' : 'left-1 right-1'} h-5 flex ${isRear ? 'gap-0.5' : isMiddle ? 'gap-0.5' : 'gap-0'}`}>
-        {Array.from({ length: windowCount }).map((_, i) => (
-          <div key={i} className="flex-1 border border-white/30 bg-white/10" />
-        ))}
-        {isMiddle && (
-          <>
-            <div className="w-1 bg-current opacity-20" />
-            <div className="flex-1 border border-white/30 bg-white/10" />
-            <div className="w-1 bg-current opacity-20" />
-            <div className="flex-1 border border-white/30 bg-white/10" />
-          </>
-        )}
-      </div>
-
-      {/* Red light indicator (rear only) */}
-      {hasRedLight && (
-        <div className="absolute top-7 left-2 w-2 h-2 bg-red-500 rounded-full shadow-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
-      )}
-
-      {/* Wheels */}
-      <div
-        className="absolute -bottom-1.5 left-3 w-2.5 h-2.5 rounded-full border-2"
-        style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-        }}
-      />
-      <div
-        className={`absolute -bottom-1.5 ${isFront ? 'right-4' : 'right-2.5'} w-${isFront ? '3' : '2.5'} h-${isFront ? '3' : '2.5'} rounded-full border-2`}
-        style={{
-          backgroundColor: TRAIN_WHEEL_COLOR,
-          borderColor: TRAIN_BORDER_COLOR,
-          width: isFront ? '12px' : '10px',
-          height: isFront ? '12px' : '10px',
-        }}
-      />
-
-      {/* Connection piece */}
-      {!isFront && (
-        <div
-          className="absolute -right-1 top-2 bottom-2 w-2 bg-black/40 border-y border-white/20"
-          style={{
-            clipPath: 'polygon(0 20%, 100% 0, 100% 100%, 0 80%)',
-          }}
-        />
-      )}
-
-      {/* Front car specific: top label and front light */}
-      {isFront && (
-        <>
-          <div className="absolute top-0 left-0 right-0 h-2 bg-orange-700 flex items-center justify-center rounded-tr-3xl overflow-hidden">
-            <div className="text-[8px] font-bold text-white">EXPRESS</div>
-          </div>
-
-          <div className="absolute top-3 left-2 right-3 h-6 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
-
-          <div className="absolute top-1/2 -translate-y-1/2 -right-1 w-2.5 h-2.5 bg-yellow-300 rounded-full shadow-lg animate-pulse border border-yellow-500" />
-        </>
-      )}
-    </div>
-  );
-};
-
-const SkillsBoard = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const boardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isVisible) {
-            // Add delay before starting animation
-            setTimeout(() => {
-              setIsVisible(true);
-            }, 500); // 500ms delay after becoming visible
-          }
-        });
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of element is visible
-        rootMargin: '0px'
-      }
-    );
-
-    if (boardRef.current) {
-      observer.observe(boardRef.current);
-    }
-
-    return () => {
-      if (boardRef.current) {
-        observer.unobserve(boardRef.current);
-      }
-    };
-  }, [isVisible]);
-
-  return (
-    <div className="mb-12" ref={boardRef}>
-      <h3 className="text-white/90 text-2xl font-bold mb-4">Operating the System</h3>
-      <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-6 font-mono shadow-2xl">
-        <div className="split-flap-board grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {skillCategories.map((cat, cIdx) => (
-            <div key={cIdx} className="space-y-3">
-              <div className="text-sm uppercase tracking-wider" style={{ color: SILVER }}>
-                {cat.title}
-              </div>
-              <div className="space-y-2">
-                {cat.items.map((it, iIdx) => (
-                  <div
-                    key={iIdx}
-                    className={`split-flap-item ${isVisible ? 'settled' : 'searching'}`}
-                    style={{ 
-                      '--settle-delay': `${(cIdx * 5 + iIdx) * 300}ms`,
-                      color: SILVER
-                    } as React.CSSProperties}
-                  >
-                    <div className="flap">
-                      <div className="flap-front">{it}</div>
-                      <div className="flap-back"></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-      </div>
-    </div>
-  );
-};
-
 export default function DesignCentralStation() {
   const navigate = useNavigate();
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [processLoaded, setProcessLoaded] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
+  const showBackToTop = useBackToTop(320);
 
   const [sparks, setSparks] = useState<Spark[]>([]);
   const trainRef = useRef<HTMLDivElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
 
   const handleTrainClick = () => {
-    // const randomMessage = trainMessages[Math.floor(Math.random() * trainMessages.length)];
-    // setTrainMessage(randomMessage);
-    // setTrainClicked(true);
-    // setTimeout(() => setTrainClicked(false), 3000);
-
     const rearCar = rearCarRef.current;
     
     if (rearCar) {
@@ -255,13 +86,6 @@ export default function DesignCentralStation() {
     gtag('config', GA_ID, {
       page_path: window.location.pathname,
     });
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setShowBackToTop(window.scrollY > 320);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
@@ -468,18 +292,6 @@ export default function DesignCentralStation() {
               />
             </div>
           </div>
-          
-          {/* Downward chevron triangle
-          <div
-            className="absolute left-1/2 -bottom-6 -translate-x-1/2"
-            style={{
-              width: 0,
-              height: 0,
-              borderLeft: '48px solid transparent',
-              borderRight: '48px solid transparent',
-              borderTop: '24px solid rgb(37, 99, 235)',
-            }}
-          /> */}
         </div>
       </div>
 
@@ -653,7 +465,7 @@ export default function DesignCentralStation() {
                   {testimonial.avatar ? (
                     <img
                       src={testimonial.avatar}
-                      alt=""//{testimonial.author}
+                      alt=""
                       className="w-12 h-12 rounded-full object-cover border-2"
                       style={{color: SILVER, borderColor: SILVER}}
                     />
@@ -698,37 +510,15 @@ export default function DesignCentralStation() {
             <p className="text-2xl text-white/80 mb-8">
               Let's build your next impactful experience
             </p>
-            {/*
-            <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">
-              <a 
-                href="mailto:andyshulman8@gmail.com" 
-                className="flex items-center gap-2 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-                Email Andy
-              </a>
-              
-            </div>
-            */}
             <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
               Montrose, Colorado • <u><a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a></u> • andyshulman8@gmail.com
              </div>
             </footer>
 
-            {/* Back to top button */}
-            {showBackToTop && (
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                aria-label="Back to top"
-                className="fixed right-6 bottom-6 z-50 flex items-center justify-center w-11 h-11 rounded-full bg-white/6 hover:bg-white/10 backdrop-blur-md transition-colors shadow-lg"
-              >
-                <ChevronUp className="w-5 h-5 text-white/90" />
-              </button>
-            )}
+            <BackToTopButton isVisible={showBackToTop} />
         </div>
          <Analytics /> 
          <SpeedInsights />
       </div>
-    // </div>
   );
 }
