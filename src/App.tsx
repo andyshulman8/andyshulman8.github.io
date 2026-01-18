@@ -21,6 +21,7 @@ import {
   UI,
 } from './constants/theme';
 import { useBackToTop } from './hooks/index';
+import { useIntersectionOnce } from './hooks/useIntersectionOnce';
 
 /**
  * Spark animation particle interface
@@ -100,28 +101,9 @@ export default function DesignCentralStation() {
 
   /**
    * Lazy load maps iframe when element becomes visible
-   * Uses Intersection Observer to defer iframe loading until needed
-   * This prevents blocking page render and improves performance
+   * Uses shared IntersectionObserver hook to minimize memory overhead
    */
-  useEffect(() => {
-  if (!mapRef.current) return;
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        setMapLoaded(true);
-        observer.disconnect();
-      }
-    },
-    { threshold: 0.25 }
-  );
-
-  observer.observe(mapRef.current);
-
-  return () => observer.disconnect();
-}, []);
-
-
+  useIntersectionOnce(mapRef, () => setMapLoaded(true), { threshold: 0.25 });
   /**
    * Initialize Google Analytics on mount
    * Prevents duplicate script loading via scriptId check

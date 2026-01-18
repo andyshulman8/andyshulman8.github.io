@@ -1,39 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { SILVER } from '../../constants/theme';
 import { skillCategories } from '../../data/skills';
+import { useIntersectionOnce } from '../../hooks/useIntersectionOnce';
 
 export const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const boardRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isVisible) {
-            // Add delay before starting animation
-            setTimeout(() => {
-              setIsVisible(true);
-            }, 500); // 500ms delay after becoming visible
-          }
-        });
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of element is visible
-        rootMargin: '0px'
-      }
-    );
-
-    if (boardRef.current) {
-      observer.observe(boardRef.current);
-    }
-
-    return () => {
-      if (boardRef.current) {
-        observer.unobserve(boardRef.current);
-      }
-    };
-  }, [isVisible]);
+  // Trigger animation once when board becomes visible
+  useIntersectionOnce(
+    boardRef,
+    () => setIsVisible(true),
+    { threshold: 0.3 }
+  );
 
   return (
     <div className="mb-12" ref={boardRef}>
