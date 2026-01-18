@@ -595,17 +595,6 @@ useEffect(() => {
 
             <div ref={ctaRef} className="text-center mt-16  relative">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
-                {/* {!isDocked && (
-                  <div
-                    className="fixed inset-x-0 bottom-0 pointer-events-none"
-                    style={{
-                      height: '120px',
-                      background:
-                        'linear-gradient(to bottom, rgba(20,21,21,0), rgba(20,21,21,0.85))',
-                      zIndex: 39
-                    }}
-                  />
-                )} */}
 
               <button
                 onClick={startJourney}

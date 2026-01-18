@@ -46,7 +46,7 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
       </g>
 
       {/* Top banner */}
-      <rect x="0" y="8" width="240" height="18" fill="#1f2937" />
+      <rect x="0" y="8" width="240" height="18" className="fill-blue-600" />
       <text
         x="16"
         y="20"
@@ -63,8 +63,8 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
       <text
         x="20"
         y="45"
-        fontFamily="Arial Black, Arial, sans-serif"
-        fontSize="13"
+        fontFamily="ui-sans-serif, system-ui, sans-serif"
+        fontSize="16"
         fontWeight="900"
         fill="#111827"
         letterSpacing="1.2"
@@ -128,7 +128,7 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
 
       {/* EXP / EXPRESS red stamp */}
       <g transform="translate(90 30) rotate(-15 80 34)" opacity="0.92">
-        <rect x="52" y="26" width="68" height="18" rx="2" fill="rgba(220,38,38,0.9)" />
+        <rect x="52" y="26" width="68" height="18" rx="2" className="fill-orange-700" />
         {/* Ink bleed */}
         <text
           x="86"
