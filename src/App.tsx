@@ -234,7 +234,7 @@ export default function DesignCentralStation() {
                     est: {project.year}
                   </div>
 
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start justify-between mb-2">
                     <div>
                       <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                     </div>
