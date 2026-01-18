@@ -19,6 +19,8 @@ import {
   TEXT_TERTIARY,
   TEXT_MUTED,
   GA_ID,
+  ANIMATION,
+  UI,
 } from './constants/theme';
 import { useBackToTop } from './hooks/index';
 
@@ -36,7 +38,7 @@ export default function DesignCentralStation() {
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [processLoaded, setProcessLoaded] = useState(false);
-  const showBackToTop = useBackToTop(320);
+  const showBackToTop = useBackToTop(UI.backToTopThreshold);
 
   const [sparks, setSparks] = useState<Spark[]>([]);
   const trainRef = useRef<HTMLDivElement>(null);
@@ -51,17 +53,17 @@ export default function DesignCentralStation() {
       const sparkX = rect.left + 8; // Small offset from left edge
       const sparkY = rect.bottom - 4; // Bottom of the car
 
-      const newSparks: Spark[] = Array.from({ length: 8 }, (_, i) => ({
+      const newSparks: Spark[] = Array.from({ length: UI.sparkCount }, (_, i) => ({
         id: Date.now() + i,
-        angle: Math.random() * 90 - 45,
-        distance: 20 + Math.random() * 30,
-        duration: 0.5 + Math.random() * 0.5,
+        angle: Math.random() * UI.sparkAngle - (UI.sparkAngle / 2),
+        distance: UI.sparkDistance.min + Math.random() * (UI.sparkDistance.max - UI.sparkDistance.min),
+        duration: UI.sparkDuration.min + Math.random() * (UI.sparkDuration.max - UI.sparkDuration.min),
         x: sparkX,
         y: sparkY
       }));
       
       setSparks(newSparks);
-      setTimeout(() => setSparks([]), 1000);
+      setTimeout(() => setSparks([]), ANIMATION.sparkFly);
     }
   };
 
@@ -232,7 +234,7 @@ export default function DesignCentralStation() {
     {/* Information Booth Panel */}
     <div
       className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:border-white/20 transition-all duration-300"
-      style={{ boxShadow: `0 4px 24px ${INFO_COLOR}10` }}
+      style={{ boxShadow: `${UI.infoBoxShadow.x}px ${UI.infoBoxShadow.y}px ${UI.infoBoxShadow.blur}px ${INFO_COLOR}10` }}
     >
       {/* Top chevron banner with glowing INFORMATION sign inside */}
       <div className="relative flex justify-center mb-10">
@@ -263,31 +265,31 @@ export default function DesignCentralStation() {
                 className="absolute -top-2 -left-2 w-3 h-3 rounded-full animate-pulse"
                 style={{
                   backgroundColor: SILVER,
-                  boxShadow: `0 0 10px ${SILVER}`,
+                  boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
                 }}
               />
               <div
                 className="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-pulse"
                 style={{
                   backgroundColor: SILVER,
-                  boxShadow: `0 0 10px ${SILVER}`,
-                  animationDelay: '0.5s',
+                  boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
+                  animationDelay: `${UI.animationDelays.staggerSmall}s`,
                 }}
               />
               <div
                 className="absolute -bottom-2 -left-2 w-3 h-3 rounded-full animate-pulse"
                 style={{
                   backgroundColor: SILVER,
-                  boxShadow: `0 0 10px ${SILVER}`,
-                  animationDelay: '1s',
+                  boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
+                  animationDelay: `${UI.animationDelays.staggerMedium}s`,
                 }}
               />
               <div
                 className="absolute -bottom-2 -right-2 w-3 h-3 rounded-full animate-pulse"
                 style={{
                   backgroundColor: SILVER,
-                  boxShadow: `0 0 10px ${SILVER}`,
-                  animationDelay: '1.5s',
+                  boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
+                  animationDelay: `${UI.animationDelays.staggerLarge}s`,
                 }}
               />
             </div>
@@ -311,7 +313,7 @@ export default function DesignCentralStation() {
           {/* Loading skeleton */}
           <div
             aria-hidden={processLoaded}
-            className={`absolute inset-0 transition-opacity duration-500 ${
+            className={`absolute inset-0 transition-opacity duration-${UI.imageLoadingDuration} ${
               processLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
           >
@@ -335,7 +337,7 @@ export default function DesignCentralStation() {
             decoding="async"
             onLoad={() => setProcessLoaded(true)}
             onError={() => setProcessLoaded(true)}
-            className={`cursor-pointer hover:opacity-90 transition-opacity duration-500 ${
+            className={`cursor-pointer hover:opacity-90 transition-opacity duration-${UI.imageLoadingDuration} ${
               processLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             onClick={() => setFullscreenImage('/images/Home/process.webp')}
@@ -408,7 +410,7 @@ export default function DesignCentralStation() {
           <div className="md:col-span-1 h-full">
             <div
               className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"
-              style={{ boxShadow: `0 0 20px ${INFO_COLOR}20` }}
+              style={{ boxShadow: `0 0 20px ${INFO_COLOR}${Math.round(UI.shadowOpacities.default * 255).toString(16).padStart(2, '0')}` }}
             >
               <div className="w-full h-full aspect-video">
                 <iframe

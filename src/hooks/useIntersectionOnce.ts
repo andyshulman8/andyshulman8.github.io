@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 /**
  * Hook to trigger a callback when an element becomes visible (once)
