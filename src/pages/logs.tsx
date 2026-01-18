@@ -157,10 +157,6 @@ useEffect(() => {
   const [peekIndex, setPeekIndex] = useState(0);
   const [stopCarouselIndex, setStopCarouselIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState<FullscreenState>({ type: 'closed' });
-  
-  // Floating CTA button docking state
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const [isDocked] = useState(false);
 
   // Sync state when URL changes
   useEffect(() => {
@@ -599,7 +595,7 @@ useEffect(() => {
   )}
 
 
-            <div ref={ctaRef} className="text-center mt-16  relative">
+            <div className="text-center mt-16  relative">
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
 
               <button
