@@ -1,6 +1,4 @@
 {
-
-  
   "headers": [
     {
       "source": "/sitemap.xml",
@@ -10,13 +8,21 @@
           "value": "application/xml"
         }
       ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
+        }
+      ]
     }
   ],
-
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/((?!sitemap\\.xml|robots\\.txt).*)",
+      "destination": "/index.html"
     }
   ]
 }
