@@ -37,6 +37,34 @@ interface Spark {
 }
 
 /**
+ * Skeleton placeholder shown while the map iframe is loading.
+ */
+const MapSkeleton: React.FC = () => (
+  <div className="relative w-full h-full animate-pulse bg-neutral-900">
+    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/60 to-neutral-900/60" />
+  </div>
+);
+
+/**
+ * Generates spark particles originating from a DOM rect.
+ * @param origin - The x,y origin point for spark emission
+ * @returns Array of spark particles with randomized angles and durations
+ */
+const generateSparks = (origin: { x: number; y: number }): Spark[] =>
+  Array.from({ length: UI.sparkCount }, (_, i) => ({
+    id: Date.now() + i,
+    angle: Math.random() * UI.sparkAngle - UI.sparkAngle / 2,
+    distance:
+      UI.sparkDistance.min +
+      Math.random() * (UI.sparkDistance.max - UI.sparkDistance.min),
+    duration:
+      UI.sparkDuration.min +
+      Math.random() * (UI.sparkDuration.max - UI.sparkDuration.min),
+    x: origin.x,
+    y: origin.y,
+  }));
+
+/**
  * DesignCentralStation - Main application entry point
  *
  * The portfolio homepage showcasing:
@@ -47,7 +75,12 @@ interface Spark {
  * - Passenger testimonials carousel
  *
  * Analytics: Integrates Google Analytics via Vercel
+ * 
+ * NOTE:
+ * This component intentionally centralizes multiple sections to preserve
+ * narrative flow and coordinated animation timing across the homepage.
  */
+
 export default function DesignCentralStation() {
   const navigate = useNavigate();
 
@@ -60,43 +93,25 @@ export default function DesignCentralStation() {
   const trainRef = useRef<HTMLDivElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-  const MapSkeleton = () => (
-  <div className="relative w-full h-full animate-pulse bg-neutral-900">
-    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/60 to-neutral-900/60" />
-    {/* <div className="absolute bottom-4 left-4 h-4 w-32 rounded bg-neutral-700/60" /> */}
-  </div>
-);
 
   /**
-   * Generates spark particles when train is clicked
-   * Sparks emit from the rear car's bottom-left position
-   * with randomized angles and durations
+   * Generates and displays spark particles when train is hovered.
+   * Sparks emit from the rear car's bottom-left position.
    */
   const handleTrainHover = () => {
     const rearCar = rearCarRef.current;
+    if (!rearCar) return;
 
-    if (rearCar) {
-      const rect = rearCar.getBoundingClientRect();
-      const sparkX = rect.left + 8;
-      const sparkY = rect.bottom - 4;
+    const rect = rearCar.getBoundingClientRect();
+    setSparks(generateSparks({ x: rect.left + 8, y: rect.bottom - 4 }));
 
-      const newSparks: Spark[] = Array.from({ length: UI.sparkCount }, (_, i) => ({
-        id: Date.now() + i,
-        angle: Math.random() * UI.sparkAngle - (UI.sparkAngle / 2),
-        distance: UI.sparkDistance.min + Math.random() * (UI.sparkDistance.max - UI.sparkDistance.min),
-        duration: UI.sparkDuration.min + Math.random() * (UI.sparkDuration.max - UI.sparkDuration.min),
-        x: sparkX,
-        y: sparkY
-      }));
-
-      setSparks(newSparks);
-      setTimeout(() => setSparks([]), ANIMATION.sparkFly);
-    }
+    window.setTimeout(() => setSparks([]), ANIMATION.sparkFly);
   }
+
   const handleTrainClick = () => {
-      // Navigate to random case study (first "stop")
+    // Navigate to random case study (first "stop")
     const randomCaseStudy = caseStudies[Math.floor(Math.random() * caseStudies.length)];
-    navigate(`/${randomCaseStudy.id}`);
+    navigate(`/${randomCaseStudy.id}/1`);
   };
 
   /**
@@ -104,6 +119,7 @@ export default function DesignCentralStation() {
    * Uses shared IntersectionObserver hook to minimize memory overhead
    */
   useIntersectionOnce(mapRef, () => setMapLoaded(true), { threshold: 0.25 });
+  
   /**
    * Initialize Google Analytics on mount
    * Prevents duplicate script loading via scriptId check
@@ -206,7 +222,7 @@ export default function DesignCentralStation() {
                   role="button"
                   aria-label="Click for train announcement"
                   tabIndex={0}
-                  onKeyPress={(e) => e.key === 'Enter' && handleTrainClick()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleTrainClick()}
                 >
                   <div className="flex items-end gap-0">
                     <div ref={rearCarRef} className="rear-car">
@@ -235,7 +251,6 @@ export default function DesignCentralStation() {
                 <Link
                   key={project.id}
                   to={`/${project.id}`}
-                  onClick={() => navigate(`/${project.id}`)}
                   className="group relative bg-black/40 backdrop-blur border border-white/10 rounded-xl p-6 hover:border-white/30 transition-all cursor-pointer overflow-hidden block"
                 >
                   <div className="mb-4">
@@ -469,6 +484,7 @@ export default function DesignCentralStation() {
       <iframe
         src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
         className="w-full h-full"
+        loading="lazy"
         title="Map preview"
       />
     ) : (

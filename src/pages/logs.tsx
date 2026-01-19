@@ -1,7 +1,23 @@
+/**
+ * CaseStudyTemplate
+ *
+ * Renders a full interactive case study experience including:
+ * - Overview entry point
+ * - Linear “journey” through stops
+ * - Media carousels and fullscreen viewing
+ * - Progress navigation and transitions
+ *
+ * This component intentionally owns a large amount of state to
+ * keep cross-stop interactions (media, transitions, navigation)
+ * synchronized in one place.
+ */
+
+
+
 import { ChevronLeft, ChevronRight, Train } from 'lucide-react';
 import CalloutBox from '../components/CalloutBox';
 import { allCaseStudies } from './casedata.tsx';
-import type { CaseStudyData } from './casedata.tsx';
+import type { CaseStudyData, Stop } from './casedata.tsx';
 import TrainTransition from './train.tsx';
 import { FullscreenImageViewer } from '../components/FullscreenImageViewer.tsx';
 import CarouselControls from '../components/CarouselControlsNew';
@@ -24,6 +40,7 @@ const SILVER = '#dfe1e5ff';
 const INFO_COLOR = '#2B2C28';
 const BACK_COLOR = '#141515';
 const ACCENT_COLOR = SILVER;
+const PREV_BUTTON_HOVER_BG = '#339989';
 
 // ============================================================
 // Type Definitions
@@ -38,28 +55,6 @@ type FullscreenState =
   | { type: 'peeks'; index: number }
   | { type: 'stop'; index: number }
   | { type: 'single'; src: string | { src: string; type: 'image' | 'video' } };
-
-interface Stop {
-  station_name: string;
-  subtitle?: string;
-  phase: string;
-  content: string;
-  quote?: string;
-  quoteAuthor?: string;
-  quoteImage?: string;
-  quotePreface?: string;
-  insights?: string[];
-  callout?: string;
-  numberedFeatures?: { title: string; description: string }[];
-  features?: { title: string; description: string }[];
-  impact?: {
-    metric1: string;
-    label1: string;
-    metric2: string;
-    label2: string;
-  };
-  images?: string[];
-}
 
 interface CaseStudyTemplateProps {
   onBack: () => void;
@@ -125,19 +120,19 @@ export default function CaseStudyTemplate({
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setShowDropdown(false);
-    }
-  };
+  useEffect(() => {
+    if (!showDropdown) return;
 
-  if (showDropdown) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-  }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showDropdown]);
 
-  return () => document.removeEventListener('mousedown', handleClickOutside);
-}, [showDropdown]);
 
   const location = useLocation();
 
@@ -156,6 +151,7 @@ useEffect(() => {
   const [peekIndex, setPeekIndex] = useState(0);
   const [stopCarouselIndex, setStopCarouselIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState<FullscreenState>({ type: 'closed' });
+  const [isPrevHovered, setIsPrevHovered] = useState(false);
 
   // Sync state when URL changes
   useEffect(() => {
@@ -180,10 +176,14 @@ useEffect(() => {
     }
   }, [currentStop, caseStudyData, stopCarouselIndex]);
 
-  const startJourney = () => {
+  /**
+   * Starts the case study journey from the first stop.
+   * Centralizes transition timing to avoid drift between CTAs.
+   */
+  const startJourneyAtBeginning = () => {
     setShowTransition(true);
-    
-    setTimeout(() => {
+
+    window.setTimeout(() => {
       setShowOverview(false);
       setCurrentStop(0);
       setShowTransition(false);
@@ -387,15 +387,7 @@ useEffect(() => {
     {/* Ticket CTA will wrap to next line if it doesn't fit */}
     <div className="w-full sm:w-auto mb-[24px]">
       <ExpressTicketCTA
-        onClick={() => {
-          setShowTransition(true);
-          setTimeout(() => {
-            setShowOverview(false);
-            setCurrentStop(0);
-            setShowTransition(false);
-            onStopChange(0);
-          }, TRANSITION_DURATION_MS);
-        }}
+        onClick={startJourneyAtBeginning}
       />
     </div>
   </div>
@@ -598,7 +590,7 @@ useEffect(() => {
               <h2 className="text-3xl font-bold">Ready to Board?</h2>
 
               <button
-                onClick={startJourney}
+                onClick={startJourneyAtBeginning}
                 className={`px-8 py-4 rounded-full font-bold text-black text-lg hover:scale-105 ${
                   'relative mt-12 mb-1 px-8 py-4 text-lg'
                 }`}
@@ -807,9 +799,12 @@ useEffect(() => {
                 aria-label="Previous Stop"
                 disabled={currentStop === 0}
                 className="flex items-center gap-2 px-4 py-3 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-all w-full sm:w-auto justify-center"
-                  style={PANEL_STYLE}
-                onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#339989')}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = INFO_COLOR}
+                style={{
+                  ...PANEL_STYLE,
+                  ...(isPrevHovered && currentStop > 0 && { backgroundColor: PREV_BUTTON_HOVER_BG })
+                }}
+                onMouseEnter={() => setIsPrevHovered(true)}
+                onMouseLeave={() => setIsPrevHovered(false)}
               >
                 <ChevronLeft size={20} />
                 Previous Stop

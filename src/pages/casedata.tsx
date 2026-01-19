@@ -3,7 +3,7 @@
 // 1. Define the types here so this file knows what they are
 type LineColor = 'red' | 'blue' | 'purple' | 'green';
 
-interface Stop {
+export interface Stop {
   station_name: string;
   subtitle?: string;
   phase: string;
