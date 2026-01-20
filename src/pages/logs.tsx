@@ -108,6 +108,9 @@ const WindowMedia = ({ src }: { src: string | { src: string; type: 'image' | 'vi
   );
 };
 
+// Universal template that renders all 6 case studies from typed data
+// Maintains consistent UX while allowing per-case content customization
+// See src/pages/casedata.tsx for content structure
 export default function CaseStudyTemplate({
   onBack,
   onNextRoute,

@@ -1,6 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import CaseStudyTemplate from '../pages/logs';
 
+// Maps case study URL slugs to their index in allCaseStudies array
+// Enables URL-based routing without hardcoding array positions
+
 const viewToIndex: Record<string, number> = { 
   logs: 0, alerts: 1, data: 2, team: 3, future: 4, health: 5 
 };

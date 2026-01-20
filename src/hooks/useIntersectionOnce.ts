@@ -15,6 +15,8 @@ export const useIntersectionOnce = (
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+        // Immediately unobserve after firing to prevent memory leaks
+        // and avoid redundant callbacks for already-loaded content
           if (entry.isIntersecting) {
             callback();
             observer.unobserve(entry.target);
