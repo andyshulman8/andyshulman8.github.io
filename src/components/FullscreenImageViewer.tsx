@@ -1,11 +1,30 @@
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+/**
+ * FullscreenImageViewer Component
+ * 
+ * Purpose: Provides a high-immersion, modal-based viewing experience for 
+ * both images and videos across the portfolio and case studies [1, 4].
+ * 
+ * Mixed Media Support:
+ * - Uses 'getMediaSrc' to normalize strings or media objects [1, 5].
+ * - Uses 'isVideo' to detect file extensions (.mp4, .webm, .mov) or explicit types [5].
+ * 
+ * Navigation & Interaction:
+ * - Supports gallery navigation (prev/next) for collections like "Sneak Peeks" [1, 6].
+ * - Implements click-to-close on the backdrop and a dedicated close button [6, 7].
+ * 
+ * Design & Performance:
+ * - Styling: Employs a metallic window frame design with "corner rivets," 
+ *   simulated glass reflections, and radial gradients for depth [1, 8, 9].
+ * - Performance: Uses 'e.stopPropagation()' on the modal content to prevent 
+ *   unintended closing when interacting with media or controls [7].
+ */
 
-// Updated type to accept mixed media
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 type MediaItem = string | { src: string; type: 'image' | 'video' };
 
 interface FullscreenImageViewerProps {
   src?: string | null;
-  images?: MediaItem[]; // Now accepts mixed types
+  images?: MediaItem[];
   currentIndex?: number;
   onChangeIndex?: (i: number) => void;
   onClose: () => void;

@@ -309,7 +309,7 @@ export const allCaseStudies: CaseStudyData[] = [
         content: "Align's network of dental professionals ultimately needed a stronger village, a stronger community. I taught the team to reframe problems our interviewees faced. The team built their first design frames, learning to focus on needs rather than solutions.",
         quote: "The Design Thinking process provided us a way to design based on the customer needs.",
         quoteAuthor: "Practice Recovery Experiences concept team",
-        images: ["/images/team/frame1.png", "images/team/frame2.png"]
+        images: ["/images/team/frame1.png", "/images/team/frame2.png"]
       },
       {
         station_name: "Brainstorming",
