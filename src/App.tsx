@@ -10,6 +10,7 @@ import { BackToTopButton } from './components/Layout/BackToTopButton.tsx';
 import './styles/animations.css';
 import { caseStudies } from './data/caseStudies';
 import { testimonials } from './data/testimonials';
+import TrainTransition from './pages/train.tsx';
 import {
   THEME_COLOR,
   INFO_COLOR,
@@ -93,6 +94,7 @@ export default function DesignCentralStation() {
   const trainRef = useRef<HTMLDivElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
+   const [showTransition, setShowTransition] = useState(false);
 
   /**
    * Generates and displays spark particles when train is hovered.
@@ -109,9 +111,15 @@ export default function DesignCentralStation() {
   }
 
   const handleTrainClick = () => {
+    setShowTransition(true);
+
     // Navigate to random case study (first "stop")
     const randomCaseStudy = caseStudies[Math.floor(Math.random() * caseStudies.length)];
-    navigate(`/${randomCaseStudy.id}/1`);
+    
+    window.setTimeout(() => {
+      navigate(`/${randomCaseStudy.id}`);
+      setShowTransition(false);
+    }, 1400); // Match TRANSITION_DURATION_MS from caseStudyConstants
   };
 
   /**
@@ -592,6 +600,7 @@ export default function DesignCentralStation() {
             </footer>
 
             <BackToTopButton isVisible={showBackToTop} />
+            <TrainTransition isActive={showTransition} direction="right" />
         </div>
          <Analytics /> 
          <SpeedInsights />
