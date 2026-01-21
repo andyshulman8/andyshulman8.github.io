@@ -1,3 +1,22 @@
+/**
+ * ExpressTicketCTA Component
+ * 
+ * Purpose: Acts as the high-impact call-to-action (CTA) to initiate a case study 
+ * journey. It is used in the CaseStudyTemplate overview section [2, 3].
+ * 
+ * SVG Structure & Design:
+ * - Emulates a physical transit ticket with a paper base (#fdf7ec), vertical 
+ *   perforations, and a machine-readable barcode [4, 5].
+ * - Features a "red stamp" style "EXPRESS" label with simulated ink bleed 
+ *   to reinforce the station metaphor [6].
+ * 
+ * Animation & Interaction:
+ * - Hover Effects: The ticket scales slightly and rotates -1 degree while the 
+ *   "stub" punch-hole changes fill to black, simulating a physical punch [5, 7].
+ * - Accessibility: Implements 'role="button"', 'tabIndex={0}', and keyboard 
+ *   event listeners (Enter key) for screen reader compatibility [7].
+ */
+
 import React from 'react';
 import barcode from './barcode.svg'
 

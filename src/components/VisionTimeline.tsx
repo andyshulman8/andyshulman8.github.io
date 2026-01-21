@@ -1,4 +1,37 @@
 // VisionTimeline.tsx
+/**
+ * VisionTimeline Component
+ *
+ * Purpose:
+ * Renders a chronological sequence of vision milestones, emphasizing
+ * how an initial vision evolved into a revised outcome over time.
+ *
+ * Data Source:
+ * Consumes the `visionTimeline` array.
+ *
+ * Indexing:
+ * Each item is rendered with an explicit index number to reinforce
+ * sequence and progression.
+ *
+ * Data Slicing Strategy:
+ * - beforeItem: Always `visionTimeline[0]` ("Original Vision").
+ * - afterItem: Always `visionTimeline[visionTimeline.length - 1]`
+ *   ("Revised Vision").
+ * - middleItems: Any items between the first and last entries, rendered
+ *   as a vertical timeline with numbered steps.
+ *
+ * Dependencies & Layout:
+ * - Relies on `visionData.ts` for ordered milestone content.
+ * - Layout uses a grid-based split view for the primary before/after
+ *   comparison and a vertical, connected timeline pattern for the
+ *   intermediate steps to visualize the journey between states.
+ *
+ * Notes:
+ * This component assumes `visionTimeline` is ordered chronologically.
+ * Reordering or filtering should occur upstream.
+ */
+
+
 import { visionTimeline } from './visionData.ts';
 
 // VisionTimeline.tsx - Before/After comparison style

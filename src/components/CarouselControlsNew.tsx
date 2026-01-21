@@ -1,4 +1,22 @@
-// import React from 'react';
+/**
+ * CarouselControlsNew Component
+ * 
+// Purpose: Provides navigation controls for image and content carousels.
+// Usage: Currently used only within WindowFrame to control local carousel state.
+// Note: Does not directly manage or interact with FullscreenImageViewer.
+// Any fullscreen behavior is handled by parent composition.
+ * 
+ * Logic & Event Handling:
+ * - Event Propagation: Uses 'e.stopPropagation()' on all click events (prev, next, 
+ *   and dot selection) [9].
+ * - Variants: Supports 'small' and 'normal' size variants to fit different UI 
+ *   contexts, such as compact stop summaries vs. full-width overviews [11].
+ * 
+ * Styling:
+ * - Visuals: Uses linear gradients (145deg) for buttons and glowing dot 
+ *   indicators to represent the active index [9, 12].
+ */
+
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Props {

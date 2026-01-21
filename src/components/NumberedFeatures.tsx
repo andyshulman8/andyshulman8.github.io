@@ -1,3 +1,20 @@
+/**
+ * NumberedFeatures Component
+ * 
+// Purpose: Displays a numbered list of key features or takeaways.
+// Placement: Rendered contextually within a case study stop.
+// May appear mid-section or at the end depending on narrative flow.
+ * 
+ * Data Structure:
+ * - Utilizes the 'Item' interface requiring a 'title' and 'description' [15, 16].
+ * 
+ * Layout & Styling:
+ * - Grid Logic: Uses 'repeat(auto-fit, minmax(220px, 1fr))' to ensure a 
+ *   responsive layout that adjusts to the number of items [15, 16].
+ * - Style Decisions: Features a silver-colored circular index (1, 2, 3...) 
+ *   to maintain visual alignment with the "Station" theme [17].
+ */
+
 interface Item { title: string; description: string }
 interface Props { items: Item[] }
 

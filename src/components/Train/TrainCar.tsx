@@ -1,3 +1,28 @@
+/**
+ * TrainCar Component
+ * // Purpose: Represents a single visual unit within the train animation.
+ * 
+ * Variant System: Supports 'rear', 'middle', and 'front' configurations, each 
+ * with distinct geometry and functional rendering logic [2, 6].
+ * 
+ * Visual Design Decisions:
+ * - Windows: Rear cars feature 2 windows, middle cars have 5, and the front 
+ *   engine features 1 large window [6, 7].
+ * - Geometry: Uses conditional rounding (e.g., 'rounded-l-3xl' for rear, 
+ *   'rounded-r-3xl' for front) to define the train's silhouette [7, 8].
+ * - Connection Pieces: Rendered on all but the front car using a 'clipPath' 
+ *   polygon to simulate mechanical coupling [7, 9].
+ * 
+ * Animation & Effects:
+ * - Red Light: The rear car includes a pulsing red light indicator [7, 10].
+ * - Front Engine: Includes a specific "EXPRESS" top label and front light [9].
+// Interaction: Hover and interaction states are attached to the entire train
+// container, not to a specific car position. In the main app, hovering over the train triggers a 'generateSparks' animation [11].
+ * 
+ * Style Dependencies:
+ * - Relies on theme-specific constants: 'TRAIN_BODY_COLOR', 'TRAIN_BORDER_COLOR', 
+ *   and 'TRAIN_WHEEL_COLOR' [6, 7].
+ */
 import {
   TRAIN_BODY_COLOR,
   TRAIN_BORDER_COLOR,

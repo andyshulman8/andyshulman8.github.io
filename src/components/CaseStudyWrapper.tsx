@@ -1,8 +1,21 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import CaseStudyTemplate from '../pages/logs';
 
-// Maps case study URL slugs to their index in allCaseStudies array
-// Enables URL-based routing without hardcoding array positions
+/**
+ * CaseStudyWrapper Component
+ * 
+ * Routing & URL Logic:
+ * - Uses the 'viewToIndex' mapping to translate URL slugs (e.g., /logs, /alerts) 
+ *   into numerical indices for the 'allCaseStudies' data array [18, 19].
+ * - Validates the 'caseId' parameter to ensure only existing projects are 
+ *   loaded, redirecting invalid routes to the home page [19, 20].
+ * 
+ * State & Navigation:
+ * - 'initialStop' logic: Extracts the 'stopIndex' from the URL to allow 
+ *   deep-linking directly into a specific part of a case study journey [19, 20].
+ * - Handlers: Manages 'onNextRoute' to sequence the user through projects 
+ *   in a specific "transit" order [20, 21].
+ */
 
 const viewToIndex: Record<string, number> = { 
   logs: 0, alerts: 1, data: 2, team: 3, future: 4, health: 5 

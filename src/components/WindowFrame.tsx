@@ -2,11 +2,22 @@ import React from 'react';
 import { WINDOW_FRAME_STYLE, WINDOW_CHROME_STYLE, WINDOW_CONTENT_STYLE, GLASS_OVERLAY_GRADIENT, CORNER_RIVET_STYLE } from '../utils/caseStudyConstants';
 
 /**
- * WindowFrame
+ * WindowFrame Component System
  * 
- * A reusable chrome-style container used to display
- * images or videos consistently across peeks and stops.
- * Centralizes visual treatment so changes don't drift.
+ * Structure: Consists of three sub-components: WindowFrame (outer container), 
+ * WindowContent (glass/media area), and WindowCornerAccents (rivets) [1, 10-12].
+ * 
+ * Design Pattern:
+ * - Implements a "metallic chrome" look using constants from 'caseStudyConstants.ts' [2, 10].
+ * - Provides a 'glass overlay' gradient effect to add depth to images and videos [2, 12].
+ * - Corner rivets are rendered via 'WindowCornerAccents' to maintain a consistent 
+ *   mechanical aesthetic across the platform [2, 12, 13].
+ * 
+ * Usage & Performance:
+ * - Centrally manages the visual treatment for media peeks and stops to prevent 
+ *   design drift [10].
+// Purpose: Provides a compositional frame with layered visual styling.
+// Styling: Uses static gradient and glass-effect styles defined as constants.
  */
 interface WindowFrameProps {
   children: React.ReactNode;

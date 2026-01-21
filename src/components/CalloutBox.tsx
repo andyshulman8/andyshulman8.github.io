@@ -1,3 +1,20 @@
+/**
+ * CalloutBox Component
+ * 
+// Purpose: Renders a styled callout container with optional iconography.
+// Children: Accepts React nodes. In practice, content may originate as markdown,
+// but by the time it reaches this component it has already been transformed
+// (e.g., via renderMarkdownLinks) into React elements.
+
+ * 
+ * 
+ * Design Note: 
+ * - The component is designed to support icon SVG usage for added visual emphasis 
+ *   within the layout [1].
+ * - It functions as a lightweight wrapper to maintain consistent spacing and 
+ *   typography for highlighted "callout" sections [2].
+ */
+
 import React from 'react';
 
 interface CalloutBoxProps {
