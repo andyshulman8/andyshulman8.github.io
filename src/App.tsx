@@ -1,16 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Train, MapPin, Info, ChevronRight } from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useNavigate, Link } from "react-router-dom";
-import { FullscreenImageViewer } from "./components/FullscreenImageViewer.tsx";
 import { TrainCar } from "./components/Train/TrainCar.tsx";
 import { SkillsBoard } from "./components/Skills/SkillsBoard.tsx";
 import { BackToTopButton } from "./components/Layout/BackToTopButton.tsx";
 import "./styles/animations.css";
 import { caseStudies } from "./data/caseStudies";
 import { testimonials } from "./data/testimonials";
-import TrainTransition from "./pages/train.tsx";
 import {
   THEME_COLOR,
   INFO_COLOR,
@@ -23,6 +21,15 @@ import {
 } from "./constants/theme";
 import { useBackToTop } from "./hooks/index";
 import { useIntersectionOnce } from "./hooks/useIntersectionOnce";
+
+const FullscreenImageViewer = lazy(
+  () =>
+    import("./components/FullscreenImageViewer.tsx").then((mod) => ({
+      default: mod.FullscreenImageViewer,
+    }))
+);
+
+const TrainTransition = lazy(() => import("./pages/train.tsx"));
 
 /**
  * Spark animation particle interface
@@ -170,26 +177,45 @@ export default function DesignCentralStation() {
           Skip to main content
         </a>
 
-        <header className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover bg-[url('/images/Home/hero1.png')] md:bg-[url('/images/Home/hero2.png')]">
+        <header className="relative h-[33vh] min-h-[300px] overflow-hidden">
           {fullscreenImage && (
-            <FullscreenImageViewer
-              src={fullscreenImage}
-              onClose={() => setFullscreenImage(null)}
-            />
+            <Suspense fallback={null}>
+              <FullscreenImageViewer
+                src={fullscreenImage}
+                onClose={() => setFullscreenImage(null)}
+              />
+            </Suspense>
           )}
 
-          <section
-            className="relative h-[33vh] min-h-[300px] overflow-hidden bg-center bg-cover"
-            style={{
-              backgroundImage: `url('/images/Home/test.webp')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+          <section className="relative h-[33vh] min-h-[300px] overflow-hidden">
+            {/* Hero image with responsive variants for LCP optimization */}
+            <picture className="absolute inset-0">
+              <source
+                media="(min-width: 768px)"
+                srcSet="/images-webp/Home/hero2.webp"
+                type="image/webp"
+              />
+              <source
+                media="(max-width: 767px)"
+                srcSet="/images-webp/Home/hero1.webp"
+                type="image/webp"
+              />
+              <img
+                src="/images/Home/hero2.png"
+                alt="Hero background"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                fetchPriority="high"
+                loading="eager"
+              />
+            </picture>
+
+            {/* Dark overlay */}
             <div
-              className="absolute inset-0"
+              className="absolute inset-0 z-5"
               style={{ backgroundColor: "rgba(20, 21, 21, 0.375)" }}
             ></div>
+
+            {/* Content */}
             <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
               <div className="text-left">
                 <div>
@@ -711,7 +737,11 @@ export default function DesignCentralStation() {
         </footer>
 
         <BackToTopButton isVisible={showBackToTop} />
-        <TrainTransition isActive={showTransition} direction="right" />
+        {showTransition && (
+          <Suspense fallback={null}>
+            <TrainTransition isActive={showTransition} direction="right" />
+          </Suspense>
+        )}
       </div>
       <Analytics />
       <SpeedInsights />
