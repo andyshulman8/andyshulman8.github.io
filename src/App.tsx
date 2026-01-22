@@ -160,7 +160,7 @@ export default function DesignCentralStation() {
                 type="image/webp"
               />
               <img
-                src="/images/Home/hero2.png"
+                src="/images/Home/hero2.webp"
                 alt="Hero background"
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 fetchPriority="high"
@@ -368,7 +368,7 @@ export default function DesignCentralStation() {
             </u>{" "}
             • andyshulman8@gmail.com
           </div>
-          <div className="mt-4 text-xs text-white/50 text-left">
+          <div className="mt-12 text-xs text-white/50">
             This site uses anonymized analytics (including Google Analytics) to understand general usage.          </div>
         </footer>
 

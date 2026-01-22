@@ -48,12 +48,12 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "red",
     destination: "Cut troubleshooting from hours to 10 minutes",
     peeks: [
-      "/images/rags/win.png",
-      "/images/rags/gap3.png",
-      "/images/rags/gap1.3.png",
+      "/images/rags/win.webp",
+      "/images/rags/gap3.webp",
+      "/images/rags/gap1.3.webp",
     ],
-    before: "/images/rags/before.png",
-    after: "/images/rags/after.png",
+    before: "/images/rags/before.webp",
+    after: "/images/rags/after.webp",
     background:
       "When Systems Fail, Lives Are at Risk: RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs. Before LogicMonitor had properly integrated a logs product, users were forced to jump between disconnected tools during critical moments.",
     overview:
@@ -74,7 +74,7 @@ export const allCaseStudies: CaseStudyData[] = [
           "I needed to see my entire environment from a single pane of glass. To monitor everything on the network, whether it be a server to a workstation to a piece of networking equipment.",
         quoteAuthor:
           "John Burriss, Senior IT Solutions Engineer at RaySearch Labs",
-        quoteImage: "/images/rags/burriss.png",
+        quoteImage: "/images/rags/burriss.webp",
         numberedFeatures: [
           {
             title: "Disconnected Tools",
@@ -116,9 +116,9 @@ export const allCaseStudies: CaseStudyData[] = [
           },
         ],
         images: [
-          "/images/rags/gap1.1.png",
-          "/images/rags/gap1.2.png",
-          "/images/rags/gap1.3.png",
+          "/images/rags/gap1.1.webp",
+          "/images/rags/gap1.2.webp",
+          "/images/rags/gap1.3.webp",
           "/images/rags/logsInResources.webp",
         ],
       },
@@ -130,7 +130,7 @@ export const allCaseStudies: CaseStudyData[] = [
           "Through competitive analysis, it was clear that search was the key to engineers finding the needle in the haystack. DataDog, Splunk, Sumologic, and more used queries to power almost everything else in Logs. I expanded the size of the search bar and added recent searches, in-line errors, type-ahead, and stateful search. I emphasized a prominent search box and an intuitive fields panel so both novice and expert users could find needles in haystacks.",
         quote: "I like a big search box and inline support is super helpful.",
         quoteAuthor: "NOC Engineer at HyeTech Networks",
-        images: ["/images/rags/logsquery.png", "/images/rags/fields.png"],
+        images: ["/images/rags/logsquery.webp", "/images/rags/fields.webp"],
       },
       {
         station_name: "Visual Analytics",
@@ -155,7 +155,7 @@ export const allCaseStudies: CaseStudyData[] = [
               "Logs widgets can be embedded in dashboards, helping correlate log data with system performance metrics.",
           },
         ],
-        images: ["/images/rags/gap3.png", "/images/rags/donut.webp"],
+        images: ["/images/rags/gap3.webp", "/images/rags/donut.webp"],
       },
       {
         station_name: "Impact",
@@ -186,8 +186,8 @@ export const allCaseStudies: CaseStudyData[] = [
       // '/images/alerts/proactive.png',
       // '/images/alerts/AI4.png'
     ],
-    before: "/images/alerts/before.png",
-    after: "/images/alerts/after.png",
+    before: "/images/alerts/before.webp",
+    after: "/images/alerts/after.webp",
     background:
       "Schneider Electric, a 160 year old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
     overview:
@@ -206,7 +206,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote:
           "We're like headless chickens running around. If you spend your efforts in different directions, the chances of them negating or canceling out are greater.",
         quoteAuthor: "Sankeet Lokhande, Senior Engineer at Schneider Electric",
-        quoteImage: "/images/alerts/sankeet.png",
+        quoteImage: "/images/alerts/sankeet.webp",
         features: [
           {
             title: "Alert Fatigue",
@@ -224,9 +224,9 @@ export const allCaseStudies: CaseStudyData[] = [
           },
         ],
         images: [
-          "/images/alerts/buried1.png",
-          "/images/alerts/buried2.png",
-          "/images/alerts/buried3.png",
+          "/images/alerts/buried1.webp",
+          "/images/alerts/buried2.webp",
+          "/images/alerts/buried3.webp",
         ],
       },
       {
@@ -252,8 +252,8 @@ export const allCaseStudies: CaseStudyData[] = [
           },
         ],
         images: [
-          "/images/alerts/newLogAlert.webp",
-          "/images/alerts/NewLogAlert.png",
+          "/images/alerts/NewLogAlert.webp",
+          // "/images/alerts/NewLogAlert2.webp",
         ],
       },
       {
@@ -261,7 +261,7 @@ export const allCaseStudies: CaseStudyData[] = [
         phase: "Ideate",
         content:
           "Once the immediate noise problem was solved, I turned to helping teams prevent issues before they caused downtime. I designed Saved Views and Query Tracking, enabling users to save, share, and track search results as metrics over time. \n\n Schneider used this to automatically track spikes in 404 errors and authentication failures across their global clusters.",
-        images: ["/images/alerts/proactive.png"],
+        images: ["/images/alerts/proactive.webp"],
       },
       {
         station_name: "AI Foundation",
@@ -269,10 +269,10 @@ export const allCaseStudies: CaseStudyData[] = [
         content:
           "Leadership asked me to extend this thinking platform-wide as they needed a unified alerts vision. I designed flows and defined troubleshooting principles, laying the groundwork for Edwin AI.",
         images: [
-          "/images/alerts/AI1.png",
-          "/images/alerts/AI2.png",
-          "/images/alerts/AI3.png",
-          "/images/alerts/AI4.png",
+          "/images/alerts/AI1.webp",
+          "/images/alerts/AI2.webp",
+          "/images/alerts/AI3.webp",
+          "/images/alerts/AI4.webp",
         ],
         numberedFeatures: [
           {
@@ -300,7 +300,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote:
           "There’s been a constant change in the technology we manage today. We were really happy to see that LogicMonitor not only supported where we are today, but where we’re moving. The scalability was very simple.",
         quoteAuthor: "Arun Mandayam, IT Manager at Schneider Electric",
-        quoteImage: "/images/alerts/arun.png",
+        quoteImage: "/images/alerts/arun.webp",
         impact: {
           metric1: "30% reduction",
           label1: "Alert Noise Reduction",
@@ -317,8 +317,8 @@ export const allCaseStudies: CaseStudyData[] = [
     destination: "Future-proofed log management for evolving compliance",
     peeks: [
       "/images/data/natural.webp",
-      "/images/data/napkin.png",
-      "/images/data/access4.png",
+      "/images/data/napkin.webp",
+      "/images/data/access4.webp",
     ],
     background:
       "In higher education, data security and compliance are mission-critical: breaches risk exposing student records, research data, and financial information. Loyola University of Maryland, serving over 17,000 students across multiple campuses, faced growing challenges as it transitioned to a virtualized network infrastructure.",
@@ -368,10 +368,10 @@ export const allCaseStudies: CaseStudyData[] = [
         content:
           "I ran multiple research and validation cycles as we evolved LM's access control model. \n\nI designed Partitions: a feature that securely segregates log data so only authorized users have access. Mike could now store all the sensitive logs in a Partition, set up proper access control, and feel confident the logs have no way of getting in the wrong hands.",
         images: [
-          "/images/data/Access.png",
-          "/images/data/access2.png",
-          "/images/data/access3.png",
-          "/images/data/access4.png",
+          "/images/data/Access.webp",
+          "/images/data/access2.webp",
+          "/images/data/access3.webp",
+          "/images/data/access4.webp",
         ],
       },
       {
@@ -387,7 +387,7 @@ export const allCaseStudies: CaseStudyData[] = [
           },
           { title: "Scalable structure for future log types", description: "" },
         ],
-        images: ["/images/data/napkin.png", "/images/data/logsource.webp"],
+        images: ["/images/data/napkin.webp", "/images/data/logsource.webp"],
       },
       {
         station_name: "Natural Language",
@@ -422,9 +422,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "blue",
     destination: "3 piloted solutions in 12 weeks",
     peeks: [
-      "/images/team/frame1.png",
-      "/images/team/proto.png",
-      "/images/team/TOC2.jpeg",
+      "/images/team/frame1.webp",
+      "/images/team/proto.webp",
+      "/images/team/TOC2.webp",
     ],
     background:
       "Align Technology, maker of Invisalign, wanted to improve its relationship with the dentists and orthodontists that fit, use, and sell their products. Their network of dental professionals needed support with their workloads and stronger relationships.",
@@ -450,7 +450,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote:
           "Listening through the customer interviews clarified a reality for many of us.",
         quoteAuthor: "Practice Recovery Experiences concept team",
-        images: ["/images/team/empathy.png"],
+        images: ["/images/team/empathy.webp"],
       },
       {
         station_name: "Reframed Needs",
@@ -460,7 +460,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote:
           "The Design Thinking process provided us a way to design based on the customer needs.",
         quoteAuthor: "Practice Recovery Experiences concept team",
-        images: ["/images/team/frame1.png", "/images/team/frame2.png"],
+        images: ["/images/team/frame1.webp", "/images/team/frame2.webp"],
       },
       {
         station_name: "Brainstorming",
@@ -479,7 +479,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote:
           "Quick testing could save the team and company time and energy to pressure test an idea long before we utilize resources to execute it completely - AGILITY!",
         quoteAuthor: "Delighted Doctor concept team",
-        images: ["/images/team/proto.png"],
+        images: ["/images/team/proto.webp"],
       },
       {
         station_name: "Impact",
@@ -507,9 +507,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "green",
     destination: "100K+ visitors served since 2022",
     peeks: [
-      "/images/future/aud4.jpeg",
-      "/images/future/toolkit1.png",
-      "/images/future/feedback.png",
+      "/images/future/aud4.webp",
+      "/images/future/toolkit1.webp",
+      "/images/future/feedback.webp",
     ],
     background:
       "The Exploratorium and SESI Lab needed to define and structure the theme 'Imagining the Future' for a new museum in Brazil, aligning 20 planned exhibits under one clear vision. The goal was to build confidence in underserved communities facing educational barriers and empower citizens to see themselves as capable of shaping their future.",
@@ -533,10 +533,10 @@ export const allCaseStudies: CaseStudyData[] = [
         content:
           "I considered both The Exploratorium's and SESI's brand goals, as well as the overall audience in cultural context. The stakeholders needed to create a distinctive museum experience blending social and physical science and design for repeat visits. In context, the overall needs boiled down to the following: ",
         images: [
-          "/images/future/aud1.png",
-          "/images/future/aud2.png",
-          "/images/future/aud3.png",
-          "/images/future/aud4.jpeg",
+          "/images/future/aud1.webp",
+          "/images/future/aud2.webp",
+          "/images/future/aud3.webp",
+          "/images/future/aud4.webp",
         ],
         features: [
           {
@@ -566,7 +566,7 @@ export const allCaseStudies: CaseStudyData[] = [
         phase: "Ideate",
         content:
           "Leveraging my Stanford Graduate School of Business course experience, I created a theory of change to provide the framework for our exhibit, outlining key goals and measurable outcomes to ensure we stayed on track throughout the design process.",
-        images: ["/images/future/TOC.png"],
+        images: ["/images/future/TOC.webp"],
       },
       {
         station_name: "Developer Toolkit",
@@ -574,10 +574,10 @@ export const allCaseStudies: CaseStudyData[] = [
         content:
           "I built a 6-step developer process that gave exhibit creators the creative freedom they needed while keeping everything tied to our thematic goal. I also designed a decision-making framework to help the manager select the final 20 exhibits. I researched exhibits worldwide and compiled a reference library with methods and outcomes.",
         images: [
-          "/images/future/toolkit1.png",
-          "/images/future/toolkit2.png",
-          "/images/future/toolkit3.png",
-          "/images/future/toolkit4.png",
+          "/images/future/toolkit1.webp",
+          "/images/future/toolkit2.webp",
+          "/images/future/toolkit3.webp",
+          "/images/future/toolkit4.webp",
         ],
       },
       {
@@ -588,7 +588,7 @@ export const allCaseStudies: CaseStudyData[] = [
         quote:
           "In this creative environment, active participation is encouraged, and the central idea of [SESI Lab] is that learning occurs in a fun and interactive way.",
         quoteAuthor: "Fabio Gatti, SESI Lab visitor",
-        quoteImage: "/images/future/fabio.png",
+        quoteImage: "/images/future/fabio.webp",
         impact: {
           metric1: "100,000+ visitors",
           label1: "Served since 2022 opening",
@@ -605,9 +605,9 @@ export const allCaseStudies: CaseStudyData[] = [
     line_color: "purple",
     destination: "40% reduction in expert dependency",
     peeks: [
-      "/images/health/sketch2.png",
+      "/images/health/sketch2.webp",
       "/images/health/stickies.avif",
-      "/images/health/LED.png",
+      "/images/health/LED.webp",
     ],
     background:
       "Only 16-30% of people who could benefit from hearing aids actually use them due to stigma, cost, and overwhelming complexity. Meanwhile, 70 million Americans struggle with sleep. Bose saw an opportunity to bring its sound expertise to both hearing and sleep, but fragmented teams needed alignment.",
