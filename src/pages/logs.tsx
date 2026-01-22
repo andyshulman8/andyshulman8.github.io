@@ -18,7 +18,7 @@ import { allCaseStudies } from "./casedata.tsx";
 import type { CaseStudyData, Stop } from "./casedata.tsx";
 import TrainTransition from "./train.tsx";
 import { FullscreenImageViewer } from "../components/FullscreenImageViewer.tsx";
-import CarouselControls from "../components/CarouselControlsNew";
+import CarouselControls from "../components/CarouselControls";
 import NumberedFeatures from "../components/NumberedFeatures.tsx";
 import VisionTimeline from "../components/VisionTimeline.tsx";
 import {

@@ -28,3 +28,6 @@ export const useBackToTop = (threshold: number = 320) => {
 
   return isVisible;
 };
+
+// Re-export usePageviewTracking from separate file to keep analytics logic isolated
+export { usePageviewTracking } from "./usePageviewTracking";

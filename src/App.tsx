@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useRef, lazy, Suspense } from "react";
 import { Train, MapPin, ChevronRight } from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -10,7 +10,6 @@ import { caseStudies } from "./data/caseStudies";
 import {
   THEME_COLOR,
   TEXT_SECONDARY,
-  GA_ID,
   ANIMATION,
   UI,
 } from "./constants/theme";
@@ -123,34 +122,6 @@ export default function DesignCentralStation() {
       setShowTransition(false);
     }, 1400); // Match TRANSITION_DURATION_MS from caseStudyConstants
   };
-
-  /**
-   * Initialize Google Analytics on mount
-   * Prevents duplicate script loading via scriptId check
-   * Tracks page views for the portfolio
-   */
-  useEffect(() => {
-    const scriptId = "ga-script";
-
-    if (document.getElementById(scriptId)) return;
-
-    const script = document.createElement("script");
-    script.id = scriptId;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-    script.async = true;
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag(...args: (string | Date | Record<string, string>)[]) {
-      window.dataLayer.push(args);
-    }
-
-    gtag("js", new Date());
-    gtag("config", GA_ID, {
-      page_path: window.location.pathname,
-    });
-  }, []);
 
   return (
     <div
@@ -397,6 +368,8 @@ export default function DesignCentralStation() {
             </u>{" "}
             • andyshulman8@gmail.com
           </div>
+          <div className="mt-4 text-xs text-white/50 text-left">
+            This site uses anonymized analytics (including Google Analytics) to understand general usage.          </div>
         </footer>
 
         <BackToTopButton isVisible={showBackToTop} />

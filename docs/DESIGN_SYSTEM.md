@@ -24,7 +24,7 @@ Audience: Designers and front-end engineers.
 - **Skills Board:** Split-flap animation for technical skills display.
 <!-- Comment: Verified in src/components/Skills/SkillsBoard.tsx. The split-flap animation is triggered via IntersectionObserver when the board becomes visible (lines 11-15) -->
 - **Carousel Controls & Fullscreen Viewer:** Navigate images/videos efficiently.
-<!-- Comment: Carousel controls are in src/components/CarouselControlsNew.tsx. Fullscreen viewer is in <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/components/FullscreenImageViewer.tsx">src/components/FullscreenImageViewer.tsx</traycer-file> and supports both images and videos -->
+<!-- Comment: Carousel controls are in src/components/CarouselControls.tsx. Fullscreen viewer is in <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/components/FullscreenImageViewer.tsx">src/components/FullscreenImageViewer.tsx</traycer-file> and supports both images and videos -->
 
 ## Motion & Interaction
 

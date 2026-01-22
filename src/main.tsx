@@ -2,6 +2,7 @@ import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DesignCentralStation from "./App.tsx";
+import { PageviewTracker } from "./components/PageviewTracker.tsx";
 import "./index.css";
 
 const CaseStudyWrapper = lazy(
@@ -17,25 +18,27 @@ const LoadingFallback = () => (
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DesignCentralStation />} />
-        <Route
-          path="/:caseId"
-          element={
-            <Suspense fallback={<LoadingFallback />}>
-              <CaseStudyWrapper />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/:caseId/:stopIndex"
-          element={
-            <Suspense fallback={<LoadingFallback />}>
-              <CaseStudyWrapper />
-            </Suspense>
-          }
-        />
-      </Routes>
+      <PageviewTracker>
+        <Routes>
+          <Route path="/" element={<DesignCentralStation />} />
+          <Route
+            path="/:caseId"
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <CaseStudyWrapper />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/:caseId/:stopIndex"
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <CaseStudyWrapper />
+              </Suspense>
+            }
+          />
+        </Routes>
+      </PageviewTracker>
     </BrowserRouter>
   </StrictMode>,
 );
