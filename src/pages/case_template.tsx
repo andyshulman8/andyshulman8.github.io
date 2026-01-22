@@ -13,21 +13,21 @@
  */
 
 import { ChevronLeft, ChevronRight, Train } from "lucide-react";
-import CalloutBox from "../components/CalloutBox";
+import CalloutBox from "../components/CalloutBox.tsx";
 import { allCaseStudies } from "./casedata.tsx";
 import type { CaseStudyData, Stop } from "./casedata.tsx";
 import TrainTransition from "./train.tsx";
 import { FullscreenImageViewer } from "../components/FullscreenImageViewer.tsx";
-import CarouselControls from "../components/CarouselControls";
+import CarouselControls from "../components/CarouselControls.tsx";
 import NumberedFeatures from "../components/NumberedFeatures.tsx";
 import VisionTimeline from "../components/VisionTimeline.tsx";
 import {
   WindowFrame,
   WindowContent,
   WindowCornerAccents,
-} from "../components/WindowFrame";
+} from "../components/WindowFrame.tsx";
 import { useNavigate, useLocation } from "react-router-dom";
-import { renderMarkdownLinks } from "../utils/renderMarkdownLinks";
+import { renderMarkdownLinks } from "../utils/renderMarkdownLinks.tsx";
 import {
   TRANSITION_DURATION_MS,
   PANEL_STYLE,
@@ -36,7 +36,7 @@ import {
   BORDER_SILVER_STYLE,
   glowStyle,
   largeGlowStyle,
-} from "../utils/caseStudyConstants";
+} from "../utils/caseStudyConstants.ts";
 import { useState, useEffect, useRef } from "react";
 import { ExpressTicketCTA } from "../components/ticket.tsx";
 

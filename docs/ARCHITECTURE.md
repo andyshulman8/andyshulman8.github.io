@@ -31,7 +31,7 @@ Everything needed to understand or extend the site lives in the repo.
 
 - `src/pages/App.tsx` — Homepage with routing
 <!-- Comment: The actual file is <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/App.tsx">src/App.tsx</traycer-file> (not in pages folder). It's the main application component with homepage content -->
-- `src/pages/logs.tsx` — Universal case study renderer
+- `src/pages/case_template.tsx` — Universal case study renderer
 <!-- Comment: VERIFIED - This is the CaseStudyTemplate component that renders all case studies -->
 - `src/pages/casedata.tsx` — All case study content
 <!-- Comment: VERIFIED - Contains allCaseStudies array with all 6 case studies -->

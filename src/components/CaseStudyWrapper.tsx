@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import CaseStudyTemplate from "../pages/logs";
+import CaseStudyTemplate from "../pages/case_template";
 
 /**
  * CaseStudyWrapper Component

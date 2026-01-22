@@ -14,7 +14,7 @@ Audience: Designers, engineers, accessibility auditors.
 
 - **Semantic HTML:** `<header>`, `<main>`, `<section>`, `<footer>` with `aria-label`.
 - **Keyboard Navigation:** Train animation and case study stops fully navigable.
-<!-- Comment: Verified in <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/App.tsx">src/App.tsx</traycer-file> lines 222-225 (train has tabIndex and onKeyDown) and <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/pages/logs.tsx">src/pages/logs.tsx</traycer-file> lines 643-679 (stop navigation buttons). However, the fullscreen image viewer keyboard controls could be improved as noted in line 30 -->
+<!-- Comment: Verified in <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/App.tsx">src/App.tsx</traycer-file> lines 222-225 (train has tabIndex and onKeyDown) and <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/pages/case_template.tsx">src/pages/case_template.tsx</traycer-file> lines 643-679 (stop navigation buttons). However, the fullscreen image viewer keyboard controls could be improved as noted in line 30 -->
 - **Color Contrast:** White/silver text on dark gray backgrounds; accent colors accessible.
 <!-- Comment: Colors verified in src/constants/theme.ts. SILVER (#dfe1e5ff) on BACK_COLOR (#141515) should meet WCAG AA standards, but formal contrast testing is recommended -->
 - **Screen Reader Support:** Alt text, ARIA labels, skip links.
