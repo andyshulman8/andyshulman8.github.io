@@ -92,7 +92,7 @@ export default function DesignCentralStation() {
   const showBackToTop = useBackToTop(UI.backToTopThreshold);
 
   const [sparks, setSparks] = useState<Spark[]>([]);
-  const trainRef = useRef<HTMLDivElement>(null);
+  const trainRef = useRef<HTMLButtonElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
   const [showTransition, setShowTransition] = useState(false);
 
@@ -151,12 +151,12 @@ export default function DesignCentralStation() {
             <picture className="absolute inset-0">
               <source
                 media="(min-width: 768px)"
-                srcSet="/images-webp/Home/hero2.webp"
+                srcSet="/images/Home/hero2.webp"
                 type="image/webp"
               />
               <source
                 media="(max-width: 767px)"
-                srcSet="/images-webp/Home/hero1.webp"
+                srcSet="/images/Home/hero1.webp"
                 type="image/webp"
               />
               <img
@@ -238,16 +238,13 @@ export default function DesignCentralStation() {
               ></div>
 
               <div className="absolute top-1 left-0 w-full h-full flex items-center z-20">
-                <div
+                <button
                   ref={trainRef}
-                  className="train-animation cursor-pointer"
+                  className="train-animation bg-transparent border-none p-0 cursor-pointer"
                   onClick={handleTrainClick}
                   onMouseOver={handleTrainHover}
                   onFocus={handleTrainHover}
-                  role="button"
-                  aria-label="Click for train announcement"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && handleTrainClick()}
+                  aria-label="Click train for random case study journey"
                 >
                   <div className="flex items-end gap-0">
                     <div ref={rearCarRef} className="rear-car">
@@ -257,8 +254,9 @@ export default function DesignCentralStation() {
                     <TrainCar variant="middle" />
                     <TrainCar variant="front" />
                   </div>
-                </div>
+                </button>
               </div>
+
             </div>
           </section>
 

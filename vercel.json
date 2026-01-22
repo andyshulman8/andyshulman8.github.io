@@ -39,7 +39,7 @@
       ]
     },
     {
-      "source": "/images-webp/:path*",
+      "source": "/images/:path*",
       "headers": [
         {
           "key": "Cache-Control",

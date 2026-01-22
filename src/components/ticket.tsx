@@ -13,7 +13,7 @@
  * Animation & Interaction:
  * - Hover Effects: The ticket scales slightly and rotates -1 degree while the
  *   "stub" punch-hole changes fill to black, simulating a physical punch [5, 7].
- * - Accessibility: Implements 'role="button"', 'tabIndex={0}', and keyboard
+ * - Accessibility: Implements as a button so space bar works, 'tabIndex={0}', and keyboard
  *   event listeners (Enter key) for screen reader compatibility [7].
  */
 
@@ -31,14 +31,12 @@ interface ExpressTicketCTAProps {
 export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({
   onClick,
 }) => (
-  <div
-    className="relative inline-flex cursor-pointer group"
-    onClick={onClick}
-    role="button"
-    tabIndex={0}
-    onKeyDown={(e) => e.key === "Enter" && onClick()}
-    aria-label="Express to first stop"
-  >
+    <button
+      type="button"
+      className="relative inline-flex cursor-pointer group bg-transparent border-0 p-0 text-left"
+      onClick={onClick}
+      aria-label="Express to first stop"
+    >
     <svg
       width="240"
       height="90"
@@ -207,5 +205,7 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({
         pointerEvents="none"
       />
     </svg>
-  </div>
+    </button>
+  // </div>
 );
+

@@ -1,6 +1,3 @@
-import { useParams, useNavigate } from "react-router-dom";
-import CaseStudyTemplate from "../pages/case_template";
-
 /**
  * CaseStudyWrapper Component
  *
@@ -16,6 +13,10 @@ import CaseStudyTemplate from "../pages/case_template";
  * - Handlers: Manages 'onNextRoute' to sequence the user through projects
  *   in a specific "transit" order [20, 21].
  */
+
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import CaseStudyTemplate from "../pages/case_template";
 
 const viewToIndex: Record<string, number> = {
   logs: 0,
@@ -35,17 +36,31 @@ export default function CaseStudyWrapper() {
 
   const validCases = ["logs", "alerts", "data", "team", "future", "health"];
 
-  if (!caseId || !validCases.includes(caseId)) {
-    navigate("/", { replace: true });
+  const isValid = !!caseId && validCases.includes(caseId);
+
+  useEffect(() => {
+    if (!isValid) {
+      navigate("/", { replace: true });
+    }
+  }, [isValid, navigate]);
+
+  if (!isValid) {
+    // Temporary fallback while redirect happens
     return <div>Loading...</div>;
   }
 
-  const dataIndex = viewToIndex[caseId];
+  const dataIndex = viewToIndex[caseId!];
 
-  // If stopIndex exists in URL, we're viewing a stop; otherwise overview
-  const initialStop = stopIndex
-    ? Math.max(0, parseInt(stopIndex, 10) - 1)
-    : undefined;
+  const getInitialStop = (stopIndex?: string): number | undefined => {
+    if (!stopIndex) return undefined;
+    
+    const parsed = parseInt(stopIndex, 10);
+    if (isNaN(parsed) || parsed < 1) return undefined;
+    
+    return Math.max(0, parsed - 1);
+  };
+
+  const initialStop = getInitialStop(stopIndex);
 
   return (
     <CaseStudyTemplate
@@ -54,7 +69,7 @@ export default function CaseStudyWrapper() {
       onBack={() => navigate("/")}
       onNextRoute={() => {
         const order = ["logs", "alerts", "data", "team", "future", "health"];
-        const currentIdx = order.indexOf(caseId);
+        const currentIdx = order.indexOf(caseId!);
         const nextCase = order[(currentIdx + 1) % order.length];
         navigate(`/${nextCase}`);
       }}
