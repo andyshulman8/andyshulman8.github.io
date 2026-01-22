@@ -1,26 +1,20 @@
 import { useState, useEffect, useRef, lazy, Suspense } from "react";
-import { Train, MapPin, Info, ChevronRight } from "lucide-react";
+import { Train, MapPin, ChevronRight } from "lucide-react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useNavigate, Link } from "react-router-dom";
 import { TrainCar } from "./components/Train/TrainCar.tsx";
-import { SkillsBoard } from "./components/Skills/SkillsBoard.tsx";
 import { BackToTopButton } from "./components/Layout/BackToTopButton.tsx";
 import "./styles/animations.css";
 import { caseStudies } from "./data/caseStudies";
-import { testimonials } from "./data/testimonials";
 import {
   THEME_COLOR,
-  INFO_COLOR,
-  SILVER,
   TEXT_SECONDARY,
-  TEXT_MUTED,
   GA_ID,
   ANIMATION,
   UI,
 } from "./constants/theme";
 import { useBackToTop } from "./hooks/index";
-import { useIntersectionOnce } from "./hooks/useIntersectionOnce";
 
 const FullscreenImageViewer = lazy(
   () =>
@@ -30,6 +24,18 @@ const FullscreenImageViewer = lazy(
 );
 
 const TrainTransition = lazy(() => import("./pages/train.tsx"));
+
+const InformationBooth = lazy(() =>
+  import("./components/InformationBooth.tsx").then((mod) => ({
+    default: mod.InformationBooth,
+  }))
+);
+
+const TestimonialsSection = lazy(() =>
+  import("./components/TestimonialsSection.tsx").then((mod) => ({
+    default: mod.TestimonialsSection,
+  }))
+);
 
 /**
  * Spark animation particle interface
@@ -43,15 +49,6 @@ interface Spark {
   x: number;
   y: number;
 }
-
-/**
- * Skeleton placeholder shown while the map iframe is loading.
- */
-const MapSkeleton: React.FC = () => (
-  <div className="relative w-full h-full animate-pulse bg-neutral-900">
-    <div className="absolute inset-0 bg-gradient-to-br from-neutral-800/60 to-neutral-900/60" />
-  </div>
-);
 
 /**
  * Generates spark particles originating from a DOM rect.
@@ -78,29 +75,26 @@ const generateSparks = (origin: { x: number; y: number }): Spark[] =>
  * The portfolio homepage showcasing:
  * - Interactive train animation with spark effects
  * - Case study grid with navigation
- * - Information booth with design process map
- * - Skills panel and about section
- * - Passenger testimonials carousel
+ * - Information booth with design process map (lazy-loaded)
+ * - Skills panel and about section (lazy-loaded)
+ * - Passenger testimonials carousel (lazy-loaded)
  *
  * Analytics: Integrates Google Analytics via Vercel
  *
  * NOTE:
- * This component intentionally centralizes multiple sections to preserve
- * narrative flow and coordinated animation timing across the homepage.
+ * Information booth, testimonials, and train transition are lazy-loaded
+ * to minimize initial bundle size for faster LCP and FCP.
  */
 
 export default function DesignCentralStation() {
   const navigate = useNavigate();
 
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
-  const [processLoaded, setProcessLoaded] = useState(false);
-  const [mapLoaded, setMapLoaded] = useState(false);
   const showBackToTop = useBackToTop(UI.backToTopThreshold);
 
   const [sparks, setSparks] = useState<Spark[]>([]);
   const trainRef = useRef<HTMLDivElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
   const [showTransition, setShowTransition] = useState(false);
 
   /**
@@ -129,12 +123,6 @@ export default function DesignCentralStation() {
       setShowTransition(false);
     }, 1400); // Match TRANSITION_DURATION_MS from caseStudyConstants
   };
-
-  /**
-   * Lazy load maps iframe when element becomes visible
-   * Uses shared IntersectionObserver hook to minimize memory overhead
-   */
-  useIntersectionOnce(mapRef, () => setMapLoaded(true), { threshold: 0.25 });
 
   /**
    * Initialize Google Analytics on mount
@@ -365,353 +353,28 @@ export default function DesignCentralStation() {
               ))}
             </div>
           </section>
-          <section className="py-16 px-6" aria-label="Information Booth">
-            <div className="grid gap-8">
-              {/* Information Booth Panel */}
-              <div
-                className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:border-white/20 transition-all duration-300"
-                style={{
-                  boxShadow: `${UI.infoBoxShadow.x}px ${UI.infoBoxShadow.y}px ${UI.infoBoxShadow.blur}px ${INFO_COLOR}10`,
-                }}
-              >
-                {/* Top chevron banner with glowing INFORMATION sign inside */}
-                <div className="relative flex justify-center mb-10">
-                  <div className="relative">
-                    {/* Blue rectangle banner */}
-                    <div className="h-20 px-4 bg-blue-600 flex items-center justify-center relative">
-                      {/* Glowing INFORMATION sign - INSIDE the banner */}
-                      <div className="relative inline-block">
-                        {/* Backlight glow */}
-                        <div
-                          className="absolute inset-0 rounded-lg blur-xl opacity-50"
-                          style={{
-                            backgroundColor: INFO_COLOR,
-                            transform: "scale(1.2)",
-                          }}
-                        />
 
-                        {/* Sign face */}
-                        <div className="relative flex items-center gap-3 px-1 py-2">
-                          <Info
-                            className="w-8 h-8 relative z-10"
-                            style={{ color: "var(--color-silver)" }}
-                          />
-                          <h2 className="text-3xl font-bold text-white relative z-10 tracking-wide">
-                            INFORMATION
-                          </h2>
-                        </div>
-
-                        {/* Corner accent lights */}
-                        <div
-                          className="absolute -top-2 -left-2 w-3 h-3 rounded-full animate-pulse"
-                          style={{
-                            backgroundColor: SILVER,
-                            boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
-                          }}
-                        />
-                        <div
-                          className="absolute -top-2 -right-2 w-3 h-3 rounded-full animate-pulse"
-                          style={{
-                            backgroundColor: SILVER,
-                            boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
-                            animationDelay: `${UI.animationDelays.staggerSmall}s`,
-                          }}
-                        />
-                        <div
-                          className="absolute -bottom-2 -left-2 w-3 h-3 rounded-full animate-pulse"
-                          style={{
-                            backgroundColor: SILVER,
-                            boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
-                            animationDelay: `${UI.animationDelays.staggerMedium}s`,
-                          }}
-                        />
-                        <div
-                          className="absolute -bottom-2 -right-2 w-3 h-3 rounded-full animate-pulse"
-                          style={{
-                            backgroundColor: SILVER,
-                            boxShadow: `0 0 ${UI.cornerAccentLights.glowIntensity}px ${SILVER}`,
-                            animationDelay: `${UI.animationDelays.staggerLarge}s`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Content below chevron */}
-                <div className="mt-8">
-                  <h3 className="text-white/90 text-2xl font-bold mb-4">
-                    The Complete Transit System
-                  </h3>
-                  <p
-                    className="text-left mb-6"
-                    style={{ color: "var(--color-text-tertiary)" }}
-                  >
-                    This is my design process map. Each project follows a unique
-                    route through these stations, combining methodologies from
-                    Stanford d.school, Business Strategy, Behavior Design, and
-                    Sustainability frameworks.
-                  </p>
-
-                  {/* Process Map Image */}
-                  <div className="bg-[#f5e6d3] rounded-xl border border-black/20 overflow-hidden relative aspect-video">
-                    {/* Loading skeleton */}
-                    <div
-                      aria-hidden={processLoaded}
-                      className={`absolute inset-0 transition-opacity duration-${UI.imageLoadingDuration} ${
-                        processLoaded
-                          ? "opacity-0 pointer-events-none"
-                          : "opacity-100"
-                      }`}
-                    >
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-full h-full rounded-md bg-gradient-to-br from-[#f2e8df] to-[#e6dccf] animate-pulse" />
-                      </div>
-                    </div>
-
-                    {/* Spinner while loading */}
-                    {!processLoaded && (
-                      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
-                      </div>
-                    )}
-
-                  {/* Actual image */}
-                  <button
-                    className={`w-full h-full cursor-pointer hover:opacity-90 transition-opacity duration-${UI.imageLoadingDuration} border-0 bg-transparent p-0 ${
-                      processLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                    onClick={() =>
-                      setFullscreenImage("/images/Home/process.webp")
-                    }
-                    aria-label="View design process map in fullscreen"
-                  >
-                    <img
-                      src="/images/Home/process.webp"
-                      alt="Design process map"
-                      loading="lazy"
-                      decoding="async"
-                      onLoad={() => setProcessLoaded(true)}
-                      onError={() => setProcessLoaded(true)}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                  </div>
-                </div>
-
-                {/* Skills Panel */}
-                <div className="pt-12">
-                  <SkillsBoard />
-                </div>
-
-                {/* About Me Panel */}
-                <div className="pt-12">
-                  <div className="flex items-start gap-4 mb-6">
-                    {/* Headshot */}
-                    <div
-                      className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                      style={{ borderColor: SILVER }}
-                    >
-                      <img
-                        src="/images/Home/headshot.png"
-                        alt="Andy Shulman"
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-
-                    <h3 className="text-white/90 text-2xl font-bold self-center">
-                      About the Conductor
-                    </h3>
-                  </div>
-
-                  <div className="grid md:grid-cols-3 gap-6 items-start">
-                    <div className="md:col-span-2 space-y-4">
-                      <p className="text-white/80 leading-relaxed">
-                        I&apos;m Andy, a Senior UX Designer with{" "}
-                        <span className="relative inline-block group">
-                          <u>
-                            <a
-                              aria-label="Andy Shulman's resume (opens in new tab)"
-                              href="https://drive.google.com/file/d/1m1BwzMNuZySV6jw0Jr3FmXCiecmqptiu/view?usp=sharing"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:text-white transition-colors"
-                            >
-                              over 5 years experience
-                            </a>
-                          </u>
-                          {/* Tooltip */}
-                          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                            See Resume →
-                          </span>
-                        </span>{" "}
-                        transforming complex enterprise systems into intuitive
-                        experiences. I have a Master&apos;s in Sustainability Science
-                        from Stanford and a skill set that brings together design
-                        thinking, behavior design, business strategy, and
-                        systems thinking.
-                      </p>
-
-                      <p className="text-white/80 leading-relaxed">
-                        My work spans enterprise B2B SaaS, health tech, to
-                        mission-driven organizations. I&apos;ve designed AI-driven
-                        features, laid foundations for IBM partnerships, and
-                        helped teams from cancer treatment centers to global
-                        energy companies work more efficiently.
-                      </p>
-                      <p className="text-white/80 leading-relaxed">
-                        I am currently based in Montrose, Colorado with my
-                        adventure dog, exploring opportunities in climate tech
-                        and mental health spaces. Check out my adventures:
-                      </p>
-                    </div>
-
-                    <div className="md:col-span-1 h-full">
-                      <div
-                        ref={mapRef}
-                        className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"
-                        style={{
-                          boxShadow: `0 0 20px ${INFO_COLOR}${Math.round(
-                            UI.shadowOpacities.default * 255,
-                          )
-                            .toString(16)
-                            .padStart(2, "0")}`,
-                        }}
-                      >
-                        <div className="w-full h-full aspect-video">
-                          {mapLoaded ? (
-                            <iframe
-                              src="https://www.google.com/maps/d/embed?mid=1QR8iQSZT8-UmjddIlJR1cA6dtaqnYTHc"
-                              className="w-full h-full"
-                              loading="lazy"
-                              title="Map preview"
-                            />
-                          ) : (
-                            <MapSkeleton />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          {/* Lazy-loaded Information Booth */}
+          <Suspense
+            fallback={
+              <div className="py-16 px-6 flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
               </div>
-            </div>
-          </section>
-
-          {/* Passenger Testimonials (section background matching All Aboard) */}
-          <section
-            className="mb-16 py-10 px-6 w-full mx-auto"
-            style={{ backgroundColor: "var(--color-back)" }}
-            aria-label="Passenger Testimonials"
+            }
           >
-            {/* Ticket Banner Separator with Testimonials (match All Aboard background) */}
-            <div
-              className="relative py-12 px-6 overflow-hidden border-y-0"
-              style={{ backgroundColor: "var(--color-back)" }}
-            >
-              <img
-                loading="lazy"
-                decoding="async"
-                src="/images/Home/tickets.webp"
-                alt="Tickets banner"
-                className="absolute top-0 rounded left-0 w-full h-full object-cover opacity-20 pointer-events-none z-0"
-              />
+            <InformationBooth onFullscreenImage={setFullscreenImage} />
+          </Suspense>
 
-              {/* Content overlay */}
-              <div className="relative z-10 w-full mx-auto">
-                <div className="flex items-left justify-left gap-4">
-                  <h3 className="text-3xl font-bold text-white">
-                    Passenger Testimonials
-                  </h3>
-                </div>
+          {/* Lazy-loaded Testimonials Section */}
+          <Suspense
+            fallback={
+              <div className="mb-16 py-10 px-6 flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-transparent border-t-white rounded-full animate-spin" />
               </div>
-            </div>
-
-            <div className="flex items-center gap-4 mb-8"></div>
-
-            {/* Passenger Testimonials Grid */}
-            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, idx) => (
-                <div
-                  key={idx}
-                  className="relative bg-white/5 border border-white/10 p-10 rounded-2xl overflow-hidden group transition-all hover:bg-white/[0.07]"
-                >
-                  <div
-                    className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
-                    style={{ color: "var(--color-silver)" }}
-                  >
-                    “
-                  </div>
-
-                  <div className="relative z-10 flex flex-col h-full">
-                    <p className="text-white/80 italic mb-8 leading-relaxed flex-grow">
-                      {testimonial.quote}
-                    </p>
-
-                    <div
-                      className="flex items-center gap-4 pt-6 border-t"
-                      style={{ borderColor: "var(--color-silver)" }}
-                    >
-                      {testimonial.avatar ? (
-                        <img
-                          src={testimonial.avatar}
-                          alt=""
-                          className="w-12 h-12 rounded-full object-cover border-2"
-                          style={{
-                            color: "var(--color-silver)",
-                            borderColor: "var(--color-silver)",
-                          }}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <div
-                          className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-xs"
-                          style={{
-                            color: "var(--color-back)",
-                            backgroundColor: "var(--color-silver)",
-                          }}
-                        >
-                          {testimonial.author
-                            .split(" ")
-                            .map((n) => n[0])
-                            .slice(0, 2)
-                            .join("")}
-                        </div>
-                      )}
-
-                      <div>
-                        <div
-                          className="font-bold text-sm tracking-tight"
-                          style={{ color: "var(--color-silver)" }}
-                        >
-                          {testimonial.author}
-                        </div>
-                        <div
-                          className="text-[11px] uppercase tracking-widest leading-tight"
-                          style={{ color: "var(--color-text-secondary)" }}
-                        >
-                          {testimonial.role} <br />
-                          <span className="" style={{ color: TEXT_MUTED }}>
-                            {testimonial.company}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
-                    style={{ color: "var(--color-silver)" }}
-                  >
-                    ”
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+            }
+          >
+            <TestimonialsSection />
+          </Suspense>
         </main>
 
         {/* Contact - Thanks for Riding */}
@@ -748,3 +411,4 @@ export default function DesignCentralStation() {
     </div>
   );
 }
+

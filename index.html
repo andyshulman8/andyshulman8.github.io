@@ -40,22 +40,36 @@
 
     <link rel="manifest" href="/site.webmanifest" />
     
+    <!-- Preconnect and DNS prefetch for Google Tag Manager -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    
     <!-- Hero image preload for LCP optimization -->
     <link
       rel="preload"
       as="image"
+      fetchpriority="high"
       href="/images-webp/Home/hero2.webp"
       media="(min-width: 768px)"
       type="image/webp"
     />
     <link
       rel="preload"
+      fetchpriority="high"
       as="image"
       href="/images-webp/Home/hero1.webp"
       media="(max-width: 767px)"
       type="image/webp"
     />
     
+    <!-- Font preload for typography optimization -->
+    <link 
+      rel="preload" 
+      as="font" 
+      href="/fonts/inter-var.woff2" 
+      type="font/woff2" 
+      crossorigin 
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO Meta Tags -->
