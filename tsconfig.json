@@ -8,6 +8,6 @@
     "module": "ESNext",
     //"moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   }
 }

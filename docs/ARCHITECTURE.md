@@ -11,6 +11,7 @@ The goal was not novelty. It was clarity, maintainability, and performance — t
 Single-page React application with six case studies rendered through one universal template. Content lives in typed data files, separated from presentation logic.
 
 The system is intentionally simple:
+
 - No global state library
 - No CMS
 - No runtime content fetching
@@ -60,16 +61,16 @@ export const allCaseStudies: CaseStudyData[] = [
 
 **Why**
 
--   Consistent reading experience
+- Consistent reading experience
 
--   Easy updates
+- Easy updates
 
--   Adding a new case study requires data entry, not new components
+- Adding a new case study requires data entry, not new components
 
 **Tradeoff**\
 Less per-case customization, but stronger systemic consistency.
 
-* * * * *
+---
 
 ### 2\. URL as State
 
@@ -81,9 +82,9 @@ All navigation state is encoded in the URL. No Redux, no Zustand.
 
 Example:
 
--   `/logs` → case study overview
+- `/logs` → case study overview
 
--   `/logs/3` → stop 3 in the Logs case study
+- `/logs/3` → stop 3 in the Logs case study
 
 ```
 // src/components/CaseStudyWrapper.tsx
@@ -96,16 +97,16 @@ const initialStop = stopIndex ? parseInt(stopIndex, 10) - 1 : undefined;
 
 **Why**
 
--   Deep-linkable content
+- Deep-linkable content
 
--   Browser back/forward works naturally
+- Browser back/forward works naturally
 
--   Clear mental model: URL is the source of truth
+- Clear mental model: URL is the source of truth
 
 **Tradeoff**\
 Routing logic is slightly more complex, but UX clarity improves significantly.
 
-* * * * *
+---
 
 ### 3\. Design Tokens as Single Source of Truth
 
@@ -131,13 +132,13 @@ export const UI = {
 
 **Why**
 
--   Changes propagate automatically
+- Changes propagate automatically
 
--   TypeScript catches invalid usage
+- TypeScript catches invalid usage
 
--   Visual consistency stays intact as the system grows
+- Visual consistency stays intact as the system grows
 
-* * * * *
+---
 
 ### 4\. Composition Over Prop Explosion
 
@@ -158,35 +159,33 @@ Use composition for structural UI patterns (e.g., the WindowFrame system).
 
 **Why**
 
--   Each component does one job
+- Each component does one job
 
--   Easier testing and refactoring
+- Easier testing and refactoring
 
--   Clear visual hierarchy in JSX
+- Clear visual hierarchy in JSX
 
-* * * * *
+---
 
-Performance Strategy
---------------------
+## Performance Strategy
 
 **Targets**
 
--   < 2s initial load
+- < 2s initial load
 
--   90+ Lighthouse score
+- 90+ Lighthouse score
 
--   Mobile-first performance
+- Mobile-first performance
 
 //Note: These are aspirational targets. Actual performance varies by network and device.
+
 <!-- !!!Consider adding actual Lighthouse scores if available, or noting that these should be measured -->
-
-
 
 ### Lazy Loading
 
--   Images use `loading="lazy"` and `decoding="async"`
+- Images use `loading="lazy"` and `decoding="async"`
 
--   Iframes (e.g., maps) load only when visible
+- Iframes (e.g., maps) load only when visible
 
 `// src/hooks/useIntersectionOnce.ts
 const observer = new IntersectionObserver((entries) => {
@@ -195,12 +194,13 @@ const observer = new IntersectionObserver((entries) => {
     observer.unobserve(entry.target);
   }
 });`
+
 <!--Verified in src/hooks/useIntersectionOnce.ts; used in src/App.tsx line 121 for maps iframe-->
 
 **Impact**\
 Faster initial render and better Time to Interactive on mobile.
 
-* * * * *
+---
 
 ### Scroll Event Throttling
 
@@ -222,19 +222,19 @@ Throttle updates using `requestAnimationFrame`.
 
 <!--Verified in src/hooks/index.ts lines 13-21-->
 
-* * * * *
+---
 
 ### Image Optimization
 
--   WebP / AVIF where supported
+- WebP / AVIF where supported
 
--   Responsive assets for mobile vs desktop
+- Responsive assets for mobile vs desktop
 
--   Manual compression (could be automated later)
+- Manual compression (could be automated later)
 
 <!-- Current implementation: Manual compression. Images use WebP/AVIF formats (verified in public/images/). Responsive assets handled via CSS object-fit, not separate image sizes. -->
 
-* * * * *
+---
 
 ### Code Splitting
 
@@ -244,35 +244,33 @@ Vite automatically splits vendor libraries into cached chunks. The current confi
 
 <!--Verified in vite.config.ts: uses default Vite code splitting behavior-->
 
-* * * * *
+---
 
-Known Limitations
------------------
+## Known Limitations
 
 1.  **Train Animation Performance**\
     Spark particles rely on absolute positioning and may be slow on older devices.
 
-    *Potential fix*: `will-change` tuning or canvas rendering.
+    _Potential fix_: `will-change` tuning or canvas rendering.
     <!-- Spark generation in src/App.tsx lines 53-65 uses absolute positioning. Consider will-change: transform for GPU acceleration. -->
 
 2.  **Fullscreen Image Viewer**\
     Loads all carousel images at once.
 
-    *Potential fix*: Virtualized loading.
+    _Potential fix_: Virtualized loading.
 
 3.  **Reduced Motion Support**\
     Animations do not yet respect `prefers-reduced-motion`.
 
-    *Fix*: Add media query--based fallbacks.
+    _Fix_: Add media query--based fallbacks.
 
-* * * * *
+---
 
-Deployment
-----------
+## Deployment
 
--   **Platform:** Vercel
+- **Platform:** Vercel
 
--   **Strategy:** Automatic deploys from `main`
+- **Strategy:** Automatic deploys from `main`
 
 `// vercel.json
 {

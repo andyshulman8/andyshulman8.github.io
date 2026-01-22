@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Converts simple markdown-style links [label](url)
  * into React anchor elements without introducing
  * a full markdown parser dependency.
- * 
+ *
  * Matches patterns like: [Google](https://google.com)
- * 
+ *
  * @param text - The text containing markdown-style links
  * @returns Array of React nodes with links rendered as anchors
- * 
+ *
  * Example:
  * ```tsx
  * const content = renderMarkdownLinks("Check out [my site](https://example.com)");
@@ -39,7 +39,7 @@ export function renderMarkdownLinks(text: string): React.ReactNode[] {
         className="underline text-blue-800 hover:text-blue-500"
       >
         {label}
-      </a>
+      </a>,
     );
 
     lastIndex = start + full.length;

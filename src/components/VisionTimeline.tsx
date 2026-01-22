@@ -31,8 +31,7 @@
  * Reordering or filtering should occur upstream.
  */
 
-
-import { visionTimeline } from './visionData.ts';
+import { visionTimeline } from "./visionData.ts";
 
 // VisionTimeline.tsx - Before/After comparison style
 export default function VisionTimeline() {
@@ -56,9 +55,7 @@ export default function VisionTimeline() {
             {/* <h3 className="text-xl font-bold text-white/90 mb-3">
               {beforeItem.label}
             </h3> */}
-            <p className="text-white/70 leading-relaxed">
-              {beforeItem.text}
-            </p>
+            <p className="text-white/70 leading-relaxed">{beforeItem.text}</p>
           </div>
         </div>
 
@@ -73,9 +70,7 @@ export default function VisionTimeline() {
             {/* <h3 className="text-xl font-bold text-white/90 mb-3">
               {afterItem.label}
             </h3> */}
-            <p className="text-white/70 leading-relaxed">
-              {afterItem.text}
-            </p>
+            <p className="text-white/70 leading-relaxed">{afterItem.text}</p>
           </div>
         </div>
       </div>
@@ -98,7 +93,7 @@ export default function VisionTimeline() {
         <div className="relative max-w-3xl mx-auto">
           {/* Connecting line */}
           <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-white/20 via-white/10 to-transparent" />
-          
+
           <div className="space-y-6">
             {middleItems.map((item, index) => (
               <div key={item.id} className="flex items-start gap-6 relative">

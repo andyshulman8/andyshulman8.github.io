@@ -3,28 +3,28 @@
 @tailwind components;
 @tailwind utilities;
 
-.split-flap-board { 
-  perspective: 1000px; 
+.split-flap-board {
+  perspective: 1000px;
 }
 
-.split-flap-item { 
-  transform-origin: top; 
-  backface-visibility: hidden; 
+.split-flap-item {
+  transform-origin: top;
+  backface-visibility: hidden;
   /* Set initial state here so there is no "jump" */
-  transform: rotateX(-90deg); 
-  opacity: 0; 
+  transform: rotateX(-90deg);
+  opacity: 0;
   animation: flap-in 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes flap-in { 
-  0% { 
-    transform: rotateX(-90deg); 
-    opacity: 0; 
-  } 
-  100% { 
-    transform: rotateX(0deg); 
-    opacity: 1; 
-  } 
+@keyframes flap-in {
+  0% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
 }
 
 @layer base {
@@ -32,7 +32,7 @@
     /* Color Design Tokens */
     --color-back: #141515;
     --color-theme: #424141;
-    --color-info: #2B2C28;
+    --color-info: #2b2c28;
     --color-silver: #dfe1e5ff;
     --color-text-secondary: #a8adb3;
     --color-text-tertiary: #a8adb3;
@@ -42,8 +42,8 @@
 
   * {
     /* Operating the system outline, dashed train line, bottom line */
-    border-color: rgba(225, 225, 225, 0.755); 
-    border-bottom-color: rgba(225, 225, 225, 0.755); 
+    border-color: rgba(225, 225, 225, 0.755);
+    border-bottom-color: rgba(225, 225, 225, 0.755);
   }
 }
 
@@ -65,8 +65,6 @@
   transform: translateY(0);
 }
 
-
-
 .metal-heading {
   font-weight: 800;
   background: linear-gradient(
@@ -85,7 +83,6 @@
 
   display: inline-block;
 }
-
 
 /* Size variants that you can reuse */
 h1.metal-heading {
@@ -106,7 +103,8 @@ h3.metal-heading {
 }
 
 @keyframes subtle-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {

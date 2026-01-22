@@ -1,22 +1,22 @@
 // import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Train } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+import { Train } from "lucide-react";
 
-const SILVER = '#dfe1e5ff';
+const SILVER = "#dfe1e5ff";
 
 interface TrainTransitionProps {
   isActive: boolean;
   //lineColor?: string;
-  direction?: 'right' | 'left';
+  direction?: "right" | "left";
 }
 
-const TrainTransition: React.FC<TrainTransitionProps> = ({ 
-  isActive, 
-  //lineColor = 'blue', 
-  direction = 'right' as const 
+const TrainTransition: React.FC<TrainTransitionProps> = ({
+  isActive,
+  //lineColor = 'blue',
+  direction = "right" as const,
 }) => {
   const color = SILVER;
-  
+
   return (
     <AnimatePresence>
       {isActive && (
@@ -28,13 +28,13 @@ const TrainTransition: React.FC<TrainTransitionProps> = ({
           transition={{ duration: 0.3 }}
         >
           {/* Dark overlay */}
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.95 }}
             exit={{ opacity: 0 }}
           />
-          
+
           {/* Speeding lines */}
           <div className="absolute inset-0 overflow-hidden">
             {Array.from({ length: 20 }, (_, i) => (
@@ -42,25 +42,25 @@ const TrainTransition: React.FC<TrainTransitionProps> = ({
                 key={i}
                 className="absolute h-1 rounded-full"
                 style={{
-                  background: `linear-gradient(${direction === 'right' ? '90deg' : '270deg'}, transparent, ${color}, transparent)`,
+                  background: `linear-gradient(${direction === "right" ? "90deg" : "270deg"}, transparent, ${color}, transparent)`,
                   top: `${5 + i * 5}%`,
-                  width: '30%',
-                  left: direction === 'right' ? '-30%' : '100%'
+                  width: "30%",
+                  left: direction === "right" ? "-30%" : "100%",
                 }}
                 initial={{ x: 0, opacity: 0 }}
-                animate={{ 
-                  x: direction === 'right' ? '500%' : '-500%',
-                  opacity: [0, 1, 1, 0]
+                animate={{
+                  x: direction === "right" ? "500%" : "-500%",
+                  opacity: [0, 1, 1, 0],
                 }}
                 transition={{
                   duration: 0.8,
                   delay: i * 0.02,
-                  ease: 'linear'
+                  ease: "linear",
                 }}
               />
             ))}
           </div>
-          
+
           {/* Center train icon */}
           <motion.div
             className="relative z-10 flex flex-col items-center"
@@ -70,20 +70,16 @@ const TrainTransition: React.FC<TrainTransitionProps> = ({
             transition={{ duration: 0.4 }}
           >
             <motion.div
-              animate={{ 
+              animate={{
                 x: [0, -5, 5, -5, 5, 0],
               }}
-              transition={{ 
-                duration: 0.5, 
+              transition={{
+                duration: 0.5,
                 repeat: Infinity,
-                ease: 'linear'
+                ease: "linear",
               }}
             >
-              <Train 
-                size={64} 
-                style={{ color }} 
-                strokeWidth={1.5}
-              />
+              <Train size={64} style={{ color }} strokeWidth={1.5} />
             </motion.div>
             <motion.div
               className="mt-4 text-white text-lg font-light tracking-widest"
@@ -94,7 +90,7 @@ const TrainTransition: React.FC<TrainTransitionProps> = ({
               NEXT STOP
             </motion.div>
           </motion.div>
-          
+
           {/* Subway line indicator at bottom */}
           <motion.div
             className="absolute bottom-0 left-0 right-0 h-2"

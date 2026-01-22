@@ -1,24 +1,24 @@
 /**
  * ExpressTicketCTA Component
- * 
- * Purpose: Acts as the high-impact call-to-action (CTA) to initiate a case study 
+ *
+ * Purpose: Acts as the high-impact call-to-action (CTA) to initiate a case study
  * journey. It is used in the CaseStudyTemplate overview section [2, 3].
- * 
+ *
  * SVG Structure & Design:
- * - Emulates a physical transit ticket with a paper base (#fdf7ec), vertical 
+ * - Emulates a physical transit ticket with a paper base (#fdf7ec), vertical
  *   perforations, and a machine-readable barcode [4, 5].
- * - Features a "red stamp" style "EXPRESS" label with simulated ink bleed 
+ * - Features a "red stamp" style "EXPRESS" label with simulated ink bleed
  *   to reinforce the station metaphor [6].
- * 
+ *
  * Animation & Interaction:
- * - Hover Effects: The ticket scales slightly and rotates -1 degree while the 
+ * - Hover Effects: The ticket scales slightly and rotates -1 degree while the
  *   "stub" punch-hole changes fill to black, simulating a physical punch [5, 7].
- * - Accessibility: Implements 'role="button"', 'tabIndex={0}', and keyboard 
+ * - Accessibility: Implements 'role="button"', 'tabIndex={0}', and keyboard
  *   event listeners (Enter key) for screen reader compatibility [7].
  */
 
-import React from 'react';
-import barcode from './barcode.svg'
+import React from "react";
+import barcode from "./barcode.svg";
 
 interface ExpressTicketCTAProps {
   onClick: () => void;
@@ -28,13 +28,15 @@ interface ExpressTicketCTAProps {
   onClick: () => void;
 }
 
-export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) => (
+export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({
+  onClick,
+}) => (
   <div
     className="relative inline-flex cursor-pointer group"
     onClick={onClick}
     role="button"
     tabIndex={0}
-    onKeyDown={(e) => e.key === 'Enter' && onClick()}
+    onKeyDown={(e) => e.key === "Enter" && onClick()}
     aria-label="Express to first stop"
   >
     <svg
@@ -42,7 +44,7 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
       height="90"
       viewBox="0 0 240 90"
       className="block transition-transform duration-200 group-hover:scale-[1.02] group-hover:-rotate-1"
-      style={{ filter: 'drop-shadow(0 4px 14px rgba(0,0,0,0.35))' }}
+      style={{ filter: "drop-shadow(0 4px 14px rgba(0,0,0,0.35))" }}
     >
       {/* Paper base */}
       <rect
@@ -88,8 +90,12 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
         fill="#111827"
         letterSpacing="1.2"
       >
-        <tspan x="20" dy="0">VIEW FULL</tspan>
-        <tspan x="20" dy="18">CASE STUDY</tspan>
+        <tspan x="20" dy="0">
+          VIEW FULL
+        </tspan>
+        <tspan x="20" dy="18">
+          CASE STUDY
+        </tspan>
       </text>
 
       {/* Machine-like metadata */}
@@ -100,7 +106,8 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
         fontSize="8"
         fill="#9ca3af"
       >
-        ZONE DCS · DS 1 · {String(new Date().getMonth())+1}{String(new Date().getFullYear()).slice(-2)}
+        ZONE DCS · DS 1 · {String(new Date().getMonth()) + 1}
+        {String(new Date().getFullYear()).slice(-2)}
       </text>
 
       {/* Stub section (right) */}
@@ -124,15 +131,15 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
       >
         01 · OUT
       </text>
-       <image
-          href={barcode}
-          x="7"
-          y="60"
-          width="40"
-          height="40"
-          preserveAspectRatio="xMidYMid meet"
-          style={{ transform: 'scale(-1, 1)', transformOrigin: 'center' }}
-        />
+      <image
+        href={barcode}
+        x="7"
+        y="60"
+        width="40"
+        height="40"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ transform: "scale(-1, 1)", transformOrigin: "center" }}
+      />
 
       {/* Hover punch-hole on stub */}
       <circle
@@ -145,10 +152,16 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
         className="transition-all duration-200 group-hover:fill-black group-hover:stroke-black"
       />
 
-
       {/* EXP / EXPRESS red stamp */}
       <g transform="translate(90 30) rotate(-15 80 34)" opacity="0.92">
-        <rect x="52" y="26" width="68" height="18" rx="2" className="fill-orange-700" />
+        <rect
+          x="52"
+          y="26"
+          width="68"
+          height="18"
+          rx="2"
+          className="fill-orange-700"
+        />
         {/* Ink bleed */}
         <text
           x="86"
@@ -177,12 +190,22 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({ onClick }) =
 
       {/* Subtle paper noise */}
       <defs>
-        <pattern id="paperDots" width="6" height="6" patternUnits="userSpaceOnUse">
+        <pattern
+          id="paperDots"
+          width="6"
+          height="6"
+          patternUnits="userSpaceOnUse"
+        >
           <circle cx="1" cy="2" r="0.4" fill="rgba(0,0,0,0.03)" />
           <circle cx="4" cy="5" r="0.35" fill="rgba(0,0,0,0.025)" />
         </pattern>
       </defs>
-      <rect width="240" height="90" fill="url(#paperDots)" pointerEvents="none" />
+      <rect
+        width="240"
+        height="90"
+        fill="url(#paperDots)"
+        pointerEvents="none"
+      />
     </svg>
   </div>
 );

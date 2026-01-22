@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 /**
  * Hook to trigger a callback when an element becomes visible (once)
@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export const useIntersectionOnce = (
   ref: React.RefObject<HTMLElement | null>,
   callback: () => void,
-  options: IntersectionObserverInit = {}
+  options: IntersectionObserverInit = {},
 ) => {
   useEffect(() => {
     if (!ref.current) return;
@@ -15,8 +15,8 @@ export const useIntersectionOnce = (
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-        // Immediately unobserve after firing to prevent memory leaks
-        // and avoid redundant callbacks for already-loaded content
+          // Immediately unobserve after firing to prevent memory leaks
+          // and avoid redundant callbacks for already-loaded content
           if (entry.isIntersecting) {
             callback();
             observer.unobserve(entry.target);
@@ -26,7 +26,7 @@ export const useIntersectionOnce = (
       {
         threshold: 0.1,
         ...options,
-      }
+      },
     );
 
     observer.observe(ref.current);

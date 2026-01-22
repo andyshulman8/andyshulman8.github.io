@@ -1,15 +1,18 @@
 # Portfolio Site Context for Claude Code
 
 ## Project Overview
+
 Personal portfolio site for Andy, a Senior UX/Product Designer showcasing enterprise SaaS work, mission-driven projects, and strategic design thinking.
 
 **Tech Stack:**
+
 - React + Vite
 - Tailwind CSS
 - Responsive design (mobile-first)
 - Deployed on Vercel
 
 **Purpose:**
+
 - Showcase 6 case studies in different configurations based on target company
 - Professional presentation for job search (climate tech, mental health, AI companies)
 - Fast, accessible, clean UX (walking the walk)
@@ -19,6 +22,7 @@ Personal portfolio site for Andy, a Senior UX/Product Designer showcasing enterp
 ## Portfolio Strategy
 
 ### Case Study Library (6 Total)
+
 1. **Logs: Rags to Riches** (LogicMonitor) - Enterprise SaaS transformation
 2. **Smarter Alerts** (LogicMonitor) - AI foundation, alert noise reduction
 3. **Secure Data** (LogicMonitor) - Security, natural language translator
@@ -29,16 +33,19 @@ Personal portfolio site for Andy, a Senior UX/Product Designer showcasing enterp
 ### Portfolio Configurations
 
 **Portfolio A: Pure SaaS/Product Design**
+
 - Target: Non-mission startups, FAANG, product-focused roles
 - Case studies: Logs, Smarter Alerts, Secure Data (all LogicMonitor)
 - Narrative: "I turn complex technical systems into intuitive experiences"
 
 **Portfolio B: Mission-Driven Product + Systems**
+
 - Target: Climate tech, health tech, sustainability companies, mission startups
 - Case studies: Logs, Secure Data, Imagining the Future OR Empowered Team
 - Narrative: "I design products that support human and planetary flourishing"
 
 **Portfolio C: Strategy + Facilitation**
+
 - Target: Design consultancies (IDEO, Frog), culture transformation roles
 - Case studies: Empowered Team, Imagining the Future, Health Frameworks, + one SaaS
 - Narrative: "I design systems that enable organizations to solve complex problems"
@@ -48,6 +55,7 @@ Personal portfolio site for Andy, a Senior UX/Product Designer showcasing enterp
 ## Key Metrics to Highlight
 
 When working on case studies, always emphasize these proven impacts:
+
 - **Logs:** Hours → 10 minutes (cancer treatment troubleshooting)
 - **Alerts:** 30% reduction in alert noise (Schneider Electric)
 - **Secure Data:** $250K annual savings (Loyola University)
@@ -60,6 +68,7 @@ When working on case studies, always emphasize these proven impacts:
 ## Design Principles
 
 ### Visual Identity
+
 - **Clean & minimal:** Let work speak, not decoration
 - **Professional warmth:** Approachable but credible
 - **Mobile-first:** Many recruiters browse on phones
@@ -67,6 +76,7 @@ When working on case studies, always emphasize these proven impacts:
 - **Accessible:** WCAG compliant (I have accessibility expertise)
 
 ### Content Strategy
+
 - **Lead with impact:** Numbers first, then story
 - **Show, don't tell:** Visuals > walls of text
 - **Scannable:** Headers, bullets, short paragraphs
@@ -74,6 +84,7 @@ When working on case studies, always emphasize these proven impacts:
 - **Process + outcome:** Not just what, but how and why
 
 ### Technical Standards
+
 - **Performance:** <2s load time, optimized images
 - **Responsive:** Mobile, tablet, desktop breakpoints
 - **Accessibility:** Keyboard navigation, screen readers, contrast ratios
@@ -158,16 +169,19 @@ Each case study should follow this format:
 ## Target Audience Considerations
 
 ### Recruiters (First Screeners)
+
 - Need: Quick scan to see if qualified
 - Optimize for: Clear role titles, recognizable companies, metrics
 - CTA: Easy resume download, LinkedIn link
 
 ### Hiring Managers (Decision Makers)
+
 - Need: Process understanding, collaboration skills, impact
 - Optimize for: Detailed case studies, problem-solving approach
 - CTA: Contact form, calendar link
 
 ### Designers (Team Members)
+
 - Need: Craft quality, design thinking, cultural fit
 - Optimize for: Visuals, design rationale, tool proficiency
 - CTA: Portfolio downloads, Figma links
@@ -177,6 +191,7 @@ Each case study should follow this format:
 ## Competitive Differentiation
 
 What makes this portfolio different:
+
 - **Real enterprise scale:** 1,000+ customers, 25,000+ devices (not just side projects)
 - **AI pioneer:** Laid foundation for Edwin AI before it was trendy
 - **Mission-driven:** Master's in Sustainability Science, ED research background
@@ -188,6 +203,7 @@ What makes this portfolio different:
 ## Current Focus Areas
 
 When making code suggestions, prioritize:
+
 1. **Performance:** Fast load times, optimized assets
 2. **Accessibility:** WCAG compliance, keyboard nav
 3. **Mobile-first:** Most recruiter traffic is mobile
@@ -199,6 +215,7 @@ When making code suggestions, prioritize:
 ## Voice & Tone
 
 ### Writing Style
+
 - **Professional but warm:** Not corporate stiff, not too casual
 - **Specific over generic:** Real names, numbers, stories
 - **Active voice:** "I designed" not "was designed"
@@ -206,6 +223,7 @@ When making code suggestions, prioritize:
 - **Humble confidence:** Own wins, acknowledge team
 
 ### Example Phrasing
+
 - ✅ "Cut troubleshooting time from hours to 10 minutes"
 - ❌ "Improved user experience"
 - ✅ "Designed natural language translator for log queries"
@@ -231,6 +249,7 @@ When making code suggestions, prioritize:
 ## Long-Term Vision
 
 This portfolio should:
+
 - Adapt easily to different target companies (Portfolio A/B/C configs)
 - Scale as I add new projects
 - Remain performant as content grows

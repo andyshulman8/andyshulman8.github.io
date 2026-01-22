@@ -5,10 +5,10 @@ It’s intended for content editors, designers, and engineers who need to unders
 
 ## Philosophy
 
-- **Show, don’t tell:** Visuals take priority over walls of text.  
-- **Scannable:** Short paragraphs, clear headers, bullets.  
-- **Human-centered:** Real problems, real customers, real constraints.  
-- **Process + Outcome:** Not just what was done, but why it mattered.  
+- **Show, don’t tell:** Visuals take priority over walls of text.
+- **Scannable:** Short paragraphs, clear headers, bullets.
+- **Human-centered:** Real problems, real customers, real constraints.
+- **Process + Outcome:** Not just what was done, but why it mattered.
 
 ## Data Structure
 
@@ -20,10 +20,10 @@ interface CaseStudyData {
   title: string;
   line_color: LineColor;
   destination: string;
-  peeks: (string | {src: string, type: string})[];
+  peeks: (string | { src: string; type: string })[];
   //The type field is more specific in the actual code. It's \'image\' | \'video\', not just string. See <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/pages/casedata.tsx">src/pages/casedata.tsx</traycer-file> line 35
 
-  allImpact?: {metric: string, label: string}[];
+  allImpact?: { metric: string; label: string }[];
   before?: string;
   after?: string;
   background: string;
@@ -53,37 +53,32 @@ interface Stop {
 }
 ```
 
-Rendering Logic
----------------
+## Rendering Logic
 
--   **Overview view:** Shows background, peeks carousel, impact metrics, before/after.
+- **Overview view:** Shows background, peeks carousel, impact metrics, before/after.
 
--   **Journey view:** Linear progression through stops with a progress bar.
+- **Journey view:** Linear progression through stops with a progress bar.
 
--   **Navigation flows:** Homepage → Case Study Overview → Stop → Overview.
+- **Navigation flows:** Homepage → Case Study Overview → Stop → Overview.
 
 ### Special Components
 
--   `NumberedFeatures`: Ordered lists of features.
+- `NumberedFeatures`: Ordered lists of features.
 
--   `VisionTimeline`: Timeline for "Imagining the Future" case study.
+- `VisionTimeline`: Timeline for "Imagining the Future" case study.
 
--   `CalloutBox`: Highlighted insights supporting markdown links.
+- `CalloutBox`: Highlighted insights supporting markdown links.
 
-Adding a New Case Study
------------------------
+## Adding a New Case Study
 
 1.  Add entry to homepage cards.
 <!-- Comment: More specifically, add entry to <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/data/caseStudies.ts">src/data/caseStudies.ts</traycer-file> which defines the CaseStudy interface used for homepage cards -->
 
-
 2.  Add full data in `casedata.tsx` following the schema.
 <!-- Comment: The actual file path is <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/pages/casedata.tsx">src/pages/casedata.tsx</traycer-file>, not just casedata.tsx -->
 
-
 3.  Update `viewToIndex` mapping.
 <!-- Comment: This mapping is in <traycer-file absPath="/Users/andyshulman/Documents/Portfolio2025/design-central-station/src/components/CaseStudyWrapper.tsx">src/components/CaseStudyWrapper.tsx</traycer-file> lines 7-9 -->
-
 
 4.  Add images to `/public/images/{caseId}/`.
 

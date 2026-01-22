@@ -1,6 +1,6 @@
 # Design Central Station Documentation
 
-Welcome! This folder documents the structure, decisions, and design thinking behind my portfolio site. 
+Welcome! This folder documents the structure, decisions, and design thinking behind my portfolio site.
 It’s intended for hiring managers, designers, and engineers who want a deeper look into how it was built.
 
 ## Documentation
@@ -14,10 +14,10 @@ It’s intended for hiring managers, designers, and engineers who want a deeper 
 
 ## Recommended Reading Paths
 
-**Hiring Managers:** OVERVIEW → DESIGN_PHILOSOPHY → CASE_STUDY_SYSTEM 
+**Hiring Managers:** OVERVIEW → DESIGN_PHILOSOPHY → CASE_STUDY_SYSTEM
 **Hiring Managers:** OVERVIEW → DESIGN_PHILOSOPHY
 **Designers:** DESIGN_SYSTEM → DESIGN_PHILOSOPHY → ACCESSIBILITY  
-**Engineers:** ARCHITECTURE → CASE_STUDY_SYSTEM → DESIGN_SYSTEM  
+**Engineers:** ARCHITECTURE → CASE_STUDY_SYSTEM → DESIGN_SYSTEM
 
 ## Live Demo
 

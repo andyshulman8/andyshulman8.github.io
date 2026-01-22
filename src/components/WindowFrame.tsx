@@ -1,5 +1,11 @@
-import React from 'react';
-import { WINDOW_FRAME_STYLE, WINDOW_CHROME_STYLE, WINDOW_CONTENT_STYLE, GLASS_OVERLAY_GRADIENT, CORNER_RIVET_STYLE } from '../utils/caseStudyConstants';
+import React from "react";
+import {
+  WINDOW_FRAME_STYLE,
+  WINDOW_CHROME_STYLE,
+  WINDOW_CONTENT_STYLE,
+  GLASS_OVERLAY_GRADIENT,
+  CORNER_RIVET_STYLE,
+} from "../utils/caseStudyConstants";
 
 /**
  * WindowFrame Component System
@@ -43,7 +49,7 @@ export function WindowFrame({ children, onClick }: WindowFrameProps) {
 
 /**
  * WindowContent
- * 
+ *
  * The inner content container for WindowFrame
  * Standardizes media display with glass overlay effects
  */
@@ -71,15 +77,15 @@ export function WindowContent({ children }: WindowContentProps) {
 
 /**
  * WindowCornerAccents
- * 
+ *
  * The metallic corner bolts on the window frame
  */
 interface WindowCornerAccentsProps {
-  positions?: ('top-left' | 'top-right' | 'bottom-left' | 'bottom-right')[];
+  positions?: ("top-left" | "top-right" | "bottom-left" | "bottom-right")[];
 }
 
 export function WindowCornerAccents({
-  positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+  positions = ["top-left", "top-right", "bottom-left", "bottom-right"],
 }: WindowCornerAccentsProps) {
   return (
     <>
@@ -88,8 +94,8 @@ export function WindowCornerAccents({
           key={i}
           className="absolute w-3 h-3 rounded-full shadow-md pointer-events-none"
           style={{
-            [pos.includes('top') ? 'top' : 'bottom']: '-2px',
-            [pos.includes('left') ? 'left' : 'right']: '-2px',
+            [pos.includes("top") ? "top" : "bottom"]: "-2px",
+            [pos.includes("left") ? "left" : "right"]: "-2px",
             ...CORNER_RIVET_STYLE,
           }}
         />
