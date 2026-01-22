@@ -61,7 +61,13 @@ export function TestimonialsSection() {
               <div
                 className="flex items-center gap-4 pt-6 border-t"
                 style={{ borderColor: "var(--color-silver)" }}
-              >
+              > <a 
+      href={testimonial.linkedin} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="transition-transform hover:scale-110 active:scale-95"
+      aria-label={`View ${testimonial.author}'s LinkedIn profile`}
+    >
                 {testimonial.avatar ? (
                   <img
                     src={testimonial.avatar}
@@ -88,7 +94,7 @@ export function TestimonialsSection() {
                       .slice(0, 2)
                       .join("")}
                   </div>
-                )}
+                )}</a>
 
                 <div>
                   <div

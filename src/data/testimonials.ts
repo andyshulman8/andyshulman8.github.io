@@ -4,6 +4,7 @@ export interface Testimony {
   role: string;
   company: string;
   avatar?: string;
+  linkedin?: string;
 }
 
 export const testimonials: Testimony[] = [
@@ -14,6 +15,7 @@ export const testimonials: Testimony[] = [
     role: "Sr. Manager, PM - Cloud & Logs",
     company: "LogicMonitor",
     avatar: "/images/Home/David.webp",
+    linkedin: "https://www.linkedin.com/in/davidfemino"
   },
   {
     quote:
@@ -22,6 +24,7 @@ export const testimonials: Testimony[] = [
     role: "Technical Fellow",
     company: "LogicMonitor",
     avatar: "/images/Home/richard.webp",
+    linkedin: "https://www.linkedin.com/in/rhuddbiz"
   },
   {
     quote:
@@ -30,5 +33,6 @@ export const testimonials: Testimony[] = [
     role: "Customer Experience VP",
     company: "Align Technology",
     avatar: "/images/Home/volker.webp",
+    linkedin: "https://www.linkedin.com/in/volker-probst"
   },
 ];
