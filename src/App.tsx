@@ -517,7 +517,7 @@ export default function DesignCentralStation() {
                         </span>{" "}
                         transforming complex enterprise systems into intuitive
                         experiences. I have a Master's in Sustainability Science
-                        from Stanford and a skillset that brings together design
+                        from Stanford and a skill set that brings together design
                         thinking, behavior design, business strategy, and
                         systems thinking.
                       </p>

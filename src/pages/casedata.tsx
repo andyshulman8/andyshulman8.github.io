@@ -378,7 +378,7 @@ export const allCaseStudies: CaseStudyData[] = [
         station_name: "Simplified Collection",
         phase: "Ideate",
         content:
-          "With secure boundaries established, the next problem was onboarding all those wildly different log types without human error. To help Loyola securely manage their evergrowing, complex environment, I designed pre-built templates for common log types, automating ingestion and reducing configuration errors.\n\nTo support user confidence, I simplified onboarding with:",
+          "With secure boundaries established, the next problem was onboarding all those wildly different log types without human error. To help Loyola securely manage their ever-growing, complex environment, I designed pre-built templates for common log types, automating ingestion and reducing configuration errors.\n\nTo support user confidence, I simplified onboarding with:",
         features: [
           { title: "Clear, pre-configured defaults", description: "" },
           {
@@ -657,7 +657,7 @@ export const allCaseStudies: CaseStudyData[] = [
           {
             title: "Expanded Research",
             description:
-              "Added 25 new research questions, categorized into 5 workstreams",
+              "Added 25 new research questions, categorized into 5 work streams",
           },
           {
             title: "Consultation Guidance",

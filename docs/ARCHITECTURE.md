@@ -205,7 +205,7 @@ Faster initial render and better Time to Interactive on mobile.
 ### Scroll Event Throttling
 
 **Problem**\
-Unthrottled scroll listeners cause jank.
+Unthrottled scroll listeners cause issues.
 
 **Solution**\
 Throttle updates using `requestAnimationFrame`.
