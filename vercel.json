@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(.*)(?!\\.(js|css|woff2|png|jpg|jpeg|gif|webp|svg|ico|avif)$)",
+      "source": "/:path*",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -30,7 +30,7 @@
       ]
     },
     {
-      "source": "/images/(.*)",
+      "source": "/images/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "source": "/images-webp/(.*)",
+      "source": "/images-webp/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -68,7 +68,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!sitemap\\.xml|robots\\.txt).*)",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ]
