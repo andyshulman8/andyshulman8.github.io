@@ -50,7 +50,7 @@ export function TestimonialsSection() {
               className="absolute top-2 left-4 text-7xl font-serif opacity-10 transition-transform group-hover:-translate-y-1 select-none"
               style={{ color: "var(--color-silver)" }}
             >
-              &quot;
+              &ldquo;
             </div>
 
             <div className="relative z-10 flex flex-col h-full">
@@ -120,7 +120,7 @@ export function TestimonialsSection() {
               className="absolute bottom-[-15px] right-4 text-7xl font-serif opacity-10 transition-transform group-hover:translate-y-1 select-none"
               style={{ color: "var(--color-silver)" }}
             >
-              &quot;
+              &rdquo;
             </div>
           </div>
         ))}
