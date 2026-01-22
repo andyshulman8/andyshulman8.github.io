@@ -147,7 +147,7 @@ export default function DesignCentralStation() {
 
     window.dataLayer = window.dataLayer || [];
 
-    function gtag(...args: any[]) {
+    function gtag(...args: (string | Date | Record<string, string>)[]) {
       window.dataLayer.push(args);
     }
 
@@ -258,6 +258,7 @@ export default function DesignCentralStation() {
                   className="train-animation cursor-pointer"
                   onClick={handleTrainClick}
                   onMouseOver={handleTrainHover}
+                  onFocus={handleTrainHover}
                   role="button"
                   aria-label="Click for train announcement"
                   tabIndex={0}
@@ -449,7 +450,16 @@ export default function DesignCentralStation() {
                       </div>
                     )}
 
-                    {/* Actual image */}
+                  {/* Actual image */}
+                  <button
+                    className={`w-full h-full cursor-pointer hover:opacity-90 transition-opacity duration-${UI.imageLoadingDuration} border-0 bg-transparent p-0 ${
+                      processLoaded ? "opacity-100" : "opacity-0"
+                    }`}
+                    onClick={() =>
+                      setFullscreenImage("/images/Home/process.webp")
+                    }
+                    aria-label="View design process map in fullscreen"
+                  >
                     <img
                       src="/images/Home/process.webp"
                       alt="Design process map"
@@ -457,13 +467,9 @@ export default function DesignCentralStation() {
                       decoding="async"
                       onLoad={() => setProcessLoaded(true)}
                       onError={() => setProcessLoaded(true)}
-                      className={`cursor-pointer hover:opacity-90 transition-opacity duration-${UI.imageLoadingDuration} ${
-                        processLoaded ? "opacity-100" : "opacity-0"
-                      }`}
-                      onClick={() =>
-                        setFullscreenImage("/images/Home/process.webp")
-                      }
+                      className="w-full h-full object-cover"
                     />
+                  </button>
                   </div>
                 </div>
 
@@ -497,7 +503,7 @@ export default function DesignCentralStation() {
                   <div className="grid md:grid-cols-3 gap-6 items-start">
                     <div className="md:col-span-2 space-y-4">
                       <p className="text-white/80 leading-relaxed">
-                        I'm Andy, a Senior UX Designer with{" "}
+                        I&apos;m Andy, a Senior UX Designer with{" "}
                         <span className="relative inline-block group">
                           <u>
                             <a
@@ -516,7 +522,7 @@ export default function DesignCentralStation() {
                           </span>
                         </span>{" "}
                         transforming complex enterprise systems into intuitive
-                        experiences. I have a Master's in Sustainability Science
+                        experiences. I have a Master&apos;s in Sustainability Science
                         from Stanford and a skill set that brings together design
                         thinking, behavior design, business strategy, and
                         systems thinking.
@@ -524,7 +530,7 @@ export default function DesignCentralStation() {
 
                       <p className="text-white/80 leading-relaxed">
                         My work spans enterprise B2B SaaS, health tech, to
-                        mission-driven organizations. I've designed AI-driven
+                        mission-driven organizations. I&apos;ve designed AI-driven
                         features, laid foundations for IBM partnerships, and
                         helped teams from cancer treatment centers to global
                         energy companies work more efficiently.
@@ -693,7 +699,7 @@ export default function DesignCentralStation() {
           />
           <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
           <p className="text-2xl text-white/80 mb-8">
-            Let's build your next impactful experience
+            Let&apos;s build your next impactful experience
           </p>
           <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
             Montrose, Colorado •{" "}

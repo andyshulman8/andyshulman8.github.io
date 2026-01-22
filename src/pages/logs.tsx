@@ -258,7 +258,7 @@ export default function CaseStudyTemplate({
             {stop.quotePreface}
           </div>
         )}
-        "{stop.quote}"
+        &quot;{stop.quote}&quot;
         {stop.quoteAuthor && (
           <>
             <div className="w-full border-t border-black/30 my-4" />
@@ -516,26 +516,27 @@ export default function CaseStudyTemplate({
                   <h2 className="text-xl font-bold text-center text-white/80">
                     Before
                   </h2>
-                  <div
-                    className="rounded-lg overflow-hidden h-[400px]"
+                  <button
+                    className="rounded-lg overflow-hidden h-[400px] w-full cursor-pointer hover:opacity-90 transition-opacity border-0 bg-transparent p-0"
                     style={PANEL_STYLE}
+                    onClick={() => {
+                      if (caseStudyData.before) {
+                        setFullscreen({
+                          type: "single",
+                          src: caseStudyData.before,
+                        });
+                      }
+                    }}
+                    aria-label="View before image in fullscreen"
                   >
                     <img
                       src={caseStudyData.before}
                       alt="Before"
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
-                      onClick={() => {
-                        if (caseStudyData.before) {
-                          setFullscreen({
-                            type: "single",
-                            src: caseStudyData.before,
-                          });
-                        }
-                      }}
+                      className="w-full h-full object-cover object-left-top bg-black/20"
                     />
-                  </div>
+                  </button>
                   <p className="text-white/50 text-sm text-center">
                     Fragmented tools, slow troubleshooting
                   </p>
@@ -544,26 +545,27 @@ export default function CaseStudyTemplate({
                   <h2 className="text-xl font-bold text-center text-white/80">
                     After
                   </h2>
-                  <div
-                    className="rounded-lg overflow-hidden h-[400px]"
+                  <button
+                    className="rounded-lg overflow-hidden h-[400px] w-full cursor-pointer hover:opacity-90 transition-opacity border-0 bg-transparent p-0"
                     style={PANEL_STYLE}
+                    onClick={() => {
+                      if (caseStudyData.after) {
+                        setFullscreen({
+                          type: "single",
+                          src: caseStudyData.after,
+                        });
+                      }
+                    }}
+                    aria-label="View after image in fullscreen"
                   >
                     <img
                       src={caseStudyData.after}
                       alt="After"
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover object-left-top bg-black/20 cursor-pointer hover:opacity-90 transition-opacity"
-                      onClick={() => {
-                        if (caseStudyData.after) {
-                          setFullscreen({
-                            type: "single",
-                            src: caseStudyData.after,
-                          });
-                        }
-                      }}
+                      className="w-full h-full object-cover object-left-top bg-black/20"
                     />
-                  </div>
+                  </button>
                   <p className="text-white/50 text-sm text-center">
                     Unified platform, 10-minute resolution
                   </p>
@@ -859,10 +861,10 @@ export default function CaseStudyTemplate({
                 <div
                   className="grid gap-4 my-8 features-grid"
                   style={{
-                    ["--cols" as any]: Math.min(Math.max(featureCount, 1), 4),
-                  }}
+                    ["--cols" as const]: Math.min(Math.max(featureCount, 1), 4),
+                  } as React.CSSProperties}
                 >
-                  {stop.features.map((f: any, i: number) => (
+                  {stop.features.map((f: { title: string; description: string }, i: number) => (
                     <div key={i} className="rounded-lg p-6" style={PANEL_STYLE}>
                       <h4
                         className="text-lg font-bold mb-2"
@@ -957,7 +959,7 @@ export default function CaseStudyTemplate({
         <Train className="w-16 h-16 mx-auto mb-6 text-[color:var(--color-theme)]" />
         <h3 className="text-4xl font-bold mb-4">Thanks for Riding!</h3>
         <p className="text-2xl text-white/80 mb-8">
-          Let's build your next impactful experience
+          Let&apos;s build your next impactful experience
         </p>
         <div className="mt-8 text-sm text-[color:var(--color-text-secondary)]">
           Montrose, Colorado •{" "}

@@ -68,10 +68,18 @@ export const FullscreenImageViewer = ({
   const currentItem = gallery[active];
 
   return (
-    <div
-      className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
+  <div
+    className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+    role="button"
+    tabIndex={0}
+    onClick={onClose}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onClose();
+      }
+    }}
+  >
       <button
         onClick={onClose}
         className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg z-10"
@@ -87,6 +95,7 @@ export const FullscreenImageViewer = ({
 
       <div
         className="relative max-w-7xl w-full"
+        aria-hidden="true"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -181,22 +190,24 @@ export const FullscreenImageViewer = ({
                 </button>
 
                 <div className="flex gap-3">
-                  {gallery.map((_, i) => (
-                    <div
-                      key={i}
-                      onClick={() => onChangeIndex && onChangeIndex(i)}
-                      className="w-4 h-4 rounded-full cursor-pointer transition-all hover:scale-125"
-                      style={{
-                        background:
-                          i === active ? "#aaa" : "rgba(170,170,170,0.4)",
-                        boxShadow:
-                          i === active
-                            ? "0 0 12px rgba(170,170,170,0.8)"
-                            : "none",
-                        border: "2px solid rgba(255,255,255,0.2)",
-                      }}
-                    />
-                  ))}
+                  {gallery.map((_, i) => {
+                    const isActive = i === active;
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => onChangeIndex && onChangeIndex(i)}
+                        aria-label={`Go to slide ${i + 1} of ${gallery.length}`}
+                        aria-pressed={isActive}
+                        className="w-4 h-4 rounded-full cursor-pointer transition-all hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/70"
+                        style={{
+                          background: isActive ? "#aaa" : "rgba(170,170,170,0.4)",
+                          boxShadow: isActive ? "0 0 12px rgba(170,170,170,0.8)" : "none",
+                          border: "2px solid rgba(255,255,255,0.2)",
+                        }}
+                      />
+                    );
+                  })}
                 </div>
 
                 <button

@@ -61,23 +61,30 @@ export default function CarouselControls({
       </button>
 
       <div className="flex gap-2">
-        {Array.from({ length }).map((_, i) => (
-          <div
-            key={i}
-            onClick={(e) => {
-              e.stopPropagation();
-              onSelect(i);
-            }}
-            className={`${dotSize} rounded-full cursor-pointer transition-all hover:scale-125`}
-            style={{
-              background: i === activeIndex ? "#aaa" : "rgba(170,170,170,0.4)",
-              boxShadow:
-                i === activeIndex ? "0 0 8px rgba(170,170,170,0.8)" : "none",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-          />
-        ))}
+        {Array.from({ length }).map((_, i) => {
+          const isActive = i === activeIndex;
+
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelect(i);
+              }}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-pressed={isActive}
+              className={`${dotSize} rounded-full cursor-pointer transition-all hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/70`}
+              style={{
+                background: isActive ? "#aaa" : "rgba(170,170,170,0.4)",
+                boxShadow: isActive ? "0 0 8px rgba(170,170,170,0.8)" : "none",
+                border: "1px solid rgba(255,255,255,0.2)",
+              }}
+            />
+          );
+        })}
       </div>
+
 
       <button
         onClick={(e) => {
