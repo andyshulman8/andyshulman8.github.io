@@ -1,5 +1,5 @@
 /**
- * CarouselControlsNew Component
+ * CarouselControls Component
  * 
 // Purpose: Provides navigation controls for image and content carousels.
 // Usage: Currently used only within WindowFrame to control local carousel state.
