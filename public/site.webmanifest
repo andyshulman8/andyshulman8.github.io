@@ -1,6 +1,7 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Design Central Station · Andy Shulman UX Portfolio",
+  "short_name": "Design Central Station",
+  "description": "Design Central Station is the UX portfolio of Andy Shulman, showcasing case studies for high-stakes systems.", 
   "icons": [
     {
       "src": "/logo-192x192.png",
@@ -15,6 +16,8 @@
       "purpose": "maskable"
     }
   ],
+  "start_url": "/",
+  "scope": "/",
   "theme_color": "#dad8d8",
   "background_color": "#dad8d8",
   "display": "standalone"

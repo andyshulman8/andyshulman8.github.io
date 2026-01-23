@@ -19,7 +19,7 @@
  *   animations only fire once, reducing unnecessary re-renders [2, 3].
  */
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { SILVER } from "../../constants/theme";
 import { skillCategories } from "../../data/skills";
 import { useIntersectionOnce } from "../../hooks/useIntersectionOnce";
@@ -28,8 +28,11 @@ export const SkillsBoard = () => {
   const [isVisible, setIsVisible] = useState(false);
   const boardRef = useRef<HTMLDivElement>(null);
 
+  const memoizedCallback = useCallback(() => setIsVisible(true), []);
+  const memoizedOptions = useMemo(() => ({ threshold: 0.3 }), []);
+
   // Trigger animation once when board becomes visible
-  useIntersectionOnce(boardRef, () => setIsVisible(true), { threshold: 0.3 });
+  useIntersectionOnce(boardRef, memoizedCallback, memoizedOptions);
 
   return (
     <div className="mb-12" ref={boardRef}>

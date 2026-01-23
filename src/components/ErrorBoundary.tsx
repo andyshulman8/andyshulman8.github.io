@@ -15,10 +15,11 @@ interface State {
  *
  * Catches runtime errors in the component tree and prevents white-screen crashes.
  * Displays a calm fallback UI with recovery suggestions.
- * This is a resilience layer that keeps the app usable even when something goes wrong.
+ * Captures unhandled promise rejections for better diagnostics.
  */
 export class ErrorBoundary extends Component<Props, State> {
   private errorHandler: ((event: ErrorEvent) => void) | null = null;
+  private rejectionHandler: ((event: PromiseRejectionEvent) => void) | null = null;
 
   constructor(props: Props) {
     super(props);
@@ -26,29 +27,66 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    // Update state so next render shows the fallback UI
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: { componentStack: string }) {
-    // Log error details to console for debugging
     console.error("ErrorBoundary caught an error:", error, errorInfo);
+    this.reportError(error);
   }
 
   componentDidMount() {
-    // Attach global error handler to catch runtime errors outside component tree
+    // Global runtime errors
     this.errorHandler = (event: ErrorEvent) => {
       console.error("Global error caught:", event.error, event.message);
+      this.reportError(event.error || new Error(event.message));
     };
     window.addEventListener("error", this.errorHandler);
+
+    // Unhandled promise rejections
+    this.rejectionHandler = (event: PromiseRejectionEvent) => {
+      console.error("Unhandled promise rejection:", event.reason);
+      this.reportError(
+        event.reason instanceof Error
+          ? event.reason
+          : new Error(String(event.reason))
+      );
+    };
+    window.addEventListener("unhandledrejection", this.rejectionHandler);
   }
 
   componentWillUnmount() {
-    // Remove the error handler to prevent duplicates in StrictMode
     if (this.errorHandler) {
       window.removeEventListener("error", this.errorHandler);
       this.errorHandler = null;
     }
+    if (this.rejectionHandler) {
+      window.removeEventListener("unhandledrejection", this.rejectionHandler);
+      this.rejectionHandler = null;
+    }
+  }
+
+  /**
+   * Report an error to a monitoring service.
+   * Replace the console.info with Sentry, LogRocket, or your server endpoint.
+   */
+  private reportError(error: Error) {
+    // Include route context
+    const routeContext = window.location.pathname;
+
+    // Send to backend endpoint
+    fetch("/api/log-error", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: error.message,
+        stack: error.stack,
+        route: routeContext,
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch((fetchError) => {
+      console.error("Failed to report error:", fetchError);
+    });
   }
 
   render() {
@@ -59,7 +97,8 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="text-6xl mb-4">⚠️</div>
             <h1 className="text-2xl font-bold mb-2">Something went wrong</h1>
             <p className="text-gray-300 mb-6">
-              We encountered an unexpected error. Don&apos;t worry—this is usually temporary.
+              We encountered an unexpected error. Don&apos;t worry—this is usually
+              temporary.
             </p>
             <button
               onClick={() => window.location.reload()}

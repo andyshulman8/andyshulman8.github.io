@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useMemo } from "react";
 import { Info } from "lucide-react";
 import { SkillsBoard } from "./Skills/SkillsBoard.tsx";
 import {
@@ -26,7 +26,10 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
 
-  useIntersectionOnce(mapRef, () => setMapLoaded(true), { threshold: 0.25 });
+  const memoizedCallback = useCallback(() => setMapLoaded(true), []);
+  const memoizedOptions = useMemo(() => ({ threshold: 0.25 }), []);
+
+  useIntersectionOnce(mapRef, memoizedCallback, memoizedOptions);
 
   return (
     <section className="py-16 px-6" aria-label="Information Booth">
@@ -173,7 +176,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                 style={{ borderColor: SILVER }}
               >
                 <img
-                  src="/images/Home/headshot.png"
+                  src="/images/Home/headshot.webp"
                   alt="Andy Shulman"
                   className="w-full h-full object-cover"
                   loading="lazy"

@@ -683,7 +683,7 @@ export const allCaseStudies: CaseStudyData[] = [
         phase: "Prototype",
         content:
           "Sleep interventions require habit formation through tiny, easy behaviors with immediate feedback, not complex feature sets. I used Behavior Design methodology, considering for each feature:",
-        images: ["/images/health/sleep.jpg", "/images/health/UIDD.jpg"],
+        images: ["/images/health/sleep.webp", "/images/health/UIDD.webp"],
         features: [
           {
             title: " Desired Behavior",

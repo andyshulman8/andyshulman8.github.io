@@ -206,6 +206,5 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({
       />
     </svg>
     </button>
-  // </div>
 );
 

@@ -268,7 +268,7 @@ export default function DesignCentralStation() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {caseStudies.map((project) => (
+              {caseStudies.map((project, index) => (
                 <Link
                   key={project.id}
                   to={`/${project.id}`}
@@ -280,7 +280,8 @@ export default function DesignCentralStation() {
                         src={project.thumbnail}
                         alt={`${project.name} thumbnail`}
                         className="w-full h-24 md:h-28 object-cover rounded-md mb-4"
-                        loading="lazy"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        fetchPriority={index === 0 ? "high" : undefined}
                         decoding="async"
                       />
                     )}
@@ -367,7 +368,7 @@ export default function DesignCentralStation() {
             • andyshulman8@gmail.com
           </div>
           <div className="mt-12 text-xs text-white/50">
-            This site uses anonymized analytics (including Google Analytics) to understand general usage.          </div>
+            This site uses anonymized analytics (e.g. Google Analytics) to understand general usage.          </div>
         </footer>
 
         <BackToTopButton isVisible={showBackToTop} />

@@ -19,6 +19,7 @@
  *   unintended closing when interacting with media or controls [7].
  */
 
+import { useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 type MediaItem = string | { src: string; type: "image" | "video" };
 
@@ -67,20 +68,59 @@ export const FullscreenImageViewer = ({
 
   const currentItem = gallery[active];
 
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    // Focus close button on open
+    closeButtonRef.current?.focus();
+
+    // Focus trapping
+    const focusableElements = dialogRef.current?.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusableElements && focusableElements.length > 0) {
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        } else if (e.key === 'Escape') {
+          onClose();
+        }
+      };
+
+      const dialogElement = dialogRef.current;
+      dialogElement?.addEventListener('keydown', handleKeyDown);
+
+      return () => {
+        dialogElement?.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [onClose]);
+
   return (
-  <div
-    className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
-    role="button"
-    tabIndex={0}
-    onClick={onClose}
-    onKeyDown={(e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        onClose();
-      }
-    }}
-  >
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    <div
+      ref={dialogRef}
+      className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
       <button
+        ref={closeButtonRef}
         onClick={onClose}
         className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg z-10"
         style={{

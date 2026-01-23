@@ -17,6 +17,7 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import CaseStudyTemplate from "../pages/case_template";
+import { allCaseStudies } from "../pages/casedata";
 
 const viewToIndex: Record<string, number> = {
   logs: 0,
@@ -53,11 +54,13 @@ export default function CaseStudyWrapper() {
 
   const getInitialStop = (stopIndex?: string): number | undefined => {
     if (!stopIndex) return undefined;
-    
+
     const parsed = parseInt(stopIndex, 10);
     if (isNaN(parsed) || parsed < 1) return undefined;
-    
-    return Math.max(0, parsed - 1);
+
+    const stopIndexZeroBased = parsed - 1;
+    const stopCount = allCaseStudies[dataIndex].stops.length;
+    return Math.max(0, Math.min(stopIndexZeroBased, stopCount - 1));
   };
 
   const initialStop = getInitialStop(stopIndex);
