@@ -1,6 +1,5 @@
-import { useState, useRef, lazy, Suspense } from "react";
+import { useState, useRef, lazy, Suspense, useEffect } from "react";
 import { Train, MapPin, ChevronRight } from "lucide-react";
-import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useNavigate, Link } from "react-router-dom";
 import { TrainCar } from "./components/Train/TrainCar.tsx";
@@ -95,6 +94,7 @@ export default function DesignCentralStation() {
   const trainRef = useRef<HTMLButtonElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
   const [showTransition, setShowTransition] = useState(false);
+  const [AnalyticsComponent, setAnalyticsComponent] = useState<React.ComponentType | null>(null);
 
   /**
    * Generates and displays spark particles when train is hovered.
@@ -122,6 +122,12 @@ export default function DesignCentralStation() {
       setShowTransition(false);
     }, 1400); // Match TRANSITION_DURATION_MS from caseStudyConstants
   };
+
+  useEffect(() => {
+    import('@vercel/analytics/react').then(({ Analytics }) => {
+      setAnalyticsComponent(() => Analytics);
+    });
+  }, []);
 
   return (
     <div
@@ -151,16 +157,18 @@ export default function DesignCentralStation() {
             <picture className="absolute inset-0">
               <source
                 media="(min-width: 768px)"
-                srcSet="/images/Home/hero2.webp"
+                srcSet="/images/Home/hero2-400w.webp 400w, /images/Home/hero2-800w.webp 800w, /images/Home/hero2-1200w.webp 1200w"
+                sizes="1200px"
                 type="image/webp"
               />
               <source
                 media="(max-width: 767px)"
-                srcSet="/images/Home/hero1.webp"
+                srcSet="/images/Home/hero1-400w.webp 400w, /images/Home/hero1-800w.webp 800w, /images/Home/hero1-1200w.webp 1200w"
+                sizes="800px"
                 type="image/webp"
               />
               <img
-                src="/images/Home/hero2.webp"
+                src="/images/Home/hero2-800w.webp"
                 alt="Hero background"
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 fetchPriority="high"
@@ -278,6 +286,8 @@ export default function DesignCentralStation() {
                     {project.thumbnail && (
                       <img
                         src={project.thumbnail}
+srcSet={`${project.thumbnail.replace('.webp', '-200w.webp')} 200w, ${project.thumbnail.replace('.webp', '-400w.webp')} 400w, ${project.thumbnail.replace('.webp', '-600w.webp')} 600w`}
+sizes="(min-width: 768px) 400px, 200px"
                         alt={`${project.name} thumbnail`}
                         className="w-full h-24 md:h-28 object-cover rounded-md mb-4"
                         loading={index === 0 ? "eager" : "lazy"}
@@ -378,7 +388,7 @@ export default function DesignCentralStation() {
           </Suspense>
         )}
       </div>
-      <Analytics />
+      {AnalyticsComponent && <AnalyticsComponent />}
       <SpeedInsights />
     </div>
   );

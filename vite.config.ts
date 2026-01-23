@@ -8,6 +8,21 @@ export default defineConfig({
   optimizeDeps: {
     include: ["react/jsx-runtime"], // Forces Vite to pre-bundle this
   },
+  build: {
+    minify: 'terser',
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'router': ['react-router-dom'],
+          'animation': ['framer-motion'],
+          'train-page': ['./src/pages/train.tsx'],
+          'case-studies': ['./src/components/CaseStudyWrapper.tsx']
+        }
+      }
+    }
+  },
   server: {
     // allowedHosts: [
     // 'd5132dfe-89fb-4e5d-a56e-4ac543d63cc6-00-1f97eeryyh6ig.riker.replit.dev'
