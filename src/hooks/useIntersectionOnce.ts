@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 /**
  * Hook to trigger a callback when an element becomes visible (once)
- * Immediately unobserves after firing to minimize memory overhead
+ * Immediately stops observing after first intersection
  */
 export const useIntersectionOnce = (
   ref: React.RefObject<HTMLElement | null>,
@@ -10,18 +10,24 @@ export const useIntersectionOnce = (
   options: IntersectionObserverInit = {},
 ) => {
   useEffect(() => {
-    if (!ref.current) return;
+    const element = ref.current;
+    if (!element) return;
+
+    let hasFired = false;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          // Immediately unobserve after firing to prevent memory leaks
-          // and avoid redundant callbacks for already-loaded content
-          if (entry.isIntersecting) {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !hasFired) {
+            hasFired = true;
             callback();
+
+            // Stop observing after first intersection
             observer.unobserve(entry.target);
+            observer.disconnect();
+            break;
           }
-        });
+        }
       },
       {
         threshold: 0.1,
@@ -29,8 +35,10 @@ export const useIntersectionOnce = (
       },
     );
 
-    observer.observe(ref.current);
+    observer.observe(element);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, [ref, callback, options]);
 };

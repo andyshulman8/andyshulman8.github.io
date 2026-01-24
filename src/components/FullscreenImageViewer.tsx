@@ -117,7 +117,14 @@ export const FullscreenImageViewer = ({
       className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
+      tabIndex={-1}
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.stopPropagation();
+          onClose();
+        }
+      }}
     >
       <button
         ref={closeButtonRef}
