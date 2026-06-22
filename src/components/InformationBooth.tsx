@@ -192,42 +192,32 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
             <div className="grid md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2 space-y-4">
                 <p className="text-white/80 leading-relaxed">
-                  I&apos;m Andy, a Senior UX Designer with{" "}
-                  <span className="relative inline-block group">
-                    <u>
+                  I&apos;m Andy, I currently lead UX at {" "}
+                   <u>
                       <a
-                        aria-label="Andy Shulman's resume (opens in new tab)"
-                        href="https://drive.google.com/file/d/1m1BwzMNuZySV6jw0Jr3FmXCiecmqptiu/view?usp=sharing"
+                        aria-label="Specright's website"
+                        href="https://www.specright.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-white transition-colors"
                       >
-                        over 5 years experience
+                        Specright,
                       </a>
                     </u>
-                    {/* Tooltip */}
-                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                      See Resume →
-                    </span>
-                  </span>{" "}
-                  transforming complex enterprise systems into intuitive
-                  experiences. I have a Master&apos;s in Sustainability Science
-                  from Stanford and a skill set that brings together design
-                  thinking, behavior design, business strategy, and
-                  systems thinking.
+                    {" "} supporting companies that 
+                  manufacture household products to more efficiently manage their product specifications, packaging, and supply chain data. 
+                  I&apos;ve been particularly interested in exploring how AI can enhance the design process, 
+                  and putting my sustainability background to work in the supply chain space.
                 </p>
 
                 <p className="text-white/80 leading-relaxed">
-                  My work spans enterprise B2B SaaS, health tech, to
-                  mission-driven organizations. I&apos;ve designed AI-driven
-                  features, laid foundations for IBM partnerships, and
+                  My previous work spans enterprise B2B SaaS, health tech, and
+                  mission-driven organizations. I&apos;ve designed AI-assisted workflows and
                   helped teams from cancer treatment centers to global
                   energy companies work more efficiently.
                 </p>
                 <p className="text-white/80 leading-relaxed">
-                  I am currently based in Montrose, Colorado with my
-                  adventure dog, exploring opportunities in climate tech
-                  and mental health spaces. Check out my adventures:
+                  I live in Montrose, Colorado with my girlfriend and our two crazy dogs. Check out my adventures:
                 </p>
               </div>
 
