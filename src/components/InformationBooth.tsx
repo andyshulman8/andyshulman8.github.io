@@ -238,7 +238,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                 <div className="text-center mb-3 -mt-10">
                   <a
                     aria-label="Andy Shulman's resume (opens in new tab)"
-                    href="https://docs.google.com/document/d/1dcvh0-dBAh5WQCPS4xrKBOeQqpJ0Tx1LMcUIXAkueKU/edit?usp=sharing"
+                    href="https://drive.google.com/file/d/135KRz2IUokO7ULy5JWPFkWHlVdO94iMr/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/70 hover:text-white transition-colors underline"
