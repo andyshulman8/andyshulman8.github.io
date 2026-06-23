@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { Info } from "lucide-react";
 import { SkillsBoard } from "./Skills/SkillsBoard.tsx";
+// import { ExpressTicketCTA } from "../components/ticket.tsx";
 import {
   INFO_COLOR,
   SILVER,
@@ -169,7 +170,8 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
 
           {/* About Me Panel */}
           <div className="pt-12">
-            <div className="flex items-start gap-4 mb-6">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-start gap-4">
               {/* Headshot */}
               <div
                 className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-4 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
@@ -186,8 +188,18 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
 
               <h3 className="text-white/90 text-2xl font-bold self-center">
                 About the Conductor
-              </h3>
-            </div>
+              </h3></div>
+              {/* <ExpressTicketCTA
+                onClick={() =>
+                  window.open(
+                    "https://docs.google.com/document/d/1dcvh0-dBAh5WQCPS4xrKBOeQqpJ0Tx1LMcUIXAkueKU/edit?usp=sharing",
+                    "_blank",
+                    "noopener,noreferrer"
+                  )
+                }
+              /> */}
+            
+  </div>
 
             <div className="grid md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2 space-y-4">
@@ -222,6 +234,18 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
               </div>
 
               <div className="md:col-span-1 h-full">
+                <div className="text-center mb-3 -mt-10">
+                  <a
+                    aria-label="Andy Shulman's resume (opens in new tab)"
+                    href="https://docs.google.com/document/d/1dcvh0-dBAh5WQCPS4xrKBOeQqpJ0Tx1LMcUIXAkueKU/edit?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/70 hover:text-white transition-colors underline"
+                    
+                  >
+                    View Resume
+                  </a>
+                </div>
                 <div
                   ref={mapRef}
                   className="bg-[#0f0f0f] border-2 border-white/10 rounded-lg overflow-hidden h-full hover:border-white/30 transition-all duration-300"

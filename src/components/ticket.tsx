@@ -24,10 +24,6 @@ interface ExpressTicketCTAProps {
   onClick: () => void;
 }
 
-interface ExpressTicketCTAProps {
-  onClick: () => void;
-}
-
 export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({
   onClick,
 }) => (
