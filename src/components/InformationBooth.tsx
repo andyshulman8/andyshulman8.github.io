@@ -181,6 +181,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                   src="/images/Home/headshot.webp"
                   alt="Andy Shulman"
                   className="w-full h-full object-cover"
+                  style={{ objectPosition: "10% 50%" }}
                   loading="lazy"
                   decoding="async"
                 />
