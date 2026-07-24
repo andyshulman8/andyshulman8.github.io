@@ -48,6 +48,7 @@ export default function CarouselControls({
           e.stopPropagation();
           onPrev();
         }}
+        aria-label="Previous image"
         className={`${btnSize} rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg`}
         style={{
           background: "linear-gradient(145deg, #333 0%, #222 100%)",
@@ -91,6 +92,7 @@ export default function CarouselControls({
           e.stopPropagation();
           onNext();
         }}
+        aria-label="Next image"
         className={`${btnSize} rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg`}
         style={{
           background: "linear-gradient(145deg, #333 0%, #222 100%)",

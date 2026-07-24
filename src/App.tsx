@@ -1,4 +1,4 @@
-import { useState, useRef, lazy, Suspense, useEffect } from "react";
+import { useState, useRef, lazy, Suspense } from "react";
 import { Train, MapPin, ChevronRight } from "lucide-react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useNavigate, Link } from "react-router-dom";
@@ -34,6 +34,12 @@ const InformationBooth = lazy(() =>
   }))
 );
 
+const Analytics = lazy(() =>
+  import("@vercel/analytics/react").then((mod) => ({
+    default: mod.Analytics,
+  }))
+);
+
 const TestimonialsSection = lazy(() =>
   import("./components/TestimonialsSection.tsx").then((mod) => ({
     default: mod.TestimonialsSection,
@@ -53,14 +59,18 @@ interface Spark {
   y: number;
 }
 
+// Monotonic counter for spark ids — Date.now() collides when two hovers
+// land in the same millisecond, producing duplicate React keys.
+let sparkIdCounter = 0;
+
 /**
  * Generates spark particles originating from a DOM rect.
  * @param origin - The x,y origin point for spark emission
  * @returns Array of spark particles with randomized angles and durations
  */
 const generateSparks = (origin: { x: number; y: number }): Spark[] =>
-  Array.from({ length: UI.sparkCount }, (_, i) => ({
-    id: Date.now() + i,
+  Array.from({ length: UI.sparkCount }, () => ({
+    id: sparkIdCounter++,
     angle: Math.random() * UI.sparkAngle - UI.sparkAngle / 2,
     distance:
       UI.sparkDistance.min +
@@ -99,7 +109,6 @@ export default function DesignCentralStation() {
   const trainRef = useRef<HTMLButtonElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
   const [showTransition, setShowTransition] = useState(false);
-  const [AnalyticsComponent, setAnalyticsComponent] = useState<React.ComponentType | null>(null);
 
   /**
    * Generates and displays spark particles when train is hovered.
@@ -123,12 +132,6 @@ export default function DesignCentralStation() {
       setShowTransition(false);
     }, TRANSITION_DURATION_MS);
   };
-
-  useEffect(() => {
-    import('@vercel/analytics/react').then(({ Analytics }) => {
-      setAnalyticsComponent(() => Analytics);
-    });
-  }, []);
 
   return (
     <div
@@ -389,7 +392,9 @@ sizes="(min-width: 768px) 400px, 200px"
           </Suspense>
         )}
       </div>
-      {AnalyticsComponent && <AnalyticsComponent />}
+      <Suspense fallback={null}>
+        <Analytics />
+      </Suspense>
       <SpeedInsights />
     </div>
   );

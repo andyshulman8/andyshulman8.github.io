@@ -5,6 +5,13 @@
  * used throughout the case study pages.
  */
 
+import {
+  THEME_COLOR,
+  SILVER,
+  INFO_COLOR,
+  TEXT_SECONDARY,
+} from "../constants/theme";
+
 // ============================================================
 // Timing & Duration Constants (in milliseconds)
 // ============================================================
@@ -16,11 +23,7 @@ export const TRANSITION_DURATION_MS = 1200;
 // Color Constants (imported context)
 // ============================================================
 
-const THEME_COLOR = "#424141";
-const SILVER = "#dfe1e5ff";
-const INFO_COLOR = "#2B2C28";
 const ACCENT_COLOR = SILVER;
-const TEXT_SECONDARY = "#a8adb3";
 
 // ============================================================
 // Style Objects & Token Functions

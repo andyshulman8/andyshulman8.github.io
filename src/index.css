@@ -1,7 +1,4 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 .split-flap-board {
   perspective: 1000px;
@@ -35,7 +32,7 @@
     --color-info: #2b2c28;
     --color-silver: #dfe1e5ff;
     --color-text-secondary: #a8adb3;
-    --color-text-tertiary: #a8adb3;
+    --color-text-tertiary: #868b92;
     --color-text-muted: #7a7f86;
     --color-accent: var(--color-silver);
   }

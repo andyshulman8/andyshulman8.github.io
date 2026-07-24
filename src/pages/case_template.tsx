@@ -37,6 +37,7 @@ import {
   glowStyle,
   largeGlowStyle,
 } from "../utils/caseStudyConstants.ts";
+import { THEME_COLOR, SILVER, INFO_COLOR, BACK_COLOR } from "../constants/theme";
 import { useState, useEffect, useRef } from "react";
 import { ExpressTicketCTA } from "../components/ticket.tsx";
 
@@ -44,10 +45,6 @@ import { ExpressTicketCTA } from "../components/ticket.tsx";
 // Color Constants
 // ============================================================
 
-const THEME_COLOR = "#424141";
-const SILVER = "#dfe1e5ff";
-const INFO_COLOR = "#2B2C28";
-const BACK_COLOR = "#141515";
 const ACCENT_COLOR = SILVER;
 const PREV_BUTTON_HOVER_BG = "#339989";
 
@@ -136,6 +133,12 @@ export default function CaseStudyTemplate({
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+    dropdownTriggerRef.current?.focus();
+  };
 
   useEffect(() => {
     if (!showDropdown) return;
@@ -145,9 +148,16 @@ export default function CaseStudyTemplate({
         setShowDropdown(false);
       }
     };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeDropdown();
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
   }, [showDropdown]);
 
   const location = useLocation();
@@ -330,8 +340,12 @@ export default function CaseStudyTemplate({
           {/* RIGHT: Case Study Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
+              ref={dropdownTriggerRef}
               className="flex items-center gap-2 cursor-pointer group p-2 rounded-lg hover:bg-white/10 transition-all"
               onClick={() => setShowDropdown((prev) => !prev)}
+              aria-expanded={showDropdown}
+              aria-haspopup="true"
+              aria-controls="case-study-dropdown-menu"
             >
               <div className="text-sm text-white/60 group-hover:text-white transition-colors">
                 Case Studies
@@ -357,14 +371,17 @@ export default function CaseStudyTemplate({
 
             {/* Dropdown Menu */}
             {showDropdown && (
-              <div className="absolute top-full right-0 mt-2 w-72 bg-black/95 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl z-50 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div
+                id="case-study-dropdown-menu"
+                className="absolute top-full right-0 mt-2 w-72 bg-black/95 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl z-50 py-2 animate-in fade-in slide-in-from-top-2 duration-200"
+              >
                 <div className="p-2">
                   {allCaseStudies.map((study, index) => (
                     <button
                       key={index}
                       onClick={() => {
                         navigate(`/${study.id}`);
-                        setShowDropdown(false);
+                        closeDropdown();
                       }}
                       className="w-full text-left px-4 py-3 hover:bg-white/10 transition-all flex items-center gap-3 group"
                     >
