@@ -180,12 +180,7 @@ export const allCaseStudies: CaseStudyData[] = [
     title: "Smarter Alerts",
     line_color: "purple",
     destination: "30% reduction in alert fatigue",
-    peeks: [
-      // '/images/alerts/logsvid.mp4',
-      { src: "/images/alerts/logsvid.mp4", type: "video" },
-      // '/images/alerts/proactive.png',
-      // '/images/alerts/AI4.png'
-    ],
+    peeks: [{ src: "/images/alerts/logsvid.mp4", type: "video" }],
     before: "/images/alerts/before.webp",
     after: "/images/alerts/after.webp",
     background:
@@ -251,10 +246,7 @@ export const allCaseStudies: CaseStudyData[] = [
               "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data",
           },
         ],
-        images: [
-          "/images/alerts/NewLogAlert.webp",
-          // "/images/alerts/NewLogAlert2.webp",
-        ],
+        images: ["/images/alerts/NewLogAlert.webp"],
       },
       {
         station_name: "Proactive Monitoring",
