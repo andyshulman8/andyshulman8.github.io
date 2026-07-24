@@ -116,3 +116,12 @@ Run it: `git checkout fix/portfolio-review-issues && npm run dev`
 5. **`npm audit`** reports 18 vulnerabilities (1 critical) in dependencies.
    Didn't touch these — `npm audit fix --force` can include breaking
    changes, not something to run unsupervised on a live portfolio site.
+6. **Do a full visual pass over every case study's images.** I verified
+   every image reference still resolves (no broken links) and spot-checked
+   the 5 re-encoded files plus the homepage cards and one fullscreen viewer
+   with real screenshots — all looked right. But I did **not** open all 6
+   case studies end-to-end and eyeball every peek/stop/before-after image
+   at real size. Nothing should have changed for images I didn't touch, and
+   the 5 I did re-encode were checked at full size before/after, but worth
+   your own click-through before this merges, especially on the
+   image-heavy stops.
