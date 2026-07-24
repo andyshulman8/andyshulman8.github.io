@@ -12,6 +12,11 @@ import {
   ANIMATION,
   UI,
 } from "./constants/theme";
+import { TRANSITION_DURATION_MS } from "./utils/caseStudyConstants";
+
+// Curated "start here" destination for the hero train click — the flagship
+// case study, not a random one, so first-time visitors land somewhere strong.
+const FEATURED_CASE_STUDY_ID = "logs";
 import { useBackToTop } from "./hooks/index";
 
 const FullscreenImageViewer = lazy(
@@ -113,14 +118,10 @@ export default function DesignCentralStation() {
   const handleTrainClick = () => {
     setShowTransition(true);
 
-    // Navigate to random case study (first "stop")
-    const randomCaseStudy =
-      caseStudies[Math.floor(Math.random() * caseStudies.length)];
-
     window.setTimeout(() => {
-      navigate(`/${randomCaseStudy.id}`);
+      navigate(`/${FEATURED_CASE_STUDY_ID}`);
       setShowTransition(false);
-    }, 1400); // Match TRANSITION_DURATION_MS from caseStudyConstants
+    }, TRANSITION_DURATION_MS);
   };
 
   useEffect(() => {

@@ -183,15 +183,8 @@ export default function CaseStudyTemplate({
 
   // Reset carousel when stop changes
   useEffect(() => {
-    const images = caseStudyData.stops[currentStop].images;
-    if (!images || images.length === 0) {
-      setStopCarouselIndex(0);
-      return;
-    }
-    if (stopCarouselIndex >= images.length) {
-      setStopCarouselIndex(0);
-    }
-  }, [currentStop, caseStudyData, stopCarouselIndex]);
+    setStopCarouselIndex(0);
+  }, [currentStop, caseStudyData]);
 
   /**
    * Starts the case study journey from the first stop.
@@ -429,7 +422,7 @@ export default function CaseStudyTemplate({
               <h2 className="text-2xl font-bold mb-6 text-white/80">
                 Background
               </h2>
-              <p className="text-white/60 leading-relaxed text-l">
+              <p className="text-white/60 leading-relaxed text-lg">
                 {caseStudyData.background}
               </p>
             </div>
@@ -823,7 +816,7 @@ export default function CaseStudyTemplate({
             <div className="prose prose-invert max-w-none">
               {!hasImages && quoteBlock}
 
-              <p className="text-l text-white/80 leading-relaxed mb-6 whitespace-pre-line">
+              <p className="text-lg text-white/80 leading-relaxed mb-6 whitespace-pre-line">
                 {stop.content}
               </p>
 

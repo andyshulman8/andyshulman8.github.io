@@ -91,7 +91,6 @@ export const UI = {
     blur: 24,
   },
   testimonialGap: 32,
-  imageLoadingDuration: 500,
 };
 
 /**

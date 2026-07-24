@@ -31,11 +31,29 @@ interface WindowFrameProps {
 }
 
 export function WindowFrame({ children, onClick }: WindowFrameProps) {
+  // The frame can't be a native <button> because it wraps real buttons
+  // (CarouselControls' prev/next/dots), and nesting interactive elements
+  // inside a <button> is invalid. Make it keyboard-operable instead.
+  const interactiveProps = onClick
+    ? {
+        role: "button" as const,
+        tabIndex: 0,
+        "aria-label": "View fullscreen",
+        onClick,
+        onKeyDown: (e: React.KeyboardEvent) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onClick();
+          }
+        },
+      }
+    : {};
+
   return (
     <div
       className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity"
-      onClick={onClick}
       style={WINDOW_FRAME_STYLE}
+      {...interactiveProps}
     >
       <div
         className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center"

@@ -75,43 +75,49 @@ export const FullscreenImageViewer = ({
     // Focus close button on open
     closeButtonRef.current?.focus();
 
-    // Focus trapping
-    const focusableElements = dialogRef.current?.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (focusableElements && focusableElements.length > 0) {
+    const dialogElement = dialogRef.current;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      // Re-query on every keystroke: nav buttons/dots mount and unmount as
+      // the gallery length and active index change, so a stale snapshot of
+      // focusable elements would trap focus on elements that no longer exist.
+      const focusableElements = dialogElement?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusableElements || focusableElements.length === 0) return;
+
       const firstElement = focusableElements[0] as HTMLElement;
       const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Tab') {
-          if (e.shiftKey) {
-            if (document.activeElement === firstElement) {
-              e.preventDefault();
-              lastElement.focus();
-            }
-          } else {
-            if (document.activeElement === lastElement) {
-              e.preventDefault();
-              firstElement.focus();
-            }
-          }
-        } else if (e.key === 'Escape') {
-          onClose();
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
         }
-      };
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
 
-      const dialogElement = dialogRef.current;
-      dialogElement?.addEventListener('keydown', handleKeyDown);
-
-      return () => {
-        dialogElement?.removeEventListener('keydown', handleKeyDown);
-      };
-    }
+    dialogElement?.addEventListener("keydown", handleKeyDown);
+    return () => dialogElement?.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    // Click-to-dismiss on the backdrop is a mouse-only convenience; keyboard
+    // users already have equivalent access via Escape (handled above) and the
+    // close button, so these two divs don't need their own key handlers.
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       ref={dialogRef}
       className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
@@ -119,12 +125,6 @@ export const FullscreenImageViewer = ({
       aria-modal="true"
       tabIndex={-1}
       onClick={onClose}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          e.stopPropagation();
-          onClose();
-        }
-      }}
     >
       <button
         ref={closeButtonRef}
@@ -140,9 +140,9 @@ export const FullscreenImageViewer = ({
         <X size={24} style={{ color: "#aaa" }} />
       </button>
 
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
       <div
         className="relative max-w-7xl w-full"
-        aria-hidden="true"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -182,13 +182,13 @@ export const FullscreenImageViewer = ({
                   loop
                   muted
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover object-left-top"
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               ) : (
                 <img
                   src={getMediaSrc(currentItem)}
                   alt={`Fullscreen preview ${active + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover object-left-top"
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               )}
 
@@ -227,6 +227,7 @@ export const FullscreenImageViewer = ({
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4 items-center z-10">
                 <button
                   onClick={prev}
+                  aria-label="Previous image"
                   className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
                   style={{
                     background: "linear-gradient(145deg, #333 0%, #222 100%)",
@@ -259,6 +260,7 @@ export const FullscreenImageViewer = ({
 
                 <button
                   onClick={next}
+                  aria-label="Next image"
                   className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
                   style={{
                     background: "linear-gradient(145deg, #333 0%, #222 100%)",

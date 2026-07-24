@@ -126,7 +126,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
               {/* Loading skeleton */}
               <div
                 aria-hidden={processLoaded}
-                className={`absolute inset-0 transition-opacity duration-${UI.imageLoadingDuration} ${
+                className={`absolute inset-0 transition-opacity duration-500 ${
                   processLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
                 }`}
               >
@@ -144,7 +144,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
 
               {/* Actual image */}
               <button
-                className={`w-full h-full cursor-pointer hover:opacity-90 transition-opacity duration-${UI.imageLoadingDuration} border-0 bg-transparent p-0 ${
+                className={`w-full h-full cursor-pointer hover:opacity-90 transition-opacity duration-500 border-0 bg-transparent p-0 ${
                   processLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 onClick={() => onFullscreenImage("/images/Home/process.webp")}
