@@ -6,6 +6,9 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 
 export default [
   {
+    ignores: ["dist/**"],
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     languageOptions: {
       globals: globals.browser,
