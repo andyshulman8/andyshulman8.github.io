@@ -13,11 +13,11 @@ import {
   UI,
 } from "./constants/theme";
 import { TRANSITION_DURATION_MS } from "./utils/caseStudyConstants";
+import { useBackToTop } from "./hooks/index";
 
 // Curated "start here" destination for the hero train click — the flagship
 // case study, not a random one, so first-time visitors land somewhere strong.
 const FEATURED_CASE_STUDY_ID = "logs";
-import { useBackToTop } from "./hooks/index";
 
 const FullscreenImageViewer = lazy(
   () =>

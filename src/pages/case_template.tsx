@@ -178,7 +178,6 @@ export default function CaseStudyTemplate({
       setShowOverview(false);
       setCurrentStop(initialStop);
     }
-    window.scrollTo(0, 0);
   }, [initialStop]);
 
   // Reset carousel when stop changes
@@ -206,7 +205,6 @@ export default function CaseStudyTemplate({
       const newStop = currentStop + 1;
       setCurrentStop(newStop);
       onStopChange(newStop);
-      window.scrollTo(0, 0);
     }
   };
 
@@ -215,7 +213,6 @@ export default function CaseStudyTemplate({
       const newStop = currentStop - 1;
       setCurrentStop(newStop);
       onStopChange(newStop);
-      window.scrollTo(0, 0);
     }
   };
 
@@ -223,14 +220,12 @@ export default function CaseStudyTemplate({
     setCurrentStop(index);
     setShowOverview(false);
     onStopChange(index);
-    window.scrollTo(0, 0);
   };
 
   const handleBackToOverview = () => {
     setShowOverview(true);
     setFullscreen({ type: "closed" });
     onOverview();
-    window.scrollTo(0, 0);
   };
 
   const stop = caseStudyData.stops[currentStop];

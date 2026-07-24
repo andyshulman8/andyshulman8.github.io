@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-v5O5jA7fhw9caR5C5uP2duiVsB9eYFdkCygHm5UYOgg=' 'sha256-eHIBETEDV4lgvceCPs5UAaW2j2tKolAK35oTM+dagIs=' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.vercel-insights.com https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://cdn.vercel-insights.com https://vercel.live https://stats.vercel.app; frame-src https://www.google.com; frame-ancestors 'none'; upgrade-insecure-requests;"        },
+          "value": "default-src 'self'; script-src 'self' 'sha256-6FyjUAr6C9/xPh5rBjjZdcuyPeXpVaIkNlY3xB3ICcQ=' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.vercel-insights.com https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://www.google.com https://cdn.vercel-insights.com https://vercel.live https://stats.vercel.app; frame-src https://www.google.com; frame-ancestors 'none'; upgrade-insecure-requests;"        },
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"

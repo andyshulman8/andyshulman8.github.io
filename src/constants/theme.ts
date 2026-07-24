@@ -92,8 +92,3 @@ export const UI = {
   },
   testimonialGap: 32,
 };
-
-/**
- * Analytics
- */
-export const GA_ID = "G-5KXX19NNJM";
