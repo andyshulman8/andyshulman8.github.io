@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { Info } from "lucide-react";
 import { SkillsBoard } from "./Skills/SkillsBoard.tsx";
-// import { ExpressTicketCTA } from "../components/ticket.tsx";
 import {
   INFO_COLOR,
   SILVER,
@@ -189,18 +188,9 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
 
               <h3 className="text-white/90 text-2xl font-bold self-center">
                 About the Conductor
-              </h3></div>
-              {/* <ExpressTicketCTA
-                onClick={() =>
-                  window.open(
-                    "https://docs.google.com/document/d/1dcvh0-dBAh5WQCPS4xrKBOeQqpJ0Tx1LMcUIXAkueKU/edit?usp=sharing",
-                    "_blank",
-                    "noopener,noreferrer"
-                  )
-                }
-              /> */}
-            
-  </div>
+              </h3>
+              </div>
+            </div>
 
             <div className="grid md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2 space-y-4">
