@@ -420,6 +420,15 @@ export default function CaseStudyTemplate({
               {/* Flex container that wraps */}
               <div className="flex flex-wrap items-start gap-4">
                 <div className="flex-1 min-w-[250px]">
+                  <div
+                    className="inline-block text-xs font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2"
+                    style={{
+                      backgroundColor: "var(--color-info)",
+                      color: "var(--color-text-secondary)",
+                    }}
+                  >
+                    {caseStudyData.company}
+                  </div>
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
                     {caseStudyData.title}
                   </h1>
@@ -554,7 +563,7 @@ export default function CaseStudyTemplate({
                     />
                   </button>
                   <p className="text-white/50 text-sm text-center">
-                    Fragmented tools, slow troubleshooting
+                    {caseStudyData.beforeCaption}
                   </p>
                 </div>
                 <div className="space-y-3">
@@ -583,7 +592,7 @@ export default function CaseStudyTemplate({
                     />
                   </button>
                   <p className="text-white/50 text-sm text-center">
-                    Unified platform, 10-minute resolution
+                    {caseStudyData.afterCaption}
                   </p>
                 </div>
               </div>

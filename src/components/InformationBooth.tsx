@@ -187,7 +187,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
               </div>
 
               <h3 className="text-white/90 text-2xl font-bold self-center">
-                About the Conductor
+                About Me (the Conductor)
               </h3>
               </div>
             </div>

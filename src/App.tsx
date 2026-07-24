@@ -189,12 +189,12 @@ export default function DesignCentralStation() {
             {/* Content */}
             <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
               <div className="text-left">
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                    Final destination:{" "}
-                    <span className="metal-heading">Impact</span>
-                  </h1>
-                </div>
+                <h1 className="text-4xl md:text-5xl font-bold mb-3">
+                  Andy Shulman
+                  <span className="block text-2xl md:text-3xl mt-1">
+                    Senior UX/Product Designer
+                  </span>
+                </h1>
                 <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">
                   Designing clarity for high-stakes systems
                 </h2>
@@ -202,7 +202,8 @@ export default function DesignCentralStation() {
                   className="text-base md:text-lg"
                   style={{ color: "var(--color-text-tertiary)" }}
                 >
-                  Andy Shulman · Senior UX Designer
+                  Final destination:{" "}
+                  <span className="metal-heading">Impact</span>
                 </p>
               </div>
             </div>
@@ -302,11 +303,20 @@ sizes="(min-width: 768px) 400px, 200px"
                   </div>
 
                   <div className="absolute top-4 right-4 bg-black/60 text-white/70 px-2 py-1 rounded-md text-xs border border-white/10">
-                    est: {project.year}
+                    {project.year}
                   </div>
 
                   <div className="flex items-start justify-between mb-2">
                     <div>
+                      <div
+                        className="inline-block text-xs font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2"
+                        style={{
+                          backgroundColor: "var(--color-info)",
+                          color: "var(--color-text-secondary)",
+                        }}
+                      >
+                        {project.company}
+                      </div>
                       <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                     </div>
                     <ChevronRight

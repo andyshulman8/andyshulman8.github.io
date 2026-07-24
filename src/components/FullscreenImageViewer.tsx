@@ -21,6 +21,7 @@
 
 import { useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { GLASS_OVERLAY_GRADIENT } from "../utils/caseStudyConstants";
 type MediaItem = string | { src: string; type: "image" | "video" };
 
 interface FullscreenImageViewerProps {
@@ -195,13 +196,7 @@ export const FullscreenImageViewer = ({
               {/* Window glare/reflection */}
               <div
                 className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: `
-                    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%), 
-                    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%), 
-                    linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
-                  `,
-                }}
+                style={{ background: GLASS_OVERLAY_GRADIENT }}
               />
             </div>
 
