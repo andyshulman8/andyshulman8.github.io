@@ -17,15 +17,18 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
     <!-- Preconnect for critical third-party resources -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://vercel.app" crossorigin />
+    <link rel="preconnect" href="https://cdn.vercel-insights.com" crossorigin />
     
     <!-- Hero image preload for LCP optimization -->
+    <!-- Must match the srcset/sizes on the <picture> sources in App.tsx,
+         otherwise the browser downloads both the preloaded file and the
+         responsive variant it actually renders. -->
     <link
       rel="preload"
       as="image"
       fetchpriority="high"
-      href="/images/Home/hero2.webp"
+      imagesrcset="/images/Home/hero2-400w.webp 400w, /images/Home/hero2-800w.webp 800w, /images/Home/hero2-1200w.webp 1200w"
+      imagesizes="1200px"
       media="(min-width: 768px)"
       type="image/webp"
     />
@@ -33,7 +36,8 @@
       rel="preload"
       fetchpriority="high"
       as="image"
-      href="/images/Home/hero1.webp"
+      imagesrcset="/images/Home/hero1-400w.webp 400w, /images/Home/hero1-800w.webp 800w, /images/Home/hero1-1200w.webp 1200w"
+      imagesizes="800px"
       media="(max-width: 767px)"
       type="image/webp"
     />
@@ -47,7 +51,7 @@
     </title>
     <meta
       name="title"
-      content="Andy Shulman - Senior UX/Product Designer | SaaS Design Specialist"
+      content="Andy Shulman - Senior UX/Product Designer | Enterprise Design Specialist"
     />
     <meta
       name="description"
