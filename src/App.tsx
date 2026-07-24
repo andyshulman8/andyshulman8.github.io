@@ -198,12 +198,12 @@ export default function DesignCentralStation() {
                 <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">
                   Designing clarity for high-stakes systems
                 </h2>
-                <h2
+                <p
                   className="text-base md:text-lg"
                   style={{ color: "var(--color-text-tertiary)" }}
                 >
                   Andy Shulman · Senior UX Designer
-                </h2>
+                </p>
               </div>
             </div>
           </section>

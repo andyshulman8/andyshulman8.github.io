@@ -261,7 +261,7 @@ export default function CaseStudyTemplate({
           <>
             <div className="w-full border-t border-black/30 my-4" />
             <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
-              {stop.quoteImage && (
+              {stop.quoteImage ? (
                 <img
                   src={stop.quoteImage}
                   alt={stop.quoteAuthor}
@@ -271,6 +271,17 @@ export default function CaseStudyTemplate({
                     borderColor: INFO_COLOR,
                   }}
                 />
+              ) : (
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0"
+                  style={{ color: SILVER, backgroundColor: INFO_COLOR }}
+                >
+                  {stop.quoteAuthor
+                    .split(" ")
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join("")}
+                </div>
               )}
               <span>{stop.quoteAuthor}</span>
             </footer>
@@ -332,7 +343,7 @@ export default function CaseStudyTemplate({
             <div className="text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
               {caseStudyData.title}
             </div>
-            <div className="hidden sm:flex text-sm text-white/40 max-w-xs">
+            <div className="hidden sm:flex text-sm text-white/60 max-w-xs">
               {caseStudyData.destination}
             </div>
           </div>
@@ -694,7 +705,7 @@ export default function CaseStudyTemplate({
 
               <button
                 onClick={onNextRoute}
-                className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
+                className="text-white/60 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
                 aria-label="Or try the next case study"
               >
                 Or try the next case study
@@ -745,16 +756,25 @@ export default function CaseStudyTemplate({
                         )}
                       </div>
 
-                      {/* The Station Name - Responsive Visibility */}
+                      {/* The Station Name - Responsive Visibility.
+                          The current stop's label stays visible at every
+                          breakpoint (it's the one thing a mobile user needs -
+                          "where am I"); other stops still rely on hover/md:
+                          since touch devices have no hover to reveal them,
+                          and their names are already exposed via aria-label
+                          on the button. */}
                       <div
-                        className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none 
-                                    opacity-0 group-hover:opacity-100 md:opacity-100 transition-opacity duration-300"
+                        className={`absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none transition-opacity duration-300 ${
+                          isCurrent
+                            ? "opacity-100"
+                            : "opacity-0 group-hover:opacity-100 md:opacity-100"
+                        }`}
                       >
                         <span
                           className={`text-xs mb-3 font-medium uppercase tracking-wider transition-colors duration-300 ${
                             isActive || isCurrent
                               ? "text-[#dfe1e5ff]" // Current and Past stops
-                              : "text-[#424141]" // Future stops (Silver)
+                              : "text-[#9a9c9e]" // Future stops (muted but WCAG AA compliant)
                           }`}
                         >
                           {stop.station_name}
