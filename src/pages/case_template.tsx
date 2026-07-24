@@ -170,6 +170,14 @@ export default function CaseStudyTemplate({
   const [showTransition, setShowTransition] = useState(false);
   const caseStudyData: CaseStudyData = allCaseStudies[dataIndex];
 
+  useEffect(() => {
+    const defaultTitle = document.title;
+    document.title = `${caseStudyData.title} — Andy Shulman`;
+    return () => {
+      document.title = defaultTitle;
+    };
+  }, [caseStudyData.title]);
+
   const [showOverview, setShowOverview] = useState(initialStop === undefined);
   const [currentStop, setCurrentStop] = useState(initialStop ?? 0);
 

@@ -195,16 +195,38 @@ export default function DesignCentralStation() {
                     Senior UX/Product Designer
                   </span>
                 </h1>
-                <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">
+                <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-2">
                   Designing clarity for high-stakes systems
                 </h2>
+                <p className="text-sm text-white/60 mb-4">
+                  Open to Senior/Staff Product Design roles · Remote (US) ·
+                  Climate, Health, AI
+                </p>
                 <p
-                  className="text-base md:text-lg"
+                  className="text-base md:text-lg mb-5"
                   style={{ color: "var(--color-text-tertiary)" }}
                 >
                   Final destination:{" "}
                   <span className="metal-heading">Impact</span>
                 </p>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="https://drive.google.com/file/d/135KRz2IUokO7ULy5JWPFkWHlVdO94iMr/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Andy Shulman's resume (opens in new tab)"
+                    className="px-5 py-2.5 rounded-full font-bold text-black text-sm hover:scale-105 transition-transform"
+                    style={{ backgroundColor: "var(--color-silver)" }}
+                  >
+                    View Resume
+                  </a>
+                  <a
+                    href="mailto:andyshulman8@gmail.com"
+                    className="px-5 py-2.5 rounded-full font-bold text-sm border border-white/30 text-white hover:bg-white/10 transition-colors"
+                  >
+                    Get in Touch
+                  </a>
+                </div>
               </div>
             </div>
           </section>
@@ -387,9 +409,16 @@ sizes="(min-width: 768px) 400px, 200px"
           <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
             Montrose, Colorado •{" "}
             <u>
-              <a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a>
+              <a
+                href="https://www.linkedin.com/in/andrea-shulman/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
             </u>{" "}
-            • andyshulman8@gmail.com
+            •{" "}
+            <a href="mailto:andyshulman8@gmail.com">andyshulman8@gmail.com</a>
           </div>
           <div className="mt-12 text-xs text-white/50">
             This site uses anonymized analytics (e.g. Google Analytics) to understand general usage.          </div>
