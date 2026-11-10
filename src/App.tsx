@@ -189,26 +189,21 @@ export default function DesignCentralStation() {
             {/* Content */}
             <div className="relative h-full flex items-center px-6 md:pl-12 z-10">
               <div className="text-left">
-                <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                  Andy Shulman
-                  <span className="block text-2xl md:text-3xl mt-1">
-                    Senior UX/Product Designer
-                  </span>
-                </h1>
-                <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-2">
+                <div>
+                  <h1 className="text-4xl md:text-5xl font-bold mb-3">
+                    Final destination:{" "}
+                    <span className="metal-heading">Impact</span>
+                  </h1>
+                </div>
+                <h2 className="text-lg md:text-xl text-white/80 font-semibold mb-4">
                   Designing clarity for high-stakes systems
                 </h2>
-                <p className="text-sm text-white/60 mb-4">
-                  Open to Senior/Staff Product Design roles · Remote (US) ·
-                  Climate, Health, AI
-                </p>
-                <p
+                <h2
                   className="text-base md:text-lg mb-5"
                   style={{ color: "var(--color-text-tertiary)" }}
                 >
-                  Final destination:{" "}
-                  <span className="metal-heading">Impact</span>
-                </p>
+                  Andy Shulman · Senior UX Designer
+                </h2>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href="https://drive.google.com/file/d/135KRz2IUokO7ULy5JWPFkWHlVdO94iMr/view?usp=sharing"
