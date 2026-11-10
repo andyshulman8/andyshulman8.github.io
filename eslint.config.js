@@ -29,6 +29,23 @@ export default [
   pluginReact.configs.flat.recommended,
   jsxA11y.flatConfigs.recommended,
   {
+    // Claude Code hook scripts run in Node, not the browser
+    files: [".claude/**/*.{js,cjs,mjs}"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "commonjs"
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off"
+    }
+  },
+  {
+    files: [".claude/**/*.mjs"],
+    languageOptions: {
+      sourceType: "module"
+    }
+  },
+  {
     rules: {
       "react/react-in-jsx-scope": "off",  // ← Turn off the annoying rule
       "react/prop-types": "off",  // ← You're using TypeScript, don't need PropTypes

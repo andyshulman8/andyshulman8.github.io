@@ -14,11 +14,13 @@ Run it: `git checkout fix/portfolio-review-issues && npm run dev`
 
 - **Hero section reordered.** Name/title ("Andy Shulman — Senior UX/Product
   Designer") now leads, largest on the page — it was previously the smallest
-  line, third down. Added an "Open to Senior/Staff Product Design roles ·
-  Remote (US) · Climate, Health, AI" line (pulled from CLAUDE.md's existing
-  background info, not invented). Added visible **"View Resume" / "Get in
-  Touch" buttons** near the top — the resume link previously only existed
-  buried in the About section, past all six case study cards.
+  line, third down. Added visible **"View Resume" / "Get in Touch" buttons**
+  near the top — the resume link previously only existed buried in the About
+  section, past all six case study cards.
+  (An "Open to Senior/Staff Product Design roles · Remote (US) · Climate,
+  Health, AI" line was also added here, sourced from CLAUDE.md's then-current
+  "job searching" status. **Since removed** — Andy is not actively looking, and
+  CLAUDE.md has been corrected so it doesn't get regenerated.)
 - **Company badges** added to every case study card and case study page title
   — LogicMonitor, Align Technology, Exploratorium, Bose. Previously no
   recognizable employer appeared anywhere in a scan.
