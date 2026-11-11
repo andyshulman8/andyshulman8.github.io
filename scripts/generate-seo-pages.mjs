@@ -52,7 +52,7 @@ const pages = [
     title: HOME_TITLE,
     desc: HOME_DESC,
     ogType: "website",
-    summary: `<h1>Andy Shulman, Senior UX/Product Designer</h1><p>${esc(HOME_DESC)}</p><ul>${allCaseStudies
+    summary: `<h1>Final destination: Impact</h1><h2>Designing clarity for high-stakes systems</h2><h2>Andy Shulman · Senior UX Designer</h2><p>${esc(HOME_DESC)}</p><ul>${allCaseStudies
       .map((c) => `<li><a href="/${c.id}">${esc(c.title)}</a> (${esc(c.company)}): ${esc(c.destination)}</li>`)
       .join("")}</ul>`,
     jsonld: [
