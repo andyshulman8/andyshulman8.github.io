@@ -58,7 +58,7 @@ export default [
   {
     plugins: { "react-hooks": reactHooks },
     rules: {
-      "react-hooks/rules-of-hooks": "warn", // TODO: "error" once FullscreenImageViewer.tsx conditional hooks are fixed
+      "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
       "react/react-in-jsx-scope": "off",  // ← Turn off the annoying rule
       "react/prop-types": "off",  // ← You're using TypeScript, don't need PropTypes

@@ -58,22 +58,15 @@ export const FullscreenImageViewer = ({
 
   // Build gallery
   const gallery = images && images.length ? images : src ? [src] : [];
-  if (!gallery.length) return null;
-
-  const active =
-    currentIndex >= 0 && currentIndex < gallery.length ? currentIndex : 0;
-  const prev = () =>
-    onChangeIndex &&
-    onChangeIndex((active - 1 + gallery.length) % gallery.length);
-  const next = () =>
-    onChangeIndex && onChangeIndex((active + 1) % gallery.length);
-
-  const currentItem = gallery[active];
+  const hasGallery = gallery.length > 0;
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    // Nothing rendered (empty gallery): refs are unset, so skip.
+    if (!hasGallery) return;
+
     // Focus close button on open
     closeButtonRef.current?.focus();
 
@@ -113,7 +106,19 @@ export const FullscreenImageViewer = ({
 
     dialogElement?.addEventListener("keydown", handleKeyDown);
     return () => dialogElement?.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [onClose, hasGallery]);
+
+  if (!hasGallery) return null;
+
+  const active =
+    currentIndex >= 0 && currentIndex < gallery.length ? currentIndex : 0;
+  const prev = () =>
+    onChangeIndex &&
+    onChangeIndex((active - 1 + gallery.length) % gallery.length);
+  const next = () =>
+    onChangeIndex && onChangeIndex((active + 1) % gallery.length);
+
+  const currentItem = gallery[active];
 
   return (
     // Click-to-dismiss on the backdrop is a mouse-only convenience; keyboard
