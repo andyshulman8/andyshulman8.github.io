@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.ts";
 
 /**
  * Site-wide pause control for decorative looping animation (WCAG 2.2.2).
  * Sets data-motion="paused" on <html>; index.css pauses all CSS animations
- * under that attribute.
+ * under that attribute. Only rendered when the browser/OS asks for reduced
+ * motion (prefers-reduced-motion), so other visitors never see the button.
  */
 export function MotionToggle() {
+  const reduced = usePrefersReducedMotion();
   const [paused, setPaused] = useState(false);
 
   const toggle = () => {
@@ -15,6 +18,8 @@ export function MotionToggle() {
     if (next) document.documentElement.dataset.motion = "paused";
     else delete document.documentElement.dataset.motion;
   };
+
+  if (!reduced) return null;
 
   return (
     <button
