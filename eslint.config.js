@@ -40,6 +40,14 @@ export default [
     }
   },
   {
+    // Build scripts run in Node
+    files: ["scripts/**/*.{js,cjs,mjs}"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "module"
+    }
+  },
+  {
     files: [".claude/**/*.mjs"],
     languageOptions: {
       sourceType: "module"
