@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DesignCentralStation from "./App.tsx";
 import { PageviewTracker } from "./components/PageviewTracker.tsx";
 import { ErrorBoundary } from "./components/ErrorBoundary.tsx";
+import { MotionToggle } from "./components/MotionToggle.tsx";
+import { RouteFocus } from "./components/RouteFocus.tsx";
 import "./index.css";
 
 const CaseStudyWrapper = lazy(
@@ -21,6 +23,8 @@ createRoot(document.getElementById("root")!).render(
     <ErrorBoundary>
       <BrowserRouter>
         <PageviewTracker>
+          <RouteFocus />
+          <MotionToggle />
           <Routes>
             <Route path="/" element={<DesignCentralStation />} />
             <Route

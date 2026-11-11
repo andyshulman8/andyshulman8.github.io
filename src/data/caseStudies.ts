@@ -1,6 +1,7 @@
 export interface CaseStudy {
   id: string;
   name: string;
+  company: string;
   year: number;
   line: string;
   color: string;
@@ -15,6 +16,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "logs",
     name: "Logs: Rags to Riches",
+    company: "LogicMonitor",
     year: 2025,
     line: "Red Line",
     color: "#E53935",
@@ -34,6 +36,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "alerts",
     name: "Smarter Alerts",
+    company: "LogicMonitor",
     year: 2025,
     line: "Purple Line",
     color: "#8E24AA",
@@ -53,6 +56,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "data",
     name: "Secure Data",
+    company: "LogicMonitor",
     year: 2025,
     line: "Red + Green Lines",
     color: "#43A047",
@@ -72,6 +76,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "team",
     name: "Empowered Team",
+    company: "Align Technology",
     year: 2020,
     line: "Blue Line",
     color: "#1E88E5",
@@ -91,6 +96,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "future",
     name: "Imagining the Future",
+    company: "Exploratorium",
     year: 2019,
     line: "Green Line",
     color: "#43A047",
@@ -110,6 +116,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: "health",
     name: "Health Frameworks",
+    company: "Bose",
     year: 2019,
     line: "Purple + Blue Lines",
     color: "#8E24AA",

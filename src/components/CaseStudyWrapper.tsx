@@ -19,14 +19,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import CaseStudyTemplate from "../pages/case_template";
 import { allCaseStudies } from "../pages/casedata";
 
-const viewToIndex: Record<string, number> = {
-  logs: 0,
-  alerts: 1,
-  data: 2,
-  team: 3,
-  future: 4,
-  health: 5,
-};
+const caseOrder = allCaseStudies.map((c) => c.id);
+const viewToIndex: Record<string, number> = Object.fromEntries(
+  caseOrder.map((id, index) => [id, index]),
+);
 
 export default function CaseStudyWrapper() {
   const { caseId, stopIndex } = useParams<{
@@ -35,9 +31,7 @@ export default function CaseStudyWrapper() {
   }>();
   const navigate = useNavigate();
 
-  const validCases = ["logs", "alerts", "data", "team", "future", "health"];
-
-  const isValid = !!caseId && validCases.includes(caseId);
+  const isValid = !!caseId && caseOrder.includes(caseId);
 
   useEffect(() => {
     if (!isValid) {
@@ -67,13 +61,13 @@ export default function CaseStudyWrapper() {
 
   return (
     <CaseStudyTemplate
+      key={caseId}
       dataIndex={dataIndex}
       initialStop={initialStop}
       onBack={() => navigate("/")}
       onNextRoute={() => {
-        const order = ["logs", "alerts", "data", "team", "future", "health"];
-        const currentIdx = order.indexOf(caseId!);
-        const nextCase = order[(currentIdx + 1) % order.length];
+        const currentIdx = caseOrder.indexOf(caseId!);
+        const nextCase = caseOrder[(currentIdx + 1) % caseOrder.length];
         navigate(`/${nextCase}`);
       }}
       onStopChange={(idx) =>

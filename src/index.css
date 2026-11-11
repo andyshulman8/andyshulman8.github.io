@@ -1,7 +1,4 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 .split-flap-board {
   perspective: 1000px;
@@ -35,7 +32,7 @@
     --color-info: #2b2c28;
     --color-silver: #dfe1e5ff;
     --color-text-secondary: #a8adb3;
-    --color-text-tertiary: #a8adb3;
+    --color-text-tertiary: #868b92;
     --color-text-muted: #7a7f86;
     --color-accent: var(--color-silver);
   }
@@ -115,4 +112,36 @@ h3.metal-heading {
 /* Smooth hover effects for panels */
 .bg-black\/60:hover {
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Pause control (MotionToggle) */
+html[data-motion="paused"] *,
+html[data-motion="paused"] *::before,
+html[data-motion="paused"] *::after {
+  animation-play-state: paused !important;
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7) */
+:where(a, button, [role="button"], summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.85);
+}
+
+/* Reduced motion (WCAG 2.2.2 / 2.3.3): stop looping and decorative motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .train-animation,
+  .info-booth-sign,
+  .animate-pulse,
+  .split-flap-item.searching .flap {
+    animation: none !important;
+  }
 }

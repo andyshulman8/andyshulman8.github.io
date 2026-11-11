@@ -52,9 +52,6 @@ export default function VisionTimeline() {
             </span>
           </div>
           <div className="bg-black/40 border-2 border-black-500/30 rounded-xl p-6 h-full backdrop-blur-sm">
-            {/* <h3 className="text-xl font-bold text-white/90 mb-3">
-              {beforeItem.label}
-            </h3> */}
             <p className="text-white/70 leading-relaxed">{beforeItem.text}</p>
           </div>
         </div>
@@ -67,9 +64,6 @@ export default function VisionTimeline() {
             </span>
           </div>
           <div className="bg-black/40 border-2 border-black-500/30 rounded-xl p-6 h-full backdrop-blur-sm shadow-lg shadow-black-500/10">
-            {/* <h3 className="text-xl font-bold text-white/90 mb-3">
-              {afterItem.label}
-            </h3> */}
             <p className="text-white/70 leading-relaxed">{afterItem.text}</p>
           </div>
         </div>
@@ -80,7 +74,7 @@ export default function VisionTimeline() {
         <div className="flex items-center justify-center mb-12">
           <div className="flex items-center gap-3">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/30" />
-            <span className="text-xs font-mono text-white/40 uppercase tracking-widest">
+            <span className="text-xs font-mono text-white/60 uppercase tracking-widest">
               The Journey
             </span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-white/30" />

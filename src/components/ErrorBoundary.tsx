@@ -32,25 +32,18 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: { componentStack: string }) {
     console.error("ErrorBoundary caught an error:", error, errorInfo);
-    this.reportError(error);
   }
 
   componentDidMount() {
     // Global runtime errors
     this.errorHandler = (event: ErrorEvent) => {
       console.error("Global error caught:", event.error, event.message);
-      this.reportError(event.error || new Error(event.message));
     };
     window.addEventListener("error", this.errorHandler);
 
     // Unhandled promise rejections
     this.rejectionHandler = (event: PromiseRejectionEvent) => {
       console.error("Unhandled promise rejection:", event.reason);
-      this.reportError(
-        event.reason instanceof Error
-          ? event.reason
-          : new Error(String(event.reason))
-      );
     };
     window.addEventListener("unhandledrejection", this.rejectionHandler);
   }
@@ -64,29 +57,6 @@ export class ErrorBoundary extends Component<Props, State> {
       window.removeEventListener("unhandledrejection", this.rejectionHandler);
       this.rejectionHandler = null;
     }
-  }
-
-  /**
-   * Report an error to a monitoring service.
-   * Replace the console.info with Sentry, LogRocket, or your server endpoint.
-   */
-  private reportError(error: Error) {
-    // Include route context
-    const routeContext = window.location.pathname;
-
-    // Send to backend endpoint
-    fetch("/api/log-error", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: error.message,
-        stack: error.stack,
-        route: routeContext,
-        timestamp: new Date().toISOString(),
-      }),
-    }).catch((fetchError) => {
-      console.error("Failed to report error:", fetchError);
-    });
   }
 
   render() {

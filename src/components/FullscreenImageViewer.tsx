@@ -21,6 +21,8 @@
 
 import { useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { getImageAlt } from "../data/imageAlt.ts";
+import { GLASS_OVERLAY_GRADIENT } from "../utils/caseStudyConstants";
 type MediaItem = string | { src: string; type: "image" | "video" };
 
 interface FullscreenImageViewerProps {
@@ -75,43 +77,49 @@ export const FullscreenImageViewer = ({
     // Focus close button on open
     closeButtonRef.current?.focus();
 
-    // Focus trapping
-    const focusableElements = dialogRef.current?.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    if (focusableElements && focusableElements.length > 0) {
+    const dialogElement = dialogRef.current;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      // Re-query on every keystroke: nav buttons/dots mount and unmount as
+      // the gallery length and active index change, so a stale snapshot of
+      // focusable elements would trap focus on elements that no longer exist.
+      const focusableElements = dialogElement?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusableElements || focusableElements.length === 0) return;
+
       const firstElement = focusableElements[0] as HTMLElement;
       const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Tab') {
-          if (e.shiftKey) {
-            if (document.activeElement === firstElement) {
-              e.preventDefault();
-              lastElement.focus();
-            }
-          } else {
-            if (document.activeElement === lastElement) {
-              e.preventDefault();
-              firstElement.focus();
-            }
-          }
-        } else if (e.key === 'Escape') {
-          onClose();
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
         }
-      };
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
 
-      const dialogElement = dialogRef.current;
-      dialogElement?.addEventListener('keydown', handleKeyDown);
-
-      return () => {
-        dialogElement?.removeEventListener('keydown', handleKeyDown);
-      };
-    }
+    dialogElement?.addEventListener("keydown", handleKeyDown);
+    return () => dialogElement?.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    // Click-to-dismiss on the backdrop is a mouse-only convenience; keyboard
+    // users already have equivalent access via Escape (handled above) and the
+    // close button, so these two divs don't need their own key handlers.
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events
     <div
       ref={dialogRef}
       className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
@@ -119,16 +127,11 @@ export const FullscreenImageViewer = ({
       aria-modal="true"
       tabIndex={-1}
       onClick={onClose}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          e.stopPropagation();
-          onClose();
-        }
-      }}
     >
       <button
         ref={closeButtonRef}
         onClick={onClose}
+        aria-label="Close fullscreen viewer"
         className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg z-10"
         style={{
           background: "linear-gradient(145deg, #333 0%, #222 100%)",
@@ -140,9 +143,9 @@ export const FullscreenImageViewer = ({
         <X size={24} style={{ color: "#aaa" }} />
       </button>
 
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
       <div
         className="relative max-w-7xl w-full"
-        aria-hidden="true"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -178,30 +181,30 @@ export const FullscreenImageViewer = ({
                 <video
                   src={getMediaSrc(currentItem)}
                   controls
-                  autoPlay
+                  autoPlay={
+                    !window.matchMedia("(prefers-reduced-motion: reduce)")
+                      .matches
+                  }
                   loop
                   muted
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover object-left-top"
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               ) : (
                 <img
                   src={getMediaSrc(currentItem)}
-                  alt={`Fullscreen preview ${active + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover object-left-top"
+                  alt={getImageAlt(
+                    getMediaSrc(currentItem),
+                    `Fullscreen preview ${active + 1}`,
+                  )}
+                  className="absolute inset-0 w-full h-full object-contain"
                 />
               )}
 
               {/* Window glare/reflection */}
               <div
                 className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: `
-                    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%), 
-                    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%), 
-                    linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
-                  `,
-                }}
+                style={{ background: GLASS_OVERLAY_GRADIENT }}
               />
             </div>
 
@@ -227,6 +230,7 @@ export const FullscreenImageViewer = ({
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4 items-center z-10">
                 <button
                   onClick={prev}
+                  aria-label="Previous image"
                   className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
                   style={{
                     background: "linear-gradient(145deg, #333 0%, #222 100%)",
@@ -246,19 +250,25 @@ export const FullscreenImageViewer = ({
                         onClick={() => onChangeIndex && onChangeIndex(i)}
                         aria-label={`Go to slide ${i + 1} of ${gallery.length}`}
                         aria-pressed={isActive}
-                        className="w-4 h-4 rounded-full cursor-pointer transition-all hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/70"
-                        style={{
-                          background: isActive ? "#aaa" : "rgba(170,170,170,0.4)",
-                          boxShadow: isActive ? "0 0 12px rgba(170,170,170,0.8)" : "none",
-                          border: "2px solid rgba(255,255,255,0.2)",
-                        }}
-                      />
+                        className="w-6 h-6 flex items-center justify-center rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/70"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="w-4 h-4 rounded-full transition-all hover:scale-125"
+                          style={{
+                            background: isActive ? "#aaa" : "rgba(170,170,170,0.4)",
+                            boxShadow: isActive ? "0 0 12px rgba(170,170,170,0.8)" : "none",
+                            border: "2px solid rgba(255,255,255,0.2)",
+                          }}
+                        />
+                      </button>
                     );
                   })}
                 </div>
 
                 <button
                   onClick={next}
+                  aria-label="Next image"
                   className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg"
                   style={{
                     background: "linear-gradient(145deg, #333 0%, #222 100%)",

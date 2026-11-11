@@ -12,6 +12,20 @@ It’s intended for hiring managers, designers, and engineers who want a deeper 
 - **[ACCESSIBILITY.md](./ACCESSIBILITY.md)** — Accessibility approach and WCAG compliance
 - **[DESIGN_PHILOSOPHY.md](./DESIGN_PHILOSOPHY.md)** — Key tradeoffs, design thinking, and decision-making
 
+<details>
+<summary><strong>Hooks</strong> — safety guardrails for AI-assisted changes (click to expand)</summary>
+
+This repo uses [Claude Code hooks](./docs/HOOKS.md) to block a few specific mistakes before they happen, configured in `.claude/settings.json`:
+
+- **`block-secrets`** — blocks any command or file write containing an API key / token / private-key pattern
+- **`block-destructive`** — blocks broad `rm -rf`, and force-pushes / hard-resets / branch deletes while on `main` (which auto-deploys to production)
+- **`check-package-manager`** — blocks `yarn`/`pnpm` since this repo is npm-only (`package-lock.json`)
+- **`typecheck-gate`** — runs `tsc -b` (the same check the production build uses) before Claude can finish a turn, and blocks the handoff if there are type errors
+
+Full details, including how to add a new one: [docs/HOOKS.md](./docs/HOOKS.md)
+
+</details>
+
 ## Recommended Reading Paths
 
 **Hiring Managers:** OVERVIEW → DESIGN_PHILOSOPHY → CASE_STUDY_SYSTEM
