@@ -373,7 +373,7 @@ sizes="(min-width: 768px) 400px, 200px"
           <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
             Montrose, Colorado •{" "}
             <u>
-              <a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/shulman-andy/">LinkedIn</a>
             </u>{" "}
             • andyshulman8@gmail.com
           </div>

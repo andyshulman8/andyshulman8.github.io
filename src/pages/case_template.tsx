@@ -964,7 +964,7 @@ export default function CaseStudyTemplate({
         <div className="mt-8 text-sm text-[color:var(--color-text-secondary)]">
           Montrose, Colorado •{" "}
           <u>
-            <a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/shulman-andy/">LinkedIn</a>
           </u>{" "}
           • andyshulman8@gmail.com
         </div>
