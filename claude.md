@@ -14,8 +14,16 @@ Personal portfolio site for Andy, a Senior UX/Product Designer showcasing enterp
 **Purpose:**
 
 - Showcase 6 case studies in different configurations based on target company
-- Professional presentation for job search (climate tech, mental health, AI companies)
+- Professional presentation for job search when I'm actively looking (climate tech, mental health, AI companies); maintained and improved year-round regardless
 - Fast, accessible, clean UX (walking the walk)
+
+**Important — current status:** I am **not** actively job searching right now. The
+site should never say "open to roles," "available for hire," "seeking my next
+role," or similar. Do not add availability banners, "open to work" badges, or
+hero copy that signals an active search. The portfolio still targets recruiters
+and hiring managers (see Target Audience Considerations) — it just shouldn't
+announce that I'm looking. If I start searching again, I'll update this line
+first.
 
 ---
 
@@ -90,6 +98,19 @@ When working on case studies, always emphasize these proven impacts:
 - **Accessibility:** Keyboard navigation, screen readers, contrast ratios
 - **SEO-friendly:** Meta tags, semantic HTML, alt text
 - **Analytics-ready:** Track which case studies get viewed most
+
+---
+
+## Hooks (Safety Guardrails)
+
+This repo has Claude Code hooks configured in `.claude/settings.json` (scripts in `.claude/hooks/`). They run automatically — you don't need to invoke them, just be aware they're enforcing these rules:
+
+- **Secrets:** any Bash command or file write matching an API key/token/private-key pattern gets blocked.
+- **Destructive commands:** broad `rm -rf`, and force-push / `reset --hard` / branch-delete while on `main` get blocked (`main` auto-deploys to production via Vercel).
+- **Package manager:** `yarn`/`pnpm` commands get blocked — this repo is npm-only (`package-lock.json`).
+- **Typecheck gate:** before ending a turn, `tsc -b` runs automatically (same check as the `build` script) and the handoff is blocked if there are type errors.
+
+If a tool call gets blocked by one of these, it's working as intended — fix the underlying issue (narrow the command, use npm, remove the secret pattern, fix the type error) rather than trying to route around it. Full details: [docs/HOOKS.md](./docs/HOOKS.md).
 
 ---
 
@@ -260,7 +281,7 @@ This portfolio should:
 
 ## Quick Reference: My Background
 
-- **Current:** Senior UX Designer, job searching
+- **Current:** At Specright — supply chain, packaging, and product specification data; exploring how AI can enhance the design process. Not actively job searching.
 - **Location:** Montrose, Colorado (remote-friendly)
 - **Experience:** 4+ years enterprise B2B SaaS (LogicMonitor)
 - **Education:** Stanford (BS Symbolic Systems, MS Sustainability Science)

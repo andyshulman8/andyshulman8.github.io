@@ -30,12 +30,15 @@ export interface Stop {
 export interface CaseStudyData {
   id: string;
   title: string;
+  company: string;
   line_color: LineColor; // This is the key part!
   destination: string;
   peeks: (string | { src: string; type: "image" | "video" })[];
   allImpact?: { metric: string; label: string }[];
   before?: string;
+  beforeCaption?: string;
   after?: string;
+  afterCaption?: string;
   background: string;
   overview: string;
   stops: Stop[];
@@ -45,6 +48,7 @@ export const allCaseStudies: CaseStudyData[] = [
   {
     id: "logs",
     title: "Logs: Rags to Riches",
+    company: "LogicMonitor",
     line_color: "red",
     destination: "Cut troubleshooting from hours to 10 minutes",
     peeks: [
@@ -53,7 +57,9 @@ export const allCaseStudies: CaseStudyData[] = [
       "/images/rags/gap1.3.webp",
     ],
     before: "/images/rags/before.webp",
+    beforeCaption: "Fragmented tools, slow troubleshooting",
     after: "/images/rags/after.webp",
+    afterCaption: "Unified platform, 10-minute resolution",
     background:
       "When Systems Fail, Lives Are at Risk: RaySearch Labs' Senior IT Solutions Engineer spent 50-60% of his time manually reviewing logs. Before LogicMonitor had properly integrated a logs product, users were forced to jump between disconnected tools during critical moments.",
     overview:
@@ -178,16 +184,14 @@ export const allCaseStudies: CaseStudyData[] = [
   {
     id: "alerts",
     title: "Smarter Alerts",
+    company: "LogicMonitor",
     line_color: "purple",
     destination: "30% reduction in alert fatigue",
-    peeks: [
-      // '/images/alerts/logsvid.mp4',
-      { src: "/images/alerts/logsvid.mp4", type: "video" },
-      // '/images/alerts/proactive.png',
-      // '/images/alerts/AI4.png'
-    ],
+    peeks: [{ src: "/images/alerts/logsvid.mp4", type: "video" }],
     before: "/images/alerts/before.webp",
+    beforeCaption: "17,000 daily alerts, constant noise",
     after: "/images/alerts/after.webp",
+    afterCaption: "30% fewer alerts, signal over noise",
     background:
       "Schneider Electric, a 160 year old global leader in energy management trusted by Google and Amazon, had IT teams surrounded by noise: juggling 17,000 daily alerts, manually troubleshooting repetitive issues, and losing valuable hours to false alarms and reactive monitoring.",
     overview:
@@ -251,10 +255,7 @@ export const allCaseStudies: CaseStudyData[] = [
               "Instead of drowning in false positives, teams saw fewer, smarter alerts tied directly to actionable data",
           },
         ],
-        images: [
-          "/images/alerts/NewLogAlert.webp",
-          // "/images/alerts/NewLogAlert2.webp",
-        ],
+        images: ["/images/alerts/NewLogAlert.webp"],
       },
       {
         station_name: "Proactive Monitoring",
@@ -313,6 +314,7 @@ export const allCaseStudies: CaseStudyData[] = [
   {
     id: "data",
     title: "Secure Data",
+    company: "LogicMonitor",
     line_color: "purple",
     destination: "Future-proofed log management for evolving compliance",
     peeks: [
@@ -419,6 +421,7 @@ export const allCaseStudies: CaseStudyData[] = [
   {
     id: "team",
     title: "Empowered Team",
+    company: "Align Technology",
     line_color: "blue",
     destination: "3 piloted solutions in 12 weeks",
     peeks: [
@@ -504,6 +507,7 @@ export const allCaseStudies: CaseStudyData[] = [
   {
     id: "future",
     title: "Imagining the Future",
+    company: "Exploratorium",
     line_color: "green",
     destination: "100K+ visitors served since 2022",
     peeks: [
@@ -602,6 +606,7 @@ export const allCaseStudies: CaseStudyData[] = [
   {
     id: "health",
     title: "Health Frameworks",
+    company: "Bose",
     line_color: "purple",
     destination: "40% reduction in expert dependency",
     peeks: [

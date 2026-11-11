@@ -1,4 +1,4 @@
-import { useState, useRef, lazy, Suspense, useEffect } from "react";
+import { useState, useRef, lazy, Suspense } from "react";
 import { Train, MapPin, ChevronRight } from "lucide-react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { useNavigate, Link } from "react-router-dom";
@@ -12,7 +12,12 @@ import {
   ANIMATION,
   UI,
 } from "./constants/theme";
+import { TRANSITION_DURATION_MS } from "./utils/caseStudyConstants";
 import { useBackToTop } from "./hooks/index";
+
+// Curated "start here" destination for the hero train click — the flagship
+// case study, not a random one, so first-time visitors land somewhere strong.
+const FEATURED_CASE_STUDY_ID = "logs";
 
 const FullscreenImageViewer = lazy(
   () =>
@@ -26,6 +31,12 @@ const TrainTransition = lazy(() => import("./pages/train.tsx"));
 const InformationBooth = lazy(() =>
   import("./components/InformationBooth.tsx").then((mod) => ({
     default: mod.InformationBooth,
+  }))
+);
+
+const Analytics = lazy(() =>
+  import("@vercel/analytics/react").then((mod) => ({
+    default: mod.Analytics,
   }))
 );
 
@@ -48,14 +59,18 @@ interface Spark {
   y: number;
 }
 
+// Monotonic counter for spark ids — Date.now() collides when two hovers
+// land in the same millisecond, producing duplicate React keys.
+let sparkIdCounter = 0;
+
 /**
  * Generates spark particles originating from a DOM rect.
  * @param origin - The x,y origin point for spark emission
  * @returns Array of spark particles with randomized angles and durations
  */
 const generateSparks = (origin: { x: number; y: number }): Spark[] =>
-  Array.from({ length: UI.sparkCount }, (_, i) => ({
-    id: Date.now() + i,
+  Array.from({ length: UI.sparkCount }, () => ({
+    id: sparkIdCounter++,
     angle: Math.random() * UI.sparkAngle - UI.sparkAngle / 2,
     distance:
       UI.sparkDistance.min +
@@ -94,7 +109,6 @@ export default function DesignCentralStation() {
   const trainRef = useRef<HTMLButtonElement>(null);
   const rearCarRef = useRef<HTMLDivElement>(null);
   const [showTransition, setShowTransition] = useState(false);
-  const [AnalyticsComponent, setAnalyticsComponent] = useState<React.ComponentType | null>(null);
 
   /**
    * Generates and displays spark particles when train is hovered.
@@ -113,21 +127,11 @@ export default function DesignCentralStation() {
   const handleTrainClick = () => {
     setShowTransition(true);
 
-    // Navigate to random case study (first "stop")
-    const randomCaseStudy =
-      caseStudies[Math.floor(Math.random() * caseStudies.length)];
-
     window.setTimeout(() => {
-      navigate(`/${randomCaseStudy.id}`);
+      navigate(`/${FEATURED_CASE_STUDY_ID}`);
       setShowTransition(false);
-    }, 1400); // Match TRANSITION_DURATION_MS from caseStudyConstants
+    }, TRANSITION_DURATION_MS);
   };
-
-  useEffect(() => {
-    import('@vercel/analytics/react').then(({ Analytics }) => {
-      setAnalyticsComponent(() => Analytics);
-    });
-  }, []);
 
   return (
     <div
@@ -169,7 +173,7 @@ export default function DesignCentralStation() {
               />
               <img
                 src="/images/Home/hero2-800w.webp"
-                alt="Hero background"
+                alt=""
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 fetchPriority="high"
                 loading="eager"
@@ -195,11 +199,29 @@ export default function DesignCentralStation() {
                   Designing clarity for high-stakes systems
                 </h2>
                 <h2
-                  className="text-base md:text-lg"
+                  className="text-base md:text-lg mb-5"
                   style={{ color: "var(--color-text-tertiary)" }}
                 >
                   Andy Shulman · Senior UX Designer
                 </h2>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="https://drive.google.com/file/d/135KRz2IUokO7ULy5JWPFkWHlVdO94iMr/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Andy Shulman's resume (opens in new tab)"
+                    className="px-5 py-2.5 rounded-full font-bold text-black text-sm hover:scale-105 transition-transform"
+                    style={{ backgroundColor: "var(--color-silver)" }}
+                  >
+                    View Resume
+                  </a>
+                  <a
+                    href="mailto:andyshulman8@gmail.com"
+                    className="px-5 py-2.5 rounded-full font-bold text-sm border border-white/30 text-white hover:bg-white/10 transition-colors"
+                  >
+                    Get in Touch
+                  </a>
+                </div>
               </div>
             </div>
           </section>
@@ -298,11 +320,20 @@ sizes="(min-width: 768px) 400px, 200px"
                   </div>
 
                   <div className="absolute top-4 right-4 bg-black/60 text-white/70 px-2 py-1 rounded-md text-xs border border-white/10">
-                    est: {project.year}
+                    {project.year}
                   </div>
 
                   <div className="flex items-start justify-between mb-2">
                     <div>
+                      <div
+                        className="inline-block text-xs font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2"
+                        style={{
+                          backgroundColor: "var(--color-info)",
+                          color: "var(--color-text-secondary)",
+                        }}
+                      >
+                        {project.company}
+                      </div>
                       <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                     </div>
                     <ChevronRight
@@ -373,9 +404,16 @@ sizes="(min-width: 768px) 400px, 200px"
           <div className="mt-8 text-sm" style={{ color: TEXT_SECONDARY }}>
             Montrose, Colorado •{" "}
             <u>
-              <a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a>
+              <a
+                href="https://www.linkedin.com/in/shulman-andy/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
             </u>{" "}
-            • andyshulman8@gmail.com
+            •{" "}
+            <a href="mailto:andyshulman8@gmail.com">andyshulman8@gmail.com</a>
           </div>
           <div className="mt-12 text-xs text-white/50">
             This site uses anonymized analytics (e.g. Google Analytics) to understand general usage.          </div>
@@ -388,7 +426,9 @@ sizes="(min-width: 768px) 400px, 200px"
           </Suspense>
         )}
       </div>
-      {AnalyticsComponent && <AnalyticsComponent />}
+      <Suspense fallback={null}>
+        <Analytics />
+      </Suspense>
       <SpeedInsights />
     </div>
   );
