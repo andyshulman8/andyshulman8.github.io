@@ -61,7 +61,7 @@ export default function CarouselControls({
         />
       </button>
 
-      <div className="flex gap-2">
+      <div className="flex gap-0">
         {Array.from({ length }).map((_, i) => {
           const isActive = i === activeIndex;
 
