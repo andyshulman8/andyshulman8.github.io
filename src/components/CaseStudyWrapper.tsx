@@ -61,6 +61,7 @@ export default function CaseStudyWrapper() {
 
   return (
     <CaseStudyTemplate
+      key={caseId}
       dataIndex={dataIndex}
       initialStop={initialStop}
       onBack={() => navigate("/")}
