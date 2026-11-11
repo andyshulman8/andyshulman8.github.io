@@ -130,6 +130,7 @@ export const FullscreenImageViewer = ({
       <button
         ref={closeButtonRef}
         onClick={onClose}
+        aria-label="Close fullscreen viewer"
         className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-lg z-10"
         style={{
           background: "linear-gradient(145deg, #333 0%, #222 100%)",
@@ -242,13 +243,18 @@ export const FullscreenImageViewer = ({
                         onClick={() => onChangeIndex && onChangeIndex(i)}
                         aria-label={`Go to slide ${i + 1} of ${gallery.length}`}
                         aria-pressed={isActive}
-                        className="w-4 h-4 rounded-full cursor-pointer transition-all hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/70"
-                        style={{
-                          background: isActive ? "#aaa" : "rgba(170,170,170,0.4)",
-                          boxShadow: isActive ? "0 0 12px rgba(170,170,170,0.8)" : "none",
-                          border: "2px solid rgba(255,255,255,0.2)",
-                        }}
-                      />
+                        className="w-6 h-6 flex items-center justify-center rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-white/70"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="w-4 h-4 rounded-full transition-all hover:scale-125"
+                          style={{
+                            background: isActive ? "#aaa" : "rgba(170,170,170,0.4)",
+                            boxShadow: isActive ? "0 0 12px rgba(170,170,170,0.8)" : "none",
+                            border: "2px solid rgba(255,255,255,0.2)",
+                          }}
+                        />
+                      </button>
                     );
                   })}
                 </div>
