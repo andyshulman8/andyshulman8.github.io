@@ -8,6 +8,9 @@ import reactHooks from "eslint-plugin-react-hooks";
 export default [
   { ignores: ["dist", "build"] },
   {
+    ignores: ["dist/**"],
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     languageOptions: {
       globals: globals.browser,
@@ -27,6 +30,31 @@ export default [
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   jsxA11y.flatConfigs.recommended,
+  {
+    // Claude Code hook scripts run in Node, not the browser
+    files: [".claude/**/*.{js,cjs,mjs}"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "commonjs"
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off"
+    }
+  },
+  {
+    // Build scripts run in Node
+    files: ["scripts/**/*.{js,cjs,mjs}"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "module"
+    }
+  },
+  {
+    files: [".claude/**/*.mjs"],
+    languageOptions: {
+      sourceType: "module"
+    }
+  },
   {
     plugins: { "react-hooks": reactHooks },
     rules: {

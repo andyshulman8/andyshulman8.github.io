@@ -31,3 +31,7 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Local tooling
+.claude/
+hookcheck.tmp.mjs

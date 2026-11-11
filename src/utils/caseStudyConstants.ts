@@ -5,6 +5,13 @@
  * used throughout the case study pages.
  */
 
+import {
+  THEME_COLOR,
+  SILVER,
+  INFO_COLOR,
+  TEXT_SECONDARY,
+} from "../constants/theme";
+
 // ============================================================
 // Timing & Duration Constants (in milliseconds)
 // ============================================================
@@ -16,11 +23,7 @@ export const TRANSITION_DURATION_MS = 1200;
 // Color Constants (imported context)
 // ============================================================
 
-const THEME_COLOR = "#424141";
-const SILVER = "#dfe1e5ff";
-const INFO_COLOR = "#2B2C28";
 const ACCENT_COLOR = SILVER;
-const TEXT_SECONDARY = "#a8adb3";
 
 // ============================================================
 // Style Objects & Token Functions
@@ -83,11 +86,16 @@ export const WINDOW_CONTENT_STYLE = {
   boxShadow: "inset 0 0 30px rgba(0,0,0,0.9)",
 } as const;
 
-/** Glass overlay effect for depth and visual interest */
+/**
+ * Glass overlay effect for depth and visual interest.
+ * Kept subtle on purpose - this sits directly on top of the design work
+ * itself, so it needs to read as a quiet frame detail, not a haze over
+ * the screenshots.
+ */
 export const GLASS_OVERLAY_GRADIENT = `
-  radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0%, transparent 50%),
-  radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-  linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)
+  radial-gradient(circle at 20% 20%, rgba(255,255,255,0.05) 0%, transparent 50%),
+  radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03) 0%, transparent 50%),
+  linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%)
 `;
 
 /** Corner rivet styling for metallic window frames */

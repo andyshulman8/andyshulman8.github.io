@@ -46,9 +46,9 @@ test("every image referenced by case data exists on disk and in dist", () => {
   assert.deepEqual(missing, [], `missing images:\n${missing.join("\n")}`);
 });
 
-test("vercel.json is valid with SPA rewrite and security headers", () => {
+test("vercel.json is valid with prerendered-route rewrite and security headers", () => {
   const cfg = JSON.parse(read("vercel.json"));
-  assert.ok(cfg.rewrites?.some((r) => r.destination === "/index.html"), "no rewrite to /index.html");
+  assert.ok(cfg.rewrites?.some((r) => r.destination.endsWith("/index.html")), "no rewrite to a prerendered index.html");
   const keys = (cfg.headers ?? []).flatMap((h) => h.headers.map((x) => x.key));
   assert.ok(keys.includes("Content-Security-Policy"), "CSP header missing");
 });

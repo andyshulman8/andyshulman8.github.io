@@ -91,10 +91,4 @@ export const UI = {
     blur: 24,
   },
   testimonialGap: 32,
-  imageLoadingDuration: 500,
 };
-
-/**
- * Analytics
- */
-export const GA_ID = "G-5KXX19NNJM";

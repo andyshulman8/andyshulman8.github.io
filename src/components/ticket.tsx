@@ -100,7 +100,7 @@ export const ExpressTicketCTA: React.FC<ExpressTicketCTAProps> = ({
         fontSize="8"
         fill="#9ca3af"
       >
-        ZONE DCS · DS 1 · {String(new Date().getMonth()) + 1}
+        ZONE DCS · DS 1 · {String(new Date().getMonth() + 1).padStart(2, "0")}
         {String(new Date().getFullYear()).slice(-2)}
       </text>
 

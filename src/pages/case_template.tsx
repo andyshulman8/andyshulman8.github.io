@@ -12,9 +12,11 @@
  * synchronized in one place.
  */
 
-import { ChevronLeft, ChevronRight, Train } from "lucide-react";
+import { ChevronLeft, ChevronRight, Train, Pause, Play } from "lucide-react";
 import CalloutBox from "../components/CalloutBox.tsx";
 import { allCaseStudies } from "./casedata.tsx";
+import { getImageAlt } from "../data/imageAlt.ts";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.ts";
 import type { CaseStudyData, Stop } from "./casedata.tsx";
 import TrainTransition from "./train.tsx";
 import { FullscreenImageViewer } from "../components/FullscreenImageViewer.tsx";
@@ -37,6 +39,7 @@ import {
   glowStyle,
   largeGlowStyle,
 } from "../utils/caseStudyConstants.ts";
+import { THEME_COLOR, SILVER, INFO_COLOR, BACK_COLOR } from "../constants/theme";
 import { useState, useEffect, useRef } from "react";
 import { ExpressTicketCTA } from "../components/ticket.tsx";
 
@@ -44,10 +47,6 @@ import { ExpressTicketCTA } from "../components/ticket.tsx";
 // Color Constants
 // ============================================================
 
-const THEME_COLOR = "#424141";
-const SILVER = "#dfe1e5ff";
-const INFO_COLOR = "#2B2C28";
-const BACK_COLOR = "#141515";
 const ACCENT_COLOR = SILVER;
 const PREV_BUTTON_HOVER_BG = "#339989";
 
@@ -96,24 +95,53 @@ const WindowMedia = ({
   const isVideo =
     mediaSrc.toLowerCase().endsWith(".mp4") ||
     (typeof src !== "string" && src.type === "video");
+  const reduced = usePrefersReducedMotion();
+  const [userPaused, setUserPaused] = useState<boolean | null>(null);
+  const playing = userPaused === null ? !reduced : !userPaused;
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (playing) void v.play().catch(() => {});
+    else v.pause();
+  }, [playing, mediaSrc]);
 
   return (
     <div className="absolute inset-0 w-full h-full">
       {isVideo ? (
-        <video
-          src={mediaSrc}
-          title="Video Preview"
-          className="w-full h-full object-cover object-left-top"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
+        <>
+          <video
+            ref={videoRef}
+            src={mediaSrc}
+            aria-label={getImageAlt(mediaSrc, "Video preview")}
+            className="w-full h-full object-cover object-left-top"
+            autoPlay={!reduced}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+          />
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setUserPaused(playing);
+            }}
+            aria-label={playing ? "Pause video" : "Play video"}
+            className="absolute bottom-2 left-2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-black/70 text-white border border-white/40"
+          >
+            {playing ? (
+              <Pause size={18} aria-hidden="true" />
+            ) : (
+              <Play size={18} aria-hidden="true" />
+            )}
+          </button>
+        </>
       ) : (
         <img
           src={mediaSrc}
-          alt="Preview"
+          alt={getImageAlt(mediaSrc, "Case study preview")}
           className="w-full h-full object-cover object-left-top"
           loading="lazy"
         />
@@ -136,6 +164,12 @@ export default function CaseStudyTemplate({
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+    dropdownTriggerRef.current?.focus();
+  };
 
   useEffect(() => {
     if (!showDropdown) return;
@@ -145,9 +179,16 @@ export default function CaseStudyTemplate({
         setShowDropdown(false);
       }
     };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeDropdown();
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
   }, [showDropdown]);
 
   const location = useLocation();
@@ -159,6 +200,14 @@ export default function CaseStudyTemplate({
 
   const [showTransition, setShowTransition] = useState(false);
   const caseStudyData: CaseStudyData = allCaseStudies[dataIndex];
+
+  useEffect(() => {
+    const defaultTitle = document.title;
+    document.title = `${caseStudyData.title} — Andy Shulman`;
+    return () => {
+      document.title = defaultTitle;
+    };
+  }, [caseStudyData.title]);
 
   const [showOverview, setShowOverview] = useState(initialStop === undefined);
   const [currentStop, setCurrentStop] = useState(initialStop ?? 0);
@@ -178,20 +227,12 @@ export default function CaseStudyTemplate({
       setShowOverview(false);
       setCurrentStop(initialStop);
     }
-    window.scrollTo(0, 0);
   }, [initialStop]);
 
   // Reset carousel when stop changes
   useEffect(() => {
-    const images = caseStudyData.stops[currentStop].images;
-    if (!images || images.length === 0) {
-      setStopCarouselIndex(0);
-      return;
-    }
-    if (stopCarouselIndex >= images.length) {
-      setStopCarouselIndex(0);
-    }
-  }, [currentStop, caseStudyData, stopCarouselIndex]);
+    setStopCarouselIndex(0);
+  }, [currentStop, caseStudyData]);
 
   /**
    * Starts the case study journey from the first stop.
@@ -213,7 +254,6 @@ export default function CaseStudyTemplate({
       const newStop = currentStop + 1;
       setCurrentStop(newStop);
       onStopChange(newStop);
-      window.scrollTo(0, 0);
     }
   };
 
@@ -222,7 +262,6 @@ export default function CaseStudyTemplate({
       const newStop = currentStop - 1;
       setCurrentStop(newStop);
       onStopChange(newStop);
-      window.scrollTo(0, 0);
     }
   };
 
@@ -230,14 +269,12 @@ export default function CaseStudyTemplate({
     setCurrentStop(index);
     setShowOverview(false);
     onStopChange(index);
-    window.scrollTo(0, 0);
   };
 
   const handleBackToOverview = () => {
     setShowOverview(true);
     setFullscreen({ type: "closed" });
     onOverview();
-    window.scrollTo(0, 0);
   };
 
   const stop = caseStudyData.stops[currentStop];
@@ -263,16 +300,27 @@ export default function CaseStudyTemplate({
           <>
             <div className="w-full border-t border-black/30 my-4" />
             <footer className="text-sm mt-2 not-italic text-black/70 flex items-center gap-3 pt-2">
-              {stop.quoteImage && (
+              {stop.quoteImage ? (
                 <img
                   src={stop.quoteImage}
-                  alt={stop.quoteAuthor}
+                  alt=""
                   className="w-10 h-10 rounded-full object-cover border-2"
                   style={{
                     boxShadow: "0 0 0 2px rgba(0,0,0,0.04) inset",
                     borderColor: INFO_COLOR,
                   }}
                 />
+              ) : (
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0"
+                  style={{ color: SILVER, backgroundColor: INFO_COLOR }}
+                >
+                  {stop.quoteAuthor
+                    .split(" ")
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join("")}
+                </div>
               )}
               <span>{stop.quoteAuthor}</span>
             </footer>
@@ -285,6 +333,10 @@ export default function CaseStudyTemplate({
   return (
     <div className="min-h-screen text-white bg-[color:var(--color-back)]">
       <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
+
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
 
       {fullscreen.type !== "closed" && (
         <FullscreenImageViewer
@@ -317,7 +369,7 @@ export default function CaseStudyTemplate({
       )}
 
       <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50 bg-[color:var(--color-info)]/[0.8]">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between gap-2">
           <button
             onClick={() => {
               window.scrollTo(0, 0);
@@ -330,11 +382,11 @@ export default function CaseStudyTemplate({
           </button>
 
           {/* CENTER: Title + Impact */}
-          <div className="flex flex-col items-center flex-1 mx-8 text-center">
-            <div className="text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
+          <div className="flex flex-col items-center flex-1 min-w-0 mx-1 sm:mx-8 text-center">
+            <div className="text-base sm:text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
               {caseStudyData.title}
             </div>
-            <div className="hidden sm:flex text-sm text-white/40 max-w-xs">
+            <div className="hidden sm:flex text-sm text-white/60 max-w-xs">
               {caseStudyData.destination}
             </div>
           </div>
@@ -342,8 +394,12 @@ export default function CaseStudyTemplate({
           {/* RIGHT: Case Study Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
+              ref={dropdownTriggerRef}
               className="flex items-center gap-2 cursor-pointer group p-2 rounded-lg hover:bg-white/10 transition-all"
               onClick={() => setShowDropdown((prev) => !prev)}
+              aria-expanded={showDropdown}
+              aria-haspopup="true"
+              aria-controls="case-study-dropdown-menu"
             >
               <div className="text-sm text-white/60 group-hover:text-white transition-colors">
                 Case Studies
@@ -369,14 +425,17 @@ export default function CaseStudyTemplate({
 
             {/* Dropdown Menu */}
             {showDropdown && (
-              <div className="absolute top-full right-0 mt-2 w-72 bg-black/95 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl z-50 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div
+                id="case-study-dropdown-menu"
+                className="absolute top-full right-0 mt-2 w-72 bg-black/95 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl z-50 py-2 animate-in fade-in slide-in-from-top-2 duration-200"
+              >
                 <div className="p-2">
                   {allCaseStudies.map((study, index) => (
                     <button
                       key={index}
                       onClick={() => {
                         navigate(`/${study.id}`);
-                        setShowDropdown(false);
+                        closeDropdown();
                       }}
                       className="w-full text-left px-4 py-3 hover:bg-white/10 transition-all flex items-center gap-3 group"
                     >
@@ -396,7 +455,7 @@ export default function CaseStudyTemplate({
           </div>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-6">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-6 outline-none">
         {showOverview ? (
           <div className="max-w-5xl mx-auto px-6 py-12">
             {/* Header row - flex with ticket pushed to right */}
@@ -404,6 +463,15 @@ export default function CaseStudyTemplate({
               {/* Flex container that wraps */}
               <div className="flex flex-wrap items-start gap-4">
                 <div className="flex-1 min-w-[250px]">
+                  <div
+                    className="inline-block text-xs font-semibold uppercase tracking-wide px-2 py-1 rounded-md mb-2"
+                    style={{
+                      backgroundColor: "var(--color-info)",
+                      color: "var(--color-text-secondary)",
+                    }}
+                  >
+                    {caseStudyData.company}
+                  </div>
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
                     {caseStudyData.title}
                   </h1>
@@ -429,7 +497,7 @@ export default function CaseStudyTemplate({
               <h2 className="text-2xl font-bold mb-6 text-white/80">
                 Background
               </h2>
-              <p className="text-white/60 leading-relaxed text-l">
+              <p className="text-white/60 leading-relaxed text-lg">
                 {caseStudyData.background}
               </p>
             </div>
@@ -486,7 +554,7 @@ export default function CaseStudyTemplate({
                 className="mb-12 w-full grid"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
                   gap: "1rem",
                   alignItems: "stretch",
                   justifyItems: "stretch",
@@ -531,14 +599,14 @@ export default function CaseStudyTemplate({
                   >
                     <img
                       src={caseStudyData.before}
-                      alt="Before"
+                      alt={getImageAlt(caseStudyData.before ?? "", "Before")}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover object-left-top bg-black/20"
                     />
                   </button>
                   <p className="text-white/50 text-sm text-center">
-                    Fragmented tools, slow troubleshooting
+                    {caseStudyData.beforeCaption}
                   </p>
                 </div>
                 <div className="space-y-3">
@@ -560,14 +628,14 @@ export default function CaseStudyTemplate({
                   >
                     <img
                       src={caseStudyData.after}
-                      alt="After"
+                      alt={getImageAlt(caseStudyData.after ?? "", "After")}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover object-left-top bg-black/20"
                     />
                   </button>
                   <p className="text-white/50 text-sm text-center">
-                    Unified platform, 10-minute resolution
+                    {caseStudyData.afterCaption}
                   </p>
                 </div>
               </div>
@@ -689,7 +757,7 @@ export default function CaseStudyTemplate({
 
               <button
                 onClick={onNextRoute}
-                className="text-white/40 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
+                className="text-white/60 text-sm hover:text-white/80 transition-colors cursor-pointer block w-full text-center"
                 aria-label="Or try the next case study"
               >
                 Or try the next case study
@@ -740,16 +808,25 @@ export default function CaseStudyTemplate({
                         )}
                       </div>
 
-                      {/* The Station Name - Responsive Visibility */}
+                      {/* The Station Name - Responsive Visibility.
+                          The current stop's label stays visible at every
+                          breakpoint (it's the one thing a mobile user needs -
+                          "where am I"); other stops still rely on hover/md:
+                          since touch devices have no hover to reveal them,
+                          and their names are already exposed via aria-label
+                          on the button. */}
                       <div
-                        className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none 
-                                    opacity-0 group-hover:opacity-100 md:opacity-100 transition-opacity duration-300"
+                        className={`absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none transition-opacity duration-300 ${
+                          isCurrent
+                            ? "opacity-100"
+                            : "opacity-0 group-hover:opacity-100 md:opacity-100"
+                        }`}
                       >
                         <span
                           className={`text-xs mb-3 font-medium uppercase tracking-wider transition-colors duration-300 ${
                             isActive || isCurrent
                               ? "text-[#dfe1e5ff]" // Current and Past stops
-                              : "text-[#424141]" // Future stops (Silver)
+                              : "text-[#9a9c9e]" // Future stops (muted but WCAG AA compliant)
                           }`}
                         >
                           {stop.station_name}
@@ -823,7 +900,7 @@ export default function CaseStudyTemplate({
             <div className="prose prose-invert max-w-none">
               {!hasImages && quoteBlock}
 
-              <p className="text-l text-white/80 leading-relaxed mb-6 whitespace-pre-line">
+              <p className="text-lg text-white/80 leading-relaxed mb-6 whitespace-pre-line">
                 {stop.content}
               </p>
 
@@ -964,7 +1041,7 @@ export default function CaseStudyTemplate({
         <div className="mt-8 text-sm text-[color:var(--color-text-secondary)]">
           Montrose, Colorado •{" "}
           <u>
-            <a href="https://www.linkedin.com/in/andrea-shulman/">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/shulman-andy/">LinkedIn</a>
           </u>{" "}
           • andyshulman8@gmail.com
         </div>

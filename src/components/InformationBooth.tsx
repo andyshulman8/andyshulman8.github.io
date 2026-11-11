@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import { Info } from "lucide-react";
 import { SkillsBoard } from "./Skills/SkillsBoard.tsx";
-// import { ExpressTicketCTA } from "../components/ticket.tsx";
 import {
   INFO_COLOR,
   SILVER,
@@ -37,7 +36,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
       <div className="grid gap-8">
         {/* Information Booth Panel */}
         <div
-          className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-6 hover:border-white/20 transition-all duration-300"
+          className="relative bg-black/60 backdrop-blur-sm rounded-xl border border-white/10 p-4 sm:p-6 hover:border-white/20 transition-all duration-300"
           style={{
             boxShadow: `${UI.infoBoxShadow.x}px ${UI.infoBoxShadow.y}px ${UI.infoBoxShadow.blur}px ${INFO_COLOR}10`,
           }}
@@ -59,12 +58,12 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                   />
 
                   {/* Sign face */}
-                  <div className="relative flex items-center gap-3 px-1 py-2">
+                  <div className="relative flex items-center gap-2 sm:gap-3 px-1 py-2">
                     <Info
-                      className="w-8 h-8 relative z-10"
+                      className="w-6 h-6 sm:w-8 sm:h-8 relative z-10"
                       style={{ color: "var(--color-silver)" }}
                     />
-                    <h2 className="text-3xl font-bold text-white relative z-10 tracking-wide">
+                    <h2 className="text-xl sm:text-3xl font-bold text-white relative z-10 tracking-wide">
                       INFORMATION
                     </h2>
                   </div>
@@ -126,7 +125,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
               {/* Loading skeleton */}
               <div
                 aria-hidden={processLoaded}
-                className={`absolute inset-0 transition-opacity duration-${UI.imageLoadingDuration} ${
+                className={`absolute inset-0 transition-opacity duration-500 ${
                   processLoaded ? "opacity-0 pointer-events-none" : "opacity-100"
                 }`}
               >
@@ -144,7 +143,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
 
               {/* Actual image */}
               <button
-                className={`w-full h-full cursor-pointer hover:opacity-90 transition-opacity duration-${UI.imageLoadingDuration} border-0 bg-transparent p-0 ${
+                className={`w-full h-full cursor-pointer hover:opacity-90 transition-opacity duration-500 border-0 bg-transparent p-0 ${
                   processLoaded ? "opacity-100" : "opacity-0"
                 }`}
                 onClick={() => onFullscreenImage("/images/Home/process.webp")}
@@ -188,19 +187,10 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
               </div>
 
               <h3 className="text-white/90 text-2xl font-bold self-center">
-                About the Conductor
-              </h3></div>
-              {/* <ExpressTicketCTA
-                onClick={() =>
-                  window.open(
-                    "https://docs.google.com/document/d/1dcvh0-dBAh5WQCPS4xrKBOeQqpJ0Tx1LMcUIXAkueKU/edit?usp=sharing",
-                    "_blank",
-                    "noopener,noreferrer"
-                  )
-                }
-              /> */}
-            
-  </div>
+                About Me (the Conductor)
+              </h3>
+              </div>
+            </div>
 
             <div className="grid md:grid-cols-3 gap-6 items-start">
               <div className="md:col-span-2 space-y-4">

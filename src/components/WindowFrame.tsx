@@ -31,12 +31,31 @@ interface WindowFrameProps {
 }
 
 export function WindowFrame({ children, onClick }: WindowFrameProps) {
+  // The frame isn't a button because it wraps real buttons (CarouselControls'
+  // prev/next/dots). Mouse users can click anywhere on it; keyboard users get
+  // a dedicated "View fullscreen" button, so Enter/Space on the carousel
+  // controls can't bubble up and open the viewer.
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      className="relative p-6 rounded-2xl cursor-pointer hover:opacity-90 transition-opacity"
-      onClick={onClick}
+      className={`relative p-6 rounded-2xl ${
+        onClick ? "cursor-pointer hover:opacity-90 transition-opacity" : ""
+      }`}
       style={WINDOW_FRAME_STYLE}
+      onClick={onClick}
     >
+      {onClick && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick();
+          }}
+          className="absolute top-1 right-1 z-10 rounded-md px-2 py-1 text-xs text-white/80 bg-black/50 hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+        >
+          View fullscreen
+        </button>
+      )}
       <div
         className="relative p-2 rounded-xl overflow-hidden w-full flex items-center justify-center"
         style={WINDOW_CHROME_STYLE}
