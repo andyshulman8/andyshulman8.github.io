@@ -63,7 +63,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                       className="w-6 h-6 sm:w-8 sm:h-8 relative z-10"
                       style={{ color: "var(--color-silver)" }}
                     />
-                    <h2 className="text-xl sm:text-3xl font-bold text-white relative z-10 tracking-wide">
+                    <h2 className="text-xl sm:text-3xl font-bold text-white/90 relative z-10 tracking-wide">
                       INFORMATION
                     </h2>
                   </div>
@@ -202,7 +202,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                         href="https://www.specright.com/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-white transition-colors"
+                        className="hover:text-white/90 transition-colors"
                       >
                         Specright,
                       </a>
@@ -231,7 +231,7 @@ export function InformationBooth({ onFullscreenImage }: InformationBoothProps) {
                     href="https://drive.google.com/file/d/135KRz2IUokO7ULy5JWPFkWHlVdO94iMr/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/70 hover:text-white transition-colors underline"
+                    className="text-white/70 hover:text-white/90 transition-colors underline"
                     
                   >
                     View Resume

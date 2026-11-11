@@ -139,7 +139,7 @@ export default function DesignCentralStation() {
       style={{ backgroundColor: "var(--color-back)" }}
     >
       <div
-        className="text-white"
+        className="text-white/90"
         style={{ backgroundColor: "var(--color-back)" }}
       >
         <a href="#main-content" className="skip-link">
@@ -217,7 +217,7 @@ export default function DesignCentralStation() {
                   </a>
                   <a
                     href="mailto:andyshulman8@gmail.com"
-                    className="px-5 py-2.5 rounded-full font-bold text-sm border border-white/30 text-white hover:bg-white/10 transition-colors"
+                    className="px-5 py-2.5 rounded-full font-bold text-sm border border-white/30 text-white/90 hover:bg-white/10 transition-colors"
                   >
                     Get in Touch
                   </a>
@@ -292,7 +292,7 @@ export default function DesignCentralStation() {
 
           <section className="px-6 w-full mx-auto" aria-label="Case studies">
             <div className="text-left mt-6 mb-8">
-              <h2 className="text-3xl font-bold text-white mb-6">
+              <h2 className="text-3xl font-bold text-white/90 mb-6">
                 Case Studies
               </h2>
             </div>
@@ -337,7 +337,7 @@ sizes="(min-width: 768px) 400px, 200px"
                       <h3 className="text-xl font-bold mb-2">{project.name}</h3>
                     </div>
                     <ChevronRight
-                      className="w-5 h-5 group-hover:text-white group-hover:translate-x-1 transition-all"
+                      className="w-5 h-5 group-hover:text-white/90 group-hover:translate-x-1 transition-all"
                       style={{ color: "var(--color-text-secondary)" }}
                     />
                   </div>

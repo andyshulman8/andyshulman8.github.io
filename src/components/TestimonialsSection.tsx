@@ -30,7 +30,7 @@ export function TestimonialsSection() {
         {/* Content overlay */}
         <div className="relative z-10 w-full mx-auto">
           <div className="flex items-left justify-left gap-4">
-            <h3 className="text-3xl font-bold text-white">
+            <h3 className="text-3xl font-bold text-white/90">
               Passenger Testimonials
             </h3>
           </div>
