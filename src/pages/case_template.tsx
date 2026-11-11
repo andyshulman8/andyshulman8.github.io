@@ -130,7 +130,7 @@ const WindowMedia = ({
               setUserPaused(playing);
             }}
             aria-label={playing ? "Pause video" : "Play video"}
-            className="absolute bottom-2 left-2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-black/70 text-white border border-white/40"
+            className="absolute bottom-2 left-2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-black/70 text-white/90 border border-white/40"
           >
             {playing ? (
               <Pause size={18} aria-hidden="true" />
@@ -336,7 +336,7 @@ export default function CaseStudyTemplate({
   );
 
   return (
-    <div className="min-h-screen text-white bg-[color:var(--color-back)]">
+    <div className="min-h-screen text-white/90 bg-[color:var(--color-back)]">
       <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
 
       <a href="#main-content" className="skip-link">
@@ -380,7 +380,7 @@ export default function CaseStudyTemplate({
               window.scrollTo(0, 0);
               onBack();
             }}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
+            className="flex items-center gap-2 text-white/60 hover:text-white/90 transition-colors"
           >
             <ChevronLeft size={20} />
             <span>Back to Station</span>
@@ -406,11 +406,11 @@ export default function CaseStudyTemplate({
               aria-haspopup="true"
               aria-controls="case-study-dropdown-menu"
             >
-              <div className="text-sm text-white/60 group-hover:text-white transition-colors">
+              <div className="text-sm text-white/60 group-hover:text-white/90 transition-colors">
                 Case Studies
               </div>
               <svg
-                className="w-4 h-4 text-white/60 group-hover:text-white transition-all duration-200"
+                className="w-4 h-4 text-white/60 group-hover:text-white/90 transition-all duration-200"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -445,7 +445,7 @@ export default function CaseStudyTemplate({
                       className="w-full text-left px-4 py-3 hover:bg-white/10 transition-all flex items-center gap-3 group"
                     >
                       <div className="min-w-0 flex-1">
-                        <div className="font-semibold text-white truncate">
+                        <div className="font-semibold text-white/90 truncate">
                           {study.title}
                         </div>
                         <div className="text-xs text-white/60 truncate">

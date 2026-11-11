@@ -125,7 +125,7 @@ export const TrainCar = ({ variant = "middle" }: TrainCarProps) => {
       {isFront && (
         <>
           <div className="absolute top-0 left-0 right-0 h-2 bg-orange-700 flex items-center justify-center rounded-tr-3xl overflow-hidden">
-            <div className="text-[8px] font-bold text-white">EXPRESS</div>
+            <div className="text-[8px] font-bold text-white/90">EXPRESS</div>
           </div>
 
           <div className="absolute top-3 left-2 right-3 h-4 rounded-md border border-white/40 bg-gradient-to-b from-sky-300/20 to-white/5 shadow-inner" />
