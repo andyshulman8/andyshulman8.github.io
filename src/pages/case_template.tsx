@@ -42,6 +42,7 @@ import {
 import { THEME_COLOR, SILVER, INFO_COLOR, BACK_COLOR } from "../constants/theme";
 import { useState, useEffect, useRef } from "react";
 import { ExpressTicketCTA } from "../components/ticket.tsx";
+import { trackCaseStudyViewed } from "../lib/analytics";
 
 // ============================================================
 // Color Constants
@@ -208,6 +209,10 @@ export default function CaseStudyTemplate({
       document.title = defaultTitle;
     };
   }, [caseStudyData.title]);
+
+  useEffect(() => {
+    trackCaseStudyViewed(caseStudyData.id);
+  }, [caseStudyData.id]);
 
   const [showOverview, setShowOverview] = useState(initialStop === undefined);
   const [currentStop, setCurrentStop] = useState(initialStop ?? 0);
