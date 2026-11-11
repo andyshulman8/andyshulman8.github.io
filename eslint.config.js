@@ -3,8 +3,10 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import pluginReact from "eslint-plugin-react";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+import reactHooks from "eslint-plugin-react-hooks";
 
 export default [
+  { ignores: ["dist", "build"] },
   {
     ignores: ["dist/**"],
   },
@@ -54,7 +56,10 @@ export default [
     }
   },
   {
+    plugins: { "react-hooks": reactHooks },
     rules: {
+      "react-hooks/rules-of-hooks": "warn", // TODO: "error" once FullscreenImageViewer.tsx conditional hooks are fixed
+      "react-hooks/exhaustive-deps": "warn",
       "react/react-in-jsx-scope": "off",  // ← Turn off the annoying rule
       "react/prop-types": "off",  // ← You're using TypeScript, don't need PropTypes
       "jsx-a11y/anchor-is-valid": "warn",
