@@ -39,7 +39,7 @@ const person = {
   image: `${SITE}/images/Home/headshot.webp`,
   alumniOf: { "@type": "CollegeOrUniversity", name: "Stanford University" },
   homeLocation: { "@type": "Place", name: "Montrose, Colorado" },
-  sameAs: ["https://www.linkedin.com/in/andrea-shulman/"],
+  sameAs: ["https://www.linkedin.com/in/shulman-andy/"],
 };
 
 const firstSentence = (t) => (t.match(/^.*?[.!?](\s|$)/)?.[0] ?? t).trim();
