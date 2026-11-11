@@ -76,8 +76,8 @@
   ],
   "rewrites": [
     {
-      "source": "/:path*",
-      "destination": "/index.html"
+      "source": "/:caseId(logs|alerts|data|team|future|health)/:stop",
+      "destination": "/:caseId/index.html"
     }
   ]
 }

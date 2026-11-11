@@ -405,7 +405,7 @@ sizes="(min-width: 768px) 400px, 200px"
             Montrose, Colorado •{" "}
             <u>
               <a
-                href="https://www.linkedin.com/in/andrea-shulman/"
+                href="https://www.linkedin.com/in/shulman-andy/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
