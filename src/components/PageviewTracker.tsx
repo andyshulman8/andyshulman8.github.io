@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { usePageviewTracking } from "../hooks/usePageviewTracking";
+import { trackLinkClick } from "../lib/analytics";
 
 /**
  * PageviewTracker
@@ -17,6 +18,16 @@ import { usePageviewTracking } from "../hooks/usePageviewTracking";
 export function PageviewTracker({ children }: { children: ReactNode }) {
   // Track pageview whenever location changes
   usePageviewTracking();
+
+  // One delegated listener records resume and other outbound link clicks.
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const anchor = (e.target as Element | null)?.closest?.("a[href]");
+      if (anchor) trackLinkClick(anchor as HTMLAnchorElement);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   return <>{children}</>;
 }

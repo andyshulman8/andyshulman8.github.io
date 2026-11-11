@@ -22,6 +22,7 @@
 import { useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getImageAlt } from "../data/imageAlt.ts";
+import { trackImageFullscreenOpened } from "../lib/analytics";
 import { GLASS_OVERLAY_GRADIENT } from "../utils/caseStudyConstants";
 type MediaItem = string | { src: string; type: "image" | "video" };
 
@@ -40,6 +41,11 @@ export const FullscreenImageViewer = ({
   onChangeIndex,
   onClose,
 }: FullscreenImageViewerProps) => {
+  // The viewer is only mounted while open, so mounting means "opened".
+  useEffect(() => {
+    trackImageFullscreenOpened();
+  }, []);
+
   // Helper functions
   const getMediaSrc = (item: MediaItem): string => {
     return typeof item === "string" ? item : item.src;
