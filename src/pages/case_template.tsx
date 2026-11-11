@@ -12,9 +12,11 @@
  * synchronized in one place.
  */
 
-import { ChevronLeft, ChevronRight, Train } from "lucide-react";
+import { ChevronLeft, ChevronRight, Train, Pause, Play } from "lucide-react";
 import CalloutBox from "../components/CalloutBox.tsx";
 import { allCaseStudies } from "./casedata.tsx";
+import { getImageAlt } from "../data/imageAlt.ts";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion.ts";
 import type { CaseStudyData, Stop } from "./casedata.tsx";
 import TrainTransition from "./train.tsx";
 import { FullscreenImageViewer } from "../components/FullscreenImageViewer.tsx";
@@ -93,24 +95,53 @@ const WindowMedia = ({
   const isVideo =
     mediaSrc.toLowerCase().endsWith(".mp4") ||
     (typeof src !== "string" && src.type === "video");
+  const reduced = usePrefersReducedMotion();
+  const [userPaused, setUserPaused] = useState<boolean | null>(null);
+  const playing = userPaused === null ? !reduced : !userPaused;
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (playing) void v.play().catch(() => {});
+    else v.pause();
+  }, [playing, mediaSrc]);
 
   return (
     <div className="absolute inset-0 w-full h-full">
       {isVideo ? (
-        <video
-          src={mediaSrc}
-          title="Video Preview"
-          className="w-full h-full object-cover object-left-top"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        />
+        <>
+          <video
+            ref={videoRef}
+            src={mediaSrc}
+            aria-label={getImageAlt(mediaSrc, "Video preview")}
+            className="w-full h-full object-cover object-left-top"
+            autoPlay={!reduced}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+          />
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setUserPaused(playing);
+            }}
+            aria-label={playing ? "Pause video" : "Play video"}
+            className="absolute bottom-2 left-2 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-black/70 text-white border border-white/40"
+          >
+            {playing ? (
+              <Pause size={18} aria-hidden="true" />
+            ) : (
+              <Play size={18} aria-hidden="true" />
+            )}
+          </button>
+        </>
       ) : (
         <img
           src={mediaSrc}
-          alt="Preview"
+          alt={getImageAlt(mediaSrc, "Case study preview")}
           className="w-full h-full object-cover object-left-top"
           loading="lazy"
         />
@@ -272,7 +303,7 @@ export default function CaseStudyTemplate({
               {stop.quoteImage ? (
                 <img
                   src={stop.quoteImage}
-                  alt={stop.quoteAuthor}
+                  alt=""
                   className="w-10 h-10 rounded-full object-cover border-2"
                   style={{
                     boxShadow: "0 0 0 2px rgba(0,0,0,0.04) inset",
@@ -302,6 +333,10 @@ export default function CaseStudyTemplate({
   return (
     <div className="min-h-screen text-white bg-[color:var(--color-back)]">
       <style>{`.features-grid{grid-template-columns:1fr;} @media (min-width:768px){.features-grid{grid-template-columns:repeat(var(--cols), minmax(0,1fr));}}`}</style>
+
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
 
       {fullscreen.type !== "closed" && (
         <FullscreenImageViewer
@@ -334,7 +369,7 @@ export default function CaseStudyTemplate({
       )}
 
       <header className="border-b border-white/10 backdrop-blur-sm sticky top-0 z-50 bg-[color:var(--color-info)]/[0.8]">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 flex items-center justify-between gap-2">
           <button
             onClick={() => {
               window.scrollTo(0, 0);
@@ -347,8 +382,8 @@ export default function CaseStudyTemplate({
           </button>
 
           {/* CENTER: Title + Impact */}
-          <div className="flex flex-col items-center flex-1 mx-8 text-center">
-            <div className="text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
+          <div className="flex flex-col items-center flex-1 min-w-0 mx-1 sm:mx-8 text-center">
+            <div className="text-base sm:text-xl font-bold mb-1" style={TEXT_ACCENT_STYLE}>
               {caseStudyData.title}
             </div>
             <div className="hidden sm:flex text-sm text-white/60 max-w-xs">
@@ -420,7 +455,7 @@ export default function CaseStudyTemplate({
           </div>
         </div>
       </header>
-      <main className="max-w-7xl mx-auto px-6">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-6 outline-none">
         {showOverview ? (
           <div className="max-w-5xl mx-auto px-6 py-12">
             {/* Header row - flex with ticket pushed to right */}
@@ -519,7 +554,7 @@ export default function CaseStudyTemplate({
                 className="mb-12 w-full grid"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
                   gap: "1rem",
                   alignItems: "stretch",
                   justifyItems: "stretch",
@@ -564,7 +599,7 @@ export default function CaseStudyTemplate({
                   >
                     <img
                       src={caseStudyData.before}
-                      alt="Before"
+                      alt={getImageAlt(caseStudyData.before ?? "", "Before")}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover object-left-top bg-black/20"
@@ -593,7 +628,7 @@ export default function CaseStudyTemplate({
                   >
                     <img
                       src={caseStudyData.after}
-                      alt="After"
+                      alt={getImageAlt(caseStudyData.after ?? "", "After")}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover object-left-top bg-black/20"
