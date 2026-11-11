@@ -173,7 +173,7 @@ export default function DesignCentralStation() {
               />
               <img
                 src="/images/Home/hero2-800w.webp"
-                alt="Hero background"
+                alt=""
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 fetchPriority="high"
                 loading="eager"
