@@ -21,6 +21,7 @@
 
 import { useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { getImageAlt } from "../data/imageAlt.ts";
 import { GLASS_OVERLAY_GRADIENT } from "../utils/caseStudyConstants";
 type MediaItem = string | { src: string; type: "image" | "video" };
 
@@ -180,7 +181,10 @@ export const FullscreenImageViewer = ({
                 <video
                   src={getMediaSrc(currentItem)}
                   controls
-                  autoPlay
+                  autoPlay={
+                    !window.matchMedia("(prefers-reduced-motion: reduce)")
+                      .matches
+                  }
                   loop
                   muted
                   playsInline
@@ -189,7 +193,10 @@ export const FullscreenImageViewer = ({
               ) : (
                 <img
                   src={getMediaSrc(currentItem)}
-                  alt={`Fullscreen preview ${active + 1}`}
+                  alt={getImageAlt(
+                    getMediaSrc(currentItem),
+                    `Fullscreen preview ${active + 1}`,
+                  )}
                   className="absolute inset-0 w-full h-full object-contain"
                 />
               )}
